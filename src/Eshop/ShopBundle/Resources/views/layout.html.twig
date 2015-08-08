@@ -1,0 +1,41 @@
+{% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/shop/css/style.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ContractorFinder</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                {#<ul class="nav navbar-nav navbar-right">#}
+                    {#&#123;&#35;{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}&#35;&#125;#}
+                        {#&#123;&#35;<li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>&#35;&#125;#}
+                    {#&#123;&#35;{% else %}&#35;&#125;#}
+                        {#&#123;&#35;<li><a href="{{ path('fos_user_security_login') }}">Login</a></li>&#35;&#125;#}
+                        {#&#123;&#35;<li><a href="{{ path('user_normal_registration') }}">Register</a></li>&#35;&#125;#}
+                    {#&#123;&#35;{% endif %}&#35;&#125;#}
+                        {#&#123;&#35;<li><a href="{{ path('user_company_registration') }}">Register company</a></li>&#35;&#125;#}
+                {#&#123;&#35;</ul>&#35;&#125;#}
+            </div>
+        </div>
+    </nav>
+
+    {% block page_content %}
+    {% endblock page_content %}
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
