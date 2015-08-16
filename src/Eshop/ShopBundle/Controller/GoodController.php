@@ -13,7 +13,7 @@ use Eshop\ShopBundle\Form\GoodType;
 /**
  * Good controller.
  *
- * @Route("/good")
+ * @Route("/admin/good")
  */
 class GoodController extends Controller
 {
@@ -21,24 +21,33 @@ class GoodController extends Controller
     /**
      * Lists all Good entities.
      *
-     * @Route("/", name="good")
+     * @Route("/", name="admin_good")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
 
-        $entities = $em->getRepository('ShopBundle:Good')->findAll();
+        $dql = "SELECT a FROM ShopBundle:Good a";
+        $query = $em->createQuery($dql);
+        $limit = $this->getParameter('admin_goods_pagination_count');
+
+        $goods = $paginator->paginate(
+            $query,
+            $this->get('request')->query->getInt('page', 1),
+            $limit
+        );
 
         return array(
-            'entities' => $entities,
+            'entities' => $goods,
         );
     }
     /**
      * Creates a new Good entity.
      *
-     * @Route("/", name="good_create")
+     * @Route("/", name="admin_good_create")
      * @Method("POST")
      * @Template("ShopBundle:Good:new.html.twig")
      */
@@ -84,7 +93,7 @@ class GoodController extends Controller
     /**
      * Displays a form to create a new Good entity.
      *
-     * @Route("/new", name="good_new")
+     * @Route("/new", name="admin_good_new")
      * @Method("GET")
      * @Template()
      */
@@ -102,7 +111,7 @@ class GoodController extends Controller
     /**
      * Finds and displays a Good entity.
      *
-     * @Route("/{id}", name="good_show")
+     * @Route("/{id}", name="admin_good_show")
      * @Method("GET")
      * @Template()
      */
@@ -127,7 +136,7 @@ class GoodController extends Controller
     /**
      * Displays a form to edit an existing Good entity.
      *
-     * @Route("/{id}/edit", name="good_edit")
+     * @Route("/{id}/edit", name="admin_good_edit")
      * @Method("GET")
      * @Template()
      */
@@ -172,7 +181,7 @@ class GoodController extends Controller
     /**
      * Edits an existing Good entity.
      *
-     * @Route("/{id}", name="good_update")
+     * @Route("/{id}", name="admin_good_update")
      * @Method("PUT")
      * @Template("ShopBundle:Good:edit.html.twig")
      */
@@ -205,7 +214,7 @@ class GoodController extends Controller
     /**
      * Deletes a Good entity.
      *
-     * @Route("/{id}", name="good_delete")
+     * @Route("/{id}", name="admin_good_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
