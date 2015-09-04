@@ -170,7 +170,7 @@ class GoodController extends Controller
     private function createEditForm(Good $entity)
     {
         $form = $this->createForm(new GoodType(), $entity, array(
-            'action' => $this->generateUrl('good_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('admin_good_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -234,7 +234,7 @@ class GoodController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('good'));
+        return $this->redirect($this->generateUrl('admin_good'));
     }
 
     /**
@@ -247,7 +247,7 @@ class GoodController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('good_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_good_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
