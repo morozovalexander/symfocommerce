@@ -1,59 +1,50 @@
 <?php
 
-namespace Eshop\ShopBundle\Controller;
+namespace Eshop\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Eshop\ShopBundle\Entity\Good;
-use Eshop\ShopBundle\Form\GoodType;
+use Eshop\ShopBundle\Entity\Manufacturer;
+use Eshop\ShopBundle\Form\ManufacturerType;
 
 /**
- * Good controller.
+ * Manufacturer controller.
  *
- * @Route("/admin/good")
+ * @Route("/admin/manufacturer")
  */
-class GoodController extends Controller
+class ManufacturerController extends Controller
 {
 
     /**
-     * Lists all Good entities.
+     * Lists all Manufacturer entities.
      *
-     * @Route("/", name="admin_good")
+     * @Route("/", name="admin_manufacturer")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:Good a";
-        $query = $em->createQuery($dql);
-        $limit = $this->getParameter('admin_goods_pagination_count');
-
-        $goods = $paginator->paginate(
-            $query,
-            $this->get('request')->query->getInt('page', 1),
-            $limit
-        );
+        $entities = $em->getRepository('ShopBundle:Manufacturer')->findAll();
 
         return array(
-            'entities' => $goods,
+            'entities' => $entities,
         );
     }
     /**
-     * Creates a new Good entity.
+     * Creates a new Manufacturer entity.
      *
-     * @Route("/", name="admin_good_create")
+     * @Route("/", name="admin_manufacturer_create")
      * @Method("POST")
-     * @Template("ShopBundle:Good:new.html.twig")
+     * @Template("ShopBundle:Manufacturer:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Good();
+        $entity = new Manufacturer();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -62,7 +53,7 @@ class GoodController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('good_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_manufacturer_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -72,16 +63,16 @@ class GoodController extends Controller
     }
 
     /**
-     * Creates a form to create a Good entity.
+     * Creates a form to create a Manufacturer entity.
      *
-     * @param Good $entity The entity
+     * @param Manufacturer $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Good $entity)
+    private function createCreateForm(Manufacturer $entity)
     {
-        $form = $this->createForm(new GoodType(), $entity, array(
-            'action' => $this->generateUrl('good_create'),
+        $form = $this->createForm(new ManufacturerType(), $entity, array(
+            'action' => $this->generateUrl('admin_manufacturer_create'),
             'method' => 'POST',
         ));
 
@@ -91,15 +82,15 @@ class GoodController extends Controller
     }
 
     /**
-     * Displays a form to create a new Good entity.
+     * Displays a form to create a new Manufacturer entity.
      *
-     * @Route("/new", name="admin_good_new")
+     * @Route("/new", name="admin_manufacturer_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Good();
+        $entity = new Manufacturer();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -109,9 +100,9 @@ class GoodController extends Controller
     }
 
     /**
-     * Finds and displays a Good entity.
+     * Finds and displays a Manufacturer entity.
      *
-     * @Route("/{id}", name="admin_good_show")
+     * @Route("/{id}", name="admin_manufacturer_show")
      * @Method("GET")
      * @Template()
      */
@@ -119,10 +110,10 @@ class GoodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Good')->find($id);
+        $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Good entity.');
+            throw $this->createNotFoundException('Unable to find Manufacturer entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -134,9 +125,9 @@ class GoodController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Good entity.
+     * Displays a form to edit an existing Manufacturer entity.
      *
-     * @Route("/{id}/edit", name="admin_good_edit")
+     * @Route("/{id}/edit", name="admin_manufacturer_edit")
      * @Method("GET")
      * @Template()
      */
@@ -144,10 +135,10 @@ class GoodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Good')->find($id);
+        $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Good entity.');
+            throw $this->createNotFoundException('Unable to find Manufacturer entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -161,16 +152,16 @@ class GoodController extends Controller
     }
 
     /**
-    * Creates a form to edit a Good entity.
+    * Creates a form to edit a Manufacturer entity.
     *
-    * @param Good $entity The entity
+    * @param Manufacturer $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Good $entity)
+    private function createEditForm(Manufacturer $entity)
     {
-        $form = $this->createForm(new GoodType(), $entity, array(
-            'action' => $this->generateUrl('good_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ManufacturerType(), $entity, array(
+            'action' => $this->generateUrl('admin_manufacturer_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -179,20 +170,20 @@ class GoodController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Good entity.
+     * Edits an existing Manufacturer entity.
      *
-     * @Route("/{id}", name="admin_good_update")
+     * @Route("/{id}", name="admin_manufacturer_update")
      * @Method("PUT")
-     * @Template("ShopBundle:Good:edit.html.twig")
+     * @Template("ShopBundle:Manufacturer:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Good')->find($id);
+        $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Good entity.');
+            throw $this->createNotFoundException('Unable to find Manufacturer entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -202,7 +193,7 @@ class GoodController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('good_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_manufacturer_edit', array('id' => $id)));
         }
 
         return array(
@@ -212,9 +203,9 @@ class GoodController extends Controller
         );
     }
     /**
-     * Deletes a Good entity.
+     * Deletes a Manufacturer entity.
      *
-     * @Route("/{id}", name="admin_good_delete")
+     * @Route("/{id}", name="admin_manufacturer_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -224,21 +215,21 @@ class GoodController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ShopBundle:Good')->find($id);
+            $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Good entity.');
+                throw $this->createNotFoundException('Unable to find Manufacturer entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('good'));
+        return $this->redirect($this->generateUrl('admin_manufacturer'));
     }
 
     /**
-     * Creates a form to delete a Good entity by id.
+     * Creates a form to delete a Manufacturer entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -247,7 +238,7 @@ class GoodController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('good_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_manufacturer_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

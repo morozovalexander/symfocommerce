@@ -1,6 +1,6 @@
 <?php
 
-namespace Eshop\ShopBundle\Controller;
+namespace Eshop\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

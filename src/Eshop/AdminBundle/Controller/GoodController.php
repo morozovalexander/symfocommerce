@@ -1,50 +1,59 @@
 <?php
 
-namespace Eshop\ShopBundle\Controller;
+namespace Eshop\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Eshop\ShopBundle\Entity\Category;
-use Eshop\ShopBundle\Form\CategoryType;
+use Eshop\ShopBundle\Entity\Good;
+use Eshop\ShopBundle\Form\GoodType;
 
 /**
- * Category controller.
+ * Good controller.
  *
- * @Route("/admin/category")
+ * @Route("/admin/good")
  */
-class CategoryController extends Controller
+class GoodController extends Controller
 {
 
     /**
-     * Lists all Category entities.
+     * Lists all Good entities.
      *
-     * @Route("/", name="admin_category")
+     * @Route("/", name="admin_good")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
 
-        $entities = $em->getRepository('ShopBundle:Category')->findAll();
+        $dql = "SELECT a FROM ShopBundle:Good a";
+        $query = $em->createQuery($dql);
+        $limit = $this->getParameter('admin_goods_pagination_count');
+
+        $goods = $paginator->paginate(
+            $query,
+            $this->get('request')->query->getInt('page', 1),
+            $limit
+        );
 
         return array(
-            'entities' => $entities,
+            'entities' => $goods,
         );
     }
     /**
-     * Creates a new Category entity.
+     * Creates a new Good entity.
      *
-     * @Route("/", name="admin_category_create")
+     * @Route("/", name="admin_good_create")
      * @Method("POST")
-     * @Template("ShopBundle:Category:new.html.twig")
+     * @Template("ShopBundle:Good:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Category();
+        $entity = new Good();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +62,7 @@ class CategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_category_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('good_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,16 +72,16 @@ class CategoryController extends Controller
     }
 
     /**
-     * Creates a form to create a Category entity.
+     * Creates a form to create a Good entity.
      *
-     * @param Category $entity The entity
+     * @param Good $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Category $entity)
+    private function createCreateForm(Good $entity)
     {
-        $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('admin_category_create'),
+        $form = $this->createForm(new GoodType(), $entity, array(
+            'action' => $this->generateUrl('good_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +91,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a form to create a new Category entity.
+     * Displays a form to create a new Good entity.
      *
-     * @Route("/new", name="admin_category_new")
+     * @Route("/new", name="admin_good_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Category();
+        $entity = new Good();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +109,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds and displays a Category entity.
+     * Finds and displays a Good entity.
      *
-     * @Route("/{id}", name="admin_category_show")
+     * @Route("/{id}", name="admin_good_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +119,10 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Category')->find($id);
+        $entity = $em->getRepository('ShopBundle:Good')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find Good entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +134,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Category entity.
+     * Displays a form to edit an existing Good entity.
      *
-     * @Route("/{id}/edit", name="admin_category_edit")
+     * @Route("/{id}/edit", name="admin_good_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +144,10 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Category')->find($id);
+        $entity = $em->getRepository('ShopBundle:Good')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find Good entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +161,16 @@ class CategoryController extends Controller
     }
 
     /**
-    * Creates a form to edit a Category entity.
+    * Creates a form to edit a Good entity.
     *
-    * @param Category $entity The entity
+    * @param Good $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Category $entity)
+    private function createEditForm(Good $entity)
     {
-        $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('admin_category_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new GoodType(), $entity, array(
+            'action' => $this->generateUrl('good_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +179,20 @@ class CategoryController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Category entity.
+     * Edits an existing Good entity.
      *
-     * @Route("/{id}", name="admin_category_update")
+     * @Route("/{id}", name="admin_good_update")
      * @Method("PUT")
-     * @Template("ShopBundle:Category:edit.html.twig")
+     * @Template("ShopBundle:Good:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Category')->find($id);
+        $entity = $em->getRepository('ShopBundle:Good')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+            throw $this->createNotFoundException('Unable to find Good entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +202,7 @@ class CategoryController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_category_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('good_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +212,9 @@ class CategoryController extends Controller
         );
     }
     /**
-     * Deletes a Category entity.
+     * Deletes a Good entity.
      *
-     * @Route("/{id}", name="admin_category_delete")
+     * @Route("/{id}", name="admin_good_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +224,21 @@ class CategoryController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ShopBundle:Category')->find($id);
+            $entity = $em->getRepository('ShopBundle:Good')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Category entity.');
+                throw $this->createNotFoundException('Unable to find Good entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_category'));
+        return $this->redirect($this->generateUrl('good'));
     }
 
     /**
-     * Creates a form to delete a Category entity by id.
+     * Creates a form to delete a Good entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +247,7 @@ class CategoryController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_category_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('good_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
