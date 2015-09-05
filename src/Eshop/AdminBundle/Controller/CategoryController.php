@@ -28,11 +28,20 @@ class CategoryController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
 
-        $entities = $em->getRepository('ShopBundle:Category')->findAll();
+        $dql = "SELECT a FROM ShopBundle:Category a";
+        $query = $em->createQuery($dql);
+        $limit = $this->getParameter('admin_categories_pagination_count');
+
+        $categories = $paginator->paginate(
+            $query,
+            $this->get('request')->query->getInt('page', 1),
+            $limit
+        );
 
         return array(
-            'entities' => $entities,
+            'entities' => $categories,
         );
     }
     /**
@@ -192,6 +201,11 @@ class CategoryController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Your changes were saved!'
+            );
 
             return $this->redirect($this->generateUrl('admin_category_edit', array('id' => $id)));
         }

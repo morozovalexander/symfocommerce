@@ -1,15 +1,21 @@
-{% extends '::base.html.twig' %}
+{% extends '@Shop/layout.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
-{% block body -%}
-    <h1>Category creation</h1>
+{% block page_content -%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                {% include "AdminBundle:Admin:admin-menu.html.twig" %}
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+                <h3>Category creation</h3>
 
-    {{ form(form) }}
+                {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_category') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-{% endblock %}
+                <a href="{{ path('admin_category') }}">
+                    Back to the list
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
