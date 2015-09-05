@@ -1,1 +1,22 @@
-{{ dump(goods) }}
+{% extends '@Shop/layout.html.twig' %}
+
+{% block page_content -%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                {% include "ShopBundle:Catalog:categories-menu.html.twig" %}
+            </div>
+            <div class="col-md-8 col-md-offset-2 main">
+                <h3>Goods list</h3>
+            </div>
+            <div class="col-md-2 col-md-offset-10 sidebar">
+                {% include "ShopBundle:Catalog:manufacturers-menu.html.twig" %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-4">
+                {#{{ knp_pagination_render(entities) }}#}
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
