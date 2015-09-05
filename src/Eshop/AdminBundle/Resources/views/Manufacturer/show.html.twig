@@ -1,5 +1,11 @@
 {% extends '@Shop/layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/shop/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
+          type="text/css"/>
+{% endblock stylesheets %}
+
 {% block page_content -%}
     <div class="container-fluid">
         <div class="row">
@@ -23,6 +29,18 @@
                         <th>Description</th>
                         <td>{{ entity.description }}</td>
                     </tr>
+                    <tr>
+                        <th>Image</th>
+                        <td>
+                            {% if entity.path %}
+                                <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
+                                    <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                                </a>
+                            {% else %}
+                                no photo
+                            {% endif %}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 
@@ -45,3 +63,15 @@
         </div>
     </div>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/shop/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/shop/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox();
+        });
+    </script>
+{% endblock javascripts %}

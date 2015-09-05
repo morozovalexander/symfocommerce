@@ -18,6 +18,7 @@
                     <tr>
                         <th>{{ knp_pagination_sortable(entities, 'Name', 'a.name') }}</th>
                         <th>Description</th>
+                        <th>{{ knp_pagination_sortable(entities, 'Photo', 'a.path') }}</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -29,6 +30,13 @@
                             </td>
                             <td>
                                 {{ entity.description }}
+                            </td>
+                            <td>
+                                {% if entity.path %}
+                                    <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                                {% else %}
+                                    no photo
+                                {% endif %}
                             </td>
                             <td>
                                 <a href="{{ path('admin_category_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;

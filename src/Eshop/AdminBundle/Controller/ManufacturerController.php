@@ -200,6 +200,12 @@ class ManufacturerController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($editForm->get('file')->getData() !== null) { // if any file was updated
+                $file = $editForm->get('file')->getData();
+                $entity->removeUpload(); // remove old file, see this at the bottom
+                $entity->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
+            }
+
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
