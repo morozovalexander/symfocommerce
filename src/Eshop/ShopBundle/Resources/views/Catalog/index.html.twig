@@ -7,7 +7,22 @@
                 {% include "ShopBundle:Catalog:categories-menu.html.twig" %}
             </div>
             <div class="col-md-8 col-md-offset-2 main">
-                <h3>Goods list</h3>
+                {% for category in categories %}
+                    <div class="col-sm-4 col-md-3">
+                        <div class="thumbnail">
+                            {% if category.path %}
+                                <img src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
+                            {% else %}
+                                <img src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
+                            {% endif %}
+                            <div class="caption">
+                                <a href="#">
+                                    <h3>{{ category.name }}</h3>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
             <div class="col-md-2 col-md-offset-10 sidebar">
                 {% include "ShopBundle:Catalog:manufacturers-menu.html.twig" %}
