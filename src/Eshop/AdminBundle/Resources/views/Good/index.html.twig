@@ -8,6 +8,7 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h3>Goods list</h3>
+                <li><a href="{{ path('admin_good_new') }}">Create new Good</a></li>
                 <table class="records_list table table-bordered table-stripped">
                     <thead>
                     <tr>
@@ -20,7 +21,7 @@
                     <tbody>
                     {% for entity in entities %}
                         <tr>
-                            <td><a href="{{ path('admin_good_show', { 'id': entity.id }) }}">{{ entity.name }}}</a></td>
+                            <td><a href="{{ path('admin_good_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                             <td>{{ entity.description }}</td>
                             <td>{{ entity.price }}</td>
                             <td>

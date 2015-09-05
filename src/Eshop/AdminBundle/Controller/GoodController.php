@@ -62,7 +62,7 @@ class GoodController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('good_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_good_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -81,7 +81,7 @@ class GoodController extends Controller
     private function createCreateForm(Good $entity)
     {
         $form = $this->createForm(new GoodType(), $entity, array(
-            'action' => $this->generateUrl('good_create'),
+            'action' => $this->generateUrl('admin_good_create'),
             'method' => 'POST',
         ));
 
@@ -183,7 +183,7 @@ class GoodController extends Controller
      *
      * @Route("/{id}", name="admin_good_update")
      * @Method("PUT")
-     * @Template("ShopBundle:Good:edit.html.twig")
+     * @Template("AdminBundle:Good:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -202,7 +202,12 @@ class GoodController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('good_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Your changes were saved!'
+            );
+
+            return $this->redirect($this->generateUrl('admin_good_edit', array('id' => $id)));
         }
 
         return array(
