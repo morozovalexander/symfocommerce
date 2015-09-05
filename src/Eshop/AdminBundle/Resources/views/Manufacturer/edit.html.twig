@@ -1,16 +1,36 @@
-{% extends '::base.html.twig' %}
+{% extends '@Shop/layout.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
 
-{% block body -%}
-    <h1>Manufacturer edit</h1>
+{% block page_content -%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                {% include "@Admin/Admin/admin-menu.html.twig" %}
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+                <h3>Manufacturer edit</h3>
 
-    {{ form(edit_form) }}
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_manufacturer') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
-{% endblock %}
+                {{ form(edit_form) }}
+
+                <div class="col-md-5 col-md-offset-2 ">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{{ path('admin_manufacturer') }}">
+                                Back to the list
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            {{ form(delete_form) }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}

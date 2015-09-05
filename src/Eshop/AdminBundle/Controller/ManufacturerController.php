@@ -28,11 +28,20 @@ class ManufacturerController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
 
-        $entities = $em->getRepository('ShopBundle:Manufacturer')->findAll();
+        $dql = "SELECT a FROM ShopBundle:Manufacturer a";
+        $query = $em->createQuery($dql);
+        $limit = $this->getParameter('admin_manufacturers_pagination_count');
+
+        $manufacturers = $paginator->paginate(
+            $query,
+            $this->get('request')->query->getInt('page', 1),
+            $limit
+        );
 
         return array(
-            'entities' => $entities,
+            'entities' => $manufacturers,
         );
     }
     /**
@@ -192,6 +201,11 @@ class ManufacturerController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Your changes were saved!'
+            );
 
             return $this->redirect($this->generateUrl('admin_manufacturer_edit', array('id' => $id)));
         }

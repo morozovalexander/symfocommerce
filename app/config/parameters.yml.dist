@@ -20,3 +20,4 @@ parameters:
     goods_pagination_count: 12
     admin_goods_pagination_count: 20
     admin_categories_pagination_count: 20
+    admin_manufacturers_pagination_count: 20
