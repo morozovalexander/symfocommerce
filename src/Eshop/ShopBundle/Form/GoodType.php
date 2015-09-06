@@ -20,6 +20,7 @@ class GoodType extends AbstractType
             ->add('price')
             ->add('category')
             ->add('manufacturer')
+            ->add('file', 'file', array('required' => false))
         ;
     }
     
