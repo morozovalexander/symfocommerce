@@ -13,8 +13,10 @@
                     <thead>
                     <tr>
                         <th>{{ knp_pagination_sortable(entities, 'Name', 'a.name') }}</th>
-                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Manufacturer</th>
                         <th>{{ knp_pagination_sortable(entities, 'Price', 'a.price') }}</th>
+                        <th>{{ knp_pagination_sortable(entities, 'Photo', 'a.path') }}</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -22,17 +24,27 @@
                     {% for entity in entities %}
                         <tr>
                             <td><a href="{{ path('admin_good_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-                            <td>{{ entity.description }}</td>
+                            <td>
+                                <a href="{{ path('admin_category_show', {'id': entity.category.id}) }}">
+                                    {{ entity.category }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_manufacturer_show', {'id': entity.manufacturer.id}) }}">
+                                    {{ entity.manufacturer }}
+                                </a>
+                            </td>
                             <td>{{ entity.price }}</td>
                             <td>
-                                <ul>
-                                    <li>
-                                        <a href="{{ path('admin_good_show', { 'id': entity.id }) }}">show</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('admin_good_edit', { 'id': entity.id }) }}">edit</a>
-                                    </li>
-                                </ul>
+                                {% if entity.path %}
+                                    <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                                {% else %}
+                                    no photo
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_good_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
+                                <a href="{{ path('admin_good_edit', { 'id': entity.id }) }}">edit</a>
                             </td>
                         </tr>
                     {% endfor %}

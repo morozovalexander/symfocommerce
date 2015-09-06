@@ -49,7 +49,7 @@ class GoodController extends Controller
      *
      * @Route("/", name="admin_good_create")
      * @Method("POST")
-     * @Template("ShopBundle:Good:new.html.twig")
+     * @Template("AdminBundle:Good:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -200,6 +200,12 @@ class GoodController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($editForm->get('file')->getData() !== null) { // if any file was updated
+                $file = $editForm->get('file')->getData();
+                $entity->removeUpload(); // remove old file, see this at the bottom
+                $entity->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
+            }
+
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(

@@ -18,8 +18,18 @@ class GoodType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('price')
-            ->add('category')
-            ->add('manufacturer')
+            ->add('category', 'entity', array(
+                'required'  => true,
+                'multiple' => false,
+                'class' => 'Eshop\ShopBundle\Entity\Category',
+                'property' => 'name'
+            ))
+            ->add('manufacturer', 'entity', array(
+                'required'  => true,
+                'multiple' => false,
+                'class' => 'Eshop\ShopBundle\Entity\Manufacturer',
+                'property' => 'name'
+            ))
             ->add('file', 'file', array('required' => false))
         ;
     }
