@@ -1,37 +1,20 @@
 {% extends '@Shop/layout.html.twig' %}
 
 {% block page_content -%}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2 sidebar">
-                {% include "ShopBundle:Catalog:categories-menu.html.twig" %}
-            </div>
-            <div class="col-md-8 col-md-offset-2 main">
-                {% for category in categories %}
-                    <div class="col-sm-4 col-md-3">
-                        <div class="thumbnail">
-                            {% if category.path %}
-                                <img src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
-                            {% else %}
-                                <img src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
-                            {% endif %}
-                            <div class="caption">
-                                <a href="#">
-                                    <h3>{{ category.name }}</h3>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="col-md-2 col-md-offset-10 sidebar">
-                {% include "ShopBundle:Catalog:manufacturers-menu.html.twig" %}
+    {% for category in categories %}
+        <div class="col-sm-4 col-md-3">
+            <div class="thumbnail">
+                {% if category.path %}
+                    <img src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
+                {% else %}
+                    <img src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
+                {% endif %}
+                <div class="caption">
+                    <a href="#">
+                        <h3>{{ category.name }}</h3>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-4">
-                {#{{ knp_pagination_render(entities) }}#}
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 {% endblock page_content %}

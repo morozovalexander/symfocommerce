@@ -1,6 +1,6 @@
 <h4>manufacturers</h4>
-<ul class="nav nav-sidebar">
+<div class="list-group">
     {% for manufacturer in manufacturers %}
-        <li><a href="#">{{ manufacturer.name }}</a></li>
+        <a href="#" class="list-group-item">{{ manufacturer.name }}</a>
     {% endfor %}
-</ul>
+</div>
