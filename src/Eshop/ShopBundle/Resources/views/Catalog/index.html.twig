@@ -2,7 +2,7 @@
 
 {% block page_content -%}
     {% for category in categories %}
-        <div class="col-sm-4 col-md-3">
+        <div class="col-sm-4 col-md-3 col-lg-2 good">
             <div class="thumbnail">
                 {% if category.path %}
                     <img src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
@@ -11,7 +11,7 @@
                 {% endif %}
                 <div class="caption">
                     <a href="#">
-                        <h3>{{ category.name }}</h3>
+                        {{ category.name }}
                     </a>
                 </div>
             </div>
