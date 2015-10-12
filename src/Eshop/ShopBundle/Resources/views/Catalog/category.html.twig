@@ -5,6 +5,14 @@
 {% endblock title %}
 
 {% block page_content -%}
+    <div class="well well-sm">
+        <strong>{{ category.name }}</strong>
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                        class="glyphicon glyphicon-th"></span>Grid</a>
+        </div>
+    </div>
     <div id="products" class="row list-group">
     {% if goods|length %}
         {% for good in goods %}
@@ -29,11 +37,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 <p class="lead">
-                                    {{ good.price }}у.е.
+                                    {{ good.price }} у.е.
                                 </p>
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <a class="btn btn-success" href="http://www.jquery2dotnet.com">Add to cart</a>
+                                <a class="btn btn-success" href="#">Add to cart</a>
                             </div>
                         </div>
                     </div>
@@ -50,3 +58,20 @@
         </div>
     </div>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#list').click(function (event) {
+                event.preventDefault();
+                $('#products .item').addClass('list-group-item');
+            });
+            $('#grid').click(function (event) {
+                event.preventDefault();
+                $('#products .item').removeClass('list-group-item');
+                $('#products .item').addClass('grid-group-item');
+            });
+        });
+    </script>
+{% endblock javascripts %}
