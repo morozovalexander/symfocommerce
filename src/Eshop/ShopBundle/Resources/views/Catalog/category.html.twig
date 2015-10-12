@@ -44,4 +44,9 @@
         <h3>Sorry, no goods in this category yet!</h3>
     {% endif %}
     </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+            {{ knp_pagination_render(goods) }}
+        </div>
+    </div>
 {% endblock page_content %}
