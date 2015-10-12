@@ -1,20 +1,29 @@
 {% extends '@Shop/layout.html.twig' %}
 
 {% block page_content -%}
+    <div id="products" class="row list-group">
     {% for category in categories %}
-        <div class="col-sm-4 col-md-3 col-lg-2 good">
+        <div class="item  col-sm-4 col-md-3 col-lg-3">
             <div class="thumbnail">
                 {% if category.path %}
-                    <img src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
+                <img class="group list-group-image"
+                     src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}"
+                     alt="{{ category.name }}" />
                 {% else %}
-                    <img src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}" alt="{{ category.name }}" />
+                <img class="group list-group-image"
+                     src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
+                     alt="{{ category.name }}" />
                 {% endif %}
-                <div class="caption">
-                    <a href="#">
+                    <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
                         {{ category.name }}
-                    </a>
+                    </h4>
+                    <p class="group inner list-group-item-text">
+                        {{ category.description|slice(0, 190) }}
+                    </p>
                 </div>
             </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock page_content %}
