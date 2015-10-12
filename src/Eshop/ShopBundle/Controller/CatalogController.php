@@ -20,13 +20,40 @@ class CatalogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $categoryRepository = $em->getRepository('ShopBundle:Category');
-        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
 
         $categories = $categoryRepository->findAll();
+
+        return array(
+            'categories' => $categories
+        );
+    }
+
+    /**
+     * @Template()
+     */
+    public function categoriesMenuAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $categoryRepository = $em->getRepository('ShopBundle:Category');
+
+        $categories = $categoryRepository->findAll();
+
+        return array(
+            'categories' => $categories
+        );
+    }
+
+    /**
+     * @Template()
+     */
+    public function manufacturersMenuAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
+
         $manufacturers = $manufacturerRepository->findAll();
 
         return array(
-            'categories' => $categories,
             'manufacturers' => $manufacturers
         );
     }

@@ -32,14 +32,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                {% include "ShopBundle:Catalog:categories-menu.html.twig" %}
+                {{ render(controller('ShopBundle:Catalog:categoriesMenu')) }}
             </div>
             <div class="col-md-8">
                 {% block page_content %}
                 {% endblock page_content %}
             </div>
             <div class="col-md-2">
-                {% include "ShopBundle:Catalog:manufacturers-menu.html.twig" %}
+                {{ render(controller('ShopBundle:Catalog:manufacturersMenu')) }}
             </div>
         </div>
     </div>
