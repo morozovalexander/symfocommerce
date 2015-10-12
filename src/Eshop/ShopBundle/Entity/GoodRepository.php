@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class GoodRepository extends EntityRepository
 {
+    //query for pagination without "getQuery()"
+    public function findByCategoryForPaginator($categoryId){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('g')
+            ->from('ShopBundle:Good', 'g')
+            ->innerJoin('   g.category', 'ca')
+            ->where('ca.id = :categoryid')
+            ->setParameter('categoryid', $categoryId
+            );
+    }
 }

@@ -12,4 +12,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+    public function getFirstCategoryId(){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('ca.id')
+            ->from('ShopBundle:Category', 'ca')
+            ->orderBy('ca.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
+
+    public function getFirstCategory(){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('ca')
+            ->from('ShopBundle:Category', 'ca')
+            ->orderBy('ca.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
 }

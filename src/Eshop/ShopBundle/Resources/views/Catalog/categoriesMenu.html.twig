@@ -1,6 +1,8 @@
 <h4>CATEGORIES</h4>
 <div class="list-group">
     {% for category in categories %}
-        <a href="#" class="list-group-item">{{ category.name }}</a>
+        <a href="{{ path('category', {'categoryId' : category.id}) }}" class="list-group-item">
+            {{ category.name }}
+        </a>
     {% endfor %}
 </div>

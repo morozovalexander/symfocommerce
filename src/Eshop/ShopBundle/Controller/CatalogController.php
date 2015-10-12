@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Controller;
 
+use Eshop\ShopBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -55,6 +56,46 @@ class CatalogController extends Controller
 
         return array(
             'manufacturers' => $manufacturers
+        );
+    }
+
+    /**
+     * @Route("/category/{categoryId}", name="category")
+     * @Method("GET")
+     * @Template()
+     */
+    public function categoryAction($categoryId = '')
+    {
+        $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
+        $categoryRepository = $em->getRepository('ShopBundle:Category');
+        $goodRepository = $em->getRepository('ShopBundle:Good');
+
+        /**
+         * @var Category $requiredCategory
+         */
+        if ($categoryId == '') {
+            //get first category id
+            $requiredCategory = $categoryRepository->getFirstCategoryId();
+            $requiredCategory = $requiredCategory['id'];
+        } else {
+            $requiredCategory = $categoryRepository->find((int)$categoryId);
+            $requiredCategory = $requiredCategory->getId();
+        }
+
+        $goodsQuery = $goodRepository->findByCategoryForPaginator($requiredCategory);
+        $limit = $this->getParameter('category_goods_pagination_count');
+        $goods = $paginator->paginate(
+            $goodsQuery,
+            $this->get('request')->query->getInt('page', 1),
+            $limit
+        );
+
+        $category = $categoryRepository->find($requiredCategory);
+
+        return array(
+            'category' => $category,
+            'goods' => $goods
         );
     }
 }
