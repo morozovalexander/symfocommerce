@@ -30,7 +30,6 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface, Ord
     {
 
         $categoriesArray = array(
-            'Главная',
             'Аминокислоты BCAA',
             'Анаболические комплексы',
             'Витаминно-минеральные комплексы',
