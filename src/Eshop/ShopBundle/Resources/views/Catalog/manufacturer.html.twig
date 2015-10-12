@@ -1,12 +1,12 @@
 {% extends '@Shop/layout.html.twig' %}
 
 {% block title %}
-    {{ category.name }}
+    {{ manufacturer.name }}
 {% endblock title %}
 
 {% block page_content -%}
     <div class="well well-sm">
-        <strong>{{ category.name }}</strong>
+        <strong>{{ manufacturer.name }}</strong>
         <div class="btn-group">
             <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
             </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
@@ -49,7 +49,7 @@
             </div>
         {% endfor %}
     {% else %}
-        <h3>Sorry, no goods in this category yet!</h3>
+        <h3>Sorry, no goods in this manufacturer yet!</h3>
     {% endif %}
     </div>
     <div class="row">

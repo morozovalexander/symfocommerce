@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ManufacturerRepository extends EntityRepository
 {
+    public function getFirstManufacturerId(){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('ma.id')
+            ->from('ShopBundle:Manufacturer', 'ma')
+            ->orderBy('ma.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
 }

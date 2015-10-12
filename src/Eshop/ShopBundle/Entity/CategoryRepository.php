@@ -23,16 +23,4 @@ class CategoryRepository extends EntityRepository
             ->getSingleResult()
             ;
     }
-
-    public function getFirstCategory(){
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('ca')
-            ->from('ShopBundle:Category', 'ca')
-            ->orderBy('ca.id', 'ASC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getSingleResult()
-            ;
-    }
 }

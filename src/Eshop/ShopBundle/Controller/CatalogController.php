@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Controller;
 
 use Eshop\ShopBundle\Entity\Category;
+use Eshop\ShopBundle\Entity\Manufacturer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -95,6 +96,46 @@ class CatalogController extends Controller
 
         return array(
             'category' => $category,
+            'goods' => $goods
+        );
+    }
+
+    /**
+     * @Route("/manufacturer/{manufacturerId}", name="manufacturer")
+     * @Method("GET")
+     * @Template()
+     */
+    public function manufacturerAction($manufacturerId = '')
+    {
+        $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
+        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
+        $goodRepository = $em->getRepository('ShopBundle:Good');
+
+        /**
+         * @var Manufacturer $requiredManufacturer
+         */
+        if ($manufacturerId == '') {
+            //get first category id
+            $requiredManufacturer = $manufacturerRepository->getFirstManufacturerId();
+            $requiredManufacturer = $requiredManufacturer['id'];
+        } else {
+            $requiredManufacturer = $manufacturerRepository->find((int)$manufacturerId);
+            $requiredManufacturer = $requiredManufacturer->getId();
+        }
+
+        $goodsQuery = $goodRepository->findByManufacturerForPaginator($requiredManufacturer);
+        $limit = $this->getParameter('category_goods_pagination_count');
+        $goods = $paginator->paginate(
+            $goodsQuery,
+            $this->get('request')->query->getInt('page', 1),
+            $limit
+        );
+
+        $manufacturer = $manufacturerRepository->find($requiredManufacturer);
+
+        return array(
+            'manufacturer' => $manufacturer,
             'goods' => $goods
         );
     }

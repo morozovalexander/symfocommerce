@@ -18,9 +18,21 @@ class GoodRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('g')
             ->from('ShopBundle:Good', 'g')
-            ->innerJoin('   g.category', 'ca')
+            ->innerJoin('g.category', 'ca')
             ->where('ca.id = :categoryid')
             ->setParameter('categoryid', $categoryId
+            );
+    }
+
+    //query for pagination without "getQuery()"
+    public function findByManufacturerForPaginator($manufacturerId){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('g')
+            ->from('ShopBundle:Good', 'g')
+            ->innerJoin('g.manufacturer', 'ma')
+            ->where('ma.id = :manufacturerid')
+            ->setParameter('manufacturerid', $manufacturerId
             );
     }
 }
