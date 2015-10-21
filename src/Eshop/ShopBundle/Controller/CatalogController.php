@@ -139,4 +139,25 @@ class CatalogController extends Controller
             'goods' => $goods
         );
     }
+
+    /**
+     * @Route("/good/{goodId}", name="show_good")
+     * @Method("GET")
+     * @Template()
+     */
+    public function goodAction($goodId = '')
+    {
+        $em = $this->getDoctrine()->getManager();
+        $goodRepository = $em->getRepository('ShopBundle:Good');
+
+        if ($goodId == '') {
+            return $this->redirectToRoute('index_main');
+        } else {
+            $good = $goodRepository->find((int)$goodId);
+        }
+
+        return array(
+            'good' => $good
+        );
+    }
 }
