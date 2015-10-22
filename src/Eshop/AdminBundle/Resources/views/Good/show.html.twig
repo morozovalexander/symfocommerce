@@ -32,10 +32,12 @@
                     <tr>
                         <th>Image</th>
                         <td>
-                            {% if entity.path %}
-                                <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
-                                    <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
-                                </a>
+                            {% if entity.images|length %}
+                                {% for image in entity.images %}
+                                    <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ image.path)) }}">
+                                        <img src="{{ asset( ('uploads/images/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
+                                    </a>
+                                {% endfor %}
                             {% else %}
                                 no photo
                             {% endif %}

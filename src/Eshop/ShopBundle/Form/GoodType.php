@@ -30,7 +30,6 @@ class GoodType extends AbstractType
                 'class' => 'Eshop\ShopBundle\Entity\Manufacturer',
                 'property' => 'name'
             ))
-            ->add('file', 'file', array('required' => false))
         ;
     }
     
