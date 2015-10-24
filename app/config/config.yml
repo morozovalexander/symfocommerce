@@ -110,3 +110,8 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [300, 300], mode: outbound }
+
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: dropzone
