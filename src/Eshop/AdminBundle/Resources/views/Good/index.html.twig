@@ -16,7 +16,7 @@
                         <th>Category</th>
                         <th>Manufacturer</th>
                         <th>{{ knp_pagination_sortable(entities, 'Price', 'a.price') }}</th>
-                        <th>{{ knp_pagination_sortable(entities, 'Photos', 'a.path') }}</th>
+                        <th>Photo</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -38,7 +38,7 @@
                             <td>
                                 {% if entity.images|length %}
                                     {% for image in entity.images %}
-                                        <img src="{{ asset( ('uploads/images/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
+                                        <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
                                     {% endfor %}
                                 {% else %}
                                     no photos

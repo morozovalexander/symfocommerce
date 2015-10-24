@@ -2,6 +2,7 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -53,20 +54,37 @@ class GoodController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Good();
-        $form = $this->createCreateForm($entity);
+        $imageIdString = $request->request->get('filenames');
+
+        $good = new Good();
+        $form = $this->createCreateForm($good);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+
+            //update uploaded images entities
+            if ($imageIdString != ''){
+                $imageIdArray = explode(',', $imageIdString);
+                array_pop($imageIdArray);
+
+                $imageRepository = $em->getRepository('ShopBundle:Image');
+                foreach($imageIdArray as $imageId){
+                    $image = $imageRepository->find($imageId);
+                    $image->setGood($good);
+                    $good->addImage($image);
+                    $em->persist($image);
+                }
+            }
+
+            $em->persist($good);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_good_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_good_show', array('id' => $good->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $good,
             'form'   => $form->createView(),
         );
     }
