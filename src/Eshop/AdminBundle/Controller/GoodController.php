@@ -189,7 +189,7 @@ class GoodController extends Controller
     {
         $form = $this->createForm(new GoodType(), $entity, array(
             'action' => $this->generateUrl('admin_good_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+            'method' => 'POST',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
@@ -199,33 +199,42 @@ class GoodController extends Controller
     /**
      * Edits an existing Good entity.
      *
-     * @Route("/{id}", name="admin_good_update")
-     * @Method("PUT")
+     * @Route("/update/{id}", name="admin_good_update")
+     * @Method("POST")
      * @Template("AdminBundle:Good:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $imageIdString = $request->request->get('filenames');
+        $good = $em->getRepository('ShopBundle:Good')->find($id);
 
-        $entity = $em->getRepository('ShopBundle:Good')->find($id);
-
-        if (!$entity) {
+        if (!$good) {
             throw $this->createNotFoundException('Unable to find Good entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($good);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            if ($editForm->get('file')->getData() !== null) { // if any file was updated
-                $file = $editForm->get('file')->getData();
-                $entity->removeUpload(); // remove old file, see this at the bottom
-                $entity->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
+            //add uploaded images entities
+            if ($imageIdString != ''){
+                $imageIdArray = explode(',', $imageIdString);
+                array_pop($imageIdArray);
+
+                $imageRepository = $em->getRepository('ShopBundle:Image');
+                foreach($imageIdArray as $imageId){
+                    $image = $imageRepository->find($imageId);
+                    $image->setGood($good);
+                    $good->addImage($image);
+                    $em->persist($image);
+                }
             }
 
             $em->flush();
 
+            //add notification
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 'Your changes were saved!'
@@ -235,7 +244,7 @@ class GoodController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $good,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );

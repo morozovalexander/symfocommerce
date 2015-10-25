@@ -1,6 +1,11 @@
 {% extends '@Admin/adminLayout.html.twig' %}
 {% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/shop/css/dropzone.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
 {% block page_content -%}
     <div class="container-fluid">
         <div class="row">
@@ -15,8 +20,24 @@
                         {{ flashMessage }}
                     </div>
                 {% endfor %}
+                <form action="{{ path('admin_good_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
 
-                {{ form(edit_form) }}
+                    <input type="hidden" name="filenames" id="filenames">
+                    {{ form_rest(edit_form) }}
+
+                </form>
+
+                <div class="panel panel-default" style="margin: 30px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                            attach photos here
+                        </h3>
+                    </div>
+                    <form action="{{ oneup_uploader_endpoint('gallery') }}" class="dropzone dz-clickable"
+                          id="my-dropzone" style="min-height: 100px;" enctype="multipart/form-data">
+                    </form>
+                </div>
 
                 <div class="col-md-5 col-md-offset-2 ">
                     <ul class="list-group">
@@ -34,3 +55,24 @@
         </div>
     </div>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/shop/js/dropzone.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            Dropzone.options.myDropzone = {
+                init: function () {
+                    thisDropzone = this;
+                    this.on("success", function (file, response) {
+                        var filename = response['image_id'];
+                        //check for normal file uploaded
+                        if (filename) {
+                            $('#filenames').val($('#filenames').val() + filename + ',');
+                        }
+                    });
+                }
+            };
+        });
+    </script>
+{% endblock javascripts %}
