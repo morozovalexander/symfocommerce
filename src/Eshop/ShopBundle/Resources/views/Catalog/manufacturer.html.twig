@@ -6,12 +6,12 @@
 
 {% block page_content -%}
     <div class="well well-sm">
-        <strong>{{ manufacturer.name }}</strong>
         <div class="btn-group">
             <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
             </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
                         class="glyphicon glyphicon-th"></span>Grid</a>
         </div>
+        <strong>{{ manufacturer.name }}</strong>
     </div>
     <div id="products" class="row list-group">
     {% if goods|length %}
