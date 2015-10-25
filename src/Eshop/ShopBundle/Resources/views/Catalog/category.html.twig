@@ -20,11 +20,11 @@
                 <div class="thumbnail">
                     {% if good.images|length %}
                         <img class="group list-group-image"
-                             src="{{ asset( ('uploads/images/' ~ good.images[0]) | imagine_filter('category_mainpage_thumb')) }}"
+                             src="{{ asset( ('uploads/gallery/' ~ good.images.first().path) | imagine_filter('category_mainpage_thumb')) }}"
                              alt="{{ good.name }}" />
                     {% else %}
                         <img class="group list-group-image"
-                             src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
+                             src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
                              alt="{{ good.name }}" />
                     {% endif %}
                     <div class="caption">
