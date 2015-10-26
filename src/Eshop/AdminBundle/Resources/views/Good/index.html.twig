@@ -37,9 +37,9 @@
                             <td>{{ entity.price }}</td>
                             <td>
                                 {% if entity.images|length %}
-                                    {% for image in entity.images %}
+                                    {% for image in entity.images|slice(0, 3) %}
                                         <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
-                                    {% endfor %}
+                                    {% endfor %} ...
                                 {% else %}
                                     no photos
                                 {% endif %}

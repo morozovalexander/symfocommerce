@@ -18,19 +18,23 @@
         {% for good in goods %}
             <div class="item  col-xs-4 col-md-3 col-lg-3">
                 <div class="thumbnail">
-                    {% if good.images|length %}
-                        <img class="group list-group-image"
-                             src="{{ asset( ('uploads/gallery/' ~ good.images.first().path) | imagine_filter('category_mainpage_thumb')) }}"
-                             alt="{{ good.name }}" />
-                    {% else %}
-                        <img class="group list-group-image"
-                             src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
-                             alt="{{ good.name }}" />
-                    {% endif %}
+                    <a href="{{ path('show_good', {'id' : good.id}) }}">
+                        {% if good.images|length %}
+                            <img class="group list-group-image"
+                                 src="{{ asset( ('uploads/gallery/' ~ good.images.first().path) | imagine_filter('category_mainpage_thumb')) }}"
+                                 alt="{{ good.name }}" />
+                        {% else %}
+                            <img class="group list-group-image"
+                                 src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
+                                 alt="{{ good.name }}" />
+                        {% endif %}
+                    </a>
                     <div class="caption">
-                        <h4 class="group inner list-group-item-heading">
-                            {{ good.name }}
-                        </h4>
+                        <a href="#">
+                            <h4 class="group inner list-group-item-heading">
+                                {{ good.name }}
+                            </h4>
+                        </a>
                         <p class="group inner list-group-item-text">
                             {{ good.description|slice(0, 190) }}
                         </p>

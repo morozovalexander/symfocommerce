@@ -141,19 +141,19 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/good/{goodId}", name="show_good")
+     * @Route("/good/{id}", name="show_good")
      * @Method("GET")
      * @Template()
      */
-    public function goodAction($goodId = '')
+    public function showGoodAction($id = '')
     {
         $em = $this->getDoctrine()->getManager();
         $goodRepository = $em->getRepository('ShopBundle:Good');
 
-        if ($goodId == '') {
+        if ($id == '') {
             return $this->redirectToRoute('index_main');
         } else {
-            $good = $goodRepository->find((int)$goodId);
+            $good = $goodRepository->find((int)$id);
         }
 
         return array(
