@@ -1,7 +1,7 @@
 <h4>MANUFACTURERS</h4>
 <div class="list-group">
     {% for manufacturer in manufacturers %}
-        <a href="{{ path('manufacturer', {'manufacturerId' : manufacturer.id}) }}" class="list-group-item">
+        <a href="{{ path('manufacturer', {'id' : manufacturer.id}) }}" class="list-group-item">
             {{ manufacturer.name }}
         </a>
     {% endfor %}
