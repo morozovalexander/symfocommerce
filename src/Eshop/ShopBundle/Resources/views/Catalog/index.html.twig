@@ -33,4 +33,13 @@
             </div>
         {% endfor %}
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well">
+                <h4>{{ news.title }}</h4>
+                <p>{{ news.text }}</p>
+                <p class="pull-right">{{ news.date|date() }}</p>
+            </div>
+        </div>
+    </div>
 {% endblock page_content %}

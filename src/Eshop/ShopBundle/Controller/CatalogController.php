@@ -22,11 +22,14 @@ class CatalogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $categoryRepository = $em->getRepository('ShopBundle:Category');
+        $newsRepository = $em->getRepository('ShopBundle:News');
 
         $categories = $categoryRepository->findAll();
+        $lastNews = $newsRepository->getLastNews();
 
         return array(
-            'categories' => $categories
+            'categories' => $categories,
+            'news' => $lastNews
         );
     }
 
@@ -158,6 +161,34 @@ class CatalogController extends Controller
 
         return array(
             'good' => $good
+        );
+    }
+
+    /**
+     * Lists news entities.
+     *
+     * @Route("/news", name="news")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $paginator = $this->get('knp_paginator');
+
+        $dql = "SELECT a FROM ShopBundle:News a ORDER BY a.date DESC";
+        $query = $em->createQuery($dql);
+        $limit = $this->getParameter('goods_pagination_count');
+
+        $news = $paginator->paginate(
+            $query,
+            $this->get('request')->query->getInt('page', 1),
+            $limit
+        );
+
+        return array(
+            'news' => $news,
         );
     }
 }

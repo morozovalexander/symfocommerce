@@ -1,0 +1,24 @@
+{% extends '@Shop/layout.html.twig' %}
+
+{% block page_content -%}
+    {% if news|length %}
+        {% for entity in news %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="well">
+                        <h4>{{ entity.title }}</h4>
+                        <p>{{ entity.text }}</p>
+                        <p class="pull-right">{{ entity.date|date() }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>Sorry, no news yet!</h3>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+            {{ knp_pagination_render(news) }}
+        </div>
+    </div>
+{% endblock page_content %}
