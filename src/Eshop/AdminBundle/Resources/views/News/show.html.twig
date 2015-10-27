@@ -1,0 +1,43 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block page_content -%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                {% include "@Admin/Admin/admin-menu.html.twig" %}
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+                <h3>News</h3>
+
+                <table class="record_properties table table-bordered table-stripped">
+                    <tbody>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ entity.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Text</th>
+                        <td>{{ entity.text }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_news') }}">
+                            Back to the list
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_news_edit', { 'id': entity.id }) }}">
+                            Edit
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        {{ form(delete_form) }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
