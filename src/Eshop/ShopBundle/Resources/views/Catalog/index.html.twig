@@ -9,7 +9,7 @@
         {% for category in categories %}
             <div class="item  col-sm-4 col-md-3 col-lg-3">
                 <div class="thumbnail">
-                    <a href="{{ path('category', {'categoryId' : category.id}) }}">
+                    <a href="{{ path('category', {'id' : category.id}) }}">
                         {% if category.path %}
                             <img class="group list-group-image"
                                  src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}"
@@ -23,7 +23,7 @@
 
                     <div class="caption">
                         <h4 class="group inner list-group-item-heading">
-                            <a href="{{ path('category', {'categoryId' : category.id}) }}">{{ category.name }}</a>
+                            <a href="{{ path('category', {'id' : category.id}) }}">{{ category.name }}</a>
                         </h4>
                         <p class="group inner list-group-item-text">
                             {{ category.description|slice(0, 190) }}
