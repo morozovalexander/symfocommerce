@@ -26,10 +26,10 @@ class Image
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Good", inversedBy="images")
-     * @ORM\JoinColumn(name="good_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="images")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      **/
-    private $good;
+    private $product;
 
     /**
      * Image path
@@ -188,25 +188,25 @@ class Image
     }
 
     /**
-     * Set good
+     * Set product
      *
-     * @param \Eshop\ShopBundle\Entity\Good $good
+     * @param \Eshop\ShopBundle\Entity\Product $product
      * @return Image
      */
-    public function setGood(\Eshop\ShopBundle\Entity\Good $good = null)
+    public function setProduct(\Eshop\ShopBundle\Entity\Product $product = null)
     {
-        $this->good = $good;
+        $this->product = $product;
 
         return $this;
     }
 
     /**
-     * Get good
+     * Get product
      *
-     * @return \Eshop\ShopBundle\Entity\Good 
+     * @return \Eshop\ShopBundle\Entity\Product
      */
-    public function getGood()
+    public function getProduct()
     {
-        return $this->good;
+        return $this->product;
     }
 }

@@ -64,12 +64,12 @@ class Category
     protected $file;
 
     /**
-     * @ORM\OneToMany(targetEntity="Good", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
      **/
-    private $goods;
+    private $products;
 
     public function __construct() {
-        $this->goods = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString(){
@@ -133,36 +133,36 @@ class Category
     }
 
     /**
-     * Add goods
+     * Add products
      *
-     * @param \Eshop\ShopBundle\Entity\Good $goods
+     * @param \Eshop\ShopBundle\Entity\Product $products
      * @return Category
      */
-    public function addGood(\Eshop\ShopBundle\Entity\Good $goods)
+    public function addProduct(\Eshop\ShopBundle\Entity\Product $products)
     {
-        $this->goods[] = $goods;
+        $this->products[] = $products;
 
         return $this;
     }
 
     /**
-     * Remove goods
+     * Remove products
      *
-     * @param \Eshop\ShopBundle\Entity\Good $goods
+     * @param \Eshop\ShopBundle\Entity\Product $products
      */
-    public function removeGood(\Eshop\ShopBundle\Entity\Good $goods)
+    public function removeProduct(\Eshop\ShopBundle\Entity\Product $products)
     {
-        $this->goods->removeElement($goods);
+        $this->products->removeElement($products);
     }
 
     /**
-     * Get goods
+     * Get products
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getGoods()
+    public function getProducts()
     {
-        return $this->goods;
+        return $this->products;
     }
 
     /**

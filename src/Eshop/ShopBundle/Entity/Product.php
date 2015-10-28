@@ -9,13 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Good
+ * Product
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\GoodRepository")
+ * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\ProductRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Good
+class Product
 {
     /**
      * @var integer
@@ -48,19 +48,19 @@ class Good
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="goods")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      **/
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="goods")
+     * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="products")
      * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
      **/
     private $manufacturer;
 
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="good", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="product", cascade={"remove"})
      **/
     private $images;
 
@@ -82,7 +82,7 @@ class Good
      * Set name
      *
      * @param string $name
-     * @return Good
+     * @return Product
      */
     public function setName($name)
     {
@@ -105,7 +105,7 @@ class Good
      * Set description
      *
      * @param string $description
-     * @return Good
+     * @return Product
      */
     public function setDescription($description)
     {
@@ -128,7 +128,7 @@ class Good
      * Set price
      *
      * @param float $price
-     * @return Good
+     * @return Product
      */
     public function setPrice($price)
     {
@@ -151,7 +151,7 @@ class Good
      * Set category
      *
      * @param \Eshop\ShopBundle\Entity\Category $category
-     * @return Good
+     * @return Product
      */
     public function setCategory(\Eshop\ShopBundle\Entity\Category $category = null)
     {
@@ -174,7 +174,7 @@ class Good
      * Set manufacturer
      *
      * @param \Eshop\ShopBundle\Entity\Manufacturer $manufacturer
-     * @return Good
+     * @return Product
      */
     public function setManufacturer(\Eshop\ShopBundle\Entity\Manufacturer $manufacturer = null)
     {
@@ -197,7 +197,7 @@ class Good
      * Add images
      *
      * @param \Eshop\ShopBundle\Entity\Image $images
-     * @return Good
+     * @return Product
      */
     public function addImage(\Eshop\ShopBundle\Entity\Image $images)
     {
