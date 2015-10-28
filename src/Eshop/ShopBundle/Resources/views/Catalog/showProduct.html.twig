@@ -41,9 +41,17 @@
             <div class="caption">
                 <h1 class="group inner list-group-item-heading">{{ product.name }}</h1>
                 <p class="lead">{{ product.price }} у.е.</p>
-                <p>
-                    <a class="btn btn-success" href="#">Add to cart</a>
-                </p>
+
+                <div class="row addtocart" data-id="{{ product.id }}">
+                    <div class="col-md-2">
+                        <input type="number" class="form-control addtocart-input" value="1">
+                    </div>
+                    <div class="col-md-2">
+                        <p>
+                            <a class="btn btn-success addtocart-btn" href="#">Add to cart</a>
+                        </p>
+                    </div>
+                </div>
                 <div class="row">
                     {% if product.images | length %}
                         {% for image in product.images|slice(1) %}
@@ -72,12 +80,24 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('bundles/shop/js/js.cookie.js') }}"></script>
     <script src="{{ asset('bundles/shop/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
             type="text/javascript"></script>
     <script src="{{ asset('bundles/shop/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $(".fancybox").fancybox();
+            $('.fancybox').fancybox();
+            $('.addtocart-btn').on('click', function(){
+                //get all cart
+                var cookies = Cookies.get('cart');
+
+                //get new vars
+                var productRow = $(this).parent().parent().parent();
+                var productQuantity = productRow.find('.addtocart-input').val();
+                var productId = productRow.data('id');
+
+                Cookies.set('cart', productQuantity);
+            });
         });
     </script>
 {% endblock javascripts %}
