@@ -13,7 +13,7 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Good</h3>
+                <h3>Product</h3>
 
                 <table class="record_properties table table-bordered table-stripped">
                     <tbody>
@@ -48,12 +48,12 @@
 
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <a href="{{ path('admin_good') }}">
+                        <a href="{{ path('admin_product') }}">
                             Back to the list
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{ path('admin_good_edit', { 'id': entity.id }) }}">
+                        <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">
                             Edit
                         </a>
                     </li>

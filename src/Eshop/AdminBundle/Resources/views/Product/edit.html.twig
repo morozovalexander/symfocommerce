@@ -13,14 +13,14 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Good edit</h3>
+                <h3>Product edit</h3>
 
                 {% for flashMessage in app.session.flashbag.get('notice') %}
                     <div class="alert alert-success" role="alert">
                         {{ flashMessage }}
                     </div>
                 {% endfor %}
-                <form action="{{ path('admin_good_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
+                <form action="{{ path('admin_product_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
 
                     <input type="hidden" name="filenames" id="filenames">
                     {{ form_rest(edit_form) }}
@@ -42,7 +42,7 @@
                 <div class="col-md-5 col-md-offset-2 ">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="{{ path('admin_good') }}">
+                            <a href="{{ path('admin_product') }}">
                                 Back to the list
                             </a>
                         </li>

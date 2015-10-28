@@ -7,8 +7,8 @@
                 {% include "AdminBundle:Admin:admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3>Goods list</h3>
-                <li><a href="{{ path('admin_good_new') }}">Create new Good</a></li>
+                <h3>Poducts list</h3>
+                <li><a href="{{ path('admin_product_new') }}">Create new Product</a></li>
                 <table class="records_list table table-bordered table-stripped">
                     <thead>
                     <tr>
@@ -23,7 +23,7 @@
                     <tbody>
                     {% for entity in entities %}
                         <tr>
-                            <td><a href="{{ path('admin_good_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                            <td><a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                             <td>
                                 <a href="{{ path('admin_category_show', {'id': entity.category.id}) }}">
                                     {{ entity.category }}
@@ -45,8 +45,8 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('admin_good_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
-                                <a href="{{ path('admin_good_edit', { 'id': entity.id }) }}">edit</a>
+                                <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
+                                <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">edit</a>
                             </td>
                         </tr>
                     {% endfor %}

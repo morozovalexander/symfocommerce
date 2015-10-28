@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class GoodType extends AbstractType
+class ProductType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -39,7 +39,7 @@ class GoodType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Good'
+            'data_class' => 'Eshop\ShopBundle\Entity\Product'
         ));
     }
 
@@ -48,6 +48,6 @@ class GoodType extends AbstractType
      */
     public function getName()
     {
-        return 'eshop_shopbundle_good';
+        return 'eshop_shopbundle_product';
     }
 }

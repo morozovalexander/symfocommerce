@@ -8,21 +8,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Eshop\ShopBundle\Entity\Good;
-use Eshop\ShopBundle\Form\GoodType;
+use Eshop\ShopBundle\Entity\Product;
+use Eshop\ShopBundle\Form\ProductType;
 
 /**
- * Good controller.
+ * Product controller.
  *
- * @Route("/admin/good")
+ * @Route("/admin/product")
  */
-class GoodController extends Controller
+class ProductController extends Controller
 {
 
     /**
-     * Lists all Good entities.
+     * Lists all Product entities.
      *
-     * @Route("/", name="admin_good")
+     * @Route("/", name="admin_product")
      * @Method("GET")
      * @Template()
      */
@@ -31,33 +31,33 @@ class GoodController extends Controller
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:Good a";
+        $dql = "SELECT a FROM ShopBundle:Product a";
         $query = $em->createQuery($dql);
-        $limit = $this->getParameter('admin_goods_pagination_count');
+        $limit = $this->getParameter('admin_products_pagination_count');
 
-        $goods = $paginator->paginate(
+        $products = $paginator->paginate(
             $query,
             $this->get('request')->query->getInt('page', 1),
             $limit
         );
 
         return array(
-            'entities' => $goods,
+            'entities' => $products,
         );
     }
     /**
-     * Creates a new Good entity.
+     * Creates a new Product entity.
      *
-     * @Route("/", name="admin_good_create")
+     * @Route("/", name="admin_product_create")
      * @Method("POST")
-     * @Template("AdminBundle:Good:new.html.twig")
+     * @Template("AdminBundle:Product:new.html.twig")
      */
     public function createAction(Request $request)
     {
         $imageIdString = $request->request->get('filenames');
 
-        $good = new Good();
-        $form = $this->createCreateForm($good);
+        $product = new Product();
+        $form = $this->createCreateForm($product);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -71,35 +71,35 @@ class GoodController extends Controller
                 $imageRepository = $em->getRepository('ShopBundle:Image');
                 foreach($imageIdArray as $imageId){
                     $image = $imageRepository->find($imageId);
-                    $image->setGood($good);
-                    $good->addImage($image);
+                    $image->setProduct($product);
+                    $product->addImage($image);
                     $em->persist($image);
                 }
             }
 
-            $em->persist($good);
+            $em->persist($product);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_good_show', array('id' => $good->getId())));
+            return $this->redirect($this->generateUrl('admin_product_show', array('id' => $product->getId())));
         }
 
         return array(
-            'entity' => $good,
+            'entity' => $product,
             'form'   => $form->createView(),
         );
     }
 
     /**
-     * Creates a form to create a Good entity.
+     * Creates a form to create a Product entity.
      *
-     * @param Good $entity The entity
+     * @param Product $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Good $entity)
+    private function createCreateForm(Product $entity)
     {
-        $form = $this->createForm(new GoodType(), $entity, array(
-            'action' => $this->generateUrl('admin_good_create'),
+        $form = $this->createForm(new ProductType(), $entity, array(
+            'action' => $this->generateUrl('admin_product_create'),
             'method' => 'POST',
         ));
 
@@ -109,15 +109,15 @@ class GoodController extends Controller
     }
 
     /**
-     * Displays a form to create a new Good entity.
+     * Displays a form to create a new Product entity.
      *
-     * @Route("/new", name="admin_good_new")
+     * @Route("/new", name="admin_product_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Good();
+        $entity = new Product();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -127,9 +127,9 @@ class GoodController extends Controller
     }
 
     /**
-     * Finds and displays a Good entity.
+     * Finds and displays a Product entity.
      *
-     * @Route("/{id}", name="admin_good_show")
+     * @Route("/{id}", name="admin_product_show")
      * @Method("GET")
      * @Template()
      */
@@ -137,10 +137,10 @@ class GoodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Good')->find($id);
+        $entity = $em->getRepository('ShopBundle:Product')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Good entity.');
+            throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -152,9 +152,9 @@ class GoodController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Good entity.
+     * Displays a form to edit an existing Product entity.
      *
-     * @Route("/{id}/edit", name="admin_good_edit")
+     * @Route("/{id}/edit", name="admin_product_edit")
      * @Method("GET")
      * @Template()
      */
@@ -162,10 +162,10 @@ class GoodController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ShopBundle:Good')->find($id);
+        $entity = $em->getRepository('ShopBundle:Product')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Good entity.');
+            throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -179,16 +179,16 @@ class GoodController extends Controller
     }
 
     /**
-    * Creates a form to edit a Good entity.
+    * Creates a form to edit a Product entity.
     *
-    * @param Good $entity The entity
+    * @param Product $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Good $entity)
+    private function createEditForm(Product $entity)
     {
-        $form = $this->createForm(new GoodType(), $entity, array(
-            'action' => $this->generateUrl('admin_good_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ProductType(), $entity, array(
+            'action' => $this->generateUrl('admin_product_update', array('id' => $entity->getId())),
             'method' => 'POST',
         ));
 
@@ -197,24 +197,24 @@ class GoodController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Good entity.
+     * Edits an existing Product entity.
      *
-     * @Route("/update/{id}", name="admin_good_update")
+     * @Route("/update/{id}", name="admin_product_update")
      * @Method("POST")
-     * @Template("AdminBundle:Good:edit.html.twig")
+     * @Template("AdminBundle:Product:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $imageIdString = $request->request->get('filenames');
-        $good = $em->getRepository('ShopBundle:Good')->find($id);
+        $product = $em->getRepository('ShopBundle:Product')->find($id);
 
-        if (!$good) {
-            throw $this->createNotFoundException('Unable to find Good entity.');
+        if (!$product) {
+            throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($good);
+        $editForm = $this->createEditForm($product);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -226,8 +226,8 @@ class GoodController extends Controller
                 $imageRepository = $em->getRepository('ShopBundle:Image');
                 foreach($imageIdArray as $imageId){
                     $image = $imageRepository->find($imageId);
-                    $image->setGood($good);
-                    $good->addImage($image);
+                    $image->setProduct($product);
+                    $product->addImage($image);
                     $em->persist($image);
                 }
             }
@@ -240,19 +240,19 @@ class GoodController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl('admin_good_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_product_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $good,
+            'entity'      => $product,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
     /**
-     * Deletes a Good entity.
+     * Deletes a Product entity.
      *
-     * @Route("/{id}", name="admin_good_delete")
+     * @Route("/{id}", name="admin_product_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -262,21 +262,21 @@ class GoodController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ShopBundle:Good')->find($id);
+            $entity = $em->getRepository('ShopBundle:Product')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Good entity.');
+                throw $this->createNotFoundException('Unable to find Product entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_good'));
+        return $this->redirect($this->generateUrl('admin_product'));
     }
 
     /**
-     * Creates a form to delete a Good entity by id.
+     * Creates a form to delete a Product entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -285,7 +285,7 @@ class GoodController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_good_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_product_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

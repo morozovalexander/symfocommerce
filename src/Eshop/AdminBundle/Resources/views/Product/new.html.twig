@@ -13,7 +13,7 @@
                 {% include "AdminBundle:Admin:admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <form action="{{ path('admin_good_create') }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
+                <form action="{{ path('admin_product_create') }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
 
                     <input type="hidden" name="filenames" id="filenames">
 
@@ -31,7 +31,7 @@
                     </form>
                 </div>
 
-                <a href="{{ path('admin_good') }}">
+                <a href="{{ path('admin_product') }}">
                     Back to the list
                 </a>
             </div>
