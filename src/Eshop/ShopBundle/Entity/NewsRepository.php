@@ -20,7 +20,7 @@ class NewsRepository extends EntityRepository
             ->orderBy('n.date', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult()
+            ->getOneOrNullResult()
             ;
     }
 }
