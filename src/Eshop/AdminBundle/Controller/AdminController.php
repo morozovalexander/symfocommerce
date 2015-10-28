@@ -15,8 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class AdminController extends Controller
 {
     /**
-     * Lists all Good entities.
-     *
      * @Route("/", name="admin_index")
      * @Method("GET")
      * @Template()

@@ -73,7 +73,7 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $categoryRepository = $em->getRepository('ShopBundle:Category');
-        $goodRepository = $em->getRepository('ShopBundle:Good');
+        $productRepository = $em->getRepository('ShopBundle:Product');
 
         /**
          * @var Category $requiredCategory
@@ -87,10 +87,10 @@ class CatalogController extends Controller
             $requiredCategory = $requiredCategory->getId();
         }
 
-        $goodsQuery = $goodRepository->findByCategoryForPaginator($requiredCategory);
-        $limit = $this->getParameter('category_goods_pagination_count');
-        $goods = $paginator->paginate(
-            $goodsQuery,
+        $productsQuery = $productRepository->findByCategoryForPaginator($requiredCategory);
+        $limit = $this->getParameter('category_products_pagination_count');
+        $products = $paginator->paginate(
+            $productsQuery,
             $this->get('request')->query->getInt('page', 1),
             $limit
         );
@@ -99,7 +99,7 @@ class CatalogController extends Controller
 
         return array(
             'category' => $category,
-            'goods' => $goods
+            'products' => $products
         );
     }
 
@@ -113,7 +113,7 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
-        $goodRepository = $em->getRepository('ShopBundle:Good');
+        $productRepository = $em->getRepository('ShopBundle:Product');
 
         /**
          * @var Manufacturer $requiredManufacturer
@@ -127,10 +127,10 @@ class CatalogController extends Controller
             $requiredManufacturer = $requiredManufacturer->getId();
         }
 
-        $goodsQuery = $goodRepository->findByManufacturerForPaginator($requiredManufacturer);
-        $limit = $this->getParameter('category_goods_pagination_count');
-        $goods = $paginator->paginate(
-            $goodsQuery,
+        $productsQuery = $productRepository->findByManufacturerForPaginator($requiredManufacturer);
+        $limit = $this->getParameter('category_products_pagination_count');
+        $products = $paginator->paginate(
+            $productsQuery,
             $this->get('request')->query->getInt('page', 1),
             $limit
         );
@@ -139,28 +139,28 @@ class CatalogController extends Controller
 
         return array(
             'manufacturer' => $manufacturer,
-            'goods' => $goods
+            'products' => $products
         );
     }
 
     /**
-     * @Route("/good/{id}", name="show_good")
+     * @Route("/product/{id}", name="show_product")
      * @Method("GET")
      * @Template()
      */
-    public function showGoodAction($id = '')
+    public function showProductAction($id = '')
     {
         $em = $this->getDoctrine()->getManager();
-        $goodRepository = $em->getRepository('ShopBundle:Good');
+        $productRepository = $em->getRepository('ShopBundle:Product');
 
         if ($id == '') {
             return $this->redirectToRoute('index_main');
         } else {
-            $good = $goodRepository->find((int)$id);
+            $product = $productRepository->find((int)$id);
         }
 
         return array(
-            'good' => $good
+            'product' => $product
         );
     }
 
@@ -179,7 +179,7 @@ class CatalogController extends Controller
 
         $dql = "SELECT a FROM ShopBundle:News a ORDER BY a.date DESC";
         $query = $em->createQuery($dql);
-        $limit = $this->getParameter('goods_pagination_count');
+        $limit = $this->getParameter('products_pagination_count');
 
         $news = $paginator->paginate(
             $query,

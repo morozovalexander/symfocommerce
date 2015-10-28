@@ -17,8 +17,8 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
-    goods_pagination_count: 12
+    products_pagination_count: 12
     admin_products_pagination_count: 20
     admin_categories_pagination_count: 20
     admin_manufacturers_pagination_count: 20
-    category_goods_pagination_count: 24
+    category_products_pagination_count: 24
