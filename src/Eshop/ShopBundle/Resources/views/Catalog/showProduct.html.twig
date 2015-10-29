@@ -87,16 +87,36 @@
     <script>
         $(document).ready(function () {
             $('.fancybox').fancybox();
+
             $('.addtocart-btn').on('click', function(){
+                //define var
+                var cartObj;
+
                 //get all cart
-                var cookies = Cookies.get('cart');
+                if (Cookies.get('cart')) {
+                    cartObj = JSON.parse(Cookies.get('cart'));
+                } else {
+                    cartObj = {};
+                }
 
                 //get new vars
                 var productRow = $(this).parent().parent().parent();
-                var productQuantity = productRow.find('.addtocart-input').val();
-                var productId = productRow.data('id');
 
-                Cookies.set('cart', productQuantity);
+                var productIdRaw = productRow.data('id');
+                var productId = Math.abs(Math.round(productIdRaw));
+
+                var productQuantityRaw = productRow.find('.addtocart-input').val();
+                var productQuantity = Math.abs(Math.round(productQuantityRaw));
+
+                //record to cart
+                if (cartObj[productId]) {
+                    cartObj[productId] = cartObj[productId] + productQuantity;
+                } else {
+                    cartObj[productId] = productQuantity;
+                }
+
+                //set cookie
+                Cookies.set('cart', JSON.stringify(cartObj));
             });
         });
     </script>
