@@ -40,7 +40,7 @@
         <div class="col-md-7">
             <div class="caption">
                 <h1 class="group inner list-group-item-heading">{{ product.name }}</h1>
-                <p class="lead">{{ product.price }} у.е.</p>
+                <p class="lead price"><span>{{ product.price }}</span> у.е.</p>
 
                 <div class="row addtocart" data-id="{{ product.id }}">
                     <div class="col-md-2">
@@ -88,7 +88,8 @@
         $(document).ready(function () {
             $('.fancybox').fancybox();
 
-            $('.addtocart-btn').on('click', function(){
+            $('.addtocart-btn').on('click', function(e){
+                e.preventDefault();
                 //define var
                 var cartObj;
 
@@ -103,10 +104,14 @@
                 var productRow = $(this).parent().parent().parent();
 
                 var productIdRaw = productRow.data('id');
-                var productId = Math.abs(Math.round(productIdRaw));
+                var productId = toPositiveInt(productIdRaw);
 
                 var productQuantityRaw = productRow.find('.addtocart-input').val();
-                var productQuantity = Math.abs(Math.round(productQuantityRaw));
+                var productQuantity = toPositiveInt(productQuantityRaw);
+
+                var productPriceRaw = productRow.parent().find('.price span').text();
+                var productPrice = toPositiveInt(productPriceRaw);
+                addToNavbarCart(productQuantity, productPrice);
 
                 //record to cart
                 if (cartObj[productId]) {
@@ -119,5 +124,27 @@
                 Cookies.set('cart', JSON.stringify(cartObj));
             });
         });
+
+        function addToNavbarCart(quantity, price){
+            //find selectors
+            var quantitySelector = $('#cart-quantity');
+            var sumSelector = $('#cart-sum');
+
+            var oldQuantity = toPositiveInt(quantitySelector.text());
+            var oldSum = toPositiveInt(sumSelector.text());
+
+            if (quantity > 0 && price > 0) {
+                var newQuantity = oldQuantity + quantity;
+                var newSum = oldSum + (price * quantity);
+
+                quantitySelector.text(newQuantity);
+                sumSelector.text(newSum);
+            }
+        }
+
+        function toPositiveInt(rawVal) {
+            return Math.abs(Math.round(rawVal));
+        }
+
     </script>
 {% endblock javascripts %}
