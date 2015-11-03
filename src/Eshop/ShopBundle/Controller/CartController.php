@@ -24,17 +24,13 @@ class CartController extends Controller
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
         $productsArray = array();
+        $cart = array();
         $totalSum = 0;
 
         $cookies = $request->cookies->all();
 
         if (isset($cookies['cart'])) {
             $cart = json_decode($cookies['cart']);
-            if ($cart == '') {
-                return array();
-            }
-        } else {
-            return array();
         }
 
 
@@ -77,7 +73,9 @@ class CartController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         //quantity -> sum array
-        $cartArray = array('quantity' => 0, 'sum' => 0);
+        $cartArray = array(
+            'cart' => array('quantity' => 0, 'sum' => 0)
+        );
         $cookies = $request->cookies->all();
 
         if (isset($cookies['cart'])) {
@@ -97,13 +95,11 @@ class CartController extends Controller
              */
             $product = $productRepository->find((int)$productId);
             if (is_object($product)) {
-                $cartArray['sum'] += ($product->getPrice() * abs((int)$productQuantity));
-                $cartArray['quantity'] += abs((int)$productQuantity);
+                $cartArray['cart']['sum'] += ($product->getPrice() * abs((int)$productQuantity));
+                $cartArray['cart']['quantity'] += abs((int)$productQuantity);
             }
         }
 
-        return array(
-            'cart' => $cartArray
-        );
+        return $cartArray;
     }
 }
