@@ -96,3 +96,8 @@ body {
 .description-preview {
     min-height: 240px;
 }
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
