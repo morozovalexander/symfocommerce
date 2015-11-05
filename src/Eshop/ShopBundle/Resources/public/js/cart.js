@@ -46,6 +46,15 @@ $(document).ready(function () {
         recalculateCart();
     });
 
+    $('.clear-cart').on('click', function(e){
+        e.preventDefault();
+        $('.product-position').each(function () {
+                $(this).remove();
+            }
+        );
+        recalculateCart();
+    });
+
     $(".quantity").bind('keyup change click', function (e) {
         if (! $(this).data("previousValue") || $(this).data("previousValue") != $(this).val()) {
             $(this).data("previousValue", $(this).val());

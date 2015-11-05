@@ -8,31 +8,11 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             {% if products|length %}
-                {#<table class="table table-striped table-bordered">#}
-                    {#<tbody>#}
-                    {#<tr class="info">#}
-                        {#<th>№</th>#}
-                        {#<th>Name</th>#}
-                        {#<th>Quantity</th>#}
-                        {#<th>Price</th>#}
-                        {#<th>Total</th>#}
-                    {#</tr>#}
-                    {#{% for product in products %}#}
-                        {#<tr>#}
-                            {#<td align="center">{{ loop.index }}</td>#}
-                            {#<td>{{ product.product.name }}</td>#}
-                            {#<td align="center">{{ product.quantity }}</td>#}
-                            {#<td align="center">{{ product.price }}</td>#}
-                            {#<td align="center">{{ product.sum }}</td>#}
-                        {#</tr>#}
-                    {#{% endfor %}#}
-                    {#<tr class="warning">#}
-                        {#<td colspan="3"><b>Total sum of the order</b></td>#}
-                        {#<td colspan="2"><b>{{ totalsum }}</b></td>#}
-                    {#</tr>#}
-                    {#</tbody>#}
-                {#</table>#}
-
+                <div class="row">
+                    <div>
+                        <h2>Your cart</h2>
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -59,7 +39,9 @@
                                 {% endif %}
                                 </a>
                                 <div>
-                                    <a href="{{ path('show_product', {'id' : product.product.id}) }}"><strong>{{ product.product.name }}</strong></a>
+                                    <a href="{{ path('show_product', {'id' : product.product.id}) }}">
+                                        <strong>{{ product.product.name }}</strong>
+                                    </a>
                                     <ul class="list-unstyled">
                                     </ul>
                                 </div>
@@ -67,13 +49,16 @@
                             <td class="col-md-2">
                                 <div class="form-group">
                                     <div>
-                                        <input type="number" name="quantity" required="required" min="1" data-id="{{ product.product.id }}"
-                                                class="form-control quantity" value="{{ product.quantity }}">
+                                        <input type="number" name="quantity" required="required" min="1"
+                                               data-id="{{ product.product.id }}" class="form-control quantity"
+                                               value="{{ product.quantity }}">
                                     </div>
                                 </div>
                             </td>
                             <td class="col-md-1">
-                                <a href="#" class="btn btn-danger glyphicon glyphicon-trash product-remove"><i class="icon-trash icon-white"></i></a>
+                                <a href="#" class="btn btn-danger glyphicon glyphicon-remove product-remove">
+                                    <i class="icon-trash icon-white"></i>
+                                </a>
                             </td>
                             <td class="col-md-1 price">
                                 <span>{{ product.price }}</span>
@@ -93,8 +78,21 @@
                     </tr>
                     </tfoot>
                 </table>
+                <div class="row">
+                    <div>
+                        <div class="pull-right">
+                            <a href="#" class="btn btn-success glyphicon glyphicon-ok"> Checkout</a>
+                            <a href="#" class="btn btn-danger glyphicon glyphicon-trash clear-cart"> Clear</a>
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                Cart is empty
+                <div class="row">
+                    <div>
+                        <h2>Your cart is empty yet</h2>
+                        <p><a href="{{ path('index_main') }}">continue shopping</a></p>
+                    </div>
+                </div>
             {% endif %}
         </div>
     </div>
