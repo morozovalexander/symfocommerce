@@ -64,7 +64,14 @@ class Product
      **/
     private $images;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Orders", inversedBy="product")
+     * @ORM\JoinTable(name="orders_product")
+     **/
+    private $orders;
+
     public function __construct() {
+        $this->orders = new ArrayCollection();
         $this->images = new ArrayCollection();
     }
 
