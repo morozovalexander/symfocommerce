@@ -19,6 +19,9 @@ $(document).ready(function () {
 
         var productQuantityRaw = productRow.find('.addtocart-input').val();
         var productQuantity = toPositiveInt(productQuantityRaw);
+        if (isNaN(productQuantity)) {
+            productQuantity = 1;
+        }
 
         var productPriceRaw = productRow.parent().find('.price span').text();
         var productPrice = toPositiveInt(productPriceRaw);
