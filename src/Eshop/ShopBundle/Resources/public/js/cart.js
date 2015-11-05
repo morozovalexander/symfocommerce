@@ -19,9 +19,6 @@ $(document).ready(function () {
 
         var productQuantityRaw = productRow.find('.addtocart-input').val();
         var productQuantity = toPositiveInt(productQuantityRaw);
-        if (isNaN(productQuantity)) {
-            productQuantity = 1;
-        }
 
         var productPriceRaw = productRow.parent().find('.price span').text();
         var productPrice = toPositiveInt(productPriceRaw);
@@ -37,7 +34,70 @@ $(document).ready(function () {
         //set cookie
         Cookies.set('cart', JSON.stringify(cartObj));
     });
+
+    $('.product-remove').on('click', function(e){
+        e.preventDefault();
+        var productRecord = $(this).closest('tr');
+        productRecord.remove();
+
+        recalculateCart();
+    });
+
+    $(".quantity").bind('keyup change click', function (e) {
+        if (! $(this).data("previousValue") || $(this).data("previousValue") != $(this).val()) {
+            $(this).data("previousValue", $(this).val());
+
+            //if quantity changed
+            recalculateCart();
+        }
+    });
+
+    $(".quantity").each(function () {
+        $(this).data("previousValue", $(this).val());
+    });
 });
+
+function recalculateCart(){
+    var totalSum = 0;
+    var totalQuantity = 0;
+    var cartObj = {};
+
+    $('.product-position').each(function () {
+        var quantityInput = $(this).find('.quantity');
+
+        //get all values
+        var productId = toPositiveInt(quantityInput.data('id'));
+        var productQuantity = toPositiveInt(quantityInput.val());
+        var productPrice = toPositiveInt($(this).find('.price span').text());
+        var productSum = productPrice * productQuantity;
+
+        //show new sum
+        var productSumSelector = $(this).find('.sum');
+        productSumSelector.html(productSum);
+
+        //record to obj
+        cartObj[productId] = productQuantity;
+
+        totalSum += productSum;
+        totalQuantity += productQuantity;
+    });
+
+    //show new total sum
+    var totalSumSelector = $('.totalsum');
+    totalSumSelector.html(totalSum);
+
+    //update navbar cart
+    updateNavbarCart(totalQuantity, totalSum);
+
+    //update cookies
+    Cookies.remove('cart');
+    Cookies.set('cart', JSON.stringify(cartObj));
+}
+
+function toPositiveInt(rawVal) {
+    return Math.abs(Math.round(rawVal));
+}
+
 
 function addToNavbarCart(quantity, price){
     //find selectors
@@ -56,6 +116,12 @@ function addToNavbarCart(quantity, price){
     }
 }
 
-function toPositiveInt(rawVal) {
-    return Math.abs(Math.round(rawVal));
+function updateNavbarCart(totalQuantity, totalSum){
+    //find selectors
+    var quantitySelector = $('#cart-quantity');
+    var sumSelector = $('#cart-sum');
+
+    //show new values
+    quantitySelector.text(totalQuantity);
+    sumSelector.text(totalSum);
 }
