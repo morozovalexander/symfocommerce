@@ -232,4 +232,37 @@ class Product
     {
         return $this->images;
     }
+
+    /**
+     * Add orders
+     *
+     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     * @return Product
+     */
+    public function addOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     */
+    public function removeOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

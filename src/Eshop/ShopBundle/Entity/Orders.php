@@ -190,4 +190,37 @@ class Orders
     {
         return $this->date;
     }
+
+    /**
+     * Add product
+     *
+     * @param \Eshop\ShopBundle\Entity\Product $product
+     * @return Orders
+     */
+    public function addProduct(\Eshop\ShopBundle\Entity\Product $product)
+    {
+        $this->product[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \Eshop\ShopBundle\Entity\Product $product
+     */
+    public function removeProduct(\Eshop\ShopBundle\Entity\Product $product)
+    {
+        $this->product->removeElement($product);
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
 }
