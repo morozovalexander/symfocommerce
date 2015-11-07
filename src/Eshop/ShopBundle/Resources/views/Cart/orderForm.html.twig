@@ -1,0 +1,68 @@
+{% extends '@Shop/layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block title %}Order Form{% endblock title %}
+
+{% block page_content -%}
+    <h2 class="text-center">Order Form</h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <form class="form-horizontal" action="#" {{ form_enctype(form) }} method="POST">
+                {{ form_errors(form) }}
+                <div class="form-group">
+                    {{ form_label(form.name, 'Name:') }}
+                    <div class="col-sm-10">
+                        {{ form_widget(form.name) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.email, 'Email:') }}
+                    <div class="col-sm-10">
+                        {{ form_widget(form.email) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.phone, 'Phone:') }}
+                    <div class="col-sm-10">
+                        {{ form_widget(form.phone) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.address, 'Address:') }}
+                    <div class="col-sm-10">
+                        {{ form_widget(form.address) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.comment, 'Your comment:') }}
+                    <div class="col-sm-10">
+                        {{ form_widget(form.comment) }}
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10 text-right">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="well col-sm-offset-2 col-sm-10 text-right">
+                        Total sum is ${{ totalsum }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {#<div class="row">#}
+        {##}
+    {#</div>#}
+
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/shop/js/js.cookie.js') }}"></script>
+    <script src="{{ asset('bundles/shop/js/cart.js') }}" type="text/javascript"></script>
+{% endblock javascripts %}

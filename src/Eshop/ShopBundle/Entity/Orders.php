@@ -32,7 +32,7 @@ class Orders
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", length=500)
+     * @ORM\Column(name="comment", type="text", length=500)
      */
     private $comment;
 
@@ -51,6 +51,13 @@ class Orders
     private $email;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="text", length=500)
+     */
+    private $address;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
@@ -64,6 +71,7 @@ class Orders
 
     public function __construct() {
         $this->product = new ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     /**
@@ -97,29 +105,6 @@ class Orders
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set comment
-     *
-     * @param string $comment
-     * @return Orders
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Get comment
-     *
-     * @return string 
-     */
-    public function getComment()
-    {
-        return $this->comment;
     }
 
     /**
@@ -222,5 +207,51 @@ class Orders
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Orders
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     * @return Orders
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string 
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 }
