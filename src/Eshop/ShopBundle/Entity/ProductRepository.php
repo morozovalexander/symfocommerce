@@ -16,9 +16,9 @@ class ProductRepository extends EntityRepository
     public function findByCategoryForPaginator($categoryId){
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('g')
-            ->from('ShopBundle:Product', 'g')
-            ->innerJoin('g.category', 'ca')
+            ->select('p')
+            ->from('ShopBundle:Product', 'p')
+            ->innerJoin('p.category', 'ca')
             ->where('ca.id = :categoryid')
             ->setParameter('categoryid', $categoryId
             );
@@ -28,9 +28,9 @@ class ProductRepository extends EntityRepository
     public function findByManufacturerForPaginator($manufacturerId){
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('g')
-            ->from('ShopBundle:Product', 'g')
-            ->innerJoin('g.manufacturer', 'ma')
+            ->select('p')
+            ->from('ShopBundle:Product', 'p')
+            ->innerJoin('p.manufacturer', 'ma')
             ->where('ma.id = :manufacturerid')
             ->setParameter('manufacturerid', $manufacturerId
             );
