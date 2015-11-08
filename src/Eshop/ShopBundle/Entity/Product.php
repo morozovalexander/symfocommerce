@@ -48,6 +48,20 @@ class Product
     private $price;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_keys", type="text", nullable=true)
+     */
+    private $metaKeys;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
+     */
+    private $metaDescription;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      **/
@@ -267,5 +281,51 @@ class Product
     public function getProductOrders()
     {
         return $this->productOrders;
+    }
+
+    /**
+     * Set metaKeys
+     *
+     * @param string $metaKeys
+     * @return Product
+     */
+    public function setMetaKeys($metaKeys)
+    {
+        $this->metaKeys = $metaKeys;
+
+        return $this;
+    }
+
+    /**
+     * Get metaKeys
+     *
+     * @return string 
+     */
+    public function getMetaKeys()
+    {
+        return $this->metaKeys;
+    }
+
+    /**
+     * Set metaDescription
+     *
+     * @param string $metaDescription
+     * @return Product
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metaDescription
+     *
+     * @return string 
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
     }
 }

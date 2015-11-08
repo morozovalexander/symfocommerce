@@ -4,6 +4,9 @@
     {{ product.name }}
 {% endblock title %}
 
+{% block metadescription %}{{ product.metaDescription }}{% endblock %}
+{% block metakeys %}{{ product.metaKeys }}{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/shop/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
