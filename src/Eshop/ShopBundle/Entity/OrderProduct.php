@@ -72,4 +72,50 @@ class OrderProduct
     {
         return $this->quantity;
     }
+
+    /**
+     * Set order
+     *
+     * @param \Eshop\ShopBundle\Entity\Orders $order
+     * @return OrderProduct
+     */
+    public function setOrder(\Eshop\ShopBundle\Entity\Orders $order = null)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Eshop\ShopBundle\Entity\Orders 
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \Eshop\ShopBundle\Entity\Product $product
+     * @return OrderProduct
+     */
+    public function setProduct(\Eshop\ShopBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Eshop\ShopBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
 }
