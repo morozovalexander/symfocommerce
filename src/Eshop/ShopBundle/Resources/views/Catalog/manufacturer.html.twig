@@ -42,7 +42,7 @@
                         {% endif %}
                     </a>
                     <div class="caption" data-id="{{ product.id }}">
-                        <a href="#">
+                        <a href="{{ path('show_product', {'id' : product.id}) }}">
                             <h4 class="group inner list-group-item-heading">
                                 {{ product.name }}
                             </h4>
