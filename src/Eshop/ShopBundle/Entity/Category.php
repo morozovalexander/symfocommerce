@@ -41,6 +41,20 @@ class Category
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_keys", type="text", nullable=true)
+     */
+    private $metaKeys;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
+     */
+    private $metaDescription;
+
+    /**
      * Image path
      *
      * @var string
@@ -285,5 +299,51 @@ class Category
     public function getFile()
     {
         return $this->file;
+    }
+
+    /**
+     * Set metaKeys
+     *
+     * @param string $metaKeys
+     * @return Category
+     */
+    public function setMetaKeys($metaKeys)
+    {
+        $this->metaKeys = $metaKeys;
+
+        return $this;
+    }
+
+    /**
+     * Get metaKeys
+     *
+     * @return string 
+     */
+    public function getMetaKeys()
+    {
+        return $this->metaKeys;
+    }
+
+    /**
+     * Set metaDescription
+     *
+     * @param string $metaDescription
+     * @return Category
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metaDescription
+     *
+     * @return string 
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
     }
 }

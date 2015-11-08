@@ -4,6 +4,9 @@
     {{ manufacturer.name }}
 {% endblock title %}
 
+{% block metadescription %}{{ manufacturer.metaDescription }}{% endblock %}
+{% block metakeys %}{{ manufacturer.metaKeys }}{% endblock %}
+
 {% block page_content -%}
     <div class="well well-sm">
         <div class="btn-group">

@@ -17,6 +17,8 @@ class NewsType extends AbstractType
         $builder
             ->add('title')
             ->add('text')
+            ->add('metaKeys')
+            ->add('metaDescription')
         ;
     }
     

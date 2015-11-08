@@ -18,6 +18,8 @@ class ManufacturerType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('file', 'file', array('required' => false))
+            ->add('metaKeys')
+            ->add('metaDescription')
         ;
     }
     

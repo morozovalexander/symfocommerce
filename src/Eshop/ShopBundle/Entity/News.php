@@ -42,6 +42,20 @@ class News
      */
     private $date;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_keys", type="text", nullable=true)
+     */
+    private $metaKeys;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
+     */
+    private $metaDescription;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -124,5 +138,51 @@ class News
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set metaKeys
+     *
+     * @param string $metaKeys
+     * @return News
+     */
+    public function setMetaKeys($metaKeys)
+    {
+        $this->metaKeys = $metaKeys;
+
+        return $this;
+    }
+
+    /**
+     * Get metaKeys
+     *
+     * @return string 
+     */
+    public function getMetaKeys()
+    {
+        return $this->metaKeys;
+    }
+
+    /**
+     * Set metaDescription
+     *
+     * @param string $metaDescription
+     * @return News
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metaDescription
+     *
+     * @return string 
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
     }
 }

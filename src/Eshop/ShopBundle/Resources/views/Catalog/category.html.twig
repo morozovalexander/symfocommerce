@@ -4,6 +4,9 @@
     {{ category.name }}
 {% endblock title %}
 
+{% block metadescription %}{{ category.metaDescription }}{% endblock %}
+{% block metakeys %}{{ category.metaKeys }}{% endblock %}
+
 {% block page_content -%}
     <div class="well well-sm">
         <div class="btn-group">
