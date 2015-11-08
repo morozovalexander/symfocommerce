@@ -20,6 +20,7 @@ class ProductRepository extends EntityRepository
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.category', 'ca')
             ->where('ca.id = :categoryid')
+            ->andWhere('p.quantity <> 0')
             ->setParameter('categoryid', $categoryId
             );
     }
@@ -32,6 +33,7 @@ class ProductRepository extends EntityRepository
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.manufacturer', 'ma')
             ->where('ma.id = :manufacturerid')
+            ->andWhere('p.quantity <> 0')
             ->setParameter('manufacturerid', $manufacturerId
             );
     }
