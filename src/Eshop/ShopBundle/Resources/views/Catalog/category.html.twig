@@ -76,6 +76,14 @@
             {{ knp_pagination_render(products) }}
         </div>
     </div>
+    <div class="row well well-lg">
+        <h3 class="group inner list-group-item-heading">{{ category.name }}</h3>
+        <div class="caption">
+            <p class="group inner list-group-item-text">
+                {{ category.description }}
+            </p>
+        </div>
+    </div>
 {% endblock page_content %}
 
 {% block javascripts %}
