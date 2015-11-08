@@ -65,13 +65,12 @@ class Product
     private $images;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Orders", inversedBy="product")
-     * @ORM\JoinTable(name="orders_product")
+     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="product")
      **/
-    private $orders;
+    private $productOrders;
 
     public function __construct() {
-        $this->orders = new ArrayCollection();
+        $this->productOrders = new ArrayCollection();
         $this->images = new ArrayCollection();
     }
 
@@ -238,35 +237,35 @@ class Product
     }
 
     /**
-     * Add orders
+     * Add productOrders
      *
-     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     * @param \Eshop\ShopBundle\Entity\OrderProduct $productOrders
      * @return Product
      */
-    public function addOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    public function addProductOrder(\Eshop\ShopBundle\Entity\OrderProduct $productOrders)
     {
-        $this->orders[] = $orders;
+        $this->productOrders[] = $productOrders;
 
         return $this;
     }
 
     /**
-     * Remove orders
+     * Remove productOrders
      *
-     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     * @param \Eshop\ShopBundle\Entity\OrderProduct $productOrders
      */
-    public function removeOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    public function removeProductOrder(\Eshop\ShopBundle\Entity\OrderProduct $productOrders)
     {
-        $this->orders->removeElement($orders);
+        $this->productOrders->removeElement($productOrders);
     }
 
     /**
-     * Get orders
+     * Get productOrders
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getOrders()
+    public function getProductOrders()
     {
-        return $this->orders;
+        return $this->productOrders;
     }
 }

@@ -65,12 +65,12 @@ class Orders
     private $date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="orders")
+     * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="order")
      **/
-    private $product;
+    private $orderProducts;
 
     public function __construct() {
-        $this->product = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
         $this->date = new \DateTime();
     }
 
@@ -177,39 +177,6 @@ class Orders
     }
 
     /**
-     * Add product
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $product
-     * @return Orders
-     */
-    public function addProduct(\Eshop\ShopBundle\Entity\Product $product)
-    {
-        $this->product[] = $product;
-
-        return $this;
-    }
-
-    /**
-     * Remove product
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $product
-     */
-    public function removeProduct(\Eshop\ShopBundle\Entity\Product $product)
-    {
-        $this->product->removeElement($product);
-    }
-
-    /**
-     * Get product
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
      * Set address
      *
      * @param string $address
@@ -253,5 +220,38 @@ class Orders
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Add orderProducts
+     *
+     * @param \Eshop\ShopBundle\Entity\OrderProduct $orderProducts
+     * @return Orders
+     */
+    public function addOrderProduct(\Eshop\ShopBundle\Entity\OrderProduct $orderProducts)
+    {
+        $this->orderProducts[] = $orderProducts;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderProducts
+     *
+     * @param \Eshop\ShopBundle\Entity\OrderProduct $orderProducts
+     */
+    public function removeOrderProduct(\Eshop\ShopBundle\Entity\OrderProduct $orderProducts)
+    {
+        $this->orderProducts->removeElement($orderProducts);
+    }
+
+    /**
+     * Get orderProducts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderProducts()
+    {
+        return $this->orderProducts;
     }
 }
