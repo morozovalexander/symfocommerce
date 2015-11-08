@@ -12,6 +12,18 @@
                         class="glyphicon glyphicon-th"></span>Grid</a>
         </div>
         <strong>{{ manufacturer.name }}</strong>
+        <div class="dropdown pull-right">
+            <strong>Sort by</strong>
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                {{ sortedby }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>{{ knp_pagination_sortable(products, 'Name', 'p.name') }}</li>
+                <li>{{ knp_pagination_sortable(products, 'Price', 'p.price') }}</li>
+            </ul>
+        </div>
     </div>
     <div id="products" class="row list-group">
     {% if products|length %}

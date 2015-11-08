@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class CatalogController extends Controller
 {
@@ -68,7 +69,7 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function categoryAction($id = '')
+    public function categoryAction(Request $request, $id = '')
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -99,7 +100,8 @@ class CatalogController extends Controller
 
         return array(
             'category' => $category,
-            'products' => $products
+            'products' => $products,
+            'sortedby' => $this->getSortingParamName($request)
         );
     }
 
@@ -108,7 +110,7 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function manufacturerAction($id = '')
+    public function manufacturerAction(Request $request, $id = '')
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -139,7 +141,8 @@ class CatalogController extends Controller
 
         return array(
             'manufacturer' => $manufacturer,
-            'products' => $products
+            'products' => $products,
+            'sortedby' => $this->getSortingParamName($request)
         );
     }
 
@@ -190,5 +193,27 @@ class CatalogController extends Controller
         return array(
             'news' => $news,
         );
+    }
+
+    /**
+     * return sorting name param form request.
+     */
+    private function getSortingParamName(Request $request)
+    {
+        $sortedBy = '';
+        $sortParam = $request->get('sort');
+
+        switch ($sortParam) {
+            case 'p.name':
+                $sortedBy = 'Name';
+                break;
+            case 'p.price':
+                $sortedBy = 'Price';
+                break;
+            default:
+                $sortedBy = 'Default';
+                break;
+        }
+        return $sortedBy;
     }
 }
