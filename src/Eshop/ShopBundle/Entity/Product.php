@@ -62,6 +62,17 @@ class Product
     private $metaDescription;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer", nullable=false)
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
+     */
+    private $quantity;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      **/
@@ -86,6 +97,7 @@ class Product
     public function __construct() {
         $this->productOrders = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->quantity = 1;
     }
 
     public function __toString() {
@@ -327,5 +339,28 @@ class Product
     public function getMetaDescription()
     {
         return $this->metaDescription;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     * @return Product
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer 
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }

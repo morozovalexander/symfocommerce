@@ -17,6 +17,7 @@
                         <th>Manufacturer</th>
                         <th>{{ knp_pagination_sortable(entities, 'Price', 'a.price') }}</th>
                         <th>Photo</th>
+                        <th>Q-ty</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -44,6 +45,7 @@
                                     no photos
                                 {% endif %}
                             </td>
+                            <td>{{ entity.quantity}}</td>
                             <td>
                                 <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
                                 <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">edit</a>

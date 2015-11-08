@@ -30,6 +30,7 @@ class ProductType extends AbstractType
                 'class' => 'Eshop\ShopBundle\Entity\Manufacturer',
                 'property' => 'name'
             ))
+            ->add('quantity')
             ->add('metaKeys')
             ->add('metaDescription')
         ;
