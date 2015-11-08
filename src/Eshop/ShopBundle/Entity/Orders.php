@@ -32,7 +32,7 @@ class Orders
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", length=500)
+     * @ORM\Column(name="comment", type="text", length=500, nullable=true)
      */
     private $comment;
 

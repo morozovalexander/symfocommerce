@@ -121,7 +121,6 @@ class CartController extends Controller
      */
     public function createOrderAction(Request $request)
     {
-        $cookies = $request->cookies->all();
         $order = new Orders();
         $form = $this->createCreateOrderForm($order);
 
@@ -131,7 +130,7 @@ class CartController extends Controller
             $em = $this->getDoctrine()->getManager();
             $productRepository = $em->getRepository('ShopBundle:Product');
 
-            $cart = $this->getCartFromCookies();
+            $cart = $this->getCartFromCookies($request);
             if (!$cart) {
                 //check valid cart
                 return $this->redirect($this->generateUrl('cartisempty'));
@@ -218,8 +217,9 @@ class CartController extends Controller
     /**
      * Get cart from cookies and return cart object or false.
      */
-    private function getCartFromCookies()
+    private function getCartFromCookies(Request $request)
     {
+        $cookies = $request->cookies->all();
         if (isset($cookies['cart'])) {
             $cart = json_decode($cookies['cart']);
 
