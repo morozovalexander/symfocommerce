@@ -9,7 +9,7 @@
     <hr>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <form class="form-horizontal" action="#" {{ form_enctype(form) }} method="POST">
+            <form class="form-horizontal" action="{{ path('order_create') }}" {{ form_enctype(form) }} method="POST">
                 {{ form_errors(form) }}
                 <div class="form-group">
                     {{ form_label(form.name, 'Name:') }}

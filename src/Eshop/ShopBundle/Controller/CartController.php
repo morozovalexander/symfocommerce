@@ -5,12 +5,14 @@ namespace Eshop\ShopBundle\Controller;
 use Doctrine\Common\Persistence\ObjectManager;
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
+use Eshop\ShopBundle\Entity\OrderProduct;
 use Eshop\ShopBundle\Form\OrdersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends Controller
 {
@@ -63,6 +65,7 @@ class CartController extends Controller
             'totalsum' => $totalSum
         );
     }
+
     /**
      * Shows order form.
      *
@@ -87,7 +90,6 @@ class CartController extends Controller
             $cart = json_decode($cookies['cart']);
         }
 
-
         foreach ($cart as $productId => $productQuantity) {
             /**
              * @var Product $product
@@ -103,12 +105,97 @@ class CartController extends Controller
             }
         }
 
-
         return array(
             'totalsum' => $totalSum,
             'order' => $order,
             'form'   => $form->createView(),
         );
+    }
+
+    /**
+     * Creates a new Orders entity.
+     *
+     * @Route("/order_create", name="order_create")
+     * @Method("POST")
+     * @Template("ShopBundle:Cart:orderForm.html.twig")
+     */
+    public function createOrderAction(Request $request)
+    {
+        $cookies = $request->cookies->all();
+        $order = new Orders();
+        $form = $this->createCreateOrderForm($order);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $productRepository = $em->getRepository('ShopBundle:Product');
+
+            $cart = $this->getCartFromCookies();
+            if (!$cart) {
+                //check valid cart
+                return $this->redirect($this->generateUrl('cartisempty'));
+            }
+
+            //parse cart json form cookies
+            foreach ($cart as $productId => $productQuantity) {
+                /**
+                 * @var Product $product
+                 */
+                $product = $productRepository->find((int)$productId);
+                if (is_object($product)) {
+                    $quantity = abs((int)$productQuantity);
+
+                    $orderProduct = new OrderProduct();
+                    $orderProduct->setProduct($product);
+                    $orderProduct->setOrder($order);
+                    $orderProduct->setQuantity($quantity);
+                    $em->persist($orderProduct);
+
+                    $order->addOrderProduct($orderProduct);
+                }
+            }
+
+            $em->persist($order);
+            $em->flush();
+
+            //clear cart
+            $response = new Response();
+            $response->headers->clearCookie('cart');
+            $response->sendHeaders();
+
+            //redirect to thankyou page
+            return $this->redirect($this->generateUrl('thankyou'));
+        }
+
+        return array(
+            'entity' => $order,
+            'form'   => $form->createView(),
+        );
+    }
+
+    /**
+     * If cart is empty.
+     *
+     * @Route("/cartisempty", name="cartisempty")
+     * @Method("GET")
+     * @Template()
+     */
+    public function cartIsEmptyAction()
+    {
+        return array();
+    }
+
+    /**
+     * If orderForm valid and submitted.
+     *
+     * @Route("/thankyou", name="thankyou")
+     * @Method("GET")
+     * @Template()
+     */
+    public function thankYouAction()
+    {
+        return array();
     }
 
     /**
@@ -121,11 +208,28 @@ class CartController extends Controller
     private function createCreateOrderForm(Orders $entity)
     {
         $form = $this->createForm(new OrdersType(), $entity, array(
-            'action' => $this->generateUrl('orders_create'),
+            'action' => $this->generateUrl('order_create'),
             'method' => 'POST',
         ));
 
         return $form;
+    }
+
+    /**
+     * Get cart from cookies and return cart object or false.
+     */
+    private function getCartFromCookies()
+    {
+        if (isset($cookies['cart'])) {
+            $cart = json_decode($cookies['cart']);
+
+            //check if cart not empty
+            $cartArray = (array)$cart;
+            if (!empty($cartArray)) {
+                return $cart;
+            }
+        }
+        return false;
     }
 
     /**

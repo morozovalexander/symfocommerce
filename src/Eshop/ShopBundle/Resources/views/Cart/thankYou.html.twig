@@ -1,0 +1,20 @@
+{% extends '@Shop/layout.html.twig' %}
+
+{% block title %}
+    Thank You!
+{% endblock title %}
+
+{% block page_content -%}
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h2>Thank you! We handle your oder as soon as possible!</h2>
+            <p><a href="{{ path('index_main') }}">continue shopping</a></p>
+        </div>
+    </div>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/shop/js/js.cookie.js') }}"></script>
+    <script src="{{ asset('bundles/shop/js/cart.js') }}" type="text/javascript"></script>
+{% endblock javascripts %}
