@@ -97,6 +97,10 @@ body {
     min-height: 240px;
 }
 
+.description-container {
+    min-height: 250px;
+}
+
 .nopadding {
     padding: 0 !important;
     margin: 0 !important;
