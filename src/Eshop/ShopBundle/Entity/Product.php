@@ -73,6 +73,17 @@ class Product
     private $quantity;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="measure_quantity", type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      minMessage = "Must be at least {{ limit }}",
+     * )
+     */
+    private $measureQuantity;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      **/
@@ -93,6 +104,12 @@ class Product
      * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="product")
      **/
     private $productOrders;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Measure", inversedBy="products")
+     * @ORM\JoinColumn(name="measure_id", referencedColumnName="id")
+     **/
+    private $measure;
 
     public function __construct() {
         $this->productOrders = new ArrayCollection();
@@ -362,5 +379,51 @@ class Product
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * Set measureQuantity
+     *
+     * @param integer $measureQuantity
+     * @return Product
+     */
+    public function setMeasureQuantity($measureQuantity)
+    {
+        $this->measureQuantity = $measureQuantity;
+
+        return $this;
+    }
+
+    /**
+     * Get measureQuantity
+     *
+     * @return integer 
+     */
+    public function getMeasureQuantity()
+    {
+        return $this->measureQuantity;
+    }
+
+    /**
+     * Set measure
+     *
+     * @param \Eshop\ShopBundle\Entity\Measure $measure
+     * @return Product
+     */
+    public function setMeasure(\Eshop\ShopBundle\Entity\Measure $measure = null)
+    {
+        $this->measure = $measure;
+
+        return $this;
+    }
+
+    /**
+     * Get measure
+     *
+     * @return \Eshop\ShopBundle\Entity\Measure 
+     */
+    public function getMeasure()
+    {
+        return $this->measure;
     }
 }
