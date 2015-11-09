@@ -29,7 +29,7 @@ class SlideController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ShopBundle:Slide')->findAll();
+        $entities = $em->getRepository('ShopBundle:Slide')->findBy(array(), array('slideOrder' => 'ASC'));
 
         return array(
             'entities' => $entities,

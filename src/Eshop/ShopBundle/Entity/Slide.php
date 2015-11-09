@@ -75,6 +75,10 @@ class Slide
         $this->enabled = true;
     }
 
+    public function __toString(){
+        return $this->getName();
+    }
+
     /**
      * Get id
      *

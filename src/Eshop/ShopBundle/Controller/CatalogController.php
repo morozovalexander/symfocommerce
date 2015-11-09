@@ -24,13 +24,17 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categoryRepository = $em->getRepository('ShopBundle:Category');
         $newsRepository = $em->getRepository('ShopBundle:News');
+        $slideRepository = $em->getRepository('ShopBundle:Slide');
 
         $categories = $categoryRepository->findAll();
+        //sorted by order number
+        $slides = $slideRepository->findBy(array(), array('slideOrder' => 'ASC'));
         $lastNews = $newsRepository->getLastNews();
 
         return array(
             'categories' => $categories,
-            'news' => $lastNews
+            'news' => $lastNews,
+            'slides' => $slides
         );
     }
 
