@@ -6,12 +6,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Slide
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("slideOrder")
  * @ORM\HasLifecycleCallbacks()
  */
 class Slide
@@ -42,7 +44,7 @@ class Slide
     /**
      * @var integer
      *
-     * @ORM\Column(name="slide_order", type="integer")
+     * @ORM\Column(name="slide_order", type="integer", unique=true)
      */
     private $slideOrder;
 
@@ -69,6 +71,9 @@ class Slide
      */
     protected $file;
 
+    public function __construct() {
+        $this->enabled = true;
+    }
 
     /**
      * Get id
