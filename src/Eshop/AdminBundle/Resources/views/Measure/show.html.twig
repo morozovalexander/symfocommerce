@@ -1,0 +1,39 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block page_content -%}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                {% include "@Admin/Admin/admin-menu.html.twig" %}
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+                <h3>Measure</h3>
+
+                <table class="record_properties table table-bordered table-stripped">
+                    <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ entity.name }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_measure') }}">
+                            Back to the list
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="{{ path('admin_measure_edit', { 'id': entity.id }) }}">
+                            Edit
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        {{ form(delete_form) }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
