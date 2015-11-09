@@ -33,6 +33,13 @@ class ProductType extends AbstractType
             ->add('quantity')
             ->add('metaKeys')
             ->add('metaDescription')
+            ->add('measure', 'entity', array(
+                'required'  => true,
+                'multiple' => false,
+                'expanded' => false,
+                'class' => 'Eshop\ShopBundle\Entity\MEasure',
+                'property' => 'name'))
+            ->add('measureQuantity')
         ;
     }
     
