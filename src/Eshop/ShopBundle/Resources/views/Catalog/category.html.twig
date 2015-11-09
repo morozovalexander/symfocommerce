@@ -47,7 +47,7 @@
                     <div class="caption description-container" data-id="{{ product.id }}">
                         <a href="{{ path('show_product', {'id' : product.id}) }}">
                             <h4 class="group inner list-group-item-heading">
-                                {{ product.name }}
+                                {{ product.name }} ({{ product.measureQuantity }} {{ product.measure.name }})
                             </h4>
                         </a>
                         <p class="group inner list-group-item-text">
