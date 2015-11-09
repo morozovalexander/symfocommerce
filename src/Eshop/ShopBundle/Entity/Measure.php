@@ -30,7 +30,7 @@ class Measure
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="measure")
      **/
     private $products;
 
