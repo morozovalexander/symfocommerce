@@ -7,12 +7,16 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Category
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\CategoryRepository")
+ * @UniqueEntity("slug"),
+ *     errorPath="slug",
+ *     message="This slug is already in use."
  * @ORM\HasLifecycleCallbacks()
  */
 class Category
@@ -25,6 +29,14 @@ class Category
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     */
+
+    private $slug;
 
     /**
      * @var string
@@ -345,5 +357,28 @@ class Category
     public function getMetaDescription()
     {
         return $this->metaDescription;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
