@@ -87,6 +87,7 @@ class LoadManufacturerData implements FixtureInterface, ContainerAwareInterface,
         foreach ($manufacturerssArray as $manufacturerName) {
             $category = new Manufacturer();
             $category->setName($manufacturerName);
+            $category->setSlug($manufacturerName);
             $category->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. One more time!
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

@@ -10,7 +10,47 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
                 <h3>News creation</h3>
 
-                {{ form(form) }}
+                <form action="{{ path('admin_news_create') }}" {{ form_enctype(form) }} class="form-horizontal" method="post">
+                    <div class="form-group">
+                        {{ form_label(form.title, 'Title:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.title, {'attr': {'class': 'product-name'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.text, 'Text:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.text) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.metaKeys, 'Meta keys:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.metaKeys) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.metaDescription, 'Meta description:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.metaDescription) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="#" class="btn btn-default generate-slug">generate slug</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.slug, 'Slug:') }}
+                        <div class="col-sm-10">
+                            {{ form_errors(form.slug) }}
+                            {{ form_widget(form.slug, {'attr': {'class': 'product-slug'}}) }}
+                        </div>
+                    </div>
+                    {{ form_rest(form) }}
+
+                </form>
 
                 <a href="{{ path('admin_news') }}">
                     Back to the list
@@ -19,3 +59,29 @@
         </div>
     </div>
 {% endblock page_content -%}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/shop/js/speakingurl.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.generate-slug').on('click', function(e) {
+                e.preventDefault();
+                //get field value
+                var productName = $('.product-name').val();
+                var slugInut = $('.product-slug');
+                var nameToSlug = productName;
+
+                //generate slug
+                var slug = getSlug(nameToSlug, {
+                    custom: {
+                        '%': ' percent '
+                    },
+                    uric:true
+                });
+                //record to slug input
+                slugInut.val(slug);
+            });
+        });
+    </script>
+{% endblock javascripts %}

@@ -16,7 +16,54 @@
                     </div>
                 {% endfor %}
 
-                {{ form(edit_form) }}
+                <form action="{{ path('admin_category_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
+                    <div class="form-group">
+                        {{ form_label(edit_form.name, 'Name:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(edit_form.description, 'Description:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(edit_form.description) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(edit_form.file, 'Image:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(edit_form.file) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(edit_form.metaKeys, 'Meta keys:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(edit_form.metaKeys) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(edit_form.metaDescription, 'Meta description:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(edit_form.metaDescription) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="#" class="btn btn-default generate-slug">generate slug</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(edit_form.slug, 'Slug:') }}
+                        <div class="col-sm-10">
+                            {{ form_errors(edit_form.slug) }}
+                            {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
+                        </div>
+                    </div>
+                    <input type='hidden' name='_method' value='PUT'>
+                    {{ form_rest(edit_form) }}
+
+                </form>
 
                 <div class="col-md-5 col-md-offset-2 ">
                     <ul class="list-group">
@@ -34,3 +81,29 @@
         </div>
     </div>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/shop/js/speakingurl.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.generate-slug').on('click', function(e) {
+                e.preventDefault();
+                //get field value
+                var productName = $('.product-name').val();
+                var slugInut = $('.product-slug');
+                var nameToSlug = productName;
+
+                //generate slug
+                var slug = getSlug(nameToSlug, {
+                    custom: {
+                        '%': ' percent '
+                    },
+                    uric:true
+                });
+                //record to slug input
+                slugInut.val(slug);
+            });
+        });
+    </script>
+{% endblock javascripts %}

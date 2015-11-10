@@ -54,6 +54,7 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface, Ord
         foreach ($categoriesArray as $categoryName) {
             $category = new Category();
             $category->setName($categoryName);
+            $category->setSlug($categoryName);
             $category->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. One more time!
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

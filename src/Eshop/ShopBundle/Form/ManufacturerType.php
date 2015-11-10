@@ -16,6 +16,7 @@ class ManufacturerType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('slug')
             ->add('description')
             ->add('file', 'file', array('required' => false))
             ->add('metaKeys')
