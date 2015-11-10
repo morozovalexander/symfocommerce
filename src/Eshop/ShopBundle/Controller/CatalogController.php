@@ -151,19 +151,19 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/product/{id}", name="show_product")
+     * @Route("/product/{slug}", name="show_product")
      * @Method("GET")
      * @Template()
      */
-    public function showProductAction($id = '')
+    public function showProductAction($slug = '')
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
 
-        if ($id == '') {
+        if ($slug == '') {
             return $this->redirectToRoute('index_main');
         } else {
-            $product = $productRepository->find((int)$id);
+            $product = $productRepository->findBySlug($slug);
         }
 
         return array(
