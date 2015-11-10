@@ -5,6 +5,7 @@ namespace Eshop\ShopBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -13,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\ProductRepository")
+ * @UniqueEntity("slug")
  * @ORM\HasLifecycleCallbacks()
  */
 class Product

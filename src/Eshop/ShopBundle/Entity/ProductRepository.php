@@ -12,6 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+    public function findBySlug($slug){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('ShopBundle:Product', 'p')
+            ->where('p.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     //query for pagination without "getQuery()"
     public function findByCategoryForPaginator($categoryId){
         return $this->getEntityManager()
