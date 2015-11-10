@@ -29,6 +29,13 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     */
+
+    private $slug;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -425,5 +432,28 @@ class Product
     public function getMeasure()
     {
         return $this->measure;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Product
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
