@@ -14,7 +14,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\ProductRepository")
- * @UniqueEntity("slug")
+ * @UniqueEntity("slug"),
+ *     errorPath="slug",
+ *     message="This slug is already in use."
  * @ORM\HasLifecycleCallbacks()
  */
 class Product

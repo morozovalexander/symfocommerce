@@ -91,6 +91,7 @@
                     <div class="form-group">
                         {{ form_label(edit_form.slug, 'Slug:') }}
                         <div class="col-sm-10">
+                            {{ form_errors(edit_form.slug) }}
                             {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
                         </div>
                     </div>
