@@ -14,6 +14,78 @@
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
                 <form action="{{ path('admin_product_create') }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
+                    <div class="form-group">
+                        {{ form_label(form.name, 'Name:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.name, {'attr': {'class': 'product-name'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description, 'Description:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.description) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.price, 'Price:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.price) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.category, 'Category:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.category) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.manufacturer, 'Manufacturer:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.manufacturer) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.quantity, 'Quantity:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.quantity) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.metaKeys, 'Meta keys:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.metaKeys) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.metaDescription, 'Meta description:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.metaDescription) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.measure, 'Measure:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.measure, {'attr': {'class': 'measure-name'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.measureQuantity, 'Measure quantity:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.measureQuantity, {'attr': {'class': 'measure-quantity'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="#" class="btn btn-default generate-slug">generate slug</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.slug, 'Slug:') }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.slug, {'attr': {'class': 'product-slug'}}) }}
+                        </div>
+                    </div>
 
                     <input type="hidden" name="filenames" id="filenames">
 
@@ -42,6 +114,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/shop/js/dropzone.js') }}"></script>
+    <script src="{{ asset('bundles/shop/js/speakingurl.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             Dropzone.options.myDropzone = {
@@ -56,6 +129,27 @@
                     });
                 }
             };
+
+            $('.generate-slug').on('click', function(e) {
+                e.preventDefault();
+                //get field value
+                var productName = $('.product-name').val();
+                var measureQuantity = $('.measure-quantity').val();
+                var measureName = $('.measure-name').find('option:selected').text();
+
+                var slugInut = $('.product-slug');
+                var nameToSlug = productName +'-'+ measureQuantity +'-'+ measureName;
+
+                //generate slug
+                var slug = getSlug(nameToSlug, {
+                    custom: {
+                        '%': ' percent '
+                    },
+                    uric:true
+                });
+                //record to slug input
+                slugInut.val(slug);
+            });
         });
     </script>
 {% endblock javascripts %}
