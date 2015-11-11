@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $('[data-toggle="confirmation"]').confirmation();
+
+
     $('.addtocart-btn').on('click', function(e){
         e.preventDefault();
         //define var
