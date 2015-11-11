@@ -12,6 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class NewsRepository extends EntityRepository
 {
+    public function findBySlug($slug){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('n')
+            ->from('ShopBundle:News', 'n')
+            ->where('n.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     public function getLastNews(){
         return $this->getEntityManager()
             ->createQueryBuilder()

@@ -69,11 +69,11 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/category/{id}", name="category")
+     * @Route("/category/{slug}", name="category")
      * @Method("GET")
      * @Template()
      */
-    public function categoryAction(Request $request, $id = '')
+    public function categoryAction(Request $request, $slug = '')
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -83,12 +83,12 @@ class CatalogController extends Controller
         /**
          * @var Category $requiredCategory
          */
-        if ($id == '') {
+        if ($slug == '') {
             //get first category id
             $requiredCategory = $categoryRepository->getFirstCategoryId();
             $requiredCategory = $requiredCategory['id'];
         } else {
-            $requiredCategory = $categoryRepository->find((int)$id);
+            $requiredCategory = $categoryRepository->findBySlug($slug);
             $requiredCategory = $requiredCategory->getId();
         }
 
@@ -110,11 +110,11 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/manufacturer/{id}", name="manufacturer")
+     * @Route("/manufacturer/{slug}", name="manufacturer")
      * @Method("GET")
      * @Template()
      */
-    public function manufacturerAction(Request $request, $id = '')
+    public function manufacturerAction(Request $request, $slug = '')
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -124,12 +124,12 @@ class CatalogController extends Controller
         /**
          * @var Manufacturer $requiredManufacturer
          */
-        if ($id == '') {
+        if ($slug == '') {
             //get first category id
             $requiredManufacturer = $manufacturerRepository->getFirstManufacturerId();
             $requiredManufacturer = $requiredManufacturer['id'];
         } else {
-            $requiredManufacturer = $manufacturerRepository->find((int)$id);
+            $requiredManufacturer = $manufacturerRepository->findBySlug($slug);
             $requiredManufacturer = $requiredManufacturer->getId();
         }
 

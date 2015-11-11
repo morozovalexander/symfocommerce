@@ -12,6 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+    public function findBySlug($slug){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('c')
+            ->from('ShopBundle:Category', 'c')
+            ->where('c.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     public function getFirstCategoryId(){
         return $this->getEntityManager()
             ->createQueryBuilder()

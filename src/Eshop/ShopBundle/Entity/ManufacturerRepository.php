@@ -12,6 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class ManufacturerRepository extends EntityRepository
 {
+    public function findBySlug($slug){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('m')
+            ->from('ShopBundle:Manufacturer', 'm')
+            ->where('m.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     public function getFirstManufacturerId(){
         return $this->getEntityManager()
             ->createQueryBuilder()
