@@ -40,7 +40,7 @@ class SlideController extends Controller
      *
      * @Route("/", name="admin_slide_create")
      * @Method("POST")
-     * @Template("ShopBundle:Slide:new.html.twig")
+     * @Template("AdminBundle:Slide:new.html.twig")
      */
     public function createAction(Request $request)
     {
