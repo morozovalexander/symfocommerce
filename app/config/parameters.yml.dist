@@ -17,6 +17,8 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    locale: en
+    my_locale: ru
     products_pagination_count: 12
     admin_products_pagination_count: 20
     admin_categories_pagination_count: 20

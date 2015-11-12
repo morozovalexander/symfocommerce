@@ -1,4 +1,5 @@
 {% extends "::base.html.twig" %}
+{% trans_default_domain 'ShopBundle' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -17,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ path('index_main') }}">EShop</a>
+                <a class="navbar-brand" href="{{ path('index_main') }}">{{ 'layout.navbar.sitename'|trans }}</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

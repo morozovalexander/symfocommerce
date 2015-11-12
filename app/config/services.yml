@@ -12,3 +12,9 @@ services:
         arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onUpload }
+
+    app.locale_listener:
+        class: Eshop\ShopBundle\EventListener\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }
