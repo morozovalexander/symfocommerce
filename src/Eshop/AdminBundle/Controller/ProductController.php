@@ -3,7 +3,9 @@
 namespace Eshop\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Eshop\ShopBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -290,5 +292,35 @@ class ProductController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * @Route("/remove_image", name="remove_image", defaults={"_format"="json"})
+     * @Method("POST")
+     */
+    public function removeImage(Request $request){
+        $requestData = $request->request;
+        $imageEntityId = (int)$requestData->get('imageEntityId');
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+        $imageRepository = $em->getRepository('ShopBundle:Image');
+        /**
+         * @var Image $image, $imageRepository
+         */
+        $image = $imageRepository->find($imageEntityId);
+        $product = $image->getProduct();
+        $product->removeImage($image);
+
+        $em->persist($product);
+        $em->remove($image);
+
+        $em->flush();
+
+        $data = json_encode(array('success' => true));
+        $headers = array('Content-type' => 'application-json; charset=utf8');
+        $response = new Response($data, 200, $headers);
+        return $response;
     }
 }

@@ -110,13 +110,17 @@
                                         <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
                                     </a>
                                     <a href="#" class="text-danger image-remove" data-toggle="confirmation"
-                                       data-popout="true" data-placement="left">
+                                       data-popout="true" data-placement="left" data-id="{{ image.id }}">
                                         remove
                                     </a>
+                                    <img id="gif-loading" style="width:17px; height:17px; display: none;"
+                                         src="{{ asset('bundles/shop/images/ajax-loader.gif') }}" />
                                 </div>
                             {% endfor %}
                         {% else %}
-                            <p>no photos</p>
+                            <p>
+                                <strong class="text-danger">no photos</strong>
+                            </p>
                         {% endif %}
                 </div>
 
@@ -174,7 +178,6 @@
 
             $(".fancybox").fancybox();
 
-
             $('.generate-slug').on('click', function(e) {
                 e.preventDefault();
                 //get field value
@@ -196,10 +199,36 @@
                 slugInut.val(slug);
             });
 
-            $('.image-remove').on('click', function(e){
+            var removeImageLink = $('.image-remove');
+            removeImageLink.css( 'cursor', 'pointer' );
+            removeImageLink.on('click', function(e){
                 e.preventDefault();
-                console.log('click to remove');
-            })
+                var imageEntityId = $(this).data('id');
+                var objToRemove = $(this).parent();
+                console.log(imageEntityId);
+                removeImageEntity(imageEntityId, objToRemove);
+            });
         });
+
+        //send request to remove image entity
+        function removeImageEntity(imageEntityId, objToRemove){
+            var imgObj = objToRemove.find("#gif-loading");
+            imgObj.show();
+
+            $.ajax({
+                url: "{{ path('remove_image')}}",
+                type: 'POST',
+                data: { imageEntityId : imageEntityId },
+                success: function () {
+                    //remove image
+                    objToRemove.remove();
+                },
+                error: function (data) {
+                    data = JSON.stringify(data);
+                    data = JSON.parse(data);
+                    console.log(data);
+                }
+            });
+        }
     </script>
 {% endblock javascripts %}
