@@ -2,3 +2,65 @@
 layout:
     navbar:
         sitename: Iron Club
+        home: Главная
+        news: Новости
+        information: Информация
+        contacts: Контакты
+        discounts: Скидки
+
+# Categories menu
+categories:
+    menu:
+        header: Категории
+
+# Manufacturers menu
+manufacturers:
+    menu:
+        header: Производители
+
+# Category page
+category:
+    view:
+        grid: Сетка
+        list: Список
+    sort:
+        by: Сортировать по
+        default: Умолчанию
+        price: Цене
+        name: Названию
+    noproducts: Извините, нет товаров в данной категории!
+
+# Manufacturer page
+manufacturer:
+    view:
+        grid: Сетка
+        list: Список
+    sort:
+        by: Сортировать по
+        default: Умолчанию
+        price: Цене
+        name: Названию
+    noproducts: Извините, нет товаров данного производителя!
+
+# currency money
+currency: р.
+
+# Cart buttons and order pages
+cart:
+    addtocart: В корзину
+    navbar:
+        goods: товаров на
+    title:
+        cart: Корзина
+    isempty: Ваша корзина пуста
+    isemptyyet: Ваша корзина пока что пуста
+    continue: продолжить покупки
+    yourcart: Ваша корзина
+    table:
+        product: Продукт
+        quantity: Количество
+        price: Цена
+        sum: Сумма
+        totalsum: Cумма заказа
+    checkout: Продолжить
+    clear: Очистить

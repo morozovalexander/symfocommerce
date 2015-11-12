@@ -1,4 +1,5 @@
 {% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
 
 {% block title %}
     {{ product.name }} ({{ product.measureQuantity }} {{ product.measure.name }})
@@ -17,10 +18,10 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-                <li><a href="{{ path('index_main') }}">Home</a></li>
-                <li><a href="{{ path('category', {'id' : product.category.id}) }}">{{ product.category.name }}</a></li>
+                <li><a href="{{ path('index_main') }}">{{ 'layout.navbar.home'|trans }}</a></li>
+                <li><a href="{{ path('category', {'slug' : product.category.slug}) }}">{{ product.category.name }}</a></li>
                 <li>
-                    <a href="{{ path('manufacturer', {'id' : product.manufacturer.id}) }}">{{ product.manufacturer.name }}</a>
+                    <a href="{{ path('manufacturer', {'slug' : product.manufacturer.slug}) }}">{{ product.manufacturer.name }}</a>
                 </li>
                 <li class="active">{{ product.name }} ({{ product.measureQuantity }} {{ product.measure.name }})</li>
             </ol>
@@ -48,7 +49,7 @@
                 <h1 class="group inner list-group-item-heading">{{ product.name }}
                     ({{ product.measureQuantity }} {{ product.measure.name }})</h1>
 
-                <p class="lead price"><span>{{ product.price }}</span> у.е.</p>
+                <p class="lead price"><span>{{ product.price }}</span> {{ 'currency'|trans }}</p>
 
                 <div class="row addtocart" data-id="{{ product.id }}">
                     <div class="col-md-2">
@@ -56,7 +57,7 @@
                     </div>
                     <div class="col-md-2">
                         <p>
-                            <a class="btn btn-success addtocart-btn" href="#">Add to cart</a>
+                            <a class="btn btn-success addtocart-btn" href="#">{{ 'cart.addtocart'|trans }}</a>
                         </p>
                     </div>
                 </div>

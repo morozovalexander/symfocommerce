@@ -7,7 +7,6 @@
 {% endblock stylesheets %}
 
 {% block body %}
-
     <!-- Static navbar -->
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -25,11 +24,11 @@
                     {#<li class="active"><a href="#">Home</a></li>#}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ path('index_main') }}">Home</a></li>
-                    <li><a href="{{ path('news') }}">News</a></li>
-                    <li><a href="#">Information</a></li>
-                    <li><a href="#">Contacts</a></li>
-                    <li><a href="#">Discounts</a></li>
+                    <li><a href="{{ path('index_main') }}">{{ 'layout.navbar.home'|trans }}</a></li>
+                    <li><a href="{{ path('news') }}">{{ 'layout.navbar.news'|trans }}</a></li>
+                    <li><a href="#">{{ 'layout.navbar.information'|trans }}</a></li>
+                    <li><a href="#">{{ 'layout.navbar.contacts'|trans }}</a></li>
+                    <li><a href="#">{{ 'layout.navbar.discounts'|trans }}</a></li>
                     <li>
                         <a href="{{ path('showcart') }}">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
@@ -57,7 +56,7 @@
     </div>
     <footer class="footer">
         <div class="container">
-            <p class="text-muted">eShop project.</p>
+            <p class="text-muted">{{ 'layout.navbar.sitename'|trans }}, 2015.</p>
         </div>
     </footer>
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
 
 {% block title %}
-    Cart
+    {{ 'cart.title.cart'|trans}}
 {% endblock title %}
 
 {% block page_content -%}
@@ -10,18 +11,18 @@
             {% if products|length %}
                 <div class="row">
                     <div>
-                        <h2>Your cart</h2>
+                        <h2>{{ 'cart.yourcart'|trans }}</h2>
                     </div>
                 </div>
                 <table class="table">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
+                        <th>{{ 'cart.table.product'|trans }}</th>
+                        <th>{{ 'cart.table.quantity'|trans }}</th>
                         <th></th>
-                        <th>Price</th>
-                        <th style="text-align: right;">Sum</th>
+                        <th>{{ 'cart.table.price'|trans }}</th>
+                        <th style="text-align: right;">{{ 'cart.table.sum'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -73,8 +74,8 @@
                     <tfoot>
                     <tr>
                         <td colspan="6" style="text-align: right;">
-                            <strong>Total sum of the order:</strong>
-                            <span class="totalsum">{{ totalsum }}</span>
+                            <strong>{{ 'cart.table.totalsum'|trans }}:</strong>
+                            <span class="totalsum">{{ totalsum }} {{ 'currency'|trans }}</span>
                         </td>
                     </tr>
                     </tfoot>
@@ -82,17 +83,21 @@
                 <div class="row">
                     <div>
                         <div class="pull-right">
-                            <a href="{{ path('orderform') }}" class="btn btn-success glyphicon glyphicon-ok"> Checkout</a>
+                            <a href="{{ path('orderform') }}" class="btn btn-success glyphicon glyphicon-ok">
+                                {{ 'cart.checkout'|trans }}
+                            </a>
                             <a href="#" class="btn btn-danger glyphicon glyphicon-trash clear-cart"
-                               data-toggle="confirmation" data-popout="true" data-placement="left"> Clear</a>
+                               data-toggle="confirmation" data-popout="true" data-placement="left">
+                                {{ 'cart.clear'|trans }}
+                            </a>
                         </div>
                     </div>
                 </div>
             {% else %}
                 <div class="row">
                     <div>
-                        <h2>Your cart is empty yet</h2>
-                        <p><a href="{{ path('index_main') }}">continue shopping</a></p>
+                        <h2>{{ 'cart.isemptyyet'|trans }}</h2>
+                        <p><a href="{{ path('index_main') }}">{{ 'cart.continue'|trans }}</a></p>
                     </div>
                 </div>
             {% endif %}

@@ -1,4 +1,5 @@
-<h4>CATEGORIES</h4>
+{% trans_default_domain 'ShopBundle' %}
+<h4>{{ 'categories.menu.header'|trans }}</h4>
 <div class="list-group">
     {% for category in categories %}
         <a href="{{ path('category', {'slug' : category.slug}) }}" class="list-group-item menu-link">

@@ -209,13 +209,13 @@ class CatalogController extends Controller
 
         switch ($sortParam) {
             case 'p.name':
-                $sortedBy = 'Name';
+                $sortedBy = 'manufacturer.sort.name';
                 break;
             case 'p.price':
-                $sortedBy = 'Price';
+                $sortedBy = 'manufacturer.sort.price';
                 break;
             default:
-                $sortedBy = 'Default';
+                $sortedBy = 'manufacturer.sort.default';
                 break;
         }
         return $sortedBy;
