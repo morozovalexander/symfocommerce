@@ -64,3 +64,12 @@ cart:
         totalsum: Cумма заказа
     checkout: Продолжить
     clear: Очистить
+
+# News
+news:
+    nonews: Еще нет новостей
+    
+# Slider
+slider:
+    previous: предыдущий
+    next: следующий

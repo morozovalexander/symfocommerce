@@ -1,4 +1,9 @@
 {% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ 'layout.navbar.sitename'|trans }} - {{ 'layout.navbar.news'|trans }}
+{% endblock title %}
 
 {% block page_content -%}
     {% if news|length %}
@@ -14,7 +19,7 @@
             </div>
         {% endfor %}
     {% else %}
-        <h3>Sorry, no news yet!</h3>
+        <h3>{{ 'news.nonews'|trans }}</h3>
     {% endif %}
     <div class="row">
         <div class="col-md-8 col-md-offset-4">
