@@ -13,7 +13,7 @@
     {% endif %}
 
     <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">{% trans from "messages" %}Please sign in{% endtrans %}</h2>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
 
         <div class="form-group">

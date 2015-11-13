@@ -7,14 +7,14 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3>Orders list</h3>
+                <h3>{{ 'Orders list'|trans }}</h3>
                 {% if entities|length %}
                     <table class="records_list table table-bordered table-stripped">
                         <thead>
                         <tr>
-                            <th>{{ knp_pagination_sortable(entities, 'Client name', 'a.name') }}</th>
-                            <th>{{ knp_pagination_sortable(entities, 'Order date', 'a.date') }}</th>
-                            <th>Actions</th>
+                            <th>{{ knp_pagination_sortable(entities, 'Client name'|trans, 'a.name') }}</th>
+                            <th>{{ knp_pagination_sortable(entities, 'Order date'|trans, 'a.date') }}</th>
+                            <th>{{ 'Actions'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,7 +34,7 @@
                         </tbody>
                     </table>
                 {% else %}
-                    <strong>No orders yet</strong>
+                    <strong>{{ 'No orders yet'|trans }}</strong>
                 {% endif %}
                 <div class="row">
                     <div class="col-md-12">

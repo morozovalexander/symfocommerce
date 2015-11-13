@@ -1,0 +1,84 @@
+eShop: eShop
+Products: Products
+Categories: Categories
+Manufacturers: Manufacturers
+News: Manufacturers
+Orders: Orders
+Measures: Measures
+Slides: Slides
+Logout: Logout
+Administration panel: Administration panel
+Hello, choose a category!: Hello, choose a category!
+Products list: Products list
+Create new Product: Create new Product
+Name: Name
+Category: Category
+Manufacturer: Manufacturer
+Price: Price
+Photo: Photo
+Q-ty: Q-ty
+Actions: Actions
+show: show
+Show: Show
+edit: edit
+Edit: Edit
+no photos: no photos
+Product: Product
+Slug: Slug
+Description: Description
+Image: Image
+Quantity: Quantity
+Measure: Measure
+Measure quantity: Measure quantity
+Meta keys: Meta keys
+Meta description: Meta description
+Back to the list: Back to the list
+Products list: Products list
+Product edit: Product edit
+generate slug: generate slug
+remove: remove
+attach photos here: attach photos here
+Product create: Product create
+Category list: Category list
+Category edit: Category edit
+Category creation: Category creation
+Create a new category: Create a new category
+Manufacturer list: Manufacturer list
+Manufacturer edit: Manufacturer edit
+Manufacturer creation: Manufacturer creation
+Create a new manufacturer: Create a new manufacturer
+News list: News list
+News edit: News edit
+News creation: News creation
+Create a new news: Create a new news
+Measure list: Measure list
+Measure edit: Measure edit
+Measure creation: Measure creation
+Create a new measure: Create a new measure
+Title: Title
+Text: Text
+Orders list: Orders list
+No orders yet: No orders yet
+Client name: Client name
+Order date: Order date
+Id: Id
+Client Name: Client Name
+Email: Email
+Phone: Phone
+Address: Address
+Comment: Comment
+No comment: No comment
+Slide: Slide
+Slide list: Slide list
+Slide edit: Slide edit
+Slide creation: Slide creation
+Create a new slide: Create a new slide
+File: File
+Slide order: Slide order
+Update: Update
+Create: Create
+Delete: Delete
+Enabled: Enabled
+yes: yes
+no: no
+Please sign in: Please sign in

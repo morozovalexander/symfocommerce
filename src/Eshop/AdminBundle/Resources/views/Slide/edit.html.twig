@@ -8,7 +8,7 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Slide edit</h3>
+                <h3>{{ 'Slide edit'|trans }}</h3>
 
                 {% for flashMessage in app.session.flashbag.get('notice') %}
                     <div class="alert alert-success" role="alert">
@@ -22,7 +22,7 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="{{ path('admin_slide') }}">
-                                Back to the list
+                                {{ 'Back to the list'|trans }}
                             </a>
                         </li>
                         <li class="list-group-item">

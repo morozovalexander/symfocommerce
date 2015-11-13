@@ -7,17 +7,17 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3>Measure list</h3>
+                <h3>{{ 'Measure list'|trans }}</h3>
                 <li>
                     <a href="{{ path('admin_measure_new') }}">
-                        Create a new entry
+                        {{ 'Measure list'|trans }}Create a new entry
                     </a>
                 </li>
                 <table class="records_list table table-bordered table-stripped">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Actions</th>
+                        <th>{{ 'Name'|trans }}</th>
+                        <th>{{ 'Actions'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,8 +27,8 @@
                                 <a href="{{ path('admin_measure_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
                             </td>
                             <td>
-                                <a href="{{ path('admin_measure_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
-                                <a href="{{ path('admin_measure_edit', { 'id': entity.id }) }}">edit</a>
+                                <a href="{{ path('admin_measure_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>&nbsp;&nbsp;
+                                <a href="{{ path('admin_measure_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}

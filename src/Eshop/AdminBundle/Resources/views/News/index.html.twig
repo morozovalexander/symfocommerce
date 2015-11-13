@@ -7,18 +7,18 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3>News list</h3>
+                <h3>{{ 'News list'|trans }}</h3>
                 <li>
                     <a href="{{ path('admin_news_new') }}">
-                        Create a new entry
+                        {{ 'Create a new news'|trans }}
                     </a>
                 </li>
                 <table class="records_list table table-bordered table-stripped">
                     <thead>
                     <tr>
-                        <th>{{ knp_pagination_sortable(entities, 'Title', 'a.title') }}</th>
-                        <th>Text</th>
-                        <th>Actions</th>
+                        <th>{{ knp_pagination_sortable(entities, 'Title'|trans, 'a.title') }}</th>
+                        <th>{{ 'Text'|trans }}</th>
+                        <th>{{ 'Actions'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -31,8 +31,8 @@
                                 {{ entity.text|slice(0, 130) }}...
                             </td>
                             <td>
-                                <a href="{{ path('admin_news_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
-                                <a href="{{ path('admin_news_edit', { 'id': entity.id }) }}">edit</a>
+                                <a href="{{ path('admin_news_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>&nbsp;&nbsp;
+                                <a href="{{ path('admin_news_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}

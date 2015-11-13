@@ -14,7 +14,7 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Product edit</h3>
+                <h3>{{ 'Product edit'|trans }}</h3>
 
                 {% for flashMessage in app.session.flashbag.get('notice') %}
                     <div class="alert alert-success" role="alert">
@@ -24,61 +24,61 @@
                 <form action="{{ path('admin_product_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
 
                     <div class="form-group">
-                        {{ form_label(edit_form.name, 'Name:') }}
+                        {{ form_label(edit_form.name, 'Name'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.description, 'Description:') }}
+                        {{ form_label(edit_form.description, 'Description'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.description) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.price, 'Price:') }}
+                        {{ form_label(edit_form.price, 'Price'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.price) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.category, 'Category:') }}
+                        {{ form_label(edit_form.category, 'Category'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.category) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.manufacturer, 'Manufacturer:') }}
+                        {{ form_label(edit_form.manufacturer, 'Manufacturer'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.manufacturer) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.quantity, 'Quantity:') }}
+                        {{ form_label(edit_form.quantity, 'Quantity'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.quantity) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.metaKeys, 'Meta keys:') }}
+                        {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.metaKeys) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.metaDescription, 'Meta description:') }}
+                        {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.metaDescription) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.measure, 'Measure:') }}
+                        {{ form_label(edit_form.measure, 'Measure'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.measure, {'attr': {'class': 'measure-name'}}) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.measureQuantity, 'Measure quantity:') }}
+                        {{ form_label(edit_form.measureQuantity, 'Measure quantity'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.measureQuantity, {'attr': {'class': 'measure-quantity'}}) }}
                         </div>
@@ -86,11 +86,11 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="#" class="btn btn-default generate-slug">generate slug</a>
+                            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.slug, 'Slug:') }}
+                        {{ form_label(edit_form.slug, 'Slug'|trans) }}
                         <div class="col-sm-10">
                             {{ form_errors(edit_form.slug) }}
                             {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
@@ -111,7 +111,7 @@
                                     </a>
                                     <a href="#" class="text-danger image-remove" data-toggle="confirmation"
                                        data-popout="true" data-placement="left" data-id="{{ image.id }}">
-                                        remove
+                                        {{ 'remove'|trans }}
                                     </a>
                                     <img id="gif-loading" style="width:17px; height:17px; display: none;"
                                          src="{{ asset('bundles/shop/images/ajax-loader.gif') }}" />
@@ -119,7 +119,7 @@
                             {% endfor %}
                         {% else %}
                             <p>
-                                <strong class="text-danger">no photos</strong>
+                                <strong class="text-danger">{{ 'no photos'|trans }}</strong>
                             </p>
                         {% endif %}
                 </div>
@@ -128,7 +128,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-                            attach photos here
+                            {{ 'attach photos here'|trans }}
                         </h3>
                     </div>
                     <form action="{{ oneup_uploader_endpoint('gallery') }}" class="dropzone dz-clickable"
@@ -140,7 +140,7 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="{{ path('admin_product') }}">
-                                Back to the list
+                                {{ 'Back to the list'|trans }}
                             </a>
                         </li>
                         <li class="list-group-item">

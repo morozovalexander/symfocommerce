@@ -8,7 +8,7 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Manufacturer edit</h3>
+                <h3>{{ 'Manufacturer edit'|trans }}</h3>
 
                 {% for flashMessage in app.session.flashbag.get('notice') %}
                     <div class="alert alert-success" role="alert">
@@ -18,31 +18,31 @@
 
                 <form action="{{ path('admin_manufacturer_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
                     <div class="form-group">
-                        {{ form_label(edit_form.name, 'Name:') }}
+                        {{ form_label(edit_form.name, 'Name'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.description, 'Description:') }}
+                        {{ form_label(edit_form.description, 'Description'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.description) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.file, 'Image:') }}
+                        {{ form_label(edit_form.file, 'Image'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.file) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.metaKeys, 'Meta keys:') }}
+                        {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.metaKeys) }}
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.metaDescription, 'Meta description:') }}
+                        {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(edit_form.metaDescription) }}
                         </div>
@@ -50,11 +50,11 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="#" class="btn btn-default generate-slug">generate slug</a>
+                            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
                         </div>
                     </div>
                     <div class="form-group">
-                        {{ form_label(edit_form.slug, 'Slug:') }}
+                        {{ form_label(edit_form.slug, 'Slug'|trans) }}
                         <div class="col-sm-10">
                             {{ form_errors(edit_form.slug) }}
                             {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
@@ -69,7 +69,7 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="{{ path('admin_manufacturer') }}">
-                                Back to the list
+                                {{ 'Back to the list'|trans }}
                             </a>
                         </li>
                         <li class="list-group-item">

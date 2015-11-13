@@ -7,19 +7,19 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3>Manufacturers list</h3>
+                <h3>{{ 'Manufacturer list'|trans }}</h3>
                 <li>
                     <a href="{{ path('admin_manufacturer_new') }}">
-                        Create a new entry
+                        {{ 'Create a new manufacturer'|trans }}
                     </a>
                 </li>
                 <table class="records_list table table-bordered table-stripped">
                     <thead>
                     <tr>
-                        <th>{{ knp_pagination_sortable(entities, 'Name', 'a.name') }}</th>
-                        <th>Description</th>
-                        <th>{{ knp_pagination_sortable(entities, 'Photo', 'a.path') }}</th>
-                        <th>Actions</th>
+                        <th>{{ knp_pagination_sortable(entities, 'Name'|trans, 'a.name') }}</th>
+                        <th>{{ 'Description'|trans }}</th>
+                        <th>{{ knp_pagination_sortable(entities, 'Photo'|trans, 'a.path') }}</th>
+                        <th>{{ 'Actions'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -35,12 +35,12 @@
                                 {% if entity.path %}
                                     <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
                                 {% else %}
-                                    no photo
+                                    {{ 'no photos'|trans }}
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ path('admin_manufacturer_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
-                                <a href="{{ path('admin_manufacturer_edit', { 'id': entity.id }) }}">edit</a>
+                                <a href="{{ path('admin_manufacturer_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>&nbsp;&nbsp;
+                                <a href="{{ path('admin_manufacturer_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}

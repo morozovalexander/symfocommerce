@@ -7,18 +7,18 @@
                 {% include "AdminBundle:Admin:admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3>Poducts list</h3>
-                <li><a href="{{ path('admin_product_new') }}">Create new Product</a></li>
+                <h3>{{ 'Products list'|trans }}</h3>
+                <li><a href="{{ path('admin_product_new') }}">{{ 'Create new Product'|trans }}</a></li>
                 <table class="records_list table table-bordered table-stripped">
                     <thead>
                     <tr>
-                        <th>{{ knp_pagination_sortable(entities, 'Name', 'a.name') }}</th>
-                        <th>Category</th>
-                        <th>Manufacturer</th>
-                        <th>{{ knp_pagination_sortable(entities, 'Price', 'a.price') }}</th>
-                        <th>Photo</th>
-                        <th>Q-ty</th>
-                        <th>Actions</th>
+                        <th>{{ knp_pagination_sortable(entities, 'Name'|trans, 'a.name') }}</th>
+                        <th>{{ 'Category'|trans }}</th>
+                        <th>{{ 'Manufacturer'|trans }}</th>
+                        <th>{{ knp_pagination_sortable(entities, 'Price'|trans, 'a.price') }}</th>
+                        <th>{{ 'Photo'|trans }}</th>
+                        <th>{{ 'Q-ty'|trans }}</th>
+                        <th>{{ 'Actions'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,13 +42,13 @@
                                         <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
                                     {% endfor %} ...
                                 {% else %}
-                                    no photos
+                                    {{ 'no photos'|trans }}
                                 {% endif %}
                             </td>
                             <td>{{ entity.quantity}}</td>
                             <td>
-                                <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">show</a>&nbsp;&nbsp;
-                                <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">edit</a>
+                                <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>&nbsp;&nbsp;
+                                <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                             </td>
                         </tr>
                     {% endfor %}

@@ -8,12 +8,12 @@
                 {% include "AdminBundle:Admin:admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Slide creation</h3>
+                <h3>{{ 'Slide creation'|trans }}</h3>
 
                 {{ form(form) }}
 
                 <a href="{{ path('admin_slide') }}">
-                    Back to the list
+                    {{ 'Back to the list'|trans }}
                 </a>
             </div>
         </div>

@@ -13,28 +13,28 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Product</h3>
+                <h3>{{ 'Product'|trans }}</h3>
 
                 <table class="record_properties table table-bordered table-stripped">
                     <tbody>
                     <tr>
-                        <th>Name</th>
+                        <th>{{ 'Name'|trans }}</th>
                         <td>{{ entity.name }}</td>
                     </tr>
                     <tr>
-                        <th>Slug</th>
+                        <th>{{ 'Slug'|trans }}</th>
                         <td>{{ entity.slug }}</td>
                     </tr>
                     <tr>
-                        <th>Description</th>
+                        <th>{{ 'Description'|trans }}</th>
                         <td>{{ entity.description }}</td>
                     </tr>
                     <tr>
-                        <th>Price</th>
+                        <th>{{ 'Price'|trans }}</th>
                         <td>{{ entity.price }}</td>
                     </tr>
                     <tr>
-                        <th>Image</th>
+                        <th>{{ 'Image'|trans }}</th>
                         <td>
                             {% if entity.images|length %}
                                 {% for image in entity.images %}
@@ -43,28 +43,28 @@
                                     </a>
                                 {% endfor %}
                             {% else %}
-                                no photo
+                                <span class="text-danger">{{ 'no photos'|trans }}</span>
                             {% endif %}
                         </td>
                     </tr>
                     <tr>
-                        <th>Quantity</th>
+                        <th>{{ 'Quantity'|trans }}</th>
                         <td>{{ entity.quantity }}</td>
                     </tr>
                     <tr>
-                        <th>Measure</th>
+                        <th>{{ 'Measure'|trans }}</th>
                         <td>{{ entity.measure.name }}</td>
                     </tr>
                     <tr>
-                        <th>Measure quantity</th>
+                        <th>{{ 'Measure quantity'|trans }}</th>
                         <td>{{ entity.measureQuantity }}</td>
                     </tr>
                     <tr>
-                        <th>Meta keys</th>
+                        <th>{{ 'Meta keys'|trans }}</th>
                         <td>{{ entity.metaKeys }}</td>
                     </tr>
                     <tr>
-                        <th>Meta description</th>
+                        <th>{{ 'Meta description'|trans }}</th>
                         <td>{{ entity.metaDescription }}</td>
                     </tr>
                     </tbody>
@@ -73,12 +73,12 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <a href="{{ path('admin_product') }}">
-                            Back to the list
+                            {{ 'Back to the list'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">
-                            Edit
+                            {{ 'Edit'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">

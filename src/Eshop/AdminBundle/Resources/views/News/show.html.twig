@@ -7,28 +7,27 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>News</h3>
-
+                <h3>{{ 'News'|trans }}</h3>
                 <table class="record_properties table table-bordered table-stripped">
                     <tbody>
                     <tr>
-                        <th>Title</th>
+                        <th>{{ 'Title'|trans }}</th>
                         <td>{{ entity.title }}</td>
                     </tr>
                     <tr>
-                        <th>Slug</th>
+                        <th>{{ 'Slug'|trans }}</th>
                         <td>{{ entity.slug }}</td>
                     </tr>
                     <tr>
-                        <th>Text</th>
+                        <th>{{ 'Text'|trans }}</th>
                         <td>{{ entity.text }}</td>
                     </tr>
                     <tr>
-                        <th>Meta keys</th>
+                        <th>{{ 'Meta keys'|trans }}</th>
                         <td>{{ entity.metaKeys }}</td>
                     </tr>
                     <tr>
-                        <th>Meta desription</th>
+                        <th>{{ 'Meta desription'|trans }}</th>
                         <td>{{ entity.metaDescription }}</td>
                     </tr>
                     </tbody>
@@ -37,12 +36,12 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <a href="{{ path('admin_news') }}">
-                            Back to the list
+                            {{ 'Back to the list'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ path('admin_news_edit', { 'id': entity.id }) }}">
-                            Edit
+                            {{ 'Edit'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">

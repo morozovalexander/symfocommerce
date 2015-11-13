@@ -7,12 +7,12 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Measure</h3>
+                <h3>{{ 'Measure'|trans }}</h3>
 
                 <table class="record_properties table table-bordered table-stripped">
                     <tbody>
                     <tr>
-                        <th>Name</th>
+                        <th>{{ 'Name'|trans }}</th>
                         <td>{{ entity.name }}</td>
                     </tr>
                     </tbody>
@@ -21,12 +21,12 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <a href="{{ path('admin_measure') }}">
-                            Back to the list
+                            {{ 'Back to the list'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ path('admin_measure_edit', { 'id': entity.id }) }}">
-                            Edit
+                            {{ 'Edit'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">
