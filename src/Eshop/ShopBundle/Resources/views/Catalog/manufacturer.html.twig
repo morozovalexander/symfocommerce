@@ -81,7 +81,7 @@
         <h3 class="group inner list-group-item-heading">{{ manufacturer.name }}</h3>
         <div class="caption">
             <p class="group inner list-group-item-text">
-                {{ manufacturer.description }}
+                {{ manufacturer.description|raw|nl2br }}
             </p>
         </div>
     </div>

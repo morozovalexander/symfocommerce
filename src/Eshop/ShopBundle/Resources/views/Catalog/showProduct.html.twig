@@ -83,9 +83,9 @@
             ({{ product.measureQuantity }} {{ product.measure.name }})</h3>
 
         <div class="caption">
-            <p class="group inner list-group-item-text">
-                {{ product.description }}
-            </p>
+            <div class="group inner list-group-item-text">
+                {{ product.description|raw|nl2br }}
+            </div>
         </div>
     </div>
 {% endblock page_content %}

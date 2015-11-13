@@ -11,8 +11,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="well">
-                        <h4>{{ entity.title }}</h4>
-                        <p>{{ entity.text }}</p>
+                        <h4>
+                            <strong>{{ entity.title }}</strong>
+                        </h4>
+                        <div>{{ entity.text|raw|nl2br }}</div>
                         <p class="pull-right">{{ entity.date|date() }}</p>
                     </div>
                 </div>

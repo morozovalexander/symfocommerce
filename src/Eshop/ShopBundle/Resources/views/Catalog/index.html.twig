@@ -52,8 +52,10 @@
         <div class="col-md-12">
             <div class="well">
                 {% if news | length %}
-                    <h4>{{ news.title }}</h4>
-                    <p>{{ news.text }}</p>
+                    <h4>
+                        <strong>{{ news.title }}</strong>
+                    </h4>
+                    <div>{{ news.text|raw|nl2br }}</div>
                     <p class="pull-right">{{ news.date|date() }}</p>
                 {% else %}
                     {{ 'news.nonews'|trans }}
