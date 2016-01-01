@@ -42,6 +42,12 @@ class StaticPage
      */
     private $orderNum;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
     /**
      * Get id
@@ -120,5 +126,28 @@ class StaticPage
     public function getOrderNum()
     {
         return $this->orderNum;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return StaticPage
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }
