@@ -1,11 +1,5 @@
 {% extends '@Admin/adminLayout.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bundles/shop/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
-          type="text/css"/>
-{% endblock stylesheets %}
-
 {% block page_content -%}
     <div class="container-fluid">
         <div class="row">
@@ -13,13 +7,13 @@
                 {% include "@Admin/Admin/admin-menu.html.twig" %}
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>{{ 'Slide'|trans }}</h3>
+                <h3>{{ 'Static page'|trans }}</h3>
 
                 <table class="record_properties table table-bordered table-stripped">
                     <tbody>
                     <tr>
-                        <th>{{ 'Name'|trans }}</th>
-                        <td>{{ entity.name }}</td>
+                        <th>{{ 'Title'|trans }}</th>
+                        <td>{{ entity.title }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'Enabled'|trans }}</th>
@@ -32,33 +26,25 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>{{ 'Image'|trans }}</th>
-                        <td>
-                            {% if entity.path %}
-                                <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
-                                    <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
-                                </a>
-                            {% else %}
-                                {{ 'no photos'|trans }}
-                            {% endif %}
-                        </td>
+                        <th>{{ 'Page order'|trans }}</th>
+                        <td>{{ entity.orderNum }}</td>
                     </tr>
                     <tr>
-                        <th>{{ 'Slide order'|trans }}</th>
-                        <td>{{ entity.slideOrder }}</td>
+                        <th>{{ 'Content'|trans }}</th>
+                        <td>{{ entity.content }}</td>
                     </tr>
                     </tbody>
                 </table>
 
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <a href="{{ path('admin_slide') }}">
+                        <a href="{{ path('admin_staticpage') }}">
                             {{ 'Back to the list'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">
-                        <a href="{{ path('admin_slide_edit', { 'id': entity.id }) }}">
-                            {{ 'Slide'|trans }}
+                        <a href="{{ path('admin_staticpage_edit', { 'id': entity.id }) }}">
+                            {{ 'Edit'|trans }}
                         </a>
                     </li>
                     <li class="list-group-item">
@@ -69,15 +55,3 @@
         </div>
     </div>
 {% endblock page_content %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/shop/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('bundles/shop/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
-    <script>
-        $(document).ready(function () {
-            $(".fancybox").fancybox();
-        });
-    </script>
-{% endblock javascripts %}

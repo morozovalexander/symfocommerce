@@ -3,12 +3,14 @@
 namespace Eshop\ShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * StaticPage
  *
  * @ORM\Table(name="static_page")
  * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Repository\StaticPageRepository")
+ * @UniqueEntity("orderNum")
  */
 class StaticPage
 {
@@ -38,7 +40,7 @@ class StaticPage
     /**
      * @var integer
      *
-     * @ORM\Column(name="slide_order", type="integer", unique=true)
+     * @ORM\Column(name="orderNum", type="integer", unique=true)
      */
     private $orderNum;
 

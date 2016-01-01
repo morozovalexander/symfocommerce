@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\StaticPage;
-use Eshop\ShopBundle\Form\SlideType;
 
 /**
  * StaticPage controller.
@@ -54,7 +53,7 @@ class StaticPageController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_slide_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_staticpage_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -161,8 +160,8 @@ class StaticPageController extends Controller
     */
     private function createEditForm(StaticPage $entity)
     {
-        $form = $this->createForm(new SlideType(), $entity, array(
-            'action' => $this->generateUrl('admin_slide_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new StaticPageType(), $entity, array(
+            'action' => $this->generateUrl('admin_staticpage_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -192,11 +191,6 @@ class StaticPageController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            if ($editForm->get('file')->getData() !== null) { // if any file was updated
-                $file = $editForm->get('file')->getData();
-                $entity->removeUpload(); // remove old file, see this at the bottom
-                $entity->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
-            }
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -204,7 +198,7 @@ class StaticPageController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl('admin_slide_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_staticpage_edit', array('id' => $id)));
         }
 
         return array(
@@ -236,7 +230,7 @@ class StaticPageController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_slide'));
+        return $this->redirect($this->generateUrl('admin_staticpage'));
     }
 
     /**
@@ -249,7 +243,7 @@ class StaticPageController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_slide_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_staticpage_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

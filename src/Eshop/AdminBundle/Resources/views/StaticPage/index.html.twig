@@ -18,6 +18,7 @@
                     <tr>
                         <th>{{ 'Title'|trans }}</th>
                         <th>{{ 'Page order'|trans }}</th>
+                        <th>{{ 'Enabled'|trans }}</th>
                         <th>{{ 'Actions'|trans }}</th>
                     </tr>
                     </thead>
@@ -25,10 +26,17 @@
                     {% for entity in entities %}
                         <tr>
                             <td>
-                                <a href="{{ path('admin_staticpage_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                                <a href="{{ path('admin_staticpage_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
                             </td>
                             <td>
                                 {{ entity.orderNum }}
+                            </td>
+                            <td>
+                                {% if entity.enabled %}
+                                    {{ 'yes'|trans }}
+                                {% else %}
+                                    {{ 'no'|trans }}
+                                {% endif %}
                             </td>
                             <td>
                                 <a href="{{ path('admin_staticpage_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
