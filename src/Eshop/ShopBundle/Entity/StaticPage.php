@@ -26,6 +26,13 @@ class StaticPage
     /**
      * @var string
      *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
@@ -151,5 +158,28 @@ class StaticPage
     public function getOrderNum()
     {
         return $this->orderNum;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return StaticPage
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
