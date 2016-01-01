@@ -16,6 +16,7 @@ class StaticPageType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('slug')
             ->add('enabled')
             ->add('orderNum')
             ->add('content')
