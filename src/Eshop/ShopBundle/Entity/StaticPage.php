@@ -36,9 +36,9 @@ class StaticPage
     private $content;
 
     /**
-     * @var bool
+     * @var integer
      *
-     * @ORM\Column(name="orderNum", type="boolean", unique=true)
+     * @ORM\Column(name="slide_order", type="integer", unique=true)
      */
     private $orderNum;
 
@@ -106,29 +106,6 @@ class StaticPage
     }
 
     /**
-     * Set orderNum
-     *
-     * @param boolean $orderNum
-     * @return StaticPage
-     */
-    public function setOrderNum($orderNum)
-    {
-        $this->orderNum = $orderNum;
-
-        return $this;
-    }
-
-    /**
-     * Get orderNum
-     *
-     * @return boolean 
-     */
-    public function getOrderNum()
-    {
-        return $this->orderNum;
-    }
-
-    /**
      * Set enabled
      *
      * @param boolean $enabled
@@ -149,5 +126,28 @@ class StaticPage
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Set orderNum
+     *
+     * @param integer $orderNum
+     * @return StaticPage
+     */
+    public function setOrderNum($orderNum)
+    {
+        $this->orderNum = $orderNum;
+
+        return $this;
+    }
+
+    /**
+     * Get orderNum
+     *
+     * @return integer 
+     */
+    public function getOrderNum()
+    {
+        return $this->orderNum;
     }
 }
