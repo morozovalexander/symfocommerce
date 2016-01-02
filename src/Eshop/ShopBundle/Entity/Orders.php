@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Orders
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\OrdersRepository")
+ * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Repository\OrdersRepository")
  */
 class Orders
 {

@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Category
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Repository\CategoryRepository")
  * @UniqueEntity("slug"),
  *     errorPath="slug",
  *     message="This slug is already in use."

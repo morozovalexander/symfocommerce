@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Product
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Entity\ProductRepository")
+ * @ORM\Entity(repositoryClass="Eshop\ShopBundle\Repository\ProductRepository")
  * @UniqueEntity("slug"),
  *     errorPath="slug",
  *     message="This slug is already in use."
