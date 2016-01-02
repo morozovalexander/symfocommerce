@@ -22,4 +22,15 @@ class StaticPageRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findBySlug($slug){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('a')
+            ->from('ShopBundle:StaticPage', 'a')
+            ->where('a.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

@@ -223,9 +223,7 @@ class CatalogController extends Controller
     }
 
     /**
-     * Lists news entities.
-     *
-     * @Route("/news", name="news")
+     * Render static top menu for static pages.
      * @Method("GET")
      * @Template()
      */
@@ -240,6 +238,26 @@ class CatalogController extends Controller
 
         return array(
             'headers' => $headers
+        );
+    }
+
+    /**
+     * Shows static page.
+     * @Route("/{slug}.html",name="show_static_page")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showStaticPageAction($slug)
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $page = $em->getRepository('ShopBundle:StaticPage')->findBySlug($slug);
+
+        return array(
+            'page' => $page
         );
     }
 }
