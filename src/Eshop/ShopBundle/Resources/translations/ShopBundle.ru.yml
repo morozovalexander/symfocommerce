@@ -65,6 +65,16 @@ cart:
     checkout: Продолжить
     clear: Очистить
 
+orderform:
+    orderform: Форма заказа
+    name: Имя
+    email: Email
+    phone: Телефон
+    address: Адрес
+    yourcomment: Комментарий к закау
+    submit: Заказать
+    totalsumis: Сумма заказа
+
 # News
 news:
     nonews: Еще нет новостей

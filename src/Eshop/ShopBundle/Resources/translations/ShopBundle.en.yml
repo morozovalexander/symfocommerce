@@ -65,6 +65,16 @@ cart:
     checkout: Checkout
     clear: Clear
 
+orderform:
+    orderform: Order Form
+    name: Name
+    email: Email
+    phone: Phone
+    address: Address
+    yourcomment: Your comment
+    submit: Submit
+    totalsumis: Total sum is
+
 # News
 news:
     nonews: No news yet
