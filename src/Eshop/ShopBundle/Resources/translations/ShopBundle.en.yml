@@ -75,6 +75,11 @@ orderform:
     submit: Submit
     totalsumis: Total sum is
 
+thankyou:
+    handleorder: Thank you! We handle your oder as soon as possible!
+    continue: continue shopping
+    thankyou: Thank you!
+
 # News
 news:
     nonews: No news yet

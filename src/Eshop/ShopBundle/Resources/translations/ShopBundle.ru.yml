@@ -75,6 +75,11 @@ orderform:
     submit: Заказать
     totalsumis: Сумма заказа
 
+thankyou:
+    handleorder: Спасибо! Ваш заказ принят и поступил в обработку!
+    continue: продолжить покупки
+    thankyou: Cпасибо!
+
 # News
 news:
     nonews: Еще нет новостей
