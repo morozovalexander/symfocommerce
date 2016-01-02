@@ -27,7 +27,7 @@
                                         {{ entity.date|date('Y-m-d H:i') }}
                                     </td>
                                     <td>
-                                        <a href="{{ path('admin_order_show', { 'id': entity.id }) }}">show</a>
+                                        <a href="{{ path('admin_order_show', { 'id': entity.id }) }}">{{ 'Show'|trans }}</a>
                                     </td>
                                 </tr>
                             {% endfor %}
