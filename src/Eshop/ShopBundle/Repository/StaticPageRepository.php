@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class StaticPageRepository extends EntityRepository
 {
+    public function getHeaders(){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('a.title, a.slug')
+            ->from('ShopBundle:StaticPage', 'a')
+            ->where('a.enabled = 1')
+            ->addOrderBy('a.orderNum', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

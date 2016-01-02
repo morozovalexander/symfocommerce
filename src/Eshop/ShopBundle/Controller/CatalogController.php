@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -219,5 +220,26 @@ class CatalogController extends Controller
                 break;
         }
         return $sortedBy;
+    }
+
+    /**
+     * Lists news entities.
+     *
+     * @Route("/news", name="news")
+     * @Method("GET")
+     * @Template()
+     */
+    public function staticPagesMenuAction()
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $headers = $em->getRepository('ShopBundle:StaticPage')->getHeaders();
+
+        return array(
+            'headers' => $headers
+        );
     }
 }
