@@ -30,7 +30,7 @@ class LoadMeasureData implements FixtureInterface, ContainerAwareInterface, Orde
     {
         $measureArray = array(
             'Grammes',
-            'Peaces',
+            'Pieces',
             'Caps',
             'Ml',
             'Packs'
