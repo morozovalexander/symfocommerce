@@ -59,6 +59,20 @@ class StaticPage
     private $enabled;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_keys", type="text", nullable=true)
+     */
+    private $metaKeys;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
+     */
+    private $metaDescription;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -181,5 +195,51 @@ class StaticPage
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set metaKeys
+     *
+     * @param string $metaKeys
+     * @return StaticPage
+     */
+    public function setMetaKeys($metaKeys)
+    {
+        $this->metaKeys = $metaKeys;
+
+        return $this;
+    }
+
+    /**
+     * Get metaKeys
+     *
+     * @return string 
+     */
+    public function getMetaKeys()
+    {
+        return $this->metaKeys;
+    }
+
+    /**
+     * Set metaDescription
+     *
+     * @param string $metaDescription
+     * @return StaticPage
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metaDescription
+     *
+     * @return string 
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
     }
 }
