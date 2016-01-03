@@ -19,6 +19,8 @@ class StaticPageType extends AbstractType
             ->add('slug')
             ->add('enabled')
             ->add('orderNum')
+            ->add('metaKeys')
+            ->add('metaDescription')
             ->add('content')
         ;
     }

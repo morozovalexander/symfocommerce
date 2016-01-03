@@ -44,6 +44,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        {{ form_label(form.metaKeys, 'Meta keys'|trans) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.metaKeys) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.metaDescription, 'Meta description'|trans) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.metaDescription) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
                         {{ form_label(form.content, 'Content'|trans) }}
                         <div class="col-sm-10">
                             {{ form_widget(form.content) }}
