@@ -33,4 +33,31 @@ $(function () {
             $('form').submit();
         }
     });
+
+    //grid to list view changing
+    $('#list').click(function (event) {
+        event.preventDefault();
+        $('#products .item').addClass('list-group-item');
+    });
+    $('#grid').click(function (event) {
+        event.preventDefault();
+        $('#products .item').removeClass('list-group-item');
+        $('#products .item').addClass('grid-group-item');
+    });
+
+    //menu items highlight
+    highlightMenu();
 });
+
+//menu items highlight
+function highlightMenu(){
+    //get requestUri
+    var requestUri = '{{ app.request.requestUri }}';
+
+    //highlight current route
+    $('.menu-link').each(function () {
+        if ($(this).attr('href') == requestUri) {
+            $(this).addClass('active');
+        }
+    });
+}
