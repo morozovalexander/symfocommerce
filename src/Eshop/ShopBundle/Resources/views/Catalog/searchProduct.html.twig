@@ -1,0 +1,107 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ 'search.searchfor'|trans }} "{{ search_phrase }}"
+{% endblock title %}
+
+{% block page_content -%}
+    <div class="well well-sm">
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>{{ 'category.view.list'|trans }}</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                        class="glyphicon glyphicon-th"></span>{{ 'category.view.grid'|trans }}</a>
+        </div>
+        <strong>{{ 'search.searchfor'|trans }} "{{ search_phrase }}"</strong>
+        <div class="dropdown pull-right">
+            <strong>{{ 'category.sort.by'|trans }}</strong>
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                {{ sortedby|trans }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>{{ knp_pagination_sortable(products, 'category.sort.name'|trans, 'p.name') }}</li>
+                <li>{{ knp_pagination_sortable(products, 'category.sort.price'|trans, 'p.price') }}</li>
+            </ul>
+        </div>
+    </div>
+    <div id="products" class="row list-group">
+    {% if products|length %}
+        {% for product in products %}
+            <div class="item col-md-4 col-lg-3">
+                <div class="thumbnail">
+                    <a href="{{ path('show_product', {'slug' : product.slug}) }}">
+                        {% if product.images|length %}
+                            <img class="group list-group-image"
+                                 src="{{ asset( ('uploads/gallery/' ~ product.images.first().path) | imagine_filter('category_mainpage_thumb')) }}"
+                                 alt="{{ product.name }}" />
+                        {% else %}
+                            <img class="group list-group-image"
+                                 src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
+                                 alt="{{ product.name }}" />
+                        {% endif %}
+                    </a>
+                    <div class="caption description-container" data-id="{{ product.id }}">
+                        <a href="{{ path('show_product', {'slug' : product.slug}) }}">
+                            <h4 class="group inner list-group-item-heading">
+                                {{ product.name }} ({{ product.measureQuantity }} {{ product.measure.name }})
+                            </h4>
+                        </a>
+                        <p class="group inner list-group-item-text">
+                            {{ product.description|slice(0, 190) }}
+                        </p>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 col-lg-6">
+                                <p class="lead price">
+                                    <span>{{ product.price }}</span> {{ 'currency'|trans }}
+                                </p>
+                            </div>
+                            <div class="col-xs-12 col-md-12 col-lg-6">
+                                <a class="btn btn-success addtocart-btn" href="#">{{ 'cart.addtocart'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>{{ 'manufacturer.noproducts'|trans }}</h3>
+    {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+            {{ knp_pagination_render(products) }}
+        </div>
+    </div>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#list').click(function (event) {
+                event.preventDefault();
+                $('#products .item').addClass('list-group-item');
+            });
+            $('#grid').click(function (event) {
+                event.preventDefault();
+                $('#products .item').removeClass('list-group-item');
+                $('#products .item').addClass('grid-group-item');
+            });
+            highlightMenu();
+        });
+
+        function highlightMenu(){
+            //get requestUri
+            var requestUri = '{{ app.request.requestUri }}';
+
+            //highlight current route
+            $('.menu-link').each(function () {
+                if ($(this).attr('href') == requestUri) {
+                    $(this).addClass('active');
+                }
+            });
+        }
+    </script>
+{% endblock javascripts %}

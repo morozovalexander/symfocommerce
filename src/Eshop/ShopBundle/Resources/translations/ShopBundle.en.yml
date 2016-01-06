@@ -88,3 +88,8 @@ news:
 slider:
     previous: previous
     next: next
+
+# Search
+search:
+    searchfor: Search for
+    search: search

@@ -33,9 +33,10 @@
                     </li>
                 </ul>
 
-                <form class="navbar-form" role="search">
+                <form action="{{ path('search') }}" class="navbar-form" role="search" method="GET">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="{{ 'search.search'|trans }}"
+                               id="search_phrase" name="search_phrase">
 						<span class="input-group-btn">
 							<button type="reset" class="btn btn-default">
 								<span class="glyphicon glyphicon-remove">

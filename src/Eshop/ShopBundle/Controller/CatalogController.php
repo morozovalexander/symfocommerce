@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -197,6 +198,50 @@ class CatalogController extends Controller
 
         return array(
             'news' => $news,
+        );
+    }
+
+    /**
+     * @Route("/search", name="search")
+     * @Method("GET")
+     * @Template()
+     */
+    public function searchProductAction(Request $request)
+    {
+        $searchResults = array();
+
+        $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
+        $productRepository = $em->getRepository('ShopBundle:Product');
+
+        $search_phrase = 'search';
+        if ($request->getMethod() == 'GET') {
+            $search_phrase = trim($request->get('search_phrase'));
+            /**
+             * @var QueryBuilder $qb
+             */
+            $qb = $productRepository->createQueryBuilder('p');
+            $searchWords = explode(' ', $search_phrase);
+
+            $cqbORX = array();
+            foreach ($searchWords as $searchWord) {
+                $cqbORX[] = $qb->expr()->like('p.name', $qb->expr()->literal('%' . $searchWord . '%'));
+                $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
+            }
+
+            $qb->andWhere(call_user_func_array(array($qb->expr(), "orx"), $cqbORX));
+
+            $limit = $this->getParameter('search_pagination_count');
+            $searchResults = $paginator->paginate(
+                $qb,
+                $this->get('request')->query->getInt('page', 1)/*page number*/,
+                $limit
+            );
+        }
+        return array(
+            'products' => $searchResults,
+            'search_phrase' => $search_phrase,
+            'sortedby' => $this->getSortingParamName($request)
         );
     }
 

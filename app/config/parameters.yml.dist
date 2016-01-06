@@ -24,3 +24,4 @@ parameters:
     admin_categories_pagination_count: 20
     admin_manufacturers_pagination_count: 20
     category_products_pagination_count: 24
+    search_pagination_count: 24

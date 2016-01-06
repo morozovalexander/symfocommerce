@@ -1,7 +1,6 @@
 $(function () {
     // Remove Search if user Resets Form or hits Escape!
     $('body, .navbar-collapse form[role="search"] button[type="reset"]').on('click keyup', function(event) {
-        console.log(event.currentTarget);
         if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active') ||
             $(event.currentTarget).attr('type') == 'reset') {
             closeSearch();
@@ -24,12 +23,14 @@ $(function () {
 
     });
     // ONLY FOR DEMO // Please use $('form').submit(function(event)) to track from submission
-    // if your form is ajax remember to call `closeSearch()` to close the search container
     $(document).on('click', '.navbar-collapse form[role="search"].active button[type="submit"]', function(event) {
         event.preventDefault();
-        var $form = $(this).closest('form'),
-            $input = $form.find('input');
-        $('#showSearchTerm').text($input.val());
-        closeSearch()
+        var search_phrase = $('#search_phrase').val();
+        //check if search is empty
+        if (search_phrase === '') {
+            closeSearch();
+        } else {
+            $('form').submit();
+        }
     });
 });
