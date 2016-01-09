@@ -1,52 +1,43 @@
 {% extends '@Admin/adminLayout.html.twig' %}
 
 {% block page_content -%}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                {% include "@Admin/Admin/admin-menu.html.twig" %}
-            </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3>{{ 'Slide list'|trans }}</h3>
-                <li>
-                    <a href="{{ path('admin_slide_new') }}">
-                        {{ 'Create a new slide'|trans }}
-                    </a>
-                </li>
-                <table class="records_list table table-bordered table-stripped">
-                    <thead>
-                    <tr>
-                        <th>{{ 'Name'|trans }}</th>
-                        <th>{{ 'Image'|trans }}</th>
-                        <th>{{ 'Slide order'|trans }}</th>
-                        <th>{{ 'Actions'|trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for entity in entities %}
-                        <tr>
-                            <td>
-                                <a href="{{ path('admin_slide_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
-                            </td>
-                            <td>
-                                {% if entity.path %}
-                                    <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
-                                {% else %}
-                                    {{ 'Actions'|trans }}x
-                                {% endif %}
-                            </td>
-                            <td>
-                                {{ entity.slideOrder }}
-                            </td>
-                            <td>
-                                <a href="{{ path('admin_slide_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
-                                <a href="{{ path('admin_slide_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <h3>{{ 'Slide list'|trans }}</h3>
+    <li>
+        <a href="{{ path('admin_slide_new') }}">
+            {{ 'Create a new slide'|trans }}
+        </a>
+    </li>
+    <table class="records_list table table-bordered table-stripped">
+        <thead>
+        <tr>
+            <th>{{ 'Name'|trans }}</th>
+            <th>{{ 'Image'|trans }}</th>
+            <th>{{ 'Slide order'|trans }}</th>
+            <th>{{ 'Actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    <a href="{{ path('admin_slide_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                </td>
+                <td>
+                    {% if entity.path %}
+                        <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                    {% else %}
+                        {{ 'Actions'|trans }}x
+                    {% endif %}
+                </td>
+                <td>
+                    {{ entity.slideOrder }}
+                </td>
+                <td>
+                    <a href="{{ path('admin_slide_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
+                    <a href="{{ path('admin_slide_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock page_content %}

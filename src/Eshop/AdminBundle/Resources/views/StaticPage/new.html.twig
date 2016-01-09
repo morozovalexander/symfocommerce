@@ -2,76 +2,67 @@
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block page_content -%}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                {% include "AdminBundle:Admin:admin-menu.html.twig" %}
-            </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>{{ 'Static page creation'|trans }}</h3>
+    <h3>{{ 'Static page creation'|trans }}</h3>
 
-                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-                    <div class="form-group">
-                        {{ form_label(form.title, 'Title'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(form.title, {'attr': {'class': 'product-name'}}) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-10">
-                            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.slug, 'Slug'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_errors(form.slug) }}
-                            {{ form_widget(form.slug, {'attr': {'class': 'product-slug'}}) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.enabled, 'Enabled'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(form.enabled) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.orderNum, 'Order num'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(form.orderNum) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.metaKeys, 'Meta keys'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(form.metaKeys) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.metaDescription, 'Meta description'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(form.metaDescription) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.content, 'Content'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(form.content) }}
-                        </div>
-                    </div>
-
-                    {{ form_rest(form) }}
-
-                {{ form_end(form) }}
-
-                <a href="{{ path('admin_staticpage') }}">
-                    {{ 'Back to the list'|trans }}
-                </a>
+        <div class="form-group">
+            {{ form_label(form.title, 'Title'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.title, {'attr': {'class': 'product-name'}}) }}
             </div>
         </div>
-    </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.slug, 'Slug'|trans) }}
+            <div class="col-sm-10">
+                {{ form_errors(form.slug) }}
+                {{ form_widget(form.slug, {'attr': {'class': 'product-slug'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.enabled, 'Enabled'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.enabled) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.orderNum, 'Order num'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.orderNum) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.metaKeys, 'Meta keys'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.metaKeys) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.metaDescription, 'Meta description'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.metaDescription) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.content, 'Content'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.content) }}
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_staticpage') }}">
+        {{ 'Back to the list'|trans }}
+    </a>
 {% endblock page_content %}
 
 {% block javascripts %}

@@ -1,60 +1,51 @@
 {% extends '@Admin/adminLayout.html.twig' %}
 
 {% block page_content -%}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                {% include "@Admin/Admin/admin-menu.html.twig" %}
-            </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>Order</h3>
+    <h3>Order</h3>
 
-                <table class="record_properties table table-bordered table-stripped">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'Id'|trans }}</th>
-                        <td>{{ entity.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Client Name'|trans }}</th>
-                        <td>{{ entity.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Email'|trans }}</th>
-                        <td>{{ entity.email }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Phone'|trans }}</th>
-                        <td>{{ entity.phone }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Address'|trans }}</th>
-                        <td>{{ entity.address }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Comment'|trans }}</th>
-                        <td>
-                            {% if entity.comment|length %}
-                                {{ entity.comment }}
-                            {% else %}
-                                <p class="text-muted">{{ 'No comment'|trans }}</p>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <table class="record_properties table table-bordered table-stripped">
+        <tbody>
+        <tr>
+            <th>{{ 'Id'|trans }}</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Client Name'|trans }}</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Email'|trans }}</th>
+            <td>{{ entity.email }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Phone'|trans }}</th>
+            <td>{{ entity.phone }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Address'|trans }}</th>
+            <td>{{ entity.address }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Comment'|trans }}</th>
+            <td>
+                {% if entity.comment|length %}
+                    {{ entity.comment }}
+                {% else %}
+                    <p class="text-muted">{{ 'No comment'|trans }}</p>
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <a href="{{ path('admin_orders') }}">
-                            {{ 'Back to the list'|trans }}
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        {{ form(delete_form) }}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ path('admin_orders') }}">
+                {{ 'Back to the list'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            {{ form(delete_form) }}
+        </li>
+    </ul>
 {% endblock page_content %}

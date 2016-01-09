@@ -2,83 +2,74 @@
 {% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block page_content -%}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                {% include "@Admin/Admin/admin-menu.html.twig" %}
-            </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>{{ 'Category edit'|trans }}</h3>
+    <h3>{{ 'Category edit'|trans }}</h3>
 
-                {% for flashMessage in app.session.flashbag.get('notice') %}
-                    <div class="alert alert-success" role="alert">
-                        {{ flashMessage }}
-                    </div>
-                {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
 
-                <form action="{{ path('admin_category_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
-                    <div class="form-group">
-                        {{ form_label(edit_form.name, 'Name'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(edit_form.description, 'Description'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(edit_form.description) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(edit_form.file, 'Image'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(edit_form.file) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(edit_form.metaKeys) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_widget(edit_form.metaDescription) }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-10">
-                            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(edit_form.slug, 'Slug'|trans) }}
-                        <div class="col-sm-10">
-                            {{ form_errors(edit_form.slug) }}
-                            {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
-                        </div>
-                    </div>
-                    <input type='hidden' name='_method' value='PUT'>
-                    {{ form_rest(edit_form) }}
-
-                </form>
-
-                <div class="col-md-5 col-md-offset-2 ">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="{{ path('admin_category') }}">
-                                {{ 'Back to the list'|trans }}
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            {{ form(delete_form) }}
-                        </li>
-                    </ul>
-                </div>
+    <form action="{{ path('admin_category_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
+        <div class="form-group">
+            {{ form_label(edit_form.name, 'Name'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
             </div>
         </div>
+        <div class="form-group">
+            {{ form_label(edit_form.description, 'Description'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(edit_form.description) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(edit_form.file, 'Image'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(edit_form.file) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(edit_form.metaKeys) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
+            <div class="col-sm-10">
+                {{ form_widget(edit_form.metaDescription) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(edit_form.slug, 'Slug'|trans) }}
+            <div class="col-sm-10">
+                {{ form_errors(edit_form.slug) }}
+                {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
+            </div>
+        </div>
+        <input type='hidden' name='_method' value='PUT'>
+        {{ form_rest(edit_form) }}
+
+    </form>
+
+    <div class="col-md-5 col-md-offset-2 ">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{{ path('admin_category') }}">
+                    {{ 'Back to the list'|trans }}
+                </a>
+            </li>
+            <li class="list-group-item">
+                {{ form(delete_form) }}
+            </li>
+        </ul>
     </div>
 {% endblock page_content %}
 

@@ -33,8 +33,17 @@
         </div>
     </nav>
 
-    {% block page_content %}
-    {% endblock page_content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                {% include "@Admin/Admin/admin-menu.html.twig" %}
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
+            {% block page_content %}
+            {% endblock page_content %}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 {% block javascripts %}

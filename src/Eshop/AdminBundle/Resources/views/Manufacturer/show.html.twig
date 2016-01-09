@@ -7,69 +7,60 @@
 {% endblock stylesheets %}
 
 {% block page_content -%}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                {% include "@Admin/Admin/admin-menu.html.twig" %}
-            </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-5 col-md-offset-2 main">
-                <h3>{{ 'Manufacturer'|trans }}</h3>
+    <h3>{{ 'Manufacturer'|trans }}</h3>
 
-                <table class="record_properties table table-bordered table-stripped">
-                    <tbody>
-                    <tr>
-                        <th>{{ 'Name'|trans }}</th>
-                        <td>{{ entity.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Slug'|trans }}</th>
-                        <td>{{ entity.slug }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Description'|trans }}</th>
-                        <td>{{ entity.description }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Image'|trans }}</th>
-                        <td>
-                            {% if entity.path %}
-                                <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
-                                    <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
-                                </a>
-                            {% else %}
-                                {{ 'no photo'|trans }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Meta keys'|trans }}</th>
-                        <td>{{ entity.metaKeys }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ 'Meta desription'|trans }}</th>
-                        <td>{{ entity.metaDescription }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+    <table class="record_properties table table-bordered table-stripped">
+        <tbody>
+        <tr>
+            <th>{{ 'Name'|trans }}</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Slug'|trans }}</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Description'|trans }}</th>
+            <td>{{ entity.description }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Image'|trans }}</th>
+            <td>
+                {% if entity.path %}
+                    <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
+                        <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                    </a>
+                {% else %}
+                    {{ 'no photo'|trans }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ 'Meta keys'|trans }}</th>
+            <td>{{ entity.metaKeys }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Meta desription'|trans }}</th>
+            <td>{{ entity.metaDescription }}</td>
+        </tr>
+        </tbody>
+    </table>
 
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <a href="{{ path('admin_manufacturer') }}">
-                            {{ 'Back to the list'|trans }}
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ path('admin_manufacturer_edit', { 'id': entity.id }) }}">
-                            {{ 'Edit'|trans }}
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        {{ form(delete_form) }}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ path('admin_manufacturer') }}">
+                {{ 'Back to the list'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ path('admin_manufacturer_edit', { 'id': entity.id }) }}">
+                {{ 'Edit'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            {{ form(delete_form) }}
+        </li>
+    </ul>
 {% endblock page_content %}
 
 {% block javascripts %}
