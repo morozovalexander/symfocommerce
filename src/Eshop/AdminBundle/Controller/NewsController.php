@@ -50,7 +50,7 @@ class NewsController extends Controller
      *
      * @Route("/", name="admin_news_create")
      * @Method("POST")
-     * @Template("ShopBundle:News:new.html.twig")
+     * @Template("AdminBundle:News:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -184,7 +184,7 @@ class NewsController extends Controller
      *
      * @Route("/{id}", name="admin_news_update")
      * @Method("PUT")
-     * @Template("ShopBundle:News:edit.html.twig")
+     * @Template("AdminBundle:News:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
