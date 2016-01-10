@@ -2,6 +2,8 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Eshop\ShopBundle\Entity\OrderProduct;
+use Eshop\ShopBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -55,18 +57,45 @@ class OrdersController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        /**
+         * @var Orders $order
+         */
+        $order = $em->getRepository('ShopBundle:Orders')->find($id);
 
-        $entity = $em->getRepository('ShopBundle:Orders')->find($id);
-
-        if (!$entity) {
+        if (!$order) {
             throw $this->createNotFoundException('Unable to find Order entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
+        $orderProducts = $order->getOrderProducts();
+        $productsArray = array();
+        $totalSum = 0;
+
+        foreach($orderProducts as $orderProduct){
+            $productPosition = array();
+            /**
+             * @var Product $product
+             * @var OrderProduct $orderProduct
+             */
+            $product = $orderProduct->getProduct();
+            $price = $product->getPrice();
+            $quantity = $orderProduct->getQuantity();
+            $sum = $price * $quantity;
+
+            $productPosition['product'] = $product;
+            $productPosition['quantity'] = $quantity;
+            $productPosition['price'] = $price;
+            $productPosition['sum'] = $sum;
+            $totalSum += $sum;
+
+            $productsArray[] = $productPosition;
+        }
 
         return array(
-            'entity'      => $entity,
+            'entity' => $order,
             'delete_form' => $deleteForm->createView(),
+            'totalsum' => $totalSum,
+            'products' => $productsArray
         );
     }
 

@@ -92,3 +92,7 @@ Static page creation: Static page creation
 Static page: Static page
 Content: Content
 Order num: Order num
+Order No: Order
+currency: $
+Order totalsum: Total sum of this order
+Total: Total
