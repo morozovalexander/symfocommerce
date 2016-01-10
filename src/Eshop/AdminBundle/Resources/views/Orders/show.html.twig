@@ -77,11 +77,11 @@
             <tbody>
             {% for product in products %}
                 <tr>
-                    <td align="center">{{ loop.index }}</td>
+                    <td>{{ loop.index }}</td>
                     <td>{{ product.product.name }}</td>
-                    <td align="center">{{ product.quantity }}</td>
-                    <td align="center">{{ product.price }} {{ 'currency'|trans }}</td>
-                    <td align="center">{{ product.sum }} {{ 'currency'|trans }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }} {{ 'currency'|trans }}</td>
+                    <td>{{ product.sum }} {{ 'currency'|trans }}</td>
                 </tr>
             {% endfor %}
             <tr class="warning">
