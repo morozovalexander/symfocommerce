@@ -88,22 +88,31 @@ body {
 .list-group-item-heading
 {
     min-height: 40px;
+    font-size: medium;
 }
 
 /*
 -------------------------------------------------- */
 
-.description-preview {
-    min-height: 240px;
-}
-
 .description-container {
-    min-height: 250px;
+    min-height: 180px;
 }
 
 .nopadding {
     padding: 0 !important;
     margin: 0 !important;
+}
+
+.product-title {
+    display: inline-block;
+    height: 70px;
+    overflow: hidden;
+}
+
+.main-categpory-title {
+    display: inline-block;
+    height: 50px;
+    overflow: hidden;
 }
 
 /* top search

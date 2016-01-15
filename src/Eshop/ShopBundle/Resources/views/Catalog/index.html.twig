@@ -79,13 +79,10 @@
                         {% endif %}
                     </a>
 
-                    <div class="caption description-preview">
-                        <h4 class="group inner list-group-item-heading">
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading main-categpory-title">
                             <a href="{{ path('category', {'id' : category.id}) }}">{{ category.name }}</a>
                         </h4>
-                        <p class="group inner list-group-item-text">
-                            {{ category.description|slice(0, 190) }}
-                        </p>
                     </div>
                 </div>
             </div>

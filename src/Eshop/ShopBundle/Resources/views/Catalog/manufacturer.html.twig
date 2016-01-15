@@ -47,23 +47,14 @@
                     </a>
                     <div class="caption description-container" data-id="{{ product.id }}">
                         <a href="{{ path('show_product', {'slug' : product.slug}) }}">
-                            <h4 class="group inner list-group-item-heading">
+                            <h4 class="group inner list-group-item-heading product-title">
                                 {{ product.name }} ({{ product.measureQuantity }} {{ product.measure.name }})
                             </h4>
                         </a>
-                        <p class="group inner list-group-item-text">
-                            {{ product.description|slice(0, 190) }}
+                        <p class="lead price">
+                            <span>{{ product.price }}</span> {{ 'currency'|trans }}
                         </p>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-6">
-                                <p class="lead price">
-                                    <span>{{ product.price }}</span> {{ 'currency'|trans }}
-                                </p>
-                            </div>
-                            <div class="col-xs-12 col-md-12 col-lg-6">
-                                <a class="btn btn-success addtocart-btn" href="#">{{ 'cart.addtocart'|trans }}</a>
-                            </div>
-                        </div>
+                        <a class="btn btn-success addtocart-btn" href="#">{{ 'cart.addtocart'|trans }}</a>
                     </div>
                 </div>
             </div>
