@@ -18,3 +18,6 @@ services:
         arguments: ["%kernel.default_locale%"]
         tags:
             - { name: kernel.event_subscriber }
+
+    fos_user.doctrine_registry:
+        alias: doctrine
