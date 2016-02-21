@@ -16,7 +16,7 @@ class LoadManufacturerData implements FixtureInterface, ContainerAwareInterface,
     private $container;
 
     /**
-     * {@inheritDoc}
+     * @param ContainerInterface|null $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -24,82 +24,25 @@ class LoadManufacturerData implements FixtureInterface, ContainerAwareInterface,
     }
 
     /**
-     * {@inheritDoc}
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-
-        $manufacturerssArray = array(
-            '4DN',
-            'ActivLab',
-            'API',
-            'ARTLab',
-            'aTech Nutrition',
-            'Axis Labs',
-            'BodyStrong',
-            'BSN',
-            'CytoSport',
-            'Dymatize',
-            'FortiFX',
-            'Gaspari Nutrition',
-            'Hardlabz',
-            'Inner Armour',
-            'IRON MAN',
-            'IronMan',
-            'KING PROTEIN',
-            'Labrada',
-            'Magnum',
-            'Maxler',
-            'Mex Nutrition',
-            'MHP',
-            'Multipower',
-            'Musclepharm',
-            'Muscletech',
-            'Mutant',
-            'Nanox',
-            'NOW',
-            'Nutrex',
-            'Olimp',
-            'Optimum Nutrition',
-            'OstroVit',
-            'Performance',
-            'ProMera Sports',
-            'PureProtein',
-            'PVL',
-            'RUSSPORT',
-            'SAN',
-            'Spotrpit Nutrition',
-            'STS-Sports',
-            'Supreme Protein',
-            'Syntrax',
-            'TSP',
-            'Twinlab',
-            'Ultimate Nutrition',
-            'Universal Nutrition',
-            'USN',
-            'USPLabs',
-            'VP Laboratory',
-            'Weider',
-            'другие'
-        );
-
-        //create manufacturer
-        foreach ($manufacturerssArray as $manufacturerName) {
-            $category = new Manufacturer();
-            $category->setName($manufacturerName);
-            $category->setSlug($manufacturerName);
-            $category->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        for ($i = 1; $i <= 20; $i++) {
+            $manufacturer = new Manufacturer();
+            $manufacturer->setName('Manufacturer ' . $i);
+            $manufacturer->setSlug('Manufacturer ' . $i);
+            $manufacturer->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. One more time!
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua.');
-            $manager->persist($category);
+            $manager->persist($manufacturer);
         }
-
         $manager->flush();
     }
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function getOrder()
     {

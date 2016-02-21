@@ -16,7 +16,7 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface, Ord
     private $container;
 
     /**
-     * {@inheritDoc}
+     * @param ContainerInterface|null $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -24,49 +24,25 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface, Ord
     }
 
     /**
-     * {@inheritDoc}
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-
-        $categoriesArray = array(
-            'Аминокислоты BCAA',
-            'Анаболические комплексы',
-            'Витаминно-минеральные комплексы',
-            'Гейнеры',
-            'Для Суставов и Связок',
-            'Жиросжигатели',
-            'Изотоники',
-            'Креатин',
-            'Одежда, перчатки, сумки',
-            'Пампинг',
-            'Пептиды',
-            'Повышение Тестостерона',
-            'Послетренировочные комплексы',
-            'Предтренировочные комплексы',
-            'Протеин',
-            'Протеиновые батончики',
-            'Шейкеры и акссесуары',
-            'Энергетики',
-        );
-
-        //create categories
-        foreach ($categoriesArray as $categoryName) {
+        for ($i = 1; $i <= 20; $i++) {
             $category = new Category();
-            $category->setName($categoryName);
-            $category->setSlug($categoryName);
+            $category->setName('Category ' . $i);
+            $category->setSlug('Category ' . $i);
             $category->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. One more time!
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua.');
             $manager->persist($category);
         }
-
         $manager->flush();
     }
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function getOrder()
     {

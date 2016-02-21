@@ -16,7 +16,7 @@ class LoadMeasureData implements FixtureInterface, ContainerAwareInterface, Orde
     private $container;
 
     /**
-     * {@inheritDoc}
+     * @param ContainerInterface|null $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -24,7 +24,7 @@ class LoadMeasureData implements FixtureInterface, ContainerAwareInterface, Orde
     }
 
     /**
-     * {@inheritDoc}
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -47,7 +47,7 @@ class LoadMeasureData implements FixtureInterface, ContainerAwareInterface, Orde
     }
 
     /**
-     * {@inheritDoc}
+     * @return int
      */
     public function getOrder()
     {
