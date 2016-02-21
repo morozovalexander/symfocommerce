@@ -15,7 +15,7 @@ $(document).ready(function () {
         }
 
         //get new vars
-        var productRow = $(this).parent().parent().parent();
+        var productRow = $(this).closest('.id-row');
 
         var productIdRaw = productRow.data('id');
         var productId = toPositiveInt(productIdRaw);
