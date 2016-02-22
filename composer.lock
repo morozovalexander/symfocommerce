@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ad228e09ce7cd7bc45e022b562c50af4",
-    "content-hash": "eba30c7246dcf257005fa11db8284a07",
+    "hash": "88c35b34253b6fad51a3a3aa964a6315",
+    "content-hash": "aefdb318f98d4af75a24e4ea4f658683",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1858,45 +1858,37 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v4.0.5",
-            "target-dir": "Sensio/Bundle/DistributionBundle",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "c89375c9d95fc5afaeb99e7a49b428b6e3beb9d3"
+                "reference": "2c167426fc24f9de116345195bc1697a748ee847"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/c89375c9d95fc5afaeb99e7a49b428b6e3beb9d3",
-                "reference": "c89375c9d95fc5afaeb99e7a49b428b6e3beb9d3",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/2c167426fc24f9de116345195bc1697a748ee847",
+                "reference": "2c167426fc24f9de116345195bc1697a748ee847",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9",
                 "sensiolabs/security-checker": "~3.0",
-                "symfony/class-loader": "~2.2",
-                "symfony/framework-bundle": "~2.3",
-                "symfony/process": "~2.2"
-            },
-            "require-dev": {
-                "symfony/form": "~2.2",
-                "symfony/validator": "~2.2",
-                "symfony/yaml": "~2.2"
-            },
-            "suggest": {
-                "symfony/form": "If you want to use the configurator",
-                "symfony/validator": "If you want to use the configurator",
-                "symfony/yaml": "If you want to use  the configurator"
+                "symfony/class-loader": "~2.3|~3.0",
+                "symfony/config": "~2.3|~3.0",
+                "symfony/dependency-injection": "~2.3|~3.0",
+                "symfony/filesystem": "~2.3|~3.0",
+                "symfony/http-kernel": "~2.3|~3.0",
+                "symfony/process": "~2.3|~3.0"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0.x-dev"
+                    "dev-master": "5.0.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Sensio\\Bundle\\DistributionBundle": ""
+                "psr-4": {
+                    "Sensio\\Bundle\\DistributionBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1914,7 +1906,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-02-12 16:21:25"
+            "time": "2016-02-12 16:21:30"
         },
         {
             "name": "sensio/framework-extra-bundle",
