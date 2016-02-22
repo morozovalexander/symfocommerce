@@ -28,7 +28,7 @@ class ProductController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -39,7 +39,7 @@ class ProductController extends Controller
 
         $products = $paginator->paginate(
             $query,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 

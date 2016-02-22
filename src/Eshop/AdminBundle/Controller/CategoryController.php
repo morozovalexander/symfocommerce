@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Category controller.
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -36,7 +37,7 @@ class CategoryController extends Controller
 
         $categories = $paginator->paginate(
             $query,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 
