@@ -98,7 +98,7 @@ class CatalogController extends Controller
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 
@@ -139,7 +139,7 @@ class CatalogController extends Controller
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 
@@ -180,7 +180,7 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function newsAction()
+    public function newsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -192,7 +192,7 @@ class CatalogController extends Controller
 
         $news = $paginator->paginate(
             $query,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 
@@ -202,6 +202,8 @@ class CatalogController extends Controller
     }
 
     /**
+     * search product by title or description
+     *
      * @Route("/search", name="search")
      * @Method("GET")
      * @Template()
@@ -234,7 +236,7 @@ class CatalogController extends Controller
             $limit = $this->getParameter('search_pagination_count');
             $searchResults = $paginator->paginate(
                 $qb,
-                $this->get('request')->query->getInt('page', 1)/*page number*/,
+                $request->query->getInt('page', 1)/*page number*/,
                 $limit
             );
         }
@@ -269,6 +271,7 @@ class CatalogController extends Controller
 
     /**
      * Render static top menu for static pages.
+     *
      * @Method("GET")
      * @Template()
      */
@@ -288,6 +291,7 @@ class CatalogController extends Controller
 
     /**
      * Shows static page.
+     * 
      * @Route("/{slug}.html",name="show_static_page")
      * @Method("GET")
      * @Template()
