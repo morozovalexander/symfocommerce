@@ -298,7 +298,7 @@ class ProductController extends Controller
      * @Route("/remove_image", name="remove_image", defaults={"_format"="json"})
      * @Method("POST")
      */
-    public function removeImage(Request $request){
+    public function removeImageAction(Request $request){
         $requestData = $request->request;
         $imageEntityId = (int)$requestData->get('imageEntityId');
         /**
