@@ -1,4 +1,5 @@
 {
+    "description": "symfony framework based e-commerce engine",
     "name": "alexander/symfocommerce",
     "license": "proprietary",
     "type": "project",
