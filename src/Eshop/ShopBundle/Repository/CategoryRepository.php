@@ -23,10 +23,10 @@ class CategoryRepository extends EntityRepository
             ->getSingleResult();
     }
 
-    public function getFirstCategoryId(){
+    public function getFirstCategory(){
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('ca.id')
+            ->select('ca')
             ->from('ShopBundle:Category', 'ca')
             ->orderBy('ca.id', 'ASC')
             ->setMaxResults(1)

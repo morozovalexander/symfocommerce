@@ -77,21 +77,21 @@ class CatalogController extends Controller
      */
     public function categoryAction(Request $request, $slug = '')
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $categoryRepository = $em->getRepository('ShopBundle:Category');
         $productRepository = $em->getRepository('ShopBundle:Product');
-
         /**
          * @var Category $requiredCategory
          */
         if ($slug == '') {
             //get first category id
             $requiredCategory = $categoryRepository->getFirstCategoryId();
-            $requiredCategory = $requiredCategory['id'];
         } else {
             $requiredCategory = $categoryRepository->findBySlug($slug);
-            $requiredCategory = $requiredCategory->getId();
         }
 
         $productsQuery = $productRepository->findByCategoryForPaginator($requiredCategory);
@@ -102,10 +102,8 @@ class CatalogController extends Controller
             $limit
         );
 
-        $category = $categoryRepository->find($requiredCategory);
-
         return array(
-            'category' => $category,
+            'category' => $requiredCategory,
             'products' => $products,
             'sortedby' => $this->getSortingParamName($request)
         );
@@ -118,6 +116,9 @@ class CatalogController extends Controller
      */
     public function manufacturerAction(Request $request, $slug = '')
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
@@ -128,11 +129,9 @@ class CatalogController extends Controller
          */
         if ($slug == '') {
             //get first category id
-            $requiredManufacturer = $manufacturerRepository->getFirstManufacturerId();
-            $requiredManufacturer = $requiredManufacturer['id'];
+            $requiredManufacturer = $manufacturerRepository->getFirstManufacturer();
         } else {
             $requiredManufacturer = $manufacturerRepository->findBySlug($slug);
-            $requiredManufacturer = $requiredManufacturer->getId();
         }
 
         $productsQuery = $productRepository->findByManufacturerForPaginator($requiredManufacturer);
@@ -143,10 +142,8 @@ class CatalogController extends Controller
             $limit
         );
 
-        $manufacturer = $manufacturerRepository->find($requiredManufacturer);
-
         return array(
-            'manufacturer' => $manufacturer,
+            'manufacturer' => $requiredManufacturer,
             'products' => $products,
             'sortedby' => $this->getSortingParamName($request)
         );
@@ -291,7 +288,7 @@ class CatalogController extends Controller
 
     /**
      * Shows static page.
-     * 
+     *
      * @Route("/{slug}.html",name="show_static_page")
      * @Method("GET")
      * @Template()

@@ -12,7 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
-    public function findBySlug($slug){
+    public function findBySlug($slug)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('p')
@@ -24,28 +25,34 @@ class ProductRepository extends EntityRepository
     }
 
     //query for pagination without "getQuery()"
-    public function findByCategoryForPaginator($categoryId){
+    public function findByCategoryForPaginator($category)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('p')
+            ->select(array('p', 'pi', 'pm'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.category', 'ca')
-            ->where('ca.id = :categoryid')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.measure', 'pm')
+            ->where('ca = :category')
             ->andWhere('p.quantity <> 0')
-            ->setParameter('categoryid', $categoryId
-            );
+            ->setParameter('category', $category)
+            ;
     }
 
     //query for pagination without "getQuery()"
-    public function findByManufacturerForPaginator($manufacturerId){
+    public function findByManufacturerForPaginator($manufacturer)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('p')
+            ->select(array('p', 'pi', 'pm'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.manufacturer', 'ma')
-            ->where('ma.id = :manufacturerid')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.measure', 'pm')
+            ->where('ma.id = :manufacturer')
             ->andWhere('p.quantity <> 0')
-            ->setParameter('manufacturerid', $manufacturerId
+            ->setParameter('manufacturer', $manufacturer
             );
     }
 }

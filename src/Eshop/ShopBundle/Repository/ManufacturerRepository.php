@@ -23,10 +23,10 @@ class ManufacturerRepository extends EntityRepository
             ->getSingleResult();
     }
 
-    public function getFirstManufacturerId(){
+    public function getFirstManufacturer(){
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('ma.id')
+            ->select('ma')
             ->from('ShopBundle:Manufacturer', 'ma')
             ->orderBy('ma.id', 'ASC')
             ->setMaxResults(1)
