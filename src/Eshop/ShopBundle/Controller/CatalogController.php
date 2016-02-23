@@ -207,6 +207,9 @@ class CatalogController extends Controller
      */
     public function searchProductAction(Request $request)
     {
+        /**
+         * @var $em EntityManager
+         */
         $searchResults = array();
 
         $em = $this->getDoctrine()->getManager();
@@ -216,19 +219,9 @@ class CatalogController extends Controller
         $search_phrase = 'search';
         if ($request->getMethod() == 'GET') {
             $search_phrase = trim($request->get('search_phrase'));
-            /**
-             * @var QueryBuilder $qb
-             */
-            $qb = $productRepository->createQueryBuilder('p');
             $searchWords = explode(' ', $search_phrase);
 
-            $cqbORX = array();
-            foreach ($searchWords as $searchWord) {
-                $cqbORX[] = $qb->expr()->like('p.name', $qb->expr()->literal('%' . $searchWord . '%'));
-                $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
-            }
-
-            $qb->andWhere(call_user_func_array(array($qb->expr(), "orx"), $cqbORX));
+            $qb = $productRepository->getSearchQuery($searchWords);
 
             $limit = $this->getParameter('search_pagination_count');
             $searchResults = $paginator->paginate(

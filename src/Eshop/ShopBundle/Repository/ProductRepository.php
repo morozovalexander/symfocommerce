@@ -55,4 +55,26 @@ class ProductRepository extends EntityRepository
             ->setParameter('manufacturer', $manufacturer
             );
     }
+
+    public function getSearchQuery($searchWords)
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select(array('p', 'pi', 'pm'))
+            ->from('ShopBundle:Product', 'p')
+            ->innerJoin('p.manufacturer', 'ma')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.measure', 'pm')
+            ->where('p.quantity <> 0');
+
+        $cqbORX = array();
+        foreach ($searchWords as $searchWord) {
+            $cqbORX[] = $qb->expr()->like('p.name', $qb->expr()->literal('%' . $searchWord . '%'));
+            $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
+        }
+
+        $qb->andWhere(call_user_func_array(array($qb->expr(), "orx"), $cqbORX));
+
+        return $qb;
+    }
 }
