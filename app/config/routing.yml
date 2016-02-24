@@ -1,5 +1,5 @@
 fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    resource: "@UserBundle/Resources/config/routing/all.xml"
 
 user:
     resource: "@UserBundle/Controller/"
