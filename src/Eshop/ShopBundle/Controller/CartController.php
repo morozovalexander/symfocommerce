@@ -163,6 +163,14 @@ class CartController extends Controller
             $response->headers->clearCookie('cart');
             $response->sendHeaders();
 
+            //send email notification
+            $notifier = $this->get('app.email_notifier');
+            $notifier->handleNotification(array(
+                'event' => 'new_order',
+                'order_id' => $order->getId(),
+                'admin_email' => $this->getParameter('admin_email')
+            ));
+
             //redirect to thankyou page
             return $this->redirect($this->generateUrl('thankyou'));
         }

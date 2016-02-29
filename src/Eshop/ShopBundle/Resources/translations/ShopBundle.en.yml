@@ -93,3 +93,7 @@ slider:
 search:
     searchfor: Search for
     search: search
+
+#email notifications
+notification:
+    neworder: You have recieved a new order

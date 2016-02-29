@@ -21,3 +21,7 @@ services:
 
     fos_user.doctrine_registry:
         alias: doctrine
+
+    app.email_notifier:
+            class:        Eshop\ShopBundle\Service\EmailNotifier
+            arguments:    ["@doctrine.orm.entity_manager", "@swiftmailer.mailer", "@router", "@templating"]

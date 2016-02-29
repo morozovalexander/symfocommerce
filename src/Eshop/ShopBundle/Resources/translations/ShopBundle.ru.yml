@@ -93,3 +93,7 @@ slider:
 search:
     searchfor: Поиск по запросу
     search: поиск
+
+#email notifications
+notification:
+    neworder: Вы получили новый заказ
