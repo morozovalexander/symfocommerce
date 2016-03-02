@@ -3,7 +3,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/shop/css/dropzone.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/shop/css/dropzone.min.css') }}" rel="stylesheet">
 {% endblock stylesheets %}
 
 {% block page_content -%}
@@ -105,7 +105,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/shop/js/dropzone.js') }}"></script>
+    <script src="{{ asset('bundles/shop/js/dropzone.min.js') }}"></script>
     <script src="{{ asset('bundles/shop/js/speakingurl.min.js') }}"></script>
     <script>
         $(document).ready(function () {
