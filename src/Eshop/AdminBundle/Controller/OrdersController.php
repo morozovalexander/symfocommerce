@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Orders;
-use Eshop\ShopBundle\Form\OrdersType;
+use Eshop\ShopBundle\Form\Type\OrdersType;
 
 /**
  * Orders controller.

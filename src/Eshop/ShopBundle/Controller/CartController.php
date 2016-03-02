@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
 use Eshop\ShopBundle\Entity\OrderProduct;
-use Eshop\ShopBundle\Form\OrdersType;
+use Eshop\ShopBundle\Form\Type\OrdersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

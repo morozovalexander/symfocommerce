@@ -1,12 +1,12 @@
 <?php
 
-namespace Eshop\ShopBundle\Form;
+namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CategoryType extends AbstractType
+class NewsType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,10 +15,9 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('title')
             ->add('slug')
-            ->add('description')
-            ->add('file', 'file', array('required' => false))
+            ->add('text')
             ->add('metaKeys')
             ->add('metaDescription')
         ;
@@ -30,7 +29,7 @@ class CategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Category'
+            'data_class' => 'Eshop\ShopBundle\Entity\News'
         ));
     }
 
@@ -39,6 +38,6 @@ class CategoryType extends AbstractType
      */
     public function getName()
     {
-        return 'eshop_shopbundle_category';
+        return 'eshop_shopbundle_news';
     }
 }

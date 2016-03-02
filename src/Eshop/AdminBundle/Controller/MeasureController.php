@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Measure;
-use Eshop\ShopBundle\Form\MeasureType;
+use Eshop\ShopBundle\Form\Type\MeasureType;
 
 /**
  * Measure controller.

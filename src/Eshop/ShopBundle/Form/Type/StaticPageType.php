@@ -1,12 +1,12 @@
 <?php
 
-namespace Eshop\ShopBundle\Form;
+namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SlideType extends AbstractType
+class StaticPageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,10 +15,13 @@ class SlideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('title')
+            ->add('slug')
             ->add('enabled')
-            ->add('file', 'file', array('required' => false))
-            ->add('slideOrder')
+            ->add('orderNum')
+            ->add('metaKeys')
+            ->add('metaDescription')
+            ->add('content')
         ;
     }
     
@@ -28,7 +31,7 @@ class SlideType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Slide'
+            'data_class' => 'Eshop\ShopBundle\Entity\StaticPage'
         ));
     }
 
@@ -37,6 +40,6 @@ class SlideType extends AbstractType
      */
     public function getName()
     {
-        return 'eshop_shopbundle_slide';
+        return 'eshop_shopbundle_staticpage';
     }
 }

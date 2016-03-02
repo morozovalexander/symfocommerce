@@ -1,12 +1,12 @@
 <?php
 
-namespace Eshop\ShopBundle\Form;
+namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class NewsType extends AbstractType
+class SlideType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,11 +15,10 @@ class NewsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('slug')
-            ->add('text')
-            ->add('metaKeys')
-            ->add('metaDescription')
+            ->add('name')
+            ->add('enabled')
+            ->add('file', 'file', array('required' => false))
+            ->add('slideOrder')
         ;
     }
     
@@ -29,7 +28,7 @@ class NewsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\News'
+            'data_class' => 'Eshop\ShopBundle\Entity\Slide'
         ));
     }
 
@@ -38,6 +37,6 @@ class NewsType extends AbstractType
      */
     public function getName()
     {
-        return 'eshop_shopbundle_news';
+        return 'eshop_shopbundle_slide';
     }
 }

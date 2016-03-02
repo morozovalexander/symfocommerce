@@ -1,12 +1,12 @@
 <?php
 
-namespace Eshop\ShopBundle\Form;
+namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class StaticPageType extends AbstractType
+class MeasureType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,13 +15,7 @@ class StaticPageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('slug')
-            ->add('enabled')
-            ->add('orderNum')
-            ->add('metaKeys')
-            ->add('metaDescription')
-            ->add('content')
+            ->add('name')
         ;
     }
     
@@ -31,7 +25,7 @@ class StaticPageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\StaticPage'
+            'data_class' => 'Eshop\ShopBundle\Entity\Measure'
         ));
     }
 
@@ -40,6 +34,6 @@ class StaticPageType extends AbstractType
      */
     public function getName()
     {
-        return 'eshop_shopbundle_staticpage';
+        return 'eshop_shopbundle_measure';
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Eshop\ShopBundle\Form;
+namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ManufacturerType extends AbstractType
+class CategoryType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -30,7 +30,7 @@ class ManufacturerType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Manufacturer'
+            'data_class' => 'Eshop\ShopBundle\Entity\Category'
         ));
     }
 
@@ -39,6 +39,6 @@ class ManufacturerType extends AbstractType
      */
     public function getName()
     {
-        return 'eshop_shopbundle_manufacturer';
+        return 'eshop_shopbundle_category';
     }
 }

@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Product;
-use Eshop\ShopBundle\Form\ProductType;
+use Eshop\ShopBundle\Form\Type\ProductType;
 
 /**
  * Product controller.
