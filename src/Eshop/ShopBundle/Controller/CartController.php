@@ -2,7 +2,6 @@
 
 namespace Eshop\ShopBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
 use Eshop\ShopBundle\Entity\OrderProduct;

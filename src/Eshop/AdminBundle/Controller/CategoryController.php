@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Form\Type\CategoryType;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Category controller.
