@@ -215,9 +215,6 @@ class Slide
             $this->path
         );
 
-        // Set the path property to the filename where you've saved the file
-        //$this->path = $this->file->getClientOriginalName();
-
         // Clean up the file property as you won't need it anymore
         $this->file = null;
     }
