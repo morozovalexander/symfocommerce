@@ -12,6 +12,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class ManufacturerRepository extends EntityRepository
 {
+    /**
+     * @param bool $showEmpty
+     * @param string $order
+     * @param string $sort
+     * @return array
+     */
+    public function getAllManufacturers($showEmpty = true, $sort = 'name', $order = 'ASC')
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('c')
+            ->from('ShopBundle:Manufacturer', 'c');
+
+        if (!$showEmpty) {
+            $qb->innerJoin('c.products', 'p');
+        }
+
+        $qb->orderBy('c.'.$sort, $order);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findBySlug($slug){
         return $this->getEntityManager()
             ->createQueryBuilder()

@@ -1,7 +1,6 @@
 <?php
 namespace Eshop\ShopBundle\Service;
 
-
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Routing\Router;

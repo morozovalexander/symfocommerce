@@ -3,7 +3,6 @@
 namespace Eshop\ShopBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,7 +27,10 @@ class CatalogController extends Controller
         $newsRepository = $em->getRepository('ShopBundle:News');
         $slideRepository = $em->getRepository('ShopBundle:Slide');
 
-        $categories = $categoryRepository->findAll();
+        $settings = $this->get('app.site_settings');
+        $showEmptyCategories = $settings->getShowEmptyCategories();
+
+        $categories = $categoryRepository->getAllCategories($showEmptyCategories);
         //sorted by order number
         $slides = $slideRepository->findBy(array(), array('slideOrder' => 'ASC'));
         $lastNews = $newsRepository->getLastNews();
@@ -48,7 +50,10 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categoryRepository = $em->getRepository('ShopBundle:Category');
 
-        $categories = $categoryRepository->findAll();
+        $settings = $this->get('app.site_settings');
+        $showEmpty = $settings->getShowEmptyCategories();
+
+        $categories = $categoryRepository->getAllCategories($showEmpty);
 
         return array(
             'categories' => $categories
@@ -63,7 +68,10 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
 
-        $manufacturers = $manufacturerRepository->findAll();
+        $settings = $this->get('app.site_settings');
+        $showEmpty = $settings->getShowEmptyManufacturers();
+
+        $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
 
         return array(
             'manufacturers' => $manufacturers
