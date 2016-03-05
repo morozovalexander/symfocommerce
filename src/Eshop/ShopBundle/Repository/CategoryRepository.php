@@ -47,7 +47,7 @@ class CategoryRepository extends EntityRepository
             ->where('c.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     /**
@@ -62,6 +62,6 @@ class CategoryRepository extends EntityRepository
             ->orderBy('ca.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 }

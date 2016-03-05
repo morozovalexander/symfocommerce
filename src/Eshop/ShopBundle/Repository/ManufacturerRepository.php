@@ -42,7 +42,7 @@ class ManufacturerRepository extends EntityRepository
             ->where('m.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     public function getFirstManufacturer(){
@@ -53,7 +53,6 @@ class ManufacturerRepository extends EntityRepository
             ->orderBy('ma.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult()
-            ;
+            ->getOneOrNullResult();
     }
 }

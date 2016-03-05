@@ -31,6 +31,6 @@ class StaticPageRepository extends EntityRepository
             ->where('a.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 }

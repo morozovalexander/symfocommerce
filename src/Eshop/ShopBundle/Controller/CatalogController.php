@@ -103,6 +103,10 @@ class CatalogController extends Controller
             $requiredCategory = $categoryRepository->findBySlug($slug);
         }
 
+        if (!is_object($requiredCategory)) {
+            throw new NotFoundHttpException("Category not found");
+        }
+
         $productsQuery = $productRepository->findByCategoryForPaginator($requiredCategory);
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
@@ -141,6 +145,10 @@ class CatalogController extends Controller
             $requiredManufacturer = $manufacturerRepository->getFirstManufacturer();
         } else {
             $requiredManufacturer = $manufacturerRepository->findBySlug($slug);
+        }
+
+        if (!is_object($requiredManufacturer)) {
+            throw new NotFoundHttpException("Manufacturer not found");
         }
 
         $productsQuery = $productRepository->findByManufacturerForPaginator($requiredManufacturer);
@@ -307,6 +315,10 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $page = $em->getRepository('ShopBundle:StaticPage')->findBySlug($slug);
+
+        if (!is_object($page)) {
+            throw new NotFoundHttpException("Static page not found");
+        }
 
         return array(
             'page' => $page
