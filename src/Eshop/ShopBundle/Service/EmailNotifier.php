@@ -10,15 +10,13 @@ class EmailNotifier
     /**
      * @var Router $router
      */
-    private $em;
     private $mailer;
     private $router;
     private $templating;
     const FROM_EMAIL = 'server@website.com';
 
-    public function __construct(EntityManager $entityManager, \Swift_Mailer $mailer, Router $router, TwigEngine $templating)
+    public function __construct(\Swift_Mailer $mailer, Router $router, TwigEngine $templating)
     {
-        $this->em = $entityManager;
         $this->mailer = $mailer;
         $this->router = $router;
         $this->templating = $templating;
