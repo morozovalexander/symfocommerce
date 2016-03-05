@@ -2,12 +2,13 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Eshop\ShopBundle\Entity\Settings;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Eshop\ShopBundle\Entity\Settings;
 
 /**
  * Settings controller.
@@ -28,11 +29,46 @@ class SettingsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $settingRepository = $em->getRepository('ShopBundle:Settings');
-
         $entities = $settingRepository->findAll();
 
         return array(
-            'entities' => $entities,
+            'settings' => $entities[0]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/settings_edit", name="admin_settings_edit")
+     * @Method("POST")
+     * @return JsonResponse
+     */
+    public function settingsEdit(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $settingRepository = $em->getRepository('ShopBundle:Settings');
+        $entities = $settingRepository->findAll();
+        /**
+         * @var Settings $settings
+         */
+        $settings = $entities[0];
+
+
+        $editingSetting = $request->get('editing_setting');
+        $newValue = $request->get('new_value');
+
+        switch ($editingSetting) {
+            case 'show_empty_categories';
+                $settings->setShowEmptyCategories((bool)$newValue);
+                break;
+            case 'show_empty_manufacturers';
+                $settings->setShowEmptyManufacturers((bool)$newValue);
+                break;
+        }
+
+        $em->flush();
+
+        return new JsonResponse(
+            array('success' => true)
         );
     }
 }
