@@ -42,7 +42,7 @@ class SettingsController extends Controller
      * @Method("POST")
      * @return JsonResponse
      */
-    public function settingsEdit(Request $request)
+    public function settingsEditAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $settingRepository = $em->getRepository('ShopBundle:Settings');
