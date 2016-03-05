@@ -21,7 +21,7 @@ class ProductRepository extends EntityRepository
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     //query for pagination without "getQuery()"

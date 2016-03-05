@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CatalogController extends Controller
 {
@@ -171,6 +172,10 @@ class CatalogController extends Controller
             return $this->redirectToRoute('index_main');
         } else {
             $product = $productRepository->findBySlug($slug);
+        }
+
+        if (!is_object($product)) {
+            throw new NotFoundHttpException("Product not found");
         }
 
         return array(
