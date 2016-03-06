@@ -21,7 +21,9 @@
         </tr>
         <tr>
             <th>{{ 'Description'|trans }}</th>
-            <td>{{ entity.description }}</td>
+            <td>
+                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': entity.description} %}
+            </td>
         </tr>
         <tr>
             <th>{{ 'Image'|trans }}</th>

@@ -33,7 +33,9 @@
         </tr>
         <tr>
             <th>{{ 'Content'|trans }}</th>
-            <td>{{ entity.content }}</td>
+            <td>
+                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': entity.content} %}
+            </td>
         </tr>
         </tbody>
     </table>

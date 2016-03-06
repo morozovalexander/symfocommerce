@@ -14,7 +14,9 @@
         </tr>
         <tr>
             <th>{{ 'Text'|trans }}</th>
-            <td>{{ entity.text }}</td>
+            <td>
+                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': entity.text} %}
+            </td>
         </tr>
         <tr>
             <th>{{ 'Meta keys'|trans }}</th>
