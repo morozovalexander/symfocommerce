@@ -23,7 +23,7 @@
                     <a href="{{ path('admin_manufacturer_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
                 </td>
                 <td>
-                    {{ entity.description }}
+                    {{ entity.description|slice(0,300) }}...
                 </td>
                 <td>
                     {% if entity.path %}
