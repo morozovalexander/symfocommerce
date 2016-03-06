@@ -27,7 +27,7 @@
                     </div>
                     {% for slide in slides|slice(1) %}
                         <div class="item">
-                            <img src="{{ asset('uploads/images/' ~ slide.path) }}" alt="{{ slide.name }}">
+                            <img src="{{ asset('uploads/images/' ~ slide.path) | imagine_filter('slide') }}" alt="{{ slide.name }}">
                             <div class="carousel-caption">
                             </div>
                         </div>

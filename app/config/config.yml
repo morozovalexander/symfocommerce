@@ -113,6 +113,10 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [600, 600], mode: outbound }
+        slide:
+            quality: 100
+            filters:
+                thumbnail: { size: [1500, 500], mode: outbound }
 
 oneup_uploader:
     mappings:

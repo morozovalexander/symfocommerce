@@ -33,7 +33,7 @@ class CatalogController extends Controller
 
         $categories = $categoryRepository->getAllCategories($showEmptyCategories);
         //sorted by order number
-        $slides = $slideRepository->findBy(array(), array('slideOrder' => 'ASC'));
+        $slides = $slideRepository->findBy(array('enabled' => true), array('slideOrder' => 'ASC'));
         $lastNews = $newsRepository->getLastNews();
 
         return array(
