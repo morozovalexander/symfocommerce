@@ -22,3 +22,8 @@ _liip_imagine:
 oneup_uploader:
     resource: .
     type: uploader
+
+PrestaSitemapBundle:
+    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
+    prefix:   /
+

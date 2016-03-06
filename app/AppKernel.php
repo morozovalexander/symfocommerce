@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Eshop\AdminBundle\AdminBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
+            new Presta\SitemapBundle\PrestaSitemapBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

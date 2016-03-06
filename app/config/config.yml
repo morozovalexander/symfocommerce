@@ -122,3 +122,7 @@ oneup_uploader:
     mappings:
         gallery:
             frontend: dropzone
+
+presta_sitemap:
+    timetolive: 3600
+
