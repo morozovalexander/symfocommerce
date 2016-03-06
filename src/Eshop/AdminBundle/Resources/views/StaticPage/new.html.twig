@@ -1,6 +1,12 @@
 {% extends '@Admin/adminLayout.html.twig' %}
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/shop/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/shop/css/summernote.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
 {% block page_content -%}
     <h3>{{ 'Static page creation'|trans }}</h3>
 
@@ -52,7 +58,7 @@
         <div class="form-group">
             {{ form_label(form.content, 'Content'|trans) }}
             <div class="col-sm-10">
-                {{ form_widget(form.content) }}
+                {{ form_widget(form.content, {'attr': {'class': 'summernote'}}) }}
             </div>
         </div>
 
@@ -68,6 +74,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/shop/js/speakingurl.min.js') }}"></script>
+    <script src="{{ asset('bundles/shop/js/summernote.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.generate-slug').on('click', function(e) {
@@ -88,5 +95,6 @@
                 slugInut.val(slug);
             });
         });
+        {% include '@Admin/Partials/initSummernote.js.twig' with {'height': 300} %}
     </script>
 {% endblock javascripts %}
