@@ -49,32 +49,38 @@
                 <h1 class="group inner list-group-item-heading">{{ product.name }}
                     ({{ product.measureQuantity }} {{ product.measure.name }})</h1>
 
-                <p class="lead price"><span>{{ product.price }}</span> {{ 'currency'|trans }}</p>
+                {% if product.quantity > 0 %}
+                    <p class="lead price"><span>{{ product.price }}</span> {{ 'currency'|trans }}</p>
 
-                <div class="row addtocart id-row" data-id="{{ product.id }}">
-                    <div class="col-md-2">
-                        <input type="number" class="form-control addtocart-input" value="1">
+                    <div class="row addtocart id-row" data-id="{{ product.id }}">
+                        <div class="col-md-2">
+                            <input type="number" class="form-control addtocart-input" value="1">
+                        </div>
+                        <div class="col-md-2">
+                            <p>
+                                <a class="btn btn-success addtocart-btn" href="#">{{ 'cart.addtocart'|trans }}</a>
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <p>
-                            <a class="btn btn-success addtocart-btn" href="#">{{ 'cart.addtocart'|trans }}</a>
-                        </p>
+                    <div class="row">
+                        {% if product.images | length %}
+                            {% for image in product.images|slice(1) %}
+                                <div class="col-xs-6 col-md-3">
+                                    <a href="{{ asset(('uploads/gallery/' ~ image.path)) }}" class="thumbnail fancybox"
+                                       rel="group">
+                                        <img class="group list-group-image"
+                                             src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('product_preview_thumb')) }}"
+                                             alt="{{ product.name }}"/>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
-                </div>
-                <div class="row">
-                    {% if product.images | length %}
-                        {% for image in product.images|slice(1) %}
-                            <div class="col-xs-6 col-md-3">
-                                <a href="{{ asset(('uploads/gallery/' ~ image.path)) }}" class="thumbnail fancybox"
-                                   rel="group">
-                                    <img class="group list-group-image"
-                                         src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('product_preview_thumb')) }}"
-                                         alt="{{ product.name }}"/>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
+                {% else %}
+                    <p>
+                        {{ 'product.notavailable'|trans }}
+                    </p>
+                {% endif %}
             </div>
         </div>
     </div>

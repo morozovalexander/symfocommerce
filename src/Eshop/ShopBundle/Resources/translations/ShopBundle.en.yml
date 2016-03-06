@@ -110,3 +110,7 @@ errors:
         description: An error was occuped. We will fix it as soon as possible, you can go to the homepage
         tohomepage: To homepage
 
+#product page
+product:
+    notavailable: Sorry, this product is not available!
+
