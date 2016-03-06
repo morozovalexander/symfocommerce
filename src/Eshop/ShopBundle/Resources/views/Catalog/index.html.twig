@@ -55,7 +55,9 @@
                     <h4>
                         <strong>{{ news.title }}</strong>
                     </h4>
-                    <div>{{ news.text|raw|nl2br }}</div>
+                    <div>
+                        {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': news.text} %}
+                    </div>
                     <p class="pull-right">{{ news.date|date() }}</p>
                 {% else %}
                     {{ 'news.nonews'|trans }}
