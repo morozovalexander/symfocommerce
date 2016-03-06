@@ -84,7 +84,7 @@
 
         <div class="caption">
             <div class="group inner list-group-item-text">
-                {{ product.description|raw|nl2br }}
+                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': product.description} %}
             </div>
         </div>
     </div>
