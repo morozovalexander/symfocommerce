@@ -31,7 +31,7 @@
         "cocur/slugify": "^1.4",
         "liip/imagine-bundle": "^1.5",
         "knplabs/knp-paginator-bundle": "2.5.1",
-        "presta/sitemap-bundle": "dev-master"
+        "presta/sitemap-bundle": "1.4.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0"
