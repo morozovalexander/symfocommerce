@@ -3,7 +3,6 @@ namespace Eshop\ShopBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Presta\SitemapBundle\Service\SitemapListenerInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;

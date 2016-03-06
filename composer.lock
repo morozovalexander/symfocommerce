@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "52935eb64b4dbdade565098d9040ba05",
-    "content-hash": "c051abde80bb45948f836b8c788cf5fd",
+    "hash": "80bfa5f17a5857a9985ae1079307fbc5",
+    "content-hash": "e2ac1bf9c10fa75f7cded9c648514586",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1825,7 +1825,7 @@
         },
         {
             "name": "presta/sitemap-bundle",
-            "version": "dev-master",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/prestaconcept/PrestaSitemapBundle.git",
@@ -3190,8 +3190,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 20,
-        "presta/sitemap-bundle": 20
+        "friendsofsymfony/user-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
