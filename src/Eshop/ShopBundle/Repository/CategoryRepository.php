@@ -26,7 +26,8 @@ class CategoryRepository extends EntityRepository
             ->from('ShopBundle:Category', 'c');
 
         if (!$showEmpty) {
-            $qb->innerJoin('c.products', 'p');
+            $qb->innerJoin('c.products', 'p')
+                ->andWhere('p.quantity <> 0');
         }
 
         $qb->orderBy('c.'.$sort, $order);
