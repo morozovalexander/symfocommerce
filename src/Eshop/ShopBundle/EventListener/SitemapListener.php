@@ -40,19 +40,22 @@ class SitemapListener implements SitemapListenerInterface
             //for manufacturers
             foreach ($manufacturers as $manufacturer) {
                 $url = $this->router->generate('manufacturer', array('slug' => $manufacturer->getSlug()), true);
-                $this->createSitemapEntry($url, $dateTime, UrlConcrete::CHANGEFREQ_MONTHLY, 1);
+                $modified = $manufacturer->getDateUpdated();
+                $this->createSitemapEntry($url, $modified, UrlConcrete::CHANGEFREQ_MONTHLY, 1);
             }
 
             //for categories
             foreach ($categories as $category) {
                 $url = $this->router->generate('category', array('slug' => $category->getSlug()), true);
-                $this->createSitemapEntry($url, $dateTime, UrlConcrete::CHANGEFREQ_MONTHLY, 1);
+                $modified = $category->getDateUpdated();
+                $this->createSitemapEntry($url, $modified, UrlConcrete::CHANGEFREQ_MONTHLY, 1);
             }
 
             //for products
             foreach ($products as $product) {
                 $url = $this->router->generate('show_product', array('slug' => $product->getSlug()), true);
-                $this->createSitemapEntry($url, $dateTime, UrlConcrete::CHANGEFREQ_MONTHLY, 0.7);
+                $modified = $product->getDateUpdated();
+                $this->createSitemapEntry($url, $modified, UrlConcrete::CHANGEFREQ_MONTHLY, 0.7);
             }
 
             //for news
