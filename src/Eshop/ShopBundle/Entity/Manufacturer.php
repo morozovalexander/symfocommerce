@@ -67,6 +67,20 @@ class Manufacturer
     private $metaDescription;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_created", type="datetime")
+     */
+    private $dateCreated;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_updated", type="datetime")
+     */
+    private $dateUpdated;
+
+    /**
      * Image path
      *
      * @var string
@@ -94,18 +108,22 @@ class Manufacturer
      **/
     private $products;
 
-    public function __construct() {
+    public function __construct()
+    {
+        $this->dateCreated = new \DateTime();
+        $this->dateUpdated = $this->dateCreated;
         $this->products = new ArrayCollection();
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->getName();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -128,7 +146,7 @@ class Manufacturer
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -151,7 +169,7 @@ class Manufacturer
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -184,7 +202,7 @@ class Manufacturer
     /**
      * Get products
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProducts()
     {
@@ -202,8 +220,18 @@ class Manufacturer
         if (null !== $this->file) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename.'.'.$this->file->guessExtension();
+            $this->path = $filename . '.' . $this->file->guessExtension();
         }
+    }
+
+    /**
+     * Called before saving the entity
+     *
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->dateUpdated = new \DateTime();
     }
 
     /**
@@ -222,7 +250,7 @@ class Manufacturer
     {
         return null === $this->path
             ? null
-            : $this->getUploadRootDir().'/'.$this->path;
+            : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     /**
@@ -256,7 +284,7 @@ class Manufacturer
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
     protected function getUploadDir()
@@ -326,7 +354,7 @@ class Manufacturer
     /**
      * Get metaKeys
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeys()
     {
@@ -349,7 +377,7 @@ class Manufacturer
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -372,10 +400,56 @@ class Manufacturer
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set dateCreated
+     *
+     * @param \DateTime $dateCreated
+     * @return Manufacturer
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreated
+     *
+     * @return \DateTime 
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Set dateUpdated
+     *
+     * @param \DateTime $dateUpdated
+     * @return Manufacturer
+     */
+    public function setDateUpdated($dateUpdated)
+    {
+        $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateUpdated
+     *
+     * @return \DateTime 
+     */
+    public function getDateUpdated()
+    {
+        return $this->dateUpdated;
     }
 }
