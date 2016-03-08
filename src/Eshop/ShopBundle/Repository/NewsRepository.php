@@ -12,6 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class NewsRepository extends EntityRepository
 {
+    /**
+     * @param $slug string
+     * @return mixed
+     */
     public function findBySlug($slug){
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -23,6 +27,9 @@ class NewsRepository extends EntityRepository
             ->getSingleResult();
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastNews(){
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -33,5 +40,18 @@ class NewsRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult()
             ;
+    }
+
+    /**
+     * Create query for paginator
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getNewsQB(){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('a')
+            ->from('ShopBundle:News', 'a')
+            ->orderBy('a.date', 'DESC');
     }
 }

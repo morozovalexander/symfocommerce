@@ -201,12 +201,11 @@ class CatalogController extends Controller
     public function newsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $paginator = $this->get('knp_paginator');
-
-        $dql = "SELECT a FROM ShopBundle:News a ORDER BY a.date DESC";
-        $query = $em->createQuery($dql);
+        $newsRepository = $em->getRepository('ShopBundle:News');
         $limit = $this->getParameter('products_pagination_count');
+
+        $query = $newsRepository->getNewsQB();
 
         $news = $paginator->paginate(
             $query,
@@ -215,7 +214,7 @@ class CatalogController extends Controller
         );
 
         return array(
-            'news' => $news,
+            'news' => $news
         );
     }
 
