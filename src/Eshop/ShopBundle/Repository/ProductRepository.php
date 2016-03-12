@@ -4,6 +4,8 @@ namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
+use Eshop\ShopBundle\Entity\Category;
+use Eshop\ShopBundle\Entity\Manufacturer;
 
 /**
  * ProductRepository
@@ -13,6 +15,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+    /**
+     * @param string $slug
+     * @return mixed
+     */
     public function findBySlug($slug)
     {
         return $this->getEntityManager()
@@ -25,7 +31,10 @@ class ProductRepository extends EntityRepository
             ->getOneOrNullResult();
     }
 
-    //query for pagination without "getQuery()"
+    /**
+     * @param Category $category
+     * @return QueryBuilder
+     */
     public function findByCategoryForPaginator($category)
     {
         return $this->getEntityManager()
@@ -40,7 +49,10 @@ class ProductRepository extends EntityRepository
             ->setParameter('category', $category);
     }
 
-    //query for pagination without "getQuery()"
+    /**
+     * @param Manufacturer $manufacturer
+     * @return QueryBuilder
+     */
     public function findByManufacturerForPaginator($manufacturer)
     {
         return $this->getEntityManager()
@@ -52,10 +64,13 @@ class ProductRepository extends EntityRepository
             ->leftJoin('p.measure', 'pm')
             ->where('ma.id = :manufacturer')
             ->andWhere('p.quantity <> 0')
-            ->setParameter('manufacturer', $manufacturer
-            );
+            ->setParameter('manufacturer', $manufacturer);
     }
 
+    /**
+     * @param array $searchWords
+     * @return QueryBuilder
+     */
     public function getSearchQuery($searchWords)
     {
         $qb = $this->getEntityManager()
@@ -79,6 +94,8 @@ class ProductRepository extends EntityRepository
     }
 
     /**
+     * return products for admin
+     *
      * @return QueryBuilder
      */
     public function getAllProductsAdminQB()
@@ -89,8 +106,7 @@ class ProductRepository extends EntityRepository
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.manufacturer', 'pm')
-            ->leftJoin('p.category', 'pc')
-        ;
+            ->leftJoin('p.category', 'pc');
 
         return $qb;
     }
