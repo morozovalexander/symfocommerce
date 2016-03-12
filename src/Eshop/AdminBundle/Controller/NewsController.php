@@ -28,14 +28,14 @@ class NewsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $newsRepository = $em->getRepository('ShopBundle:News');
         $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:News a";
-        $query = $em->createQuery($dql);
+        $qb = $newsRepository->getAllNewsAdminQB();
         $limit = $this->getParameter('admin_categories_pagination_count');
 
         $categories = $paginator->paginate(
-            $query,
+            $qb,
             $request->query->getInt('page', 1),
             $limit
         );

@@ -28,14 +28,14 @@ class ManufacturerController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
         $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:Manufacturer a";
-        $query = $em->createQuery($dql);
+        $qb = $manufacturerRepository->getAllManufacturersAdminQB();
         $limit = $this->getParameter('admin_manufacturers_pagination_count');
 
         $manufacturers = $paginator->paginate(
-            $query,
+            $qb,
             $request->query->getInt('page', 1),
             $limit
         );

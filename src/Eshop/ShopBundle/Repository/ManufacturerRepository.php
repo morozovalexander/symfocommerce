@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * ManufacturerRepository
@@ -30,12 +31,28 @@ class ManufacturerRepository extends EntityRepository
                 ->andWhere('p.quantity <> 0');
         }
 
-        $qb->orderBy('c.'.$sort, $order);
+        $qb->orderBy('c.' . $sort, $order);
 
         return $qb->getQuery()->getResult();
     }
 
-    public function findBySlug($slug){
+    /**
+     * query for admin paginator
+     *
+     * @return QueryBuilder
+     */
+    public function getAllManufacturersAdminQB()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('m')
+            ->from('ShopBundle:Manufacturer', 'm');
+
+        return $qb;
+    }
+
+    public function findBySlug($slug)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('m')
@@ -46,7 +63,8 @@ class ManufacturerRepository extends EntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getFirstManufacturer(){
+    public function getFirstManufacturer()
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('ma')

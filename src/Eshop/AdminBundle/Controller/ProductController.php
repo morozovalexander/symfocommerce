@@ -31,14 +31,14 @@ class ProductController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository('ShopBundle:Product');
         $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:Product a";
-        $query = $em->createQuery($dql);
+        $qb = $productRepository->getAllProductsAdminQB();
         $limit = $this->getParameter('admin_products_pagination_count');
 
         $products = $paginator->paginate(
-            $query,
+            $qb,
             $request->query->getInt('page', 1),
             $limit
         );
@@ -47,6 +47,7 @@ class ProductController extends Controller
             'entities' => $products,
         );
     }
+
     /**
      * Creates a new Product entity.
      *
@@ -66,12 +67,12 @@ class ProductController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             //update uploaded images entities
-            if ($imageIdString != ''){
+            if ($imageIdString != '') {
                 $imageIdArray = explode(',', $imageIdString);
                 array_pop($imageIdArray);
 
                 $imageRepository = $em->getRepository('ShopBundle:Image');
-                foreach($imageIdArray as $imageId){
+                foreach ($imageIdArray as $imageId) {
                     $image = $imageRepository->find($imageId);
                     $image->setProduct($product);
                     $product->addImage($image);
@@ -87,7 +88,7 @@ class ProductController extends Controller
 
         return array(
             'entity' => $product,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -120,11 +121,11 @@ class ProductController extends Controller
     public function newAction()
     {
         $entity = new Product();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -148,7 +149,7 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -174,19 +175,19 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Product entity.
-    *
-    * @param Product $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Product entity.
+     *
+     * @param Product $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Product $entity)
     {
         $form = $this->createForm(new ProductType(), $entity, array(
@@ -198,6 +199,7 @@ class ProductController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Product entity.
      *
@@ -221,12 +223,12 @@ class ProductController extends Controller
 
         if ($editForm->isValid()) {
             //add uploaded images entities
-            if ($imageIdString != ''){
+            if ($imageIdString != '') {
                 $imageIdArray = explode(',', $imageIdString);
                 array_pop($imageIdArray);
 
                 $imageRepository = $em->getRepository('ShopBundle:Image');
-                foreach($imageIdArray as $imageId){
+                foreach ($imageIdArray as $imageId) {
                     $image = $imageRepository->find($imageId);
                     $image->setProduct($product);
                     $product->addImage($image);
@@ -246,11 +248,12 @@ class ProductController extends Controller
         }
 
         return array(
-            'entity'      => $product,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $product,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Product entity.
      *
@@ -290,15 +293,15 @@ class ProductController extends Controller
             ->setAction($this->generateUrl('admin_product_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**
      * @Route("/remove_image", name="remove_image", defaults={"_format"="json"})
      * @Method("POST")
      */
-    public function removeImageAction(Request $request){
+    public function removeImageAction(Request $request)
+    {
         $requestData = $request->request;
         $imageEntityId = (int)$requestData->get('imageEntityId');
         /**
@@ -307,7 +310,7 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
         $imageRepository = $em->getRepository('ShopBundle:Image');
         /**
-         * @var Image $image, $imageRepository
+         * @var Image $image , $imageRepository
          */
         $image = $imageRepository->find($imageEntityId);
         $product = $image->getProduct();

@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * CategoryRepository
@@ -30,9 +31,24 @@ class CategoryRepository extends EntityRepository
                 ->andWhere('p.quantity <> 0');
         }
 
-        $qb->orderBy('c.'.$sort, $order);
+        $qb->orderBy('c.' . $sort, $order);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * query for admin paginator
+     *
+     * @return QueryBuilder
+     */
+    public function getAllCategoriesAdminQB()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('c')
+            ->from('ShopBundle:Category', 'c');
+
+        return $qb;
     }
 
     /**
