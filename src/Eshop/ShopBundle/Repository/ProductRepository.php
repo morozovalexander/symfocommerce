@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Repository;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -36,8 +37,7 @@ class ProductRepository extends EntityRepository
             ->leftJoin('p.measure', 'pm')
             ->where('ca = :category')
             ->andWhere('p.quantity <> 0')
-            ->setParameter('category', $category)
-            ;
+            ->setParameter('category', $category);
     }
 
     //query for pagination without "getQuery()"
@@ -74,6 +74,23 @@ class ProductRepository extends EntityRepository
         }
 
         $qb->andWhere(call_user_func_array(array($qb->expr(), "orx"), $cqbORX));
+
+        return $qb;
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function getAllProductsAdminQB()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select(array('p', 'pi', 'pm', 'pc'))
+            ->from('ShopBundle:Product', 'p')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.manufacturer', 'pm')
+            ->leftJoin('p.category', 'pc')
+        ;
 
         return $qb;
     }
