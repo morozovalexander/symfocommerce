@@ -1,0 +1,27 @@
+{% extends "@Shop/layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block title %}
+    {{ 'layout.register'|trans }}
+{% endblock title %}
+
+{% block page_content %}
+    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <h2>{{ 'layout.register'|trans }}</h2>
+            </div>
+        </div>
+
+        {{ form_widget(form) }}
+
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-primary">{{ 'registration.submit'|trans }}</button>
+            </div>
+        </div>
+
+    {{ form_end(form) }}
+{% endblock page_content %}
