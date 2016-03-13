@@ -6,7 +6,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Eshop\UserBundle\Repository\UserRepository")
  * @ORM\Table(name="app_user")
  */
 class User extends BaseUser
