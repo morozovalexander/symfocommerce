@@ -19,8 +19,10 @@ class UserRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('u')
-            ->from('UserBundle:User', 'u');
+            ->select('a')
+            ->from('UserBundle:User', 'a')
+            ->where('a.roles NOT LIKE :roles')
+            ->setParameter('roles', '%"ROLE_ADMIN"%');;
 
         return $qb;
     }
