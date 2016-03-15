@@ -1,19 +1,31 @@
 {% extends '@Admin/adminLayout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/shop/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
+          type="text/css"/>
+{% endblock stylesheets %}
+
+{% block title %}
+    {{ 'Slide list'|trans }} - {{ 'Administration panel'|trans }}
+{% endblock title %}
+
 {% block page_content -%}
     <h3>{{ 'Slide list'|trans }}</h3>
-    <li>
+    <p>
         <a href="{{ path('admin_slide_new') }}">
+            <span class="glyphicon glyphicon-plus"></span>
             {{ 'Create a new slide'|trans }}
         </a>
-    </li>
+    </p>
     <table class="records_list table table-striped">
         <thead>
         <tr>
-            <th>{{ 'Name'|trans }}</th>
-            <th>{{ 'Image'|trans }}</th>
-            <th>{{ 'Slide order'|trans }}</th>
-            <th>{{ 'Actions'|trans }}</th>
+            <th class="col-md-3">{{ 'Name'|trans }}</th>
+            <th class="col-md-3">{{ 'Image'|trans }}</th>
+            <th class="col-md-2">{{ 'Slide order'|trans }}</th>
+            <th class="col-md-2">{{ 'Enabled'|trans }}</th>
+            <th class="col-md-2">{{ 'Actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -24,13 +36,22 @@
                 </td>
                 <td>
                     {% if entity.path %}
-                        <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                        <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
+                            <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                        </a>
                     {% else %}
                         {{ 'Actions'|trans }}x
                     {% endif %}
                 </td>
                 <td>
                     {{ entity.slideOrder }}
+                </td>
+                <td>
+                    {% if entity.enabled %}
+                        {{ 'yes'|trans }}
+                    {% else %}
+                        {{ 'no'|trans }}
+                    {% endif %}
                 </td>
                 <td>
                     <a href="{{ path('admin_slide_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
@@ -41,3 +62,15 @@
         </tbody>
     </table>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/shop/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('bundles/shop/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox();
+        });
+    </script>
+{% endblock javascripts %}

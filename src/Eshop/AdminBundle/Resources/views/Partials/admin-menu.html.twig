@@ -1,12 +1,20 @@
 <ul class="nav nav-sidebar">
+    <li><a href="{{ path('admin_orders') }}">{{ 'Orders'|trans }}</a></li>
+    <li><a href="{{ path('admin_user') }}">{{ 'User list'|trans }}</a></li>
+</ul>
+
+<ul class="nav nav-sidebar">
     <li><a href="{{ path('admin_product') }}">{{ 'Products'|trans }}</a></li>
     <li><a href="{{ path('admin_category') }}">{{ 'Categories'|trans }}</a></li>
     <li><a href="{{ path('admin_manufacturer') }}">{{ 'Manufacturers'|trans }}</a></li>
-    <li><a href="{{ path('admin_news') }}">{{ 'News'|trans }}</a></li>
-    <li><a href="{{ path('admin_orders') }}">{{ 'Orders'|trans }}</a></li>
     <li><a href="{{ path('admin_measure') }}">{{ 'Measures'|trans }}</a></li>
+</ul>
+
+<ul class="nav nav-sidebar">
+    <li><a href="{{ path('admin_news') }}">{{ 'News'|trans }}</a></li>
     <li><a href="{{ path('admin_slide') }}">{{ 'Slides'|trans }}</a></li>
     <li><a href="{{ path('admin_staticpage') }}">{{ 'Static pages'|trans }}</a></li>
     <li><a href="{{ path('admin_settings') }}">{{ 'Site settings'|trans }}</a></li>
-    <li><a href="{{ path('admin_user') }}">{{ 'User list'|trans }}</a></li>
 </ul>
+
+

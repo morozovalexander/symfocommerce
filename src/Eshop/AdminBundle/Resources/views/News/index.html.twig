@@ -1,18 +1,23 @@
 {% extends '@Admin/adminLayout.html.twig' %}
 
+{% block title %}
+    {{ 'News list'|trans }} - {{ 'Administration panel'|trans }}
+{% endblock title %}
+
 {% block page_content -%}
     <h3>{{ 'News list'|trans }}</h3>
-    <li>
+    <p>
         <a href="{{ path('admin_news_new') }}">
+            <span class="glyphicon glyphicon-plus"></span>
             {{ 'Create a new news'|trans }}
         </a>
-    </li>
+    </p>
     <table class="records_list table table-striped">
         <thead>
         <tr>
-            <th>{{ knp_pagination_sortable(entities, 'Title'|trans, 'a.title') }}</th>
-            <th>{{ 'Text'|trans }}</th>
-            <th>{{ 'Actions'|trans }}</th>
+            <th class="col-md-3">{{ knp_pagination_sortable(entities, 'Title'|trans, 'n.title') }}</th>
+            <th class="col-md-8">{{ knp_pagination_sortable(entities, 'Text'|trans, 'n.text') }}</th>
+            <th class="col-md-1">{{ 'Actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +30,7 @@
                     {{ entity.text|slice(0, 130) }}...
                 </td>
                 <td>
-                    <a href="{{ path('admin_news_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a>&nbsp;&nbsp;
+                    <a href="{{ path('admin_news_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
                     <a href="{{ path('admin_news_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
                 </td>
             </tr>
