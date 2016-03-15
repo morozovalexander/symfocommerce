@@ -134,12 +134,18 @@ class Product
      **/
     private $measure;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Favourites", mappedBy="product")
+     **/
+    private $favourites;
+
     public function __construct()
     {
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = $this->dateCreated;
         $this->productOrders = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->favourites = new ArrayCollection();
         $this->quantity = 1;
     }
 
@@ -531,5 +537,38 @@ class Product
     public function getDateUpdated()
     {
         return $this->dateUpdated;
+    }
+
+    /**
+     * Add favourites
+     *
+     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     * @return Product
+     */
+    public function addFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    {
+        $this->favourites[] = $favourites;
+
+        return $this;
+    }
+
+    /**
+     * Remove favourites
+     *
+     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     */
+    public function removeFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    {
+        $this->favourites->removeElement($favourites);
+    }
+
+    /**
+     * Get favourites
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFavourites()
+    {
+        return $this->favourites;
     }
 }

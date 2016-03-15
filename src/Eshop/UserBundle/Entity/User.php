@@ -4,6 +4,7 @@ namespace Eshop\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Eshop\UserBundle\Repository\UserRepository")
@@ -37,11 +38,16 @@ class User extends BaseUser
      */
     private $joinDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\Eshop\ShopBundle\Entity\Favourites", mappedBy="user")
+     **/
+    private $favourites;
+
     public function __construct()
     {
         parent::__construct();
         $this->joinDate = new \DateTime();
-        // your own logic
+        $this->favourites = new ArrayCollection();
     }
 
     /**
@@ -111,5 +117,38 @@ class User extends BaseUser
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Add favourites
+     *
+     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     * @return User
+     */
+    public function addFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    {
+        $this->favourites[] = $favourites;
+
+        return $this;
+    }
+
+    /**
+     * Remove favourites
+     *
+     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     */
+    public function removeFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    {
+        $this->favourites->removeElement($favourites);
+    }
+
+    /**
+     * Get favourites
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFavourites()
+    {
+        return $this->favourites;
     }
 }
