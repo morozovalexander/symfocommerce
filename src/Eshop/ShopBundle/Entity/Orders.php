@@ -65,6 +65,12 @@ class Orders
     private $date;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Eshop\UserBundle\Entity\User", inversedBy="orders")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     **/
+    private $user;
+
+    /**
      * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="order")
      **/
     private $orderProducts;
@@ -253,5 +259,28 @@ class Orders
     public function getOrderProducts()
     {
         return $this->orderProducts;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Eshop\UserBundle\Entity\User $user
+     * @return Orders
+     */
+    public function setUser(\Eshop\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Eshop\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

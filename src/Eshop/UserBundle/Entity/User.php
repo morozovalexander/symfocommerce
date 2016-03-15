@@ -43,11 +43,17 @@ class User extends BaseUser
      **/
     private $favourites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\Eshop\ShopBundle\Entity\Orders", mappedBy="user")
+     **/
+    private $orders;
+
     public function __construct()
     {
         parent::__construct();
         $this->joinDate = new \DateTime();
         $this->favourites = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     /**
@@ -150,5 +156,38 @@ class User extends BaseUser
     public function getFavourites()
     {
         return $this->favourites;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     * @return User
+     */
+    public function addOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     */
+    public function removeOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }
