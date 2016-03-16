@@ -86,5 +86,9 @@
         //set path urls
         var urls = [];
         urls['ajax_like'] = '{{ path('ajax_like') }}';
+        //set translated messages
+        var messages = [];
+        messages['mustberegistered'] = '{{ 'layout.messages.mustberegistered'|trans }}';
+        messages['productnotfound'] = '{{ 'layout.messages.productnotfound'|trans }}';
     </script>
 {% endblock %}

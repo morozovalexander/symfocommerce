@@ -241,7 +241,7 @@ class CatalogController extends Controller
             $search_phrase = trim($request->get('search_phrase'));
             $searchWords = explode(' ', $search_phrase);
 
-            $qb = $productRepository->getSearchQuery($searchWords);
+            $qb = $productRepository->getSearchQB($searchWords, $this->getUser());
 
             $limit = $this->getParameter('search_pagination_count');
             $searchResults = $paginator->paginate(

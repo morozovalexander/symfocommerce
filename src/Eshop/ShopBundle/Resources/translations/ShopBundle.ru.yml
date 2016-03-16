@@ -15,6 +15,9 @@ layout:
         enter: Войти
         signup: Зарегистрироваться
         admin: Админ
+    messages:
+        mustberegistered: Для этого действия необходима регистрация
+        productnotfound: Продукт не найден
 
 # Categories menu
 categories:

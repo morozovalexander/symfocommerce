@@ -28,9 +28,9 @@ class AjaxController extends Controller
         $user = $this->getUser();
 
         if (!is_object($product)) {
-            return $this->returnErrorJson('product not found');
+            return $this->returnErrorJson('productnotfound');
         } elseif (!is_object($user)) {
-            return $this->returnErrorJson('user not found');
+            return $this->returnErrorJson('mustberegistered');
         }
 
         $favoriteRecord = $favouritesRepository->findOneBy(array(
@@ -64,12 +64,9 @@ class AjaxController extends Controller
      */
     public function returnErrorJson($message)
     {
-        return new JsonResponse(
-            array(
-                'success' => false,
-                'message' => $message
-            ),
-            400
-        );
+        return new JsonResponse(array(
+            'success' => false,
+            'message' => $message
+        ), 400);
     }
 }

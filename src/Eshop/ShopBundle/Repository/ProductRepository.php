@@ -82,16 +82,17 @@ class ProductRepository extends EntityRepository
      * @param array $searchWords
      * @return QueryBuilder
      */
-    public function getSearchQuery($searchWords)
+    public function getSearchQB($searchWords, $user = null)
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm'))
+            ->select(array('p', 'pi', 'pm', 'pf'))
             ->from('ShopBundle:Product', 'p')
-            ->innerJoin('p.manufacturer', 'ma')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->where('p.quantity <> 0');
+            ->leftJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //if liked
+            ->where('p.quantity <> 0')
+            ->setParameter('user', $user);
 
         $cqbORX = array();
         foreach ($searchWords as $searchWord) {

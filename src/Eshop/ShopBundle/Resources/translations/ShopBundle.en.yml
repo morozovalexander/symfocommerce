@@ -15,6 +15,9 @@ layout:
         enter: Enter
         signup: Sign up
         admin: Admin
+    messages:
+        mustberegistered: You must be registered for this
+        productnotfound: Product not found
 
 # Categories menu
 categories:

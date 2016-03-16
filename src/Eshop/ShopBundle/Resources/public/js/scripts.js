@@ -45,9 +45,10 @@ $(function () {
         $('#products .item').addClass('grid-group-item');
     });
 
-    $('.like').on('click', function(e){
+    //like click handle
+    $('.like').on('click', function (e) {
         e.preventDefault();
-        //get productID
+        var clickedIcon = $(this);
         var productId = $(this).parent().parent().data('id');
         //send ajax
         $.ajax({
@@ -56,14 +57,14 @@ $(function () {
             data: {product_id: productId},
             success: function (data) {
                 if (data.success === true) {
-                    console.log('success');
-                    //change like icon
-
+                    changeGlyphicon(clickedIcon);
                 }
             },
             error: function (data) {
                 if (data.message) {
-                    alert(data.message);
+                    alert(messages[data.message]);
+                } else if (data.responseJSON.message) {
+                    alert(messages[data.responseJSON.message]);
                 }
             }
         });
@@ -85,3 +86,14 @@ function highlightMenu(){
         }
     });
 }
+
+function changeGlyphicon(clickedIcon) {
+    if(clickedIcon.hasClass('glyphicon-heart-empty')){
+        clickedIcon.removeClass('glyphicon-heart-empty');
+        clickedIcon.addClass('glyphicon-heart');
+    } else {
+        clickedIcon.removeClass('glyphicon-heart');
+        clickedIcon.addClass('glyphicon-heart-empty');
+    }
+}
+
