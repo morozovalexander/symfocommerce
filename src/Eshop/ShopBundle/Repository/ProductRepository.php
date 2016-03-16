@@ -35,7 +35,7 @@ class ProductRepository extends EntityRepository
      * @param Category $category
      * @return QueryBuilder
      */
-    public function findByCategoryForPaginator($category)
+    public function findByCategoryQB($category)
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -53,7 +53,7 @@ class ProductRepository extends EntityRepository
      * @param Manufacturer $manufacturer
      * @return QueryBuilder
      */
-    public function findByManufacturerForPaginator($manufacturer)
+    public function findByManufacturerQB($manufacturer)
     {
         return $this->getEntityManager()
             ->createQueryBuilder()

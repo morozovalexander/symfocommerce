@@ -107,7 +107,7 @@ class CatalogController extends Controller
             throw new NotFoundHttpException("Category not found");
         }
 
-        $productsQuery = $productRepository->findByCategoryForPaginator($requiredCategory);
+        $productsQuery = $productRepository->findByCategoryQB($requiredCategory);
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
@@ -151,7 +151,7 @@ class CatalogController extends Controller
             throw new NotFoundHttpException("Manufacturer not found");
         }
 
-        $productsQuery = $productRepository->findByManufacturerForPaginator($requiredManufacturer);
+        $productsQuery = $productRepository->findByManufacturerQB($requiredManufacturer);
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
