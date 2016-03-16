@@ -80,6 +80,7 @@ class ProductRepository extends EntityRepository
 
     /**
      * @param array $searchWords
+     * @param User $user
      * @return QueryBuilder
      */
     public function getSearchQB($searchWords, $user = null)
