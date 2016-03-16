@@ -1,0 +1,37 @@
+{% trans_default_domain 'ShopBundle' %}
+
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="true">
+                {{ 'layout.navbar.admin'|trans }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ path('admin_index') }}">{{ 'layout.navbar.adminpanel'|trans }}</a></li>
+                <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.navbar.logout'|trans }}</a></li>
+            </ul>
+        </li>
+    {% else %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="true">
+                {{ 'layout.navbar.loggedas'|trans }} {{ app.user.username }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.navbar.logout'|trans }}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+{% else %}
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+           aria-expanded="true">
+            {{ 'layout.navbar.login'|trans }} <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.navbar.signin'|trans }}</a></li>
+            <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.navbar.signup'|trans }}</a></li>
+        </ul>
+    </li>
+{% endif %}

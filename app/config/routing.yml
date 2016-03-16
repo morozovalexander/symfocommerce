@@ -1,5 +1,5 @@
 fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    resource: "@UserBundle/Resources/config/routing/all.xml"
 
 user:
     resource: "@UserBundle/Controller/"
@@ -22,3 +22,8 @@ _liip_imagine:
 oneup_uploader:
     resource: .
     type: uploader
+
+PrestaSitemapBundle:
+    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
+    prefix:   /
+

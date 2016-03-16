@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\News;
-use Eshop\ShopBundle\Form\NewsType;
+use Eshop\ShopBundle\Form\Type\NewsType;
 
 /**
  * News controller.
@@ -25,18 +25,18 @@ class NewsController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $newsRepository = $em->getRepository('ShopBundle:News');
         $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:News a";
-        $query = $em->createQuery($dql);
+        $qb = $newsRepository->getAllNewsAdminQB();
         $limit = $this->getParameter('admin_categories_pagination_count');
 
         $categories = $paginator->paginate(
-            $query,
-            $this->get('request')->query->getInt('page', 1),
+            $qb,
+            $request->query->getInt('page', 1),
             $limit
         );
 

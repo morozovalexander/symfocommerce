@@ -4,9 +4,21 @@ layout:
         sitename: Symfocommerce
         home: Главная
         news: Новости
+        favourites: Избранные
         information: Информация
         contacts: Контакты
         discounts: Скидки
+        adminpanel: Панель управления
+        loggedas: Вы вошли как
+        signin: Войти
+        logout: Выйти
+        login: Войти
+        enter: Войти
+        signup: Зарегистрироваться
+        admin: Админ
+    messages:
+        mustberegistered: Для этого действия необходима регистрация
+        productnotfound: Продукт не найден
 
 # Categories menu
 categories:
@@ -93,3 +105,37 @@ slider:
 search:
     searchfor: Поиск по запросу
     search: поиск
+
+#email notifications
+notification:
+    neworder: Вы получили новый заказ
+
+
+#error pages
+errors:
+    pnf:
+        header: Страница не найдена
+        description: Запрашиваемая страница не найдена. Проверьте правильность написания URL или вернитесь на главную страницу
+        tohomepage: На главную страницу
+    err:
+        header: Упс! Что-то пошло не так!
+        description: Возникла ошибка. Мы исправим ее так скоро, как сможем, а пока предлагаем перейти на главную страницу
+        tohomepage: На главную страницу
+
+#product page
+product:
+    notavailable: Извините, товара нет в наличии!
+
+#favourites
+favourites:
+    view:
+        grid: Сетка
+        list: Список
+    sort:
+        by: Сортировать по
+        default: Умолчанию
+        price: Цене
+        name: Названию
+        added: Добавлен
+    yourfavouriteproducts: Ваши избранные товары
+    noproducts: У вас нет избранных товаров!

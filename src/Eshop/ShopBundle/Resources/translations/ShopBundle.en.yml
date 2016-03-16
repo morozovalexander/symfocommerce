@@ -4,9 +4,21 @@ layout:
         sitename: Symfocommerce
         home: Home
         news: News
+        favourites: Favourites
         information: Information
         contacts: Contacts
         discounts: Discounts
+        adminpanel: Admin panel
+        loggedas: Logged as
+        signin: Sign in
+        logout: Logout
+        login: Login
+        enter: Enter
+        signup: Sign up
+        admin: Admin
+    messages:
+        mustberegistered: You must be registered for this
+        productnotfound: Product not found
 
 # Categories menu
 categories:
@@ -93,3 +105,37 @@ slider:
 search:
     searchfor: Search for
     search: search
+
+#email notifications
+notification:
+    neworder: You have recieved a new order
+
+#error pages
+errors:
+    pnf:
+        header: Page not found
+        description: The requested page couldn't be located. Checkout for any URL misspelling or return to the homepage
+        tohomepage: To homepage
+
+    err:
+        header: Ooops! Something went wrong!
+        description: An error was occuped. We will fix it as soon as possible, you can go to the homepage
+        tohomepage: To homepage
+
+#product page
+product:
+    notavailable: Sorry, this product is not available!
+
+#favourites
+favourites:
+    view:
+        grid: Grid
+        list: List
+    sort:
+        by: Sort by
+        default: Default
+        price: Price
+        name: Name
+        added: Added
+    yourfavouriteproducts: Your Favourite Products
+    noproducts: You have not favourite products yet!

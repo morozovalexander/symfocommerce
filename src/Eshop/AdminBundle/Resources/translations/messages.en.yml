@@ -2,7 +2,7 @@ eShop: eShop
 Products: Products
 Categories: Categories
 Manufacturers: Manufacturers
-News: Manufacturers
+News: News
 Orders: Orders
 Measures: Measures
 Slides: Slides
@@ -96,3 +96,10 @@ Order No: Order
 currency: $
 Order totalsum: Total sum of this order
 Total: Total
+Site settings: Site settings
+Settings list: Settings list
+Show empty categories: Show categories without products
+Show empty manufacturers: Show manufacturers without products
+User list: User list
+Username: Username
+Registration date: Registration date

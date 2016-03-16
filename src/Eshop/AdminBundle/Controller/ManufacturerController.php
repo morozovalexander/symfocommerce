@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Manufacturer;
-use Eshop\ShopBundle\Form\ManufacturerType;
+use Eshop\ShopBundle\Form\Type\ManufacturerType;
 
 /**
  * Manufacturer controller.
@@ -25,18 +25,18 @@ class ManufacturerController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
         $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:Manufacturer a";
-        $query = $em->createQuery($dql);
+        $qb = $manufacturerRepository->getAllManufacturersAdminQB();
         $limit = $this->getParameter('admin_manufacturers_pagination_count');
 
         $manufacturers = $paginator->paginate(
-            $query,
-            $this->get('request')->query->getInt('page', 1),
+            $qb,
+            $request->query->getInt('page', 1),
             $limit
         );
 

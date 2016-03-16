@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * CategoryRepository
@@ -12,7 +13,50 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
-    public function findBySlug($slug){
+    /**
+     * @param bool $showEmpty
+     * @param string $order
+     * @param string $sort
+     * @return array
+     */
+    public function getAllCategories($showEmpty = true, $sort = 'name', $order = 'ASC')
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('c')
+            ->from('ShopBundle:Category', 'c');
+
+        if (!$showEmpty) {
+            $qb->innerJoin('c.products', 'p')
+                ->andWhere('p.quantity <> 0');
+        }
+
+        $qb->orderBy('c.' . $sort, $order);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * query for admin paginator
+     *
+     * @return QueryBuilder
+     */
+    public function getAllCategoriesAdminQB()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('c')
+            ->from('ShopBundle:Category', 'c');
+
+        return $qb;
+    }
+
+    /**
+     * @param $slug string
+     * @return mixed
+     */
+    public function findBySlug($slug)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('c')
@@ -20,18 +64,21 @@ class CategoryRepository extends EntityRepository
             ->where('c.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
-    public function getFirstCategoryId(){
+    /**
+     * @return mixed
+     */
+    public function getFirstCategory()
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('ca.id')
+            ->select('ca')
             ->from('ShopBundle:Category', 'ca')
             ->orderBy('ca.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult()
-            ;
+            ->getOneOrNullResult();
     }
 }

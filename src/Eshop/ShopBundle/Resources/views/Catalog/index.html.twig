@@ -27,7 +27,7 @@
                     </div>
                     {% for slide in slides|slice(1) %}
                         <div class="item">
-                            <img src="{{ asset('uploads/images/' ~ slide.path) }}" alt="{{ slide.name }}">
+                            <img src="{{ asset('uploads/images/' ~ slide.path) | imagine_filter('slide') }}" alt="{{ slide.name }}">
                             <div class="carousel-caption">
                             </div>
                         </div>
@@ -55,7 +55,9 @@
                     <h4>
                         <strong>{{ news.title }}</strong>
                     </h4>
-                    <div>{{ news.text|raw|nl2br }}</div>
+                    <div>
+                        {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': news.text} %}
+                    </div>
                     <p class="pull-right">{{ news.date|date() }}</p>
                 {% else %}
                     {{ 'news.nonews'|trans }}
@@ -65,27 +67,7 @@
     </div>
     <div id="products" class="row list-group">
         {% for category in categories %}
-            <div class="item  col-sm-4 col-md-4 col-lg-3">
-                <div class="thumbnail">
-                    <a href="{{ path('category', {'slug' : category.slug}) }}">
-                        {% if category.path %}
-                            <img class="group list-group-image"
-                                 src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}"
-                                 alt="{{ category.name }}"/>
-                        {% else %}
-                            <img class="group list-group-image"
-                                 src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
-                                 alt="{{ category.name }}"/>
-                        {% endif %}
-                    </a>
-
-                    <div class="caption">
-                        <h4 class="group inner list-group-item-heading main-categpory-title">
-                            <a href="{{ path('category', {'slug' : category.slug}) }}">{{ category.name }}</a>
-                        </h4>
-                    </div>
-                </div>
-            </div>
+            {{ include('@Shop/Partials/categoryPreview.html.twig') }}
         {% endfor %}
     </div>
 {% endblock page_content %}

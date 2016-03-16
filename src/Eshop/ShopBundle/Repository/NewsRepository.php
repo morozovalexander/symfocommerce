@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * NewsRepository
@@ -12,7 +13,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class NewsRepository extends EntityRepository
 {
-    public function findBySlug($slug){
+    /**
+     * @param $slug string
+     * @return mixed
+     */
+    public function findBySlug($slug)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('n')
@@ -23,7 +29,26 @@ class NewsRepository extends EntityRepository
             ->getSingleResult();
     }
 
-    public function getLastNews(){
+    /**
+     * query for admin paginator
+     *
+     * @return QueryBuilder
+     */
+    public function getAllNewsAdminQB()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('n')
+            ->from('ShopBundle:News', 'n');
+
+        return $qb;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastNews()
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('n')
@@ -31,7 +56,20 @@ class NewsRepository extends EntityRepository
             ->orderBy('n.date', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult()
-            ;
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * Create query for paginator
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getNewsQB()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('a')
+            ->from('ShopBundle:News', 'a')
+            ->orderBy('a.date', 'DESC');
     }
 }

@@ -1,0 +1,15 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block page_content %}
+    <h1>{{ 'errors.pnf.header'|trans }}</h1>
+
+    <p>
+        {{ 'errors.pnf.description'|trans }}
+    </p>
+    <p>
+        <a href="{{ path('index_main') }}">
+            {{ 'errors.pnf.tohomepage'|trans }}
+        </a>
+    </p>
+{% endblock page_content %}

@@ -2,11 +2,10 @@
 
 namespace Eshop\ShopBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
 use Eshop\ShopBundle\Entity\OrderProduct;
-use Eshop\ShopBundle\Form\OrdersType;
+use Eshop\ShopBundle\Form\Type\OrdersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -162,6 +161,14 @@ class CartController extends Controller
             $response = new Response();
             $response->headers->clearCookie('cart');
             $response->sendHeaders();
+
+            //send email notification
+            $notifier = $this->get('app.email_notifier');
+            $notifier->handleNotification(array(
+                'event' => 'new_order',
+                'order_id' => $order->getId(),
+                'admin_email' => $this->getParameter('admin_email')
+            ));
 
             //redirect to thankyou page
             return $this->redirect($this->generateUrl('thankyou'));

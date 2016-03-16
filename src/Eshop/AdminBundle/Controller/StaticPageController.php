@@ -2,7 +2,7 @@
 
 namespace Eshop\AdminBundle\Controller;
 
-use Eshop\ShopBundle\Form\StaticPageType;
+use Eshop\ShopBundle\Form\Type\StaticPageType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

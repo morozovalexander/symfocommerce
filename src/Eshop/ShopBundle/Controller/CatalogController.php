@@ -3,7 +3,6 @@
 namespace Eshop\ShopBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CatalogController extends Controller
 {
@@ -28,9 +28,12 @@ class CatalogController extends Controller
         $newsRepository = $em->getRepository('ShopBundle:News');
         $slideRepository = $em->getRepository('ShopBundle:Slide');
 
-        $categories = $categoryRepository->findAll();
+        $settings = $this->get('app.site_settings');
+        $showEmptyCategories = $settings->getShowEmptyCategories();
+
+        $categories = $categoryRepository->getAllCategories($showEmptyCategories);
         //sorted by order number
-        $slides = $slideRepository->findBy(array(), array('slideOrder' => 'ASC'));
+        $slides = $slideRepository->findBy(array('enabled' => true), array('slideOrder' => 'ASC'));
         $lastNews = $newsRepository->getLastNews();
 
         return array(
@@ -48,7 +51,10 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categoryRepository = $em->getRepository('ShopBundle:Category');
 
-        $categories = $categoryRepository->findAll();
+        $settings = $this->get('app.site_settings');
+        $showEmpty = $settings->getShowEmptyCategories();
+
+        $categories = $categoryRepository->getAllCategories($showEmpty);
 
         return array(
             'categories' => $categories
@@ -63,7 +69,10 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
 
-        $manufacturers = $manufacturerRepository->findAll();
+        $settings = $this->get('app.site_settings');
+        $showEmpty = $settings->getShowEmptyManufacturers();
+
+        $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
 
         return array(
             'manufacturers' => $manufacturers
@@ -77,35 +86,37 @@ class CatalogController extends Controller
      */
     public function categoryAction(Request $request, $slug = '')
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $categoryRepository = $em->getRepository('ShopBundle:Category');
         $productRepository = $em->getRepository('ShopBundle:Product');
-
         /**
          * @var Category $requiredCategory
          */
         if ($slug == '') {
             //get first category id
             $requiredCategory = $categoryRepository->getFirstCategoryId();
-            $requiredCategory = $requiredCategory['id'];
         } else {
             $requiredCategory = $categoryRepository->findBySlug($slug);
-            $requiredCategory = $requiredCategory->getId();
         }
 
-        $productsQuery = $productRepository->findByCategoryForPaginator($requiredCategory);
+        if (!is_object($requiredCategory)) {
+            throw new NotFoundHttpException("Category not found");
+        }
+
+        $productsQuery = $productRepository->findByCategoryQB($requiredCategory, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 
-        $category = $categoryRepository->find($requiredCategory);
-
         return array(
-            'category' => $category,
+            'category' => $requiredCategory,
             'products' => $products,
             'sortedby' => $this->getSortingParamName($request)
         );
@@ -118,6 +129,9 @@ class CatalogController extends Controller
      */
     public function manufacturerAction(Request $request, $slug = '')
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
         $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
@@ -128,25 +142,25 @@ class CatalogController extends Controller
          */
         if ($slug == '') {
             //get first category id
-            $requiredManufacturer = $manufacturerRepository->getFirstManufacturerId();
-            $requiredManufacturer = $requiredManufacturer['id'];
+            $requiredManufacturer = $manufacturerRepository->getFirstManufacturer();
         } else {
             $requiredManufacturer = $manufacturerRepository->findBySlug($slug);
-            $requiredManufacturer = $requiredManufacturer->getId();
         }
 
-        $productsQuery = $productRepository->findByManufacturerForPaginator($requiredManufacturer);
+        if (!is_object($requiredManufacturer)) {
+            throw new NotFoundHttpException("Manufacturer not found");
+        }
+
+        $productsQuery = $productRepository->findByManufacturerQB($requiredManufacturer, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 
-        $manufacturer = $manufacturerRepository->find($requiredManufacturer);
-
         return array(
-            'manufacturer' => $manufacturer,
+            'manufacturer' => $requiredManufacturer,
             'products' => $products,
             'sortedby' => $this->getSortingParamName($request)
         );
@@ -168,6 +182,10 @@ class CatalogController extends Controller
             $product = $productRepository->findBySlug($slug);
         }
 
+        if (!is_object($product)) {
+            throw new NotFoundHttpException("Product not found");
+        }
+
         return array(
             'product' => $product
         );
@@ -180,34 +198,66 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function newsAction()
+    public function newsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $paginator = $this->get('knp_paginator');
-
-        $dql = "SELECT a FROM ShopBundle:News a ORDER BY a.date DESC";
-        $query = $em->createQuery($dql);
+        $newsRepository = $em->getRepository('ShopBundle:News');
         $limit = $this->getParameter('products_pagination_count');
+
+        $query = $newsRepository->getNewsQB();
 
         $news = $paginator->paginate(
             $query,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 
         return array(
-            'news' => $news,
+            'news' => $news
         );
     }
 
     /**
+     * Display favourite products.
+     *
+     * @Route("/favourites", name="favourites")
+     * @Method("GET")
+     * @Template()
+     */
+    public function favouritesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
+        $productRepository = $em->getRepository('ShopBundle:Product');
+        $limit = $this->getParameter('products_pagination_count');
+
+        $query = $productRepository->getFavouritesQB($this->getUser());
+
+        $products = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $limit
+        );
+
+        return array(
+            'products' => $products,
+            'sortedby' => $this->getSortingParamName($request)
+        );
+    }
+
+    /**
+     * search product by title or description
+     *
      * @Route("/search", name="search")
      * @Method("GET")
      * @Template()
      */
     public function searchProductAction(Request $request)
     {
+        /**
+         * @var $em EntityManager
+         */
         $searchResults = array();
 
         $em = $this->getDoctrine()->getManager();
@@ -217,24 +267,14 @@ class CatalogController extends Controller
         $search_phrase = 'search';
         if ($request->getMethod() == 'GET') {
             $search_phrase = trim($request->get('search_phrase'));
-            /**
-             * @var QueryBuilder $qb
-             */
-            $qb = $productRepository->createQueryBuilder('p');
             $searchWords = explode(' ', $search_phrase);
 
-            $cqbORX = array();
-            foreach ($searchWords as $searchWord) {
-                $cqbORX[] = $qb->expr()->like('p.name', $qb->expr()->literal('%' . $searchWord . '%'));
-                $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
-            }
-
-            $qb->andWhere(call_user_func_array(array($qb->expr(), "orx"), $cqbORX));
+            $qb = $productRepository->getSearchQB($searchWords, $this->getUser());
 
             $limit = $this->getParameter('search_pagination_count');
             $searchResults = $paginator->paginate(
                 $qb,
-                $this->get('request')->query->getInt('page', 1)/*page number*/,
+                $request->query->getInt('page', 1)/*page number*/,
                 $limit
             );
         }
@@ -269,6 +309,7 @@ class CatalogController extends Controller
 
     /**
      * Render static top menu for static pages.
+     *
      * @Method("GET")
      * @Template()
      */
@@ -288,6 +329,7 @@ class CatalogController extends Controller
 
     /**
      * Shows static page.
+     *
      * @Route("/{slug}.html",name="show_static_page")
      * @Method("GET")
      * @Template()
@@ -300,6 +342,10 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $page = $em->getRepository('ShopBundle:StaticPage')->findBySlug($slug);
+
+        if (!is_object($page)) {
+            throw new NotFoundHttpException("Static page not found");
+        }
 
         return array(
             'page' => $page

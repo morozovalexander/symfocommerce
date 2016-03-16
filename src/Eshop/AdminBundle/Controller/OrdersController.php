@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Orders;
-use Eshop\ShopBundle\Form\OrdersType;
 
 /**
  * Orders controller.
@@ -27,7 +26,7 @@ class OrdersController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -38,7 +37,7 @@ class OrdersController extends Controller
 
         $orders = $paginator->paginate(
             $query,
-            $this->get('request')->query->getInt('page', 1),
+            $request->query->getInt('page', 1),
             $limit
         );
 

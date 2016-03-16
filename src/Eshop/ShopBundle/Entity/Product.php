@@ -3,8 +3,6 @@
 namespace Eshop\ShopBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -73,6 +71,20 @@ class Product
     private $metaDescription;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_created", type="datetime")
+     */
+    private $dateCreated;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_updated", type="datetime")
+     */
+    private $dateUpdated;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="quantity", type="integer", nullable=false)
@@ -96,13 +108,13 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      **/
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="products")
-     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id", onDelete="CASCADE")
      **/
     private $manufacturer;
 
@@ -122,20 +134,40 @@ class Product
      **/
     private $measure;
 
-    public function __construct() {
+    /**
+     * @ORM\OneToMany(targetEntity="Favourites", mappedBy="product")
+     **/
+    private $favourites;
+
+    public function __construct()
+    {
+        $this->dateCreated = new \DateTime();
+        $this->dateUpdated = $this->dateCreated;
         $this->productOrders = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->favourites = new ArrayCollection();
         $this->quantity = 1;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
+    }
+
+    /**
+     * Called before saving the entity
+     *
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->dateUpdated = new \DateTime();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -158,7 +190,7 @@ class Product
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -181,7 +213,7 @@ class Product
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -204,7 +236,7 @@ class Product
     /**
      * Get price
      *
-     * @return float 
+     * @return float
      */
     public function getPrice()
     {
@@ -227,7 +259,7 @@ class Product
     /**
      * Get category
      *
-     * @return \Eshop\ShopBundle\Entity\Category 
+     * @return \Eshop\ShopBundle\Entity\Category
      */
     public function getCategory()
     {
@@ -250,7 +282,7 @@ class Product
     /**
      * Get manufacturer
      *
-     * @return \Eshop\ShopBundle\Entity\Manufacturer 
+     * @return \Eshop\ShopBundle\Entity\Manufacturer
      */
     public function getManufacturer()
     {
@@ -283,7 +315,7 @@ class Product
     /**
      * Get images
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getImages()
     {
@@ -316,7 +348,7 @@ class Product
     /**
      * Get productOrders
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProductOrders()
     {
@@ -339,7 +371,7 @@ class Product
     /**
      * Get metaKeys
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeys()
     {
@@ -362,7 +394,7 @@ class Product
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -385,7 +417,7 @@ class Product
     /**
      * Get quantity
      *
-     * @return integer 
+     * @return integer
      */
     public function getQuantity()
     {
@@ -408,7 +440,7 @@ class Product
     /**
      * Get measureQuantity
      *
-     * @return integer 
+     * @return integer
      */
     public function getMeasureQuantity()
     {
@@ -431,7 +463,7 @@ class Product
     /**
      * Get measure
      *
-     * @return \Eshop\ShopBundle\Entity\Measure 
+     * @return \Eshop\ShopBundle\Entity\Measure
      */
     public function getMeasure()
     {
@@ -454,10 +486,89 @@ class Product
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set dateCreated
+     *
+     * @param \DateTime $dateCreated
+     * @return Product
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreated
+     *
+     * @return \DateTime 
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Set dateUpdated
+     *
+     * @param \DateTime $dateUpdated
+     * @return Product
+     */
+    public function setDateUpdated($dateUpdated)
+    {
+        $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateUpdated
+     *
+     * @return \DateTime 
+     */
+    public function getDateUpdated()
+    {
+        return $this->dateUpdated;
+    }
+
+    /**
+     * Add favourites
+     *
+     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     * @return Product
+     */
+    public function addFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    {
+        $this->favourites[] = $favourites;
+
+        return $this;
+    }
+
+    /**
+     * Remove favourites
+     *
+     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     */
+    public function removeFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    {
+        $this->favourites->removeElement($favourites);
+    }
+
+    /**
+     * Get favourites
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFavourites()
+    {
+        return $this->favourites;
     }
 }

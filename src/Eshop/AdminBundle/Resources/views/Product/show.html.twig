@@ -9,7 +9,7 @@
 {% block page_content -%}
     <h3>{{ 'Product'|trans }}</h3>
 
-    <table class="record_properties table table-bordered table-stripped">
+    <table class="record_properties table table-bordered table-striped">
         <tbody>
         <tr>
             <th>{{ 'Name'|trans }}</th>
@@ -21,7 +21,9 @@
         </tr>
         <tr>
             <th>{{ 'Description'|trans }}</th>
-            <td>{{ entity.description }}</td>
+            <td>
+                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': entity.description} %}
+            </td>
         </tr>
         <tr>
             <th>{{ 'Price'|trans }}</th>
