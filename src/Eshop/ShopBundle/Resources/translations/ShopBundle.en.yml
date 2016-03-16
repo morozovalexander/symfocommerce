@@ -4,6 +4,7 @@ layout:
         sitename: Symfocommerce
         home: Home
         news: News
+        favourites: Favourites
         information: Information
         contacts: Contacts
         discounts: Discounts
@@ -125,3 +126,16 @@ errors:
 product:
     notavailable: Sorry, this product is not available!
 
+#favourites
+favourites:
+    view:
+        grid: Grid
+        list: List
+    sort:
+        by: Sort by
+        default: Default
+        price: Price
+        name: Name
+        added: Added
+    yourfavouriteproducts: Your Favourite Products
+    noproducts: You have not favourite products yet!

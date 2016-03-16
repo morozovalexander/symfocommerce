@@ -4,6 +4,7 @@ layout:
         sitename: Symfocommerce
         home: Главная
         news: Новости
+        favourites: Избранные
         information: Информация
         contacts: Контакты
         discounts: Скидки
@@ -125,3 +126,16 @@ errors:
 product:
     notavailable: Извините, товара нет в наличии!
 
+#favourites
+favourites:
+    view:
+        grid: Сетка
+        list: Список
+    sort:
+        by: Сортировать по
+        default: Умолчанию
+        price: Цене
+        name: Названию
+        added: Добавлен
+    yourfavouriteproducts: Ваши избранные товары
+    noproducts: У вас нет избранных товаров!

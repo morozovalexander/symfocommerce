@@ -79,6 +79,25 @@ class ProductRepository extends EntityRepository
     }
 
     /**
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public function getFavouritesQB($user = null)
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select(array('p', 'pi', 'pm', 'pf'))
+            ->from('ShopBundle:Product', 'p')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.measure', 'pm')
+            ->innerJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //only liked
+            ->andWhere('p.quantity <> 0')
+            ->setParameter('user', $user);
+
+        return $qb;
+    }
+
+    /**
      * @param array $searchWords
      * @param User $user
      * @return QueryBuilder

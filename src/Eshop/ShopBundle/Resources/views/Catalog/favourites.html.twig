@@ -1,0 +1,44 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ 'layout.navbar.favourites'|trans }} - {{ 'layout.navbar.news'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <div class="well well-sm">
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>{{ 'favourites.view.list'|trans }}</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                        class="glyphicon glyphicon-th"></span>{{ 'favourites.view.grid'|trans }}</a>
+        </div>
+        <strong>{{ 'favourites.yourfavouriteproducts'|trans }}</strong>
+        <div class="dropdown pull-right">
+            <strong>{{ 'favourites.sort.by'|trans }}</strong>
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                {{ sortedby|trans }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>{{ knp_pagination_sortable(products, 'favourites.sort.name'|trans, 'p.name') }}</li>
+                <li>{{ knp_pagination_sortable(products, 'favourites.sort.price'|trans, 'p.price') }}</li>
+                <li>{{ knp_pagination_sortable(products, 'favourites.sort.added'|trans, 'pf.date') }}</li>
+            </ul>
+        </div>
+    </div>
+    <div id="products" class="row list-group">
+    {% if products|length %}
+        {% for product in products %}
+            {{ include('@Shop/Partials/productPreview.html.twig') }}
+        {% endfor %}
+    {% else %}
+        <h3>{{ 'favourites.noproducts'|trans }}</h3>
+    {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+            {{ knp_pagination_render(products) }}
+        </div>
+    </div>
+{% endblock page_content %}

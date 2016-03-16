@@ -219,6 +219,34 @@ class CatalogController extends Controller
     }
 
     /**
+     * Display favourite products.
+     *
+     * @Route("/favourites", name="favourites")
+     * @Method("GET")
+     * @Template()
+     */
+    public function favouritesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $paginator = $this->get('knp_paginator');
+        $productRepository = $em->getRepository('ShopBundle:Product');
+        $limit = $this->getParameter('products_pagination_count');
+
+        $query = $productRepository->getFavouritesQB($this->getUser());
+
+        $products = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $limit
+        );
+
+        return array(
+            'products' => $products,
+            'sortedby' => $this->getSortingParamName($request)
+        );
+    }
+
+    /**
      * search product by title or description
      *
      * @Route("/search", name="search")
