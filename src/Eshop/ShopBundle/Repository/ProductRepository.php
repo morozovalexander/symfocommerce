@@ -6,6 +6,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
+use Eshop\UserBundle\Entity\User;
 
 /**
  * ProductRepository
@@ -33,38 +34,48 @@ class ProductRepository extends EntityRepository
 
     /**
      * @param Category $category
+     * @param User $user
      * @return QueryBuilder
      */
-    public function findByCategoryQB($category)
+    public function findByCategoryQB($category, $user = null)
     {
-        return $this->getEntityManager()
+        $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm'))
+            ->select(array('p', 'pi', 'pm', 'pf'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.category', 'ca')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
+            ->leftJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //if liked
             ->where('ca = :category')
             ->andWhere('p.quantity <> 0')
-            ->setParameter('category', $category);
+            ->setParameter('category', $category)
+            ->setParameter('user', $user);
+
+        return $qb;
     }
 
     /**
      * @param Manufacturer $manufacturer
+     * @param User $user
      * @return QueryBuilder
      */
-    public function findByManufacturerQB($manufacturer)
+    public function findByManufacturerQB($manufacturer, $user = null)
     {
-        return $this->getEntityManager()
+        $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm'))
+            ->select(array('p', 'pi', 'pm', 'pf'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.manufacturer', 'ma')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
+            ->leftJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //if liked
             ->where('ma.id = :manufacturer')
             ->andWhere('p.quantity <> 0')
-            ->setParameter('manufacturer', $manufacturer);
+            ->setParameter('manufacturer', $manufacturer)
+            ->setParameter('user', $user);
+
+        return $qb;
     }
 
     /**

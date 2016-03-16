@@ -45,6 +45,30 @@ $(function () {
         $('#products .item').addClass('grid-group-item');
     });
 
+    $('.like').on('click', function(e){
+        e.preventDefault();
+        //get productID
+        var productId = $(this).parent().parent().data('id');
+        //send ajax
+        $.ajax({
+            type: 'post',
+            url: urls['ajax_like'],
+            data: {product_id: productId},
+            success: function (data) {
+                if (data.success === true) {
+                    console.log('success');
+                    //change like icon
+
+                }
+            },
+            error: function (data) {
+                if (data.message) {
+                    alert(data.message);
+                }
+            }
+        });
+    });
+
     //menu items highlight
     highlightMenu();
 });

@@ -5,14 +5,20 @@
             {% if product.images|length %}
                 <img class="group list-group-image"
                      src="{{ asset( ('uploads/gallery/' ~ product.images.first().path) | imagine_filter('category_mainpage_thumb')) }}"
-                     alt="{{ product.name }}" />
+                     alt="{{ product.name }}"/>
             {% else %}
                 <img class="group list-group-image"
                      src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
-                     alt="{{ product.name }}" />
+                     alt="{{ product.name }}"/>
             {% endif %}
+
         </a>
         <div class="caption description-container id-row" data-id="{{ product.id }}">
+            {% if product.favourites|length %}
+                <a href="#"><span class="glyphicon glyphicon-heart like" aria-hidden="true"></span></a>
+            {% else %}
+                <a href="#"><span class="glyphicon glyphicon-heart-empty like" aria-hidden="true"></span></a>
+            {% endif %}
             <a href="{{ path('show_product', {'slug' : product.slug}) }}">
                 <h4 class="group inner list-group-item-heading product-title">
                     {{ product.name }} ({{ product.measureQuantity }} {{ product.measure.name }})

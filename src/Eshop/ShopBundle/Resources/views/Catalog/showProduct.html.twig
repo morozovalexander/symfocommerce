@@ -29,7 +29,7 @@
     </div>
     <div class="row">
         <div class="col-md-5">
-            <div class="thumbnail">
+            <div class="thumbnail" data-id="{{ product.id }}">
                 {% if product.images | length %}
                     <a href="{{ asset(('uploads/gallery/' ~ product.images.first().path)) }}" class="fancybox"
                        rel="group">
@@ -41,6 +41,11 @@
                     <img class="group list-group-image"
                          src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('product_main_thumb')) }}"
                          alt="{{ product.name }}"/>
+                {% endif %}
+                {% if product.favourites|length %}
+                    <a href="#"><span class="glyphicon glyphicon-heart like" aria-hidden="true"></span></a>
+                {% else %}
+                    <a href="#"><span class="glyphicon glyphicon-heart-empty like" aria-hidden="true"></span></a>
                 {% endif %}
             </div>
         </div>
