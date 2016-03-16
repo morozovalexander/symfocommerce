@@ -62,7 +62,7 @@ class AjaxController extends Controller
      * @param string $message
      * @return JsonResponse
      */
-    public function returnErrorJson($message)
+    private function returnErrorJson($message)
     {
         return new JsonResponse(array(
             'success' => false,
