@@ -8,6 +8,7 @@ Symfony2 Standart Edition based ecommerce project.
 - Products with related categories and manufacturers.
 - Products sorting by name or price
 - Disabling products by set zero quantity
+- Ability to add products to favourites
 - Seo friendly navigation, meta tags and description on each page, routes using slug, 
 not id's, slug generator in admin section
 - Different product measures, e.g. grammes, pieces, oz., ml.
