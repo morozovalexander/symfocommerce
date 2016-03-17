@@ -2,8 +2,6 @@
 
 namespace Eshop\ShopBundle\Controller;
 
-use Eshop\ShopBundle\Entity\Category;
-use Eshop\ShopBundle\Entity\Manufacturer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class LayoutsUtilityController extends Controller
