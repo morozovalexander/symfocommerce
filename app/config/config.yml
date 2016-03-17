@@ -78,6 +78,9 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Eshop\UserBundle\Entity\User
+    registration:
+        form:
+            type: Eshop\UserBundle\Form\Type\RegistrationType
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control

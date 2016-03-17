@@ -143,3 +143,11 @@ favourites:
         added: Добавлен
     yourfavouriteproducts: Ваши избранные товары
     noproducts: У вас нет избранных товаров!
+
+#registration
+registration:
+    firstname: Имя
+    lastname: Фамилия
+    phone: Телефон
+    address: Адрес
+    successful: Регистрация прошла успешно!

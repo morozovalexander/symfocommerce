@@ -33,5 +33,9 @@ services:
         class:        Eshop\ShopBundle\EventListener\SitemapListener
         arguments:    ["@router", "@doctrine.orm.entity_manager"]
         tags:
-            - {name: "presta.sitemap.listener"}
+            - { name: "presta.sitemap.listener" }
 
+    app.form.registration:
+        class:        Eshop\UserBundle\Form\Type\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }

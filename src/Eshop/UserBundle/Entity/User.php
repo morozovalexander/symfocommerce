@@ -20,16 +20,24 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
+     * @ORM\Column(name="firstname", type="string", length=255)
      */
     protected $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
+     * @ORM\Column(name="lastname", type="string", length=255)
      */
     protected $lastname;
+
+    /**
+     * @ORM\Column(name="phone", type="string", length=255)
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Column(name="address", type="text", length=1000)
+     */
+    protected $address;
 
     /**
      * @var \DateTime
@@ -189,5 +197,51 @@ class User extends BaseUser
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return User
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 }

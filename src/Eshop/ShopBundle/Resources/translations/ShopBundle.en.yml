@@ -143,3 +143,12 @@ favourites:
         added: Added
     yourfavouriteproducts: Your Favourite Products
     noproducts: You have not favourite products yet!
+
+#registration
+registration:
+    firstname: Firstname
+    lastname: Lastname
+    phone: Phone number
+    address: Address
+    successful: Registration completed successful!
+
