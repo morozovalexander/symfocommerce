@@ -115,7 +115,6 @@ search:
 notification:
     neworder: Вы получили новый заказ
 
-
 #error pages
 errors:
     pnf:

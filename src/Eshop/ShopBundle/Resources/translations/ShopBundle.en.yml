@@ -121,7 +121,6 @@ errors:
         header: Page not found
         description: The requested page couldn't be located. Checkout for any URL misspelling or return to the homepage
         tohomepage: To homepage
-
     err:
         header: Ooops! Something went wrong!
         description: An error was occuped. We will fix it as soon as possible, you can go to the homepage
