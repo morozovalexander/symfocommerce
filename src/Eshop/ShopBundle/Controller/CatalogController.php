@@ -44,42 +44,6 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Template()
-     */
-    public function categoriesMenuAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $categoryRepository = $em->getRepository('ShopBundle:Category');
-
-        $settings = $this->get('app.site_settings');
-        $showEmpty = $settings->getShowEmptyCategories();
-
-        $categories = $categoryRepository->getAllCategories($showEmpty);
-
-        return array(
-            'categories' => $categories
-        );
-    }
-
-    /**
-     * @Template()
-     */
-    public function manufacturersMenuAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
-
-        $settings = $this->get('app.site_settings');
-        $showEmpty = $settings->getShowEmptyManufacturers();
-
-        $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
-
-        return array(
-            'manufacturers' => $manufacturers
-        );
-    }
-
-    /**
      * @Route("/category/{slug}", name="category")
      * @Method("GET")
      * @Template()
@@ -118,7 +82,7 @@ class CatalogController extends Controller
         return array(
             'category' => $requiredCategory,
             'products' => $products,
-            'sortedby' => $this->getSortingParamName($request)
+            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
         );
     }
 
@@ -162,7 +126,7 @@ class CatalogController extends Controller
         return array(
             'manufacturer' => $requiredManufacturer,
             'products' => $products,
-            'sortedby' => $this->getSortingParamName($request)
+            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
         );
     }
 
@@ -219,34 +183,6 @@ class CatalogController extends Controller
     }
 
     /**
-     * Display favourite products.
-     *
-     * @Route("/favourites", name="favourites")
-     * @Method("GET")
-     * @Template()
-     */
-    public function favouritesAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository('ShopBundle:Product');
-        $limit = $this->getParameter('products_pagination_count');
-
-        $query = $productRepository->getFavouritesQB($this->getUser());
-
-        $products = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            $limit
-        );
-
-        return array(
-            'products' => $products,
-            'sortedby' => $this->getSortingParamName($request)
-        );
-    }
-
-    /**
      * search product by title or description
      *
      * @Route("/search", name="search")
@@ -255,9 +191,6 @@ class CatalogController extends Controller
      */
     public function searchProductAction(Request $request)
     {
-        /**
-         * @var $em EntityManager
-         */
         $searchResults = array();
 
         $em = $this->getDoctrine()->getManager();
@@ -274,56 +207,14 @@ class CatalogController extends Controller
             $limit = $this->getParameter('search_pagination_count');
             $searchResults = $paginator->paginate(
                 $qb,
-                $request->query->getInt('page', 1)/*page number*/,
+                $request->query->getInt('page', 1),
                 $limit
             );
         }
         return array(
             'products' => $searchResults,
             'search_phrase' => $search_phrase,
-            'sortedby' => $this->getSortingParamName($request)
-        );
-    }
-
-    /**
-     * return sorting name param form request.
-     */
-    private function getSortingParamName(Request $request)
-    {
-        $sortedBy = '';
-        $sortParam = $request->get('sort');
-
-        switch ($sortParam) {
-            case 'p.name':
-                $sortedBy = 'manufacturer.sort.name';
-                break;
-            case 'p.price':
-                $sortedBy = 'manufacturer.sort.price';
-                break;
-            default:
-                $sortedBy = 'manufacturer.sort.default';
-                break;
-        }
-        return $sortedBy;
-    }
-
-    /**
-     * Render static top menu for static pages.
-     *
-     * @Method("GET")
-     * @Template()
-     */
-    public function staticPagesMenuAction()
-    {
-        /**
-         * @var EntityManager $em
-         */
-        $em = $this->getDoctrine()->getManager();
-
-        $headers = $em->getRepository('ShopBundle:StaticPage')->getHeaders();
-
-        return array(
-            'headers' => $headers
+            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
         );
     }
 
@@ -336,9 +227,6 @@ class CatalogController extends Controller
      */
     public function showStaticPageAction($slug)
     {
-        /**
-         * @var EntityManager $em
-         */
         $em = $this->getDoctrine()->getManager();
 
         $page = $em->getRepository('ShopBundle:StaticPage')->findBySlug($slug);

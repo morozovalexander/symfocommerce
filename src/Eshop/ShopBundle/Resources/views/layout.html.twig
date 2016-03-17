@@ -27,7 +27,7 @@
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li><a href="{{ path('favourites') }}">{{ 'layout.navbar.favourites'|trans }}</a></li>
                     {% endif %}
-                    {{ render(controller('ShopBundle:Catalog:staticPagesMenu')) }}
+                    {{ render(controller('ShopBundle:LayoutsUtility:staticPagesMenu')) }}
 
                     <li>
                         <a href="{{ path('showcart') }}">
@@ -63,14 +63,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                {{ render(controller('ShopBundle:Catalog:categoriesMenu')) }}
+                {{ render(controller('ShopBundle:LayoutsUtility:categoriesMenu')) }}
             </div>
             <div class="col-md-8">
                 {% block page_content %}
                 {% endblock page_content %}
             </div>
             <div class="col-md-2">
-                {{ render(controller('ShopBundle:Catalog:manufacturersMenu')) }}
+                {{ render(controller('ShopBundle:LayoutsUtility:manufacturersMenu')) }}
             </div>
         </div>
     </div>

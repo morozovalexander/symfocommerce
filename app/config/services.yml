@@ -25,6 +25,10 @@ services:
         class:        Eshop\ShopBundle\Service\SettingsService
         arguments:    ["@doctrine.orm.entity_manager"]
 
+    app.page_utilities:
+        class:        Eshop\ShopBundle\Service\PagesUtilities
+        arguments:    []
+
     my.sitemap.listener:
         class:        Eshop\ShopBundle\EventListener\SitemapListener
         arguments:    ["@router", "@doctrine.orm.entity_manager"]

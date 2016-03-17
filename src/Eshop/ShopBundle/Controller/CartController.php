@@ -58,7 +58,6 @@ class CartController extends Controller
             }
         }
 
-
         return array(
             'products' => $productsArray,
             'totalsum' => $totalSum
@@ -75,8 +74,7 @@ class CartController extends Controller
     public function orderFormAction(Request $request)
     {
         $order = new Orders();
-        $form   = $this->createCreateOrderForm($order);
-
+        $form = $this->createCreateOrderForm($order);
 
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -107,7 +105,7 @@ class CartController extends Controller
         return array(
             'totalsum' => $totalSum,
             'order' => $order,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -176,7 +174,7 @@ class CartController extends Controller
 
         return array(
             'entity' => $order,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
