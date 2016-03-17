@@ -2,6 +2,7 @@
 namespace Eshop\ShopBundle\Service;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PagesUtilities
 {
@@ -28,5 +29,17 @@ class PagesUtilities
                 break;
         }
         return $sortedBy;
+    }
+
+    /**
+     * clear cookies cart
+     *
+     * @return void
+     */
+    public function clearCart()
+    {
+        $response = new Response();
+        $response->headers->clearCookie('cart');
+        $response->sendHeaders();
     }
 }

@@ -33,8 +33,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
         $userAdmin->setFirstname('admin');
         $userAdmin->setLastname('admin');
         $userAdmin->setUsername('admin');
-        $userAdmin->setPhone('admin');
-        $userAdmin->setAddress('admin');
+        $userAdmin->setPhone('1234567890');
+        $userAdmin->setAddress('admin address');
         $userAdmin->setEnabled(true);
         $userAdmin->setRoles(array('ROLE_ADMIN'));
         $userAdmin->setEmail('admin@email.com');
@@ -52,8 +52,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
             $user = new User();
             $user->setFirstname('firstname' . $i);
             $user->setLastname('lastname' . $i);
-            $user->setPhone('lastname' . $i);
-            $user->setAddress('lastname' . $i);
+            $user->setPhone('1234567890 ' . $i);
+            $user->setAddress('address ' . $i);
             $user->setUsername('user' . $i);
             $user->setEnabled(true);
             $user->setEmail('user' . $i . '@email.com');
