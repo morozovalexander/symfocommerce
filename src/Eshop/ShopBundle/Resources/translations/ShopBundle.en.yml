@@ -74,8 +74,13 @@ cart:
         price: Price
         sum: Sum
         totalsum: Total sum of the order
-    checkout: Checkout
+    checkout: CHECKOUT
     clear: Clear
+    pleasereg: Please Registrate!
+    regadvadtages: Please registrate to use all site advantage!
+    login: Login
+    register: Register
+    continuewithout: Continue without registration
 
 orderform:
     orderform: Order Form

@@ -74,8 +74,13 @@ cart:
         price: Цена
         sum: Сумма
         totalsum: Cумма заказа
-    checkout: Продолжить
+    checkout: ПРОДОЛЖИТЬ
     clear: Очистить
+    pleasereg: Пожалуйста зарегистрируйтесь!
+    regadvadtages: Пожалуйста зарегистрируйтесь для того, чтобы использовать все преимущества сайта!
+    login: Войти
+    register: Зарегистрироваться
+    continuewithout: Продолжить без регистрации
 
 orderform:
     orderform: Форма заказа

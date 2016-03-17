@@ -2,7 +2,7 @@
 {% trans_default_domain 'ShopBundle' %}
 
 {% block title %}
-    {{ 'cart.title.cart'|trans}}
+    {{ 'cart.title.cart'|trans }}
 {% endblock title %}
 
 {% block page_content -%}
@@ -31,13 +31,13 @@
                             <td class="col-md-1">{{ loop.index }}</td>
                             <td>
                                 <a href="#" class="thumbnail pull-left" style="margin-right: 15px;">
-                                {% if product.product.images|length %}
-                                    <img src="{{ asset( ('uploads/gallery/' ~ product.product.images.first().path) | imagine_filter('some_thumb')) }}"
-                                         alt="{{ product.product.name }}">
-                                {% else %}
-                                    <img src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('some_thumb')) }}"
-                                         alt="{{ product.product.name }}">
-                                {% endif %}
+                                    {% if product.product.images|length %}
+                                        <img src="{{ asset( ('uploads/gallery/' ~ product.product.images.first().path) | imagine_filter('some_thumb')) }}"
+                                             alt="{{ product.product.name }}">
+                                    {% else %}
+                                        <img src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('some_thumb')) }}"
+                                             alt="{{ product.product.name }}">
+                                    {% endif %}
                                 </a>
                                 <div>
                                     <a href="{{ path('show_product', {'slug' : product.product.slug}) }}">
@@ -83,7 +83,8 @@
                 <div class="row">
                     <div>
                         <div class="pull-right">
-                            <a href="{{ path('orderform') }}" class="btn btn-success glyphicon glyphicon-ok">
+                            <a href="{{ path('orderform') }}" class="btn btn-success glyphicon glyphicon-ok"
+                               id="{% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}showModal{% endif %}">
                                 {{ 'cart.checkout'|trans }}
                             </a>
                             <a href="#" class="btn btn-danger glyphicon glyphicon-trash clear-cart"
@@ -103,4 +104,42 @@
             {% endif %}
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="authSuggest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'cart.pleasereg'|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ 'cart.regadvadtages'|trans }}
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-success">
+                        {{ 'cart.login'|trans }}
+                    </a>
+                    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-success">
+                        {{ 'cart.register'|trans }}
+                    </a>
+                    <a href="{{ path('orderform') }}" class="btn btn-primary">
+                        {{ 'cart.continuewithout'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function (e) {
+            $('#showModal').on('click', function (e) {
+                e.preventDefault();
+                $('#authSuggest').modal('show');
+            });
+        });
+    </script>
+{% endblock javascripts %}
