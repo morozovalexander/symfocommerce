@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * OrdersRepository
@@ -12,4 +13,38 @@ use Doctrine\ORM\EntityRepository;
  */
 class OrdersRepository extends EntityRepository
 {
+    /**
+     * query for admin paginator
+     *
+     * @return QueryBuilder
+     */
+    public function getAllOrdersAdminQB()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('o')
+            ->from('ShopBundle:Orders', 'o')
+            ->addOrderBy('o.date', 'DESC');
+
+        return $qb;
+    }
+
+    /**
+     * return query to get users orders
+     *
+     * @return QueryBuilder
+     */
+    public function getUserOrdersAdminQB($user)
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('o')
+            ->from('ShopBundle:Orders', 'o')
+            ->innerJoin('o.user', 'ou')
+            ->where('ou = :user')
+            ->addOrderBy('o.date', 'DESC')
+            ->setParameter('user', $user);
+
+        return $qb;
+    }
 }

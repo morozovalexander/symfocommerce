@@ -29,14 +29,14 @@ class OrdersController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $ordersRepository = $em->getRepository('ShopBundle:Orders');
         $paginator = $this->get('knp_paginator');
 
-        $dql = "SELECT a FROM ShopBundle:Orders a ORDER BY a.date DESC";
-        $query = $em->createQuery($dql);
+        $qb = $ordersRepository->getAllOrdersAdminQB();
         $limit = $this->getParameter('admin_manufacturers_pagination_count');
 
         $orders = $paginator->paginate(
-            $query,
+            $qb,
             $request->query->getInt('page', 1),
             $limit
         );
