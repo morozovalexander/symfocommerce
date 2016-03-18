@@ -39,3 +39,9 @@ services:
         class:        Eshop\UserBundle\Form\Type\RegistrationType
         tags:
             - { name: form.type, alias: app_user_registration }
+
+    app.twig_extension:
+        class:        Eshop\ShopBundle\Twig\RawDescriptionExtension
+        public:       false
+        tags:
+            - { name: twig.extension }
