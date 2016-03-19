@@ -22,7 +22,7 @@
         <tr>
             <th>{{ 'Description'|trans }}</th>
             <td>
-                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': entity.description} %}
+                {{ entity.description|rawdescr|nl2br }}
             </td>
         </tr>
         <tr>

@@ -15,7 +15,7 @@
         <tr>
             <th>{{ 'Text'|trans }}</th>
             <td>
-                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': entity.text} %}
+                {{ entity.text|rawdescr|nl2br }}
             </td>
         </tr>
         <tr>
