@@ -97,3 +97,24 @@ function changeGlyphicon(clickedIcon) {
     }
 }
 
+function checkProductIsLiked(productId) {
+    $.ajax({
+        type: 'post',
+        url: urls['ajax_is_liked_product'],
+        data: {product_id: productId},
+        success: function (data) {
+            if (data.liked === true) {
+                var icon = $('.like');
+                changeGlyphicon(icon);
+            }
+        },
+        error: function (data) {
+            if (data.message) {
+                alert(messages[data.message]);
+            } else if (data.responseJSON.message) {
+                alert(messages[data.responseJSON.message]);
+            }
+        }
+    });
+}
+

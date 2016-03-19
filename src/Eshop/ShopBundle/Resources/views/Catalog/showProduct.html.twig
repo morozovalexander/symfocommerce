@@ -42,11 +42,7 @@
                          src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('product_main_thumb')) }}"
                          alt="{{ product.name }}"/>
                 {% endif %}
-                {% if product.favourites|length %}
-                    <a href="#"><span class="glyphicon glyphicon-heart like" aria-hidden="true"></span></a>
-                {% else %}
-                    <a href="#"><span class="glyphicon glyphicon-heart-empty like" aria-hidden="true"></span></a>
-                {% endif %}
+                <a href="#"><span class="glyphicon glyphicon-heart-empty like" aria-hidden="true"></span></a>
             </div>
         </div>
         <div class="col-md-7">
@@ -108,6 +104,7 @@
     <script>
         $(document).ready(function () {
             $('.fancybox').fancybox();
+            checkProductIsLiked({{ product.id }});
         });
     </script>
 {% endblock javascripts %}

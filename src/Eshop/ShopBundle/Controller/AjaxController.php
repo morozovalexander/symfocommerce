@@ -24,6 +24,7 @@ class AjaxController extends Controller
         $favouritesRepository = $em->getRepository('ShopBundle:Favourites');
 
         $productId = $request->request->getInt('product_id');
+
         $product = $productRepository->find($productId);
         $user = $this->getUser();
 
@@ -54,6 +55,31 @@ class AjaxController extends Controller
 
         return new JsonResponse(array(
             'favourite' => $liked,
+            'success' => true
+        ), 200);
+    }
+
+    /**
+     * Сhecks if user liked this project.
+     *
+     * @Route("/ajax_is_liked_product", name="ajax_is_liked_product")
+     * @Method("POST")
+     */
+    public function checkIsLikedAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $favouritesRepository = $em->getRepository('ShopBundle:Favourites');
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->returnErrorJson('mustberegistered');
+        }
+
+        $productId = $request->request->getInt('product_id');
+
+        $liked = $favouritesRepository->checkIsLiked($user, $productId);
+
+        return new JsonResponse(array(
+            'liked' => $liked,
             'success' => true
         ), 200);
     }
