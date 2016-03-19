@@ -5,12 +5,13 @@ namespace Eshop\ShopBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
+use Eshop\ShopBundle\Entity\Product;
+use Eshop\ShopBundle\Entity\StaticPage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CatalogController extends Controller
 {
@@ -48,30 +49,16 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function categoryAction(Request $request, $slug = '')
+    public function categoryAction(Request $request, Category $category)
     {
         /**
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $categoryRepository = $em->getRepository('ShopBundle:Category');
         $productRepository = $em->getRepository('ShopBundle:Product');
-        /**
-         * @var Category $requiredCategory
-         */
-        if ($slug == '') {
-            //get first category id
-            $requiredCategory = $categoryRepository->getFirstCategoryId();
-        } else {
-            $requiredCategory = $categoryRepository->findBySlug($slug);
-        }
 
-        if (!is_object($requiredCategory)) {
-            throw new NotFoundHttpException("Category not found");
-        }
-
-        $productsQuery = $productRepository->findByCategoryQB($requiredCategory, $this->getUser());
+        $productsQuery = $productRepository->findByCategoryQB($category, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
@@ -80,7 +67,7 @@ class CatalogController extends Controller
         );
 
         return array(
-            'category' => $requiredCategory,
+            'category' => $category,
             'products' => $products,
             'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
         );
@@ -91,31 +78,16 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function manufacturerAction(Request $request, $slug = '')
+    public function manufacturerAction(Request $request, Manufacturer $manufacturer)
     {
         /**
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
         $productRepository = $em->getRepository('ShopBundle:Product');
 
-        /**
-         * @var Manufacturer $requiredManufacturer
-         */
-        if ($slug == '') {
-            //get first category id
-            $requiredManufacturer = $manufacturerRepository->getFirstManufacturer();
-        } else {
-            $requiredManufacturer = $manufacturerRepository->findBySlug($slug);
-        }
-
-        if (!is_object($requiredManufacturer)) {
-            throw new NotFoundHttpException("Manufacturer not found");
-        }
-
-        $productsQuery = $productRepository->findByManufacturerQB($requiredManufacturer, $this->getUser());
+        $productsQuery = $productRepository->findByManufacturerQB($manufacturer, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
             $productsQuery,
@@ -124,7 +96,7 @@ class CatalogController extends Controller
         );
 
         return array(
-            'manufacturer' => $requiredManufacturer,
+            'manufacturer' => $manufacturer,
             'products' => $products,
             'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
         );
@@ -135,24 +107,9 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showProductAction($slug = '')
+    public function showProductAction(Product $product)
     {
-        $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository('ShopBundle:Product');
-
-        if ($slug == '') {
-            return $this->redirectToRoute('index_main');
-        } else {
-            $product = $productRepository->findBySlug($slug);
-        }
-
-        if (!is_object($product)) {
-            throw new NotFoundHttpException("Product not found");
-        }
-
-        return array(
-            'product' => $product
-        );
+        return array('product' => $product);
     }
 
     /**
@@ -177,9 +134,7 @@ class CatalogController extends Controller
             $limit
         );
 
-        return array(
-            'news' => $news
-        );
+        return array('news' => $news);
     }
 
     /**
@@ -225,18 +180,8 @@ class CatalogController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showStaticPageAction($slug)
+    public function showStaticPageAction(StaticPage $page)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $page = $em->getRepository('ShopBundle:StaticPage')->findBySlug($slug);
-
-        if (!is_object($page)) {
-            throw new NotFoundHttpException("Static page not found");
-        }
-
-        return array(
-            'page' => $page
-        );
+        return array('page' => $page);
     }
 }
