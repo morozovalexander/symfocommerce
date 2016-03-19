@@ -41,12 +41,13 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pf'))
+            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.category', 'ca')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //if liked
+            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
+            ->leftJoin('p.featured', 'pfe')
             ->where('ca = :category')
             ->andWhere('p.quantity <> 0')
             ->setParameter('category', $category)
@@ -64,12 +65,13 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pf'))
+            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.manufacturer', 'ma')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //if liked
+            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
+            ->leftJoin('p.featured', 'pfe')
             ->where('ma.id = :manufacturer')
             ->andWhere('p.quantity <> 0')
             ->setParameter('manufacturer', $manufacturer)
@@ -86,11 +88,12 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pf'))
+            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->innerJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //only liked
+            ->innerJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //only liked
+            ->leftJoin('p.featured', 'pfe')
             ->andWhere('p.quantity <> 0')
             ->setParameter('user', $user);
 
@@ -106,11 +109,12 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pf'))
+            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //if liked
+            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
+            ->leftJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
             ->setParameter('user', $user);
 
@@ -134,11 +138,12 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pf'))
+            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pf', 'WITH', 'pf.user = :user') //if liked
+            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
+            ->leftJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
             ->setMaxResults($quantity)
             ->setParameter('user', $user)
