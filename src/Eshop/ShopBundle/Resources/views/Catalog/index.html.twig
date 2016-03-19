@@ -66,8 +66,11 @@
         </div>
     </div>
     <div id="products" class="row list-group">
-        {% for category in categories %}
-            {{ include('@Shop/Partials/categoryPreview.html.twig') }}
-        {% endfor %}
+        <div class="col-md-12">
+            <h3 class="text-center">Latest products</h3>
+            {% for product in latest_products %}
+                {{ include('@Shop/Partials/productPreview.html.twig'    ) }}
+            {% endfor %}
+        </div>
     </div>
 {% endblock page_content %}

@@ -25,20 +25,17 @@ class CatalogController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $categoryRepository = $em->getRepository('ShopBundle:Category');
         $newsRepository = $em->getRepository('ShopBundle:News');
         $slideRepository = $em->getRepository('ShopBundle:Slide');
+        $productRepository = $em->getRepository('ShopBundle:Product');
 
-        $settings = $this->get('app.site_settings');
-        $showEmptyCategories = $settings->getShowEmptyCategories();
-
-        $categories = $categoryRepository->getAllCategories($showEmptyCategories);
         //sorted by order number
         $slides = $slideRepository->findBy(array('enabled' => true), array('slideOrder' => 'ASC'));
         $lastNews = $newsRepository->getLastNews();
+        $latestProducts =  $productRepository->getLatest(12, $this->getUser());
 
         return array(
-            'categories' => $categories,
+            'latest_products' => $latestProducts,
             'news' => $lastNews,
             'slides' => $slides
         );
