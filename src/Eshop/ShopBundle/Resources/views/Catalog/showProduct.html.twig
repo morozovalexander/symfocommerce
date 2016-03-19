@@ -104,7 +104,10 @@
     <script>
         $(document).ready(function () {
             $('.fancybox').fancybox();
-            checkProductIsLiked({{ product.id }});
+
+            {% if is_granted('ROLE_USER') %}
+                checkProductIsLiked({{ product.id }});
+            {% endif %}
         });
     </script>
 {% endblock javascripts %}
