@@ -66,6 +66,7 @@ class FeaturedController extends Controller
     /**
      * @param Product $product
      * @param bool $addFeaturedValue
+     * @return void
      */
     private function createOrDeleteFeaturedProduct($product, $addFeaturedValue)
     {
@@ -73,7 +74,6 @@ class FeaturedController extends Controller
         $featuredRepository = $em->getRepository('ShopBundle:Featured');
 
         if ($addFeaturedValue) {
-
             $alreadyFeatured = $product->getFeatured(); //check if already featured
 
             if (!is_object($alreadyFeatured)) {
