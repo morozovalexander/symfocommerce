@@ -36,11 +36,11 @@ class FeaturedController extends Controller
 
     /**
      * @param Request $request
-     * @Route("/featured_edit_ajax", name="admin_featured_edit_ajax")
+     * @Route("/featured_product_edit_ajax", name="admin_featured_product_edit_ajax")
      * @Method("POST")
      * @return JsonResponse
      */
-    public function featuredEditAction(Request $request)
+    public function featuredProductEditAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -50,13 +50,42 @@ class FeaturedController extends Controller
 
         $product = $productRepository->find($productId);
         if (!$product) {
-            return new JsonResponse(array(
-                'success' => false,
-                'message' => 'product not found'
-            ), 400);
+            return $this->returnErrorJson('product not found');
         }
 
         $this->createOrDeleteFeaturedProduct($product, $addFeaturedValue);
+
+        return new JsonResponse(array(
+            'success' => true
+        ), 200);
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/featured_order_edit_ajax", name="admin_featured_order_edit_ajax")
+     * @Method("POST")
+     * @return JsonResponse
+     */
+    public function featuredOrderEditAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $featuredRepository = $em->getRepository('ShopBundle:Featured');
+
+        $featuredId = $request->request->getInt('featured_id');
+        $newOrder = $request->request->getInt('new_value');
+
+        $featuredWithNewOrder = $featuredRepository->findOneBy(array('productOrder' => $newOrder));
+        if (is_object($featuredWithNewOrder)) {
+            return $this->returnErrorJson('order exists');
+        }
+
+        $featured = $featuredRepository->find($featuredId); //search featured record
+        if (!$featured) {
+            return $this->returnErrorJson('entity not found');
+        }
+
+        $featured->setProductOrder($newOrder);
+        $em->flush();
 
         return new JsonResponse(array(
             'success' => true
@@ -95,5 +124,16 @@ class FeaturedController extends Controller
             $em->remove($featured);
         }
         $em->flush();
+    }
+
+    /**
+     * @param string $message
+     * @return JsonResponse
+     */
+    private function returnErrorJson($message) {
+        return new JsonResponse(array(
+            'success' => false,
+            'message' => $message
+        ), 400);
     }
 }

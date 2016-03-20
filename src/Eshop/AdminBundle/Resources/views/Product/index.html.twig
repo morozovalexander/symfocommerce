@@ -99,18 +99,15 @@
 
                 $.ajax({
                     type: 'post',
-                    url: '{{ path('admin_featured_edit_ajax') }}',
+                    url: '{{ path('admin_featured_product_edit_ajax') }}',
                     data: {
                         product_id: productId,
                         new_value: newValue
                     },
-                    async: false,
                     success: function (data) {
                         if (data.success === true) {
                             changeFeturedValue(link);
                         }
-                    },
-                    error: function () {
                     }
                 });
             });
