@@ -25,14 +25,14 @@
             <th class="col-md-2">{{ knp_pagination_sortable(entities, 'Category'|trans, 'pc.name') }}</th>
             <th class="col-md-2">{{ knp_pagination_sortable(entities, 'Manufacturer'|trans, 'pm.name') }}</th>
             <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Price'|trans, 'p.price') }}</th>
-            <th class="col-md-4">{{ 'Photo'|trans }}</th>
+            <th class="col-md-3">{{ 'Photo'|trans }}</th>
             <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Q-ty'|trans, 'p.quantity') }}</th>
-            <th class="col-md-1">{{ 'Actions'|trans }}</th>
+            <th class="col-md-2">{{ 'Actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr data-id="{{ entity.id }}">
                 <td><a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>
                     <a href="{{ path('admin_category_show', {'id': entity.category.id}) }}">
@@ -59,7 +59,12 @@
                 <td>{{ entity.quantity }}</td>
                 <td>
                     <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
-                    <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
+                    <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a><br>
+                    {% if entity.featured|length %}
+                        <a href="#" class="featured">{{ 'featured'|trans }}</a>
+                    {% else %}
+                        <a href="#" class="featured">{{ 'not featured'|trans }}</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
@@ -80,6 +85,43 @@
     <script>
         $(document).ready(function () {
             $(".fancybox").fancybox();
+
+            $(".featured").on("click", function (e) {
+                e.preventDefault();
+                var link = $(this);
+                var productId = link.closest('tr').data('id');
+                var value = link.text();
+
+                var newValue = false;
+                if (value == 'not featured') {
+                    newValue = true;
+                }
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('admin_featured_edit_ajax') }}',
+                    data: {
+                        product_id: productId,
+                        new_value: newValue
+                    },
+                    async: false,
+                    success: function (data) {
+                        if (data.success === true) {
+                            changeFeturedValue(link);
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            });
+
+            function changeFeturedValue(link) {
+                if(link.html() =='not featured'){
+                    link.html('featured')
+                } else {
+                    link.html('not featured')
+                }
+            }
         });
     </script>
 {% endblock javascripts %}

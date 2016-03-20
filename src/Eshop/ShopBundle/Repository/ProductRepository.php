@@ -161,11 +161,12 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pc'))
+            ->select(array('p', 'pi', 'pm', 'pc', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.manufacturer', 'pm')
-            ->leftJoin('p.category', 'pc');
+            ->leftJoin('p.category', 'pc')
+            ->leftJoin('p.featured', 'pfe');
 
         return $qb;
     }

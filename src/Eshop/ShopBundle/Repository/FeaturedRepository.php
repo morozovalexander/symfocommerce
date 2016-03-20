@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class FeaturedRepository extends EntityRepository
 {
+    /**
+     * @return mixed
+     */
+    public function getLatestProductOrder(){
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('f.productOrder')
+            ->from('ShopBundle:Featured', 'f')
+            ->addOrderBy('f.productOrder', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
