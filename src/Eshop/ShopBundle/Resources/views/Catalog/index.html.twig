@@ -66,10 +66,18 @@
             </div>
         </div>
     </div>
-    <div id="products" class="row list-group">
+    <div class="row">
         <div class="col-md-12">
-            <h3 class="text-center">Latest products</h3>
+            <h3 class="text-center">{{ 'Latest products'|trans }}</h3>
             {% for product in latest_products %}
+                {{ include('@Shop/Partials/productPreview.html.twig') }}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">{{ 'Featured products'|trans }}</h3>
+            {% for product in featured_products %}
                 {{ include('@Shop/Partials/productPreview.html.twig') }}
             {% endfor %}
         </div>

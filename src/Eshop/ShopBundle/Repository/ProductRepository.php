@@ -153,6 +153,29 @@ class ProductRepository extends EntityRepository
     }
 
     /**
+     * @param int $quantity
+     * @param User $user
+     * @return array
+     */
+    public function getFeatured($quantity = 1, $user = null)
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+            ->from('ShopBundle:Product', 'p')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.measure', 'pm')
+            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
+            ->innerJoin('p.featured', 'pfe')
+            ->where('p.quantity <> 0')
+            ->setMaxResults($quantity)
+            ->setParameter('user', $user)
+            ->addOrderBy('pfe.productOrder', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * return products for admin
      *
      * @return QueryBuilder

@@ -32,9 +32,11 @@ class CatalogController extends Controller
         //sorted by order number
         $slides = $slideRepository->findBy(array('enabled' => true), array('slideOrder' => 'ASC'));
         $lastNews = $newsRepository->getLastNews();
-        $latestProducts =  $productRepository->getLatest(12, $this->getUser());
+        $latestProducts = $productRepository->getLatest(12, $this->getUser());
+        $featuredProducts = $productRepository->getFeatured(12, $this->getUser());
 
         return array(
+            'featured_products' => $featuredProducts,
             'latest_products' => $latestProducts,
             'news' => $lastNews,
             'slides' => $slides
