@@ -12,6 +12,7 @@
             <tr>
                 <th class="col-md-2">{{ 'Order No'|trans }} #</th>
                 <th class="col-md-4">{{ knp_pagination_sortable(entities, 'Client name'|trans, 'o.name') }}</th>
+                <th class="col-md-4">{{ knp_pagination_sortable(entities, 'User'|trans, 'u.username') }}</th>
                 <th class="col-md-4">{{ knp_pagination_sortable(entities, 'Order date'|trans, 'o.date') }}</th>
                 <th class="col-md-2">{{ 'Actions'|trans }}</th>
             </tr>
@@ -24,6 +25,13 @@
                     </td>
                     <td>
                         <a href="{{ path('admin_order_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                    </td>
+                    <td>
+                        {% if entity.user %}
+                            <a href="{{ path('admin_user_info', { 'id': entity.user.id }) }}">{{ entity.user.username }}</a>
+                        {% else %}
+                            {{ 'not registered'|trans }}
+                        {% endif %}
                     </td>
                     <td>
                         {{ entity.date|date('Y-m-d H:i') }}

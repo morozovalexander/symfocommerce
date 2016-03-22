@@ -11,6 +11,18 @@
             <table class="table">
                 <tr>
                     <td class="field-label col-md-2 active">
+                        <label>{{ 'User'|trans }}:</label>
+                    </td>
+                    <td class="col-md-10">
+                        {% if entity.user %}
+                            <a href="{{ path('admin_user_info', { 'id': entity.user.id }) }}">{{ entity.user.username }}</a>
+                        {% else %}
+                            {{ 'not registered'|trans }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-label col-md-2 active">
                         <label>{{ 'Client Name'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
