@@ -19,6 +19,9 @@ layout:
     messages:
         mustberegistered: You must be registered for this
         productnotfound: Product not found
+    index:
+        latestproducts: Latest products
+        featuredproducts: Featured products
 
 # Categories menu
 categories:

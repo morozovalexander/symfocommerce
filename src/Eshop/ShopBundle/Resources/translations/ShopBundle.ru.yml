@@ -19,6 +19,9 @@ layout:
     messages:
         mustberegistered: Для этого действия необходима регистрация
         productnotfound: Продукт не найден
+    index:
+        latestproducts: Новые поступления
+        featuredproducts: Рекомендованные
 
 # Categories menu
 categories:
