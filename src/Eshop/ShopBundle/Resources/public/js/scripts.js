@@ -118,3 +118,31 @@ function checkProductIsLiked(productId) {
     });
 }
 
+function addToLastSeenProductIds(productId) {
+    var arr;
+
+    //get all
+    if (Cookies.get('last-seen')) {
+        arr = JSON.parse(Cookies.get('last-seen'));
+        //search in array
+        if (productId in arr) {
+            //check if not in the first position
+            if (!arr[0] === productId) {
+                var index = arr.indexOf(productId);
+                arr.splice(index, 1);
+                //add to first position
+                arr.unshift(productId);
+            }
+        } else {
+            //add to first position
+            arr.unshift(productId);
+        }
+        //control array length
+        arr.splice(10);
+    } else {
+        //create new arr
+        arr = [];
+        arr.unshift(productId);
+    }
+    Cookies.set('last-seen', JSON.stringify(arr));
+}

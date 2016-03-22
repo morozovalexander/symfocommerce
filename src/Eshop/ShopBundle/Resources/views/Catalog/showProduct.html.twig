@@ -108,6 +108,8 @@
             {% if is_granted('ROLE_USER') %}
                 checkProductIsLiked({{ product.id }});
             {% endif %}
+
+            addToLastSeenProductIds({{ product.id }});
         });
     </script>
 {% endblock javascripts %}
