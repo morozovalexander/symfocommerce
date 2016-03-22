@@ -1,4 +1,6 @@
 {% extends '@Admin/adminLayout.html.twig' %}
+{% set FEATURED = 'featured'|trans %}
+{% set NOT_FEATURED = 'not featured'|trans %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -61,9 +63,9 @@
                     <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
                     <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a><br>
                     {% if entity.featured|length %}
-                        <a href="#" class="featured">{{ 'featured'|trans }}</a>
+                        <a href="#" class="featured">{{ FEATURED }}</a>
                     {% else %}
-                        <a href="#" class="featured">{{ 'not featured'|trans }}</a>
+                        <a href="#" class="featured">{{ NOT_FEATURED }}</a>
                     {% endif %}
                 </td>
             </tr>
@@ -93,7 +95,7 @@
                 var value = link.text();
 
                 var newValue = false;
-                if (value == 'not featured') {
+                if (value == '{{ NOT_FEATURED }}') {
                     newValue = true;
                 }
 
@@ -113,10 +115,10 @@
             });
 
             function changeFeturedValue(link) {
-                if(link.html() =='not featured'){
-                    link.html('featured')
+                if (link.html() == '{{ NOT_FEATURED }}') {
+                    link.html('{{ FEATURED }}')
                 } else {
-                    link.html('not featured')
+                    link.html('{{ NOT_FEATURED }}')
                 }
             }
         });
