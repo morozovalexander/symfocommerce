@@ -68,6 +68,7 @@
             <div class="col-md-8">
                 {% block page_content %}
                 {% endblock page_content %}
+                <div class="row" id="latest-products"></div>
             </div>
             <div class="col-md-2">
                 {{ render(controller('ShopBundle:LayoutsUtility:manufacturersMenu')) }}
@@ -91,6 +92,7 @@
         var urls = [];
         urls['ajax_like'] = '{{ path('ajax_like') }}';
         urls['ajax_is_liked_product'] = '{{ path('ajax_is_liked_product') }}';
+        urls['ajax_get_last_seen_products'] = '{{ path('ajax_get_last_seen_products') }}';
         //set translated messages
         var messages = [];
         messages['mustberegistered'] = '{{ 'layout.messages.mustberegistered'|trans }}';

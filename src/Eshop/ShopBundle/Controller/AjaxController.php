@@ -85,6 +85,31 @@ class AjaxController extends Controller
     }
 
     /**
+     * Render last seen products from cookies
+     *
+     * @Route("/ajax_get_last_seen_products", name="ajax_get_last_seen_products")
+     * @Method("POST")
+     */
+    public function getLastSeenProductsAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository('ShopBundle:Product');
+
+        $productIdsArray = $this->get('app.page_utilities')->getLastSeenProducts($request);
+
+        $products = $productRepository->getLastSeen(4, $productIdsArray, $this->getUser());
+        if (!$products) {
+            $this->returnErrorJson('product not forund');
+        }
+        $html = $this->renderView('@Shop/Partials/lastSeenProducts.html.twig', array('products' => $products));
+
+        return new JsonResponse(array(
+            'html' => $html,
+            'success' => true
+        ), 200);
+    }
+
+    /**
      * @param string $message
      * @return JsonResponse
      */

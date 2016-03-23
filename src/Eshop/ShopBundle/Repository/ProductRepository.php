@@ -176,6 +176,35 @@ class ProductRepository extends EntityRepository
     }
 
     /**
+     * @param int $quantity
+     * @param array $productIdsArray
+     * @param User $user
+     * @return array
+     */
+    public function getLastSeen($quantity = 1, $productIdsArray, $user)
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+            ->from('ShopBundle:Product', 'p')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.measure', 'pm')
+            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
+            ->leftJoin('p.featured', 'pfe')
+            ->where('p.quantity <> 0')
+            ->andWhere('p.id IN (:ids)')
+            ->setMaxResults($quantity)
+            ->setParameters(
+                array(
+                    'user' => $user,
+                    'ids' => $productIdsArray
+                )
+            );
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * return products for admin
      *
      * @return QueryBuilder

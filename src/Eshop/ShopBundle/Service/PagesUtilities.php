@@ -32,6 +32,26 @@ class PagesUtilities
     }
 
     /**
+     * return last seen products from cookies
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function getLastSeenProducts(Request $request)
+    {
+        $cookies = $request->cookies->all();
+
+        if (isset($cookies['last-seen'])) {
+            $productIdsArray = json_decode($cookies['last-seen']);
+
+            if (is_array($productIdsArray) && !empty($productIdsArray)) {
+                return $productIdsArray;
+            }
+        }
+        return false;
+    }
+
+    /**
      * clear cookies cart
      *
      * @return void

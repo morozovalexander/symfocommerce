@@ -22,6 +22,8 @@ layout:
     index:
         latestproducts: Latest products
         featuredproducts: Featured products
+    lastseen:
+        header: Your last seen products
 
 # Categories menu
 categories:

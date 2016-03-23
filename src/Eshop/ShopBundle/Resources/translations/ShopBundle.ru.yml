@@ -22,6 +22,8 @@ layout:
     index:
         latestproducts: Новые поступления
         featuredproducts: Рекомендованные
+    lastseen:
+        header: Вы недавно смотрели
 
 # Categories menu
 categories:
