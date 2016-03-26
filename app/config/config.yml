@@ -129,3 +129,5 @@ oneup_uploader:
 presta_sitemap:
     timetolive: 3600
 
+hwi_oauth:
+    firewall_names: [main]

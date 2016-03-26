@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Eshop\AdminBundle\AdminBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Presta\SitemapBundle\PrestaSitemapBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

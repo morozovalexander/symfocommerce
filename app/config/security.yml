@@ -23,6 +23,18 @@ security:
 
             logout:       true
             anonymous:    true
+            oauth:
+                resource_owners:
+#                    facebook:           "/login/check-facebook"
+#                    google:             "/login/check-google"
+#                    my_custom_provider: "/login/check-custom"
+#                    my_github:          "/login/check-github"
+                login_path:        /login
+                use_forward:       false
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: my.oauth_aware.user_provider.service
 
     access_control:
             - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
