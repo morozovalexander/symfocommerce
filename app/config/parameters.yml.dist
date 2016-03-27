@@ -28,3 +28,7 @@ parameters:
     search_pagination_count: 24
     admin_users_pagination_count: 20
     admin_user_orders_pagination_count: 10
+    facebook_app_id: ~
+    facebook_app_secret: ~
+    google_app_id: ~
+    google_app_secret: ~

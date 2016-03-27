@@ -3,14 +3,14 @@
 
 services:
     eshop.upload_listener:
-        class: Eshop\ShopBundle\EventListener\UploadListener
-        arguments: [@doctrine.orm.entity_manager]
+        class:        Eshop\ShopBundle\EventListener\UploadListener
+        arguments:    [@doctrine.orm.entity_manager]
         tags:
             - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onUpload }
 
     app.locale_listener:
         class: Eshop\ShopBundle\EventListener\LocaleListener
-        arguments: ["%kernel.default_locale%"]
+        arguments:    ["%kernel.default_locale%"]
         tags:
             - { name: kernel.event_subscriber }
 
@@ -45,3 +45,7 @@ services:
         public:       false
         tags:
             - { name: twig.extension }
+
+    my_user_provider:
+        class:        Eshop\UserBundle\Security\Core\User\FOSUBUserProvider
+        arguments:    [@fos_user.user_manager,{facebook: facebook_id, google: google_id}]
