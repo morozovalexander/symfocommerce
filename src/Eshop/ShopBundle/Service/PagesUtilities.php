@@ -89,8 +89,9 @@ class PagesUtilities
                 $quantity = abs((int)$productQuantity);
 
                 $orderProduct = new OrderProduct();
-                $orderProduct->setProduct($product);
                 $orderProduct->setOrder($order);
+                $orderProduct->setProduct($product);
+                $orderProduct->setPrice($product->getPrice());
                 $orderProduct->setQuantity($quantity);
                 $this->em->persist($orderProduct);
 
