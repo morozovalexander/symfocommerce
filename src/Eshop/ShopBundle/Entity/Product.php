@@ -96,6 +96,13 @@ class Product
     private $quantity;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=true)
+     */
+    private $deleted;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="measure_quantity", type="integer", nullable=true)
@@ -152,6 +159,7 @@ class Product
         $this->images = new ArrayCollection();
         $this->favourites = new ArrayCollection();
         $this->quantity = 1;
+        $this->deleted = false;
     }
 
     public function __toString()
@@ -598,5 +606,28 @@ class Product
     public function getFeatured()
     {
         return $this->featured;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Product
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
 }
