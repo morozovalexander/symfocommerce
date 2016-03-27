@@ -5,7 +5,7 @@
 
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <b>{{ 'Order No'|trans }} #{{ entity.id }}</b>
+            <b>{{ 'Order No'|trans }} #{{ order.id }}</b>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -14,8 +14,8 @@
                         <label>{{ 'User'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
-                        {% if entity.user %}
-                            <a href="{{ path('admin_user_info', { 'id': entity.user.id }) }}">{{ entity.user.username }}</a>
+                        {% if order.user %}
+                            <a href="{{ path('admin_user_info', { 'id': order.user.id }) }}">{{ order.user.username }}</a>
                         {% else %}
                             {{ 'not registered'|trans }}
                         {% endif %}
@@ -26,7 +26,7 @@
                         <label>{{ 'Client Name'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
-                        {{ entity.name }}
+                        {{ order.name }}
                     </td>
                 </tr>
                 <tr>
@@ -34,7 +34,7 @@
                         <label>{{ 'Email'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
-                        {{ entity.email }}
+                        {{ order.email }}
                     </td>
                 </tr>
                 <tr>
@@ -42,7 +42,7 @@
                         <label>{{ 'Phone'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
-                        {{ entity.phone }}
+                        {{ order.phone }}
                     </td>
                 </tr>
                 <tr>
@@ -50,7 +50,7 @@
                         <label>{{ 'Address'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
-                        {{ entity.address }}
+                        {{ order.address }}
                     </td>
                 </tr>
                 <tr>
@@ -58,7 +58,7 @@
                         <label>{{ 'Order date'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
-                        {{ entity.date|date('Y-m-d h:i') }}
+                        {{ order.date|date('Y-m-d h:i') }}
                     </td>
                 </tr>
                 <tr>
@@ -66,8 +66,8 @@
                         <label>{{ 'Comment'|trans }}:</label>
                     </td>
                     <td class="col-md-10">
-                        {% if entity.comment|length %}
-                            {{ entity.comment }}
+                        {% if order.comment|length %}
+                            {{ order.comment }}
                         {% else %}
                             <p class="text-muted">{{ 'No comment'|trans }}</p>
                         {% endif %}
@@ -98,7 +98,7 @@
             {% endfor %}
             <tr class="warning">
                 <td colspan="3"><b>{{ 'Order totalsum'|trans }}</b></td>
-                <td colspan="2"><b>{{ totalsum }} {{ 'currency'|trans }}</b></td>
+                <td colspan="2"><b>{{ order.sum }} {{ 'currency'|trans }}</b></td>
             </tr>
             </tbody>
         </table>
