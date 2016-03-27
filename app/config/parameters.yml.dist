@@ -7,8 +7,6 @@ parameters:
     database_name:     symfony
     database_user:     root
     database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -28,7 +26,7 @@ parameters:
     search_pagination_count: 24
     admin_users_pagination_count: 20
     admin_user_orders_pagination_count: 10
-    facebook_app_id: ~
-    facebook_app_secret: ~
-    google_app_id: ~
-    google_app_secret: ~
+    facebook_app_id: addyourfacebookappid
+    facebook_app_secret: addyourfacebookapsecret
+    google_app_id: addyourgoogleappid
+    google_app_secret: addyourgoogleappsecret
