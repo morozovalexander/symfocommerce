@@ -1,11 +1,25 @@
 <?php
 namespace Eshop\ShopBundle\Service;
 
+use Doctrine\ORM\EntityManager;
+use Eshop\ShopBundle\Entity\OrderProduct;
+use Eshop\ShopBundle\Entity\Orders;
+use Eshop\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PagesUtilities
 {
+    /**
+     * @var EntityManager $em
+     */
+    private $em;
+
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
     /**
      * return sorting name param from request
      *
@@ -48,6 +62,69 @@ class PagesUtilities
                 return $productIdsArray;
             }
         }
+        return false;
+    }
+
+    /**
+     * Record cart to db order.
+     *
+     * @param Request $request
+     * @param Orders $order
+     * @param User $user
+     * @return bool
+     */
+    public function createOrderDBRecord(Request $request, Orders $order, User $user)
+    {
+        $productRepository = $this->em->getRepository('ShopBundle:Product');
+
+        $cart = $this->getCartFromCookies($request);
+        if ((!$cart) || !(count($cart))) {
+            return false;
+        }
+
+        //parse cart json form cookies
+        foreach ($cart as $productId => $productQuantity) {
+            $product = $productRepository->find((int)$productId);
+            if (is_object($product)) {
+                $quantity = abs((int)$productQuantity);
+
+                $orderProduct = new OrderProduct();
+                $orderProduct->setProduct($product);
+                $orderProduct->setOrder($order);
+                $orderProduct->setQuantity($quantity);
+                $this->em->persist($orderProduct);
+
+                $order->addOrderProduct($orderProduct);
+            }
+        }
+
+        $order->setUser($user); //can be null if not registered
+        $this->em->persist($order);
+        $this->em->flush();
+
+        $this->clearCart();
+        return true;
+    }
+
+    /**
+     * Get cart from cookies and return cart or false.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    private function getCartFromCookies(Request $request)
+    {
+        $cookies = $request->cookies->all();
+
+        if (isset($cookies['cart'])) {
+            $cart = json_decode($cookies['cart']);
+
+            $cartArray = $cart; //check if cart not empty
+            if (!empty($cartArray)) {
+                return $cart;
+            }
+        }
+
         return false;
     }
 

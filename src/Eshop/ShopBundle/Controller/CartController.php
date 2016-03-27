@@ -129,46 +129,20 @@ class CartController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $productRepository = $em->getRepository('ShopBundle:Product');
+            $orderSuccess = $this->get('app.page_utilities')->createOrderDBRecord($request, $order, $this->getUser());
 
-            $cart = $this->getCartFromCookies($request);
-            if (!$cart) {
+            if (!$orderSuccess) {
                 return $this->redirect($this->generateUrl('cartisempty')); //check valid cart
             }
 
-            //parse cart json form cookies
-            foreach ($cart as $productId => $productQuantity) {
-                $product = $productRepository->find((int)$productId);
-                if (is_object($product)) {
-                    $quantity = abs((int)$productQuantity);
-
-                    $orderProduct = new OrderProduct();
-                    $orderProduct->setProduct($product);
-                    $orderProduct->setOrder($order);
-                    $orderProduct->setQuantity($quantity);
-                    $em->persist($orderProduct);
-
-                    $order->addOrderProduct($orderProduct);
-                }
-            }
-
-            $order->setUser($this->getUser()); //can be null if not regisered
-            $em->persist($order);
-            $em->flush();
-
-            $this->get('app.page_utilities')->clearCart();
-
             //send email notification
-            $notifier = $this->get('app.email_notifier');
-            $notifier->handleNotification(array(
+            $this->get('app.email_notifier')->handleNotification(array(
                 'event' => 'new_order',
                 'order_id' => $order->getId(),
                 'admin_email' => $this->getParameter('admin_email')
             ));
 
-            //redirect to thankyou page
-            return $this->redirect($this->generateUrl('thankyou'));
+            return $this->render('@Shop/Cart/thankYou.html.twig'); //redirect to thankyou page
         }
 
         return array(
@@ -190,18 +164,6 @@ class CartController extends Controller
     }
 
     /**
-     * If orderForm valid and submitted.
-     *
-     * @Route("/thankyou", name="thankyou")
-     * @Method("GET")
-     * @Template()
-     */
-    public function thankYouAction()
-    {
-        return array();
-    }
-
-    /**
      * Creates a form to create a Orders entity.
      *
      * @param Orders $entity The entity
@@ -216,24 +178,6 @@ class CartController extends Controller
         ));
 
         return $form;
-    }
-
-    /**
-     * Get cart from cookies and return cart object or false.
-     */
-    private function getCartFromCookies(Request $request)
-    {
-        $cookies = $request->cookies->all();
-        if (isset($cookies['cart'])) {
-            $cart = json_decode($cookies['cart']);
-
-            //check if cart not empty
-            $cartArray = (array)$cart;
-            if (!empty($cartArray)) {
-                return $cart;
-            }
-        }
-        return false;
     }
 
     /**

@@ -7,9 +7,14 @@ use Eshop\ShopBundle\Entity\Settings;
 class SettingsService
 {
     /**
-     * @var $settings Settings
+     * @var Settings $settings
      */
     private $settings;
+
+    /**
+     * @var EntityManager $em
+     */
+    private $em;
 
     public function __construct(EntityManager $entityManager)
     {

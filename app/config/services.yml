@@ -27,7 +27,7 @@ services:
 
     app.page_utilities:
         class:        Eshop\ShopBundle\Service\PagesUtilities
-        arguments:    []
+        arguments:    ["@doctrine.orm.entity_manager"]
 
     my.sitemap.listener:
         class:        Eshop\ShopBundle\EventListener\SitemapListener
