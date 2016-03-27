@@ -22,11 +22,12 @@ class ProductRepository extends EntityRepository
      */
     public function findBySlug($slug)
     {
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('p')
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        return $qb->select('p')
             ->from('ShopBundle:Product', 'p')
             ->where('p.slug = :slug')
+            ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setParameter('slug', $slug)
             ->getQuery()
             ->getOneOrNullResult();
@@ -39,9 +40,9 @@ class ProductRepository extends EntityRepository
      */
     public function findByCategoryQB($category, $user = null)
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.category', 'ca')
             ->leftJoin('p.images', 'pi')
@@ -50,6 +51,7 @@ class ProductRepository extends EntityRepository
             ->leftJoin('p.featured', 'pfe')
             ->where('ca = :category')
             ->andWhere('p.quantity <> 0')
+            ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setParameter('category', $category)
             ->setParameter('user', $user);
 
@@ -63,9 +65,9 @@ class ProductRepository extends EntityRepository
      */
     public function findByManufacturerQB($manufacturer, $user = null)
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.manufacturer', 'ma')
             ->leftJoin('p.images', 'pi')
@@ -74,6 +76,7 @@ class ProductRepository extends EntityRepository
             ->leftJoin('p.featured', 'pfe')
             ->where('ma.id = :manufacturer')
             ->andWhere('p.quantity <> 0')
+            ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setParameter('manufacturer', $manufacturer)
             ->setParameter('user', $user);
 
@@ -86,15 +89,16 @@ class ProductRepository extends EntityRepository
      */
     public function getFavouritesQB($user = null)
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
             ->innerJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //only liked
             ->leftJoin('p.featured', 'pfe')
             ->andWhere('p.quantity <> 0')
+            ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setParameter('user', $user);
 
         return $qb;
@@ -107,15 +111,16 @@ class ProductRepository extends EntityRepository
      */
     public function getSearchQB($searchWords, $user = null)
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
             ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
             ->leftJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
+            ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setParameter('user', $user);
 
         $cqbORX = array();
@@ -136,15 +141,16 @@ class ProductRepository extends EntityRepository
      */
     public function getLatest($quantity = 1, $user = null)
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
             ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
             ->leftJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
+            ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setMaxResults($quantity)
             ->setParameter('user', $user)
             ->addOrderBy('p.dateCreated', 'DESC');
@@ -159,15 +165,16 @@ class ProductRepository extends EntityRepository
      */
     public function getFeatured($quantity = 1, $user = null)
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
             ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user') //if liked
             ->innerJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
+            ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setMaxResults($quantity)
             ->setParameter('user', $user)
             ->addOrderBy('pfe.productOrder', 'DESC');
@@ -183,9 +190,9 @@ class ProductRepository extends EntityRepository
      */
     public function getLastSeen($quantity = 1, $productIdsArray, $user)
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
@@ -212,6 +219,7 @@ class ProductRepository extends EntityRepository
     public function getAllProductsAdminQB()
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
+
         $qb->select(array('p', 'pi', 'pm', 'pc', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
