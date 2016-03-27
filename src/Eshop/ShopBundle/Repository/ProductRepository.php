@@ -211,14 +211,14 @@ class ProductRepository extends EntityRepository
      */
     public function getAllProductsAdminQB()
     {
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select(array('p', 'pi', 'pm', 'pc', 'pfe'))
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select(array('p', 'pi', 'pm', 'pc', 'pfe'))
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.manufacturer', 'pm')
             ->leftJoin('p.category', 'pc')
-            ->leftJoin('p.featured', 'pfe');
+            ->leftJoin('p.featured', 'pfe')
+            ->where($qb->expr()->neq('p.deleted', 1));
 
         return $qb;
     }

@@ -139,11 +139,14 @@ class ProductController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('ShopBundle:Product')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
+        }
+
+        if ($entity->getDeleted()) {
+            return $this->render('@Admin/Product/deleted.html.twig');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -272,8 +275,7 @@ class ProductController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Product entity.');
             }
-
-            $em->remove($entity);
+            $entity->setDeleted(true);
             $em->flush();
         }
 
