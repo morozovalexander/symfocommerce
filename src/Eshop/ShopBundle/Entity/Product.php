@@ -98,7 +98,7 @@ class Product
     /**
      * @var boolean
      *
-     * @ORM\Column(name="deleted", type="boolean", nullable=true)
+     * @ORM\Column(name="deleted", type="boolean", nullable=false)
      */
     private $deleted;
 
