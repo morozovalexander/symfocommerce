@@ -41,6 +41,13 @@ class OrderProduct
     private $product;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float")
+     */
+    private $price;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -117,5 +124,28 @@ class OrderProduct
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return OrderProduct
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }
