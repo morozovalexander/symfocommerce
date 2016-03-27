@@ -73,7 +73,7 @@ class PagesUtilities
      * @param User $user
      * @return bool
      */
-    public function createOrderDBRecord(Request $request, Orders $order, User $user)
+    public function createOrderDBRecord(Request $request, Orders $order, User $user = null)
     {
         $productRepository = $this->em->getRepository('ShopBundle:Product');
 
@@ -83,10 +83,12 @@ class PagesUtilities
         }
 
         //parse cart json form cookies
+        $sum = 0; //total control sum of the order
         foreach ($cart as $productId => $productQuantity) {
             $product = $productRepository->find((int)$productId);
             if (is_object($product)) {
                 $quantity = abs((int)$productQuantity);
+                $sum += ($quantity * $product->getPrice());
 
                 $orderProduct = new OrderProduct();
                 $orderProduct->setOrder($order);
@@ -100,6 +102,7 @@ class PagesUtilities
         }
 
         $order->setUser($user); //can be null if not registered
+        $order->setSum($sum);
         $this->em->persist($order);
         $this->em->flush();
 

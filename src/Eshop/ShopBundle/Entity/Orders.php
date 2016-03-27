@@ -71,6 +71,13 @@ class Orders
     private $user;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="sum", type="float")
+     */
+    private $sum;
+
+    /**
      * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="order")
      **/
     private $orderProducts;
@@ -282,5 +289,28 @@ class Orders
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set sum
+     *
+     * @param float $sum
+     * @return Orders
+     */
+    public function setSum($sum)
+    {
+        $this->sum = $sum;
+
+        return $this;
+    }
+
+    /**
+     * Get sum
+     *
+     * @return float 
+     */
+    public function getSum()
+    {
+        return $this->sum;
     }
 }
