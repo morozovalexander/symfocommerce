@@ -250,7 +250,6 @@ class SlideController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_slide_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

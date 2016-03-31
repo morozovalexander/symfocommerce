@@ -111,7 +111,7 @@
             </a>
         </li>
         <li class="list-group-item">
-            {{ form_start(delete_form, { 'attr': {'class': 'delete-order-form'} }) }}
+            {{ form_start(delete_form, { 'attr': {'class': 'delete-form'} }) }}
                 {{ form_widget(delete_form) }}
                 <input type="submit" value="Delete" class="btn btn-danger" />
             {{ form_end(delete_form) }}
@@ -123,7 +123,7 @@
     {{ parent() }}
     <script>
         $(function () {
-            $('.delete-order-form').submit(function(e) {
+            $('.delete-form').submit(function(e) {
                 var currentForm = this;
                 e.preventDefault();
                 bootbox.confirm("Are you sure?", function (result) {

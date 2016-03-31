@@ -260,7 +260,6 @@ class ManufacturerController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_manufacturer_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
