@@ -3,6 +3,8 @@
 namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -15,11 +17,11 @@ class NewsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('slug')
-            ->add('text')
-            ->add('metaKeys')
-            ->add('metaDescription')
+            ->add('title', TextType::class)
+            ->add('slug', TextType::class)
+            ->add('text', TextareaType::class)
+            ->add('metaKeys', TextType::class)
+            ->add('metaDescription', TextType::class)
         ;
     }
     

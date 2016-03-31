@@ -3,6 +3,10 @@
 namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -15,10 +19,10 @@ class SlideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('enabled')
-            ->add('file', 'file', array('required' => false))
-            ->add('slideOrder')
+            ->add('name', TextType::class)
+            ->add('enabled', CheckboxType::class)
+            ->add('file', FileType::class, array('required' => false))
+            ->add('slideOrder', IntegerType::class)
         ;
     }
     
