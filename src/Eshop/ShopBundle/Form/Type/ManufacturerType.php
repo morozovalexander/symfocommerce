@@ -40,7 +40,7 @@ class ManufacturerType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'eshop_shopbundle_manufacturer';
     }

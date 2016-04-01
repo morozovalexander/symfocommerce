@@ -41,7 +41,7 @@ class OrdersType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'eshop_shopbundle_orders';
     }
