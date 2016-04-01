@@ -101,7 +101,7 @@ class ProductController extends Controller
      */
     private function createCreateForm(Product $entity)
     {
-        $form = $this->createForm(new ProductType(), $entity, array(
+        $form = $this->createForm(ProductType::class, $entity, array(
             'action' => $this->generateUrl('admin_product_create'),
             'method' => 'POST',
         ));
@@ -193,7 +193,7 @@ class ProductController extends Controller
      */
     private function createEditForm(Product $entity)
     {
-        $form = $this->createForm(new ProductType(), $entity, array(
+        $form = $this->createForm(ProductType::class , $entity, array(
             'action' => $this->generateUrl('admin_product_update', array('id' => $entity->getId())),
             'method' => 'POST',
         ));

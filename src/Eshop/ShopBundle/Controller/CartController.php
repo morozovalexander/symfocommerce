@@ -171,7 +171,7 @@ class CartController extends Controller
      */
     private function createCreateOrderForm(Orders $entity)
     {
-        $form = $this->createForm(new OrdersType(), $entity, array(
+        $form = $this->createForm(OrdersType::class, $entity, array(
             'action' => $this->generateUrl('order_create'),
             'method' => 'POST',
         ));

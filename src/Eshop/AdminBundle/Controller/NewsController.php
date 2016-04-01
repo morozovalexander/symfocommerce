@@ -81,7 +81,7 @@ class NewsController extends Controller
      */
     private function createCreateForm(News $entity)
     {
-        $form = $this->createForm(new NewsType(), $entity, array(
+        $form = $this->createForm(NewsType::class, $entity, array(
             'action' => $this->generateUrl('admin_news_create'),
             'method' => 'POST',
         ));
@@ -170,7 +170,7 @@ class NewsController extends Controller
     */
     private function createEditForm(News $entity)
     {
-        $form = $this->createForm(new NewsType(), $entity, array(
+        $form = $this->createForm(NewsType::class, $entity, array(
             'action' => $this->generateUrl('admin_news_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

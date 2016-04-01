@@ -71,7 +71,7 @@ class SlideController extends Controller
      */
     private function createCreateForm(Slide $entity)
     {
-        $form = $this->createForm(new SlideType(), $entity, array(
+        $form = $this->createForm(SlideType::class, $entity, array(
             'action' => $this->generateUrl('admin_slide_create'),
             'method' => 'POST',
         ));
@@ -160,7 +160,7 @@ class SlideController extends Controller
     */
     private function createEditForm(Slide $entity)
     {
-        $form = $this->createForm(new SlideType(), $entity, array(
+        $form = $this->createForm(SlideType::class, $entity, array(
             'action' => $this->generateUrl('admin_slide_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

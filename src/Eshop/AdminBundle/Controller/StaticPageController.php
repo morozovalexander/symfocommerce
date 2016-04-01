@@ -71,7 +71,7 @@ class StaticPageController extends Controller
      */
     private function createCreateForm(StaticPage $entity)
     {
-        $form = $this->createForm(new StaticPageType(), $entity, array(
+        $form = $this->createForm(StaticPageType::class, $entity, array(
             'action' => $this->generateUrl('admin_staticpage_create'),
             'method' => 'POST',
         ));
@@ -160,7 +160,7 @@ class StaticPageController extends Controller
     */
     private function createEditForm(StaticPage $entity)
     {
-        $form = $this->createForm(new StaticPageType(), $entity, array(
+        $form = $this->createForm(StaticPageType::class, $entity, array(
             'action' => $this->generateUrl('admin_staticpage_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

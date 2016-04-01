@@ -71,7 +71,7 @@ class MeasureController extends Controller
      */
     private function createCreateForm(Measure $entity)
     {
-        $form = $this->createForm(new MeasureType(), $entity, array(
+        $form = $this->createForm(MeasureType::class, $entity, array(
             'action' => $this->generateUrl('admin_measure_create'),
             'method' => 'POST',
         ));
@@ -160,7 +160,7 @@ class MeasureController extends Controller
     */
     private function createEditForm(Measure $entity)
     {
-        $form = $this->createForm(new MeasureType(), $entity, array(
+        $form = $this->createForm(MeasureType::class, $entity, array(
             'action' => $this->generateUrl('admin_measure_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
