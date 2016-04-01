@@ -17,7 +17,7 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: security.csrf.token_manager
+                csrf_token_generator: security.csrf.token_manager
             oauth:
                 resource_owners:
                     facebook:           "/login/check-facebook"
@@ -36,7 +36,7 @@ security:
             security: false
 
             remember_me:
-                key: "%secret%"
+                secret: "%secret%"
                 lifetime: 31536000
                 path: /
                 domain: ~ # Defaults to the current domain from $_SERVER

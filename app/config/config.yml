@@ -132,7 +132,7 @@ presta_sitemap:
 hwi_oauth:
     connect:
         account_connector: my_user_provider
-    firewall_name: main
+    firewall_names: [main]
     fosub:
         username_iterations: 30
         properties:
