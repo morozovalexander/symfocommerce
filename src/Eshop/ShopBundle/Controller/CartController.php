@@ -68,7 +68,7 @@ class CartController extends Controller
      * Shows order form.
      *
      * @Route("/orderform", name="orderform")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function orderFormAction(Request $request)
@@ -76,57 +76,7 @@ class CartController extends Controller
         $order = new Orders();
         $form = $this->createForm('Eshop\ShopBundle\Form\Type\OrdersType', $order);
 
-        $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository('ShopBundle:Product');
-        $cart = array();
-        $totalSum = 0;
-
-        $cookies = $request->cookies->all();
-
-        if (isset($cookies['cart'])) {
-            $cart = json_decode($cookies['cart']);
-        }
-
-        foreach ($cart as $productId => $productQuantity) {
-            /**
-             * @var Product $product
-             */
-            $product = $productRepository->find((int)$productId);
-            if (is_object($product)) {
-
-                $quantity = abs((int)$productQuantity);
-                $price = $product->getPrice();
-                $sum = $price * $quantity;
-
-                $totalSum += $sum;
-            }
-        }
-
-        if (is_object($user = $this->getUser())) {
-            $this->fillWithUserData($user, $form);
-        }
-
-        return array(
-            'totalsum' => $totalSum,
-            'order' => $order,
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a new Orders entity.
-     *
-     * @Route("/order_create", name="order_create")
-     * @Method("POST")
-     * @Template("ShopBundle:Cart:orderForm.html.twig")
-     */
-    public function createOrderAction(Request $request)
-    {
-        $order = new Orders();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\OrdersType', $order);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $orderSuccess = $this->get('app.page_utilities')->createOrderDBRecord($request, $order, $this->getUser());
 
@@ -144,8 +94,12 @@ class CartController extends Controller
             return $this->render('@Shop/Cart/thankYou.html.twig'); //redirect to thankyou page
         }
 
+        if (is_object($user = $this->getUser())) {
+            $this->fillWithUserData($user, $form);
+        }
+
         return array(
-            'entity' => $order,
+            'order' => $order,
             'form' => $form->createView(),
         );
     }
