@@ -28,13 +28,13 @@ class ProductType extends AbstractType
                 'required'  => true,
                 'multiple' => false,
                 'class' => 'Eshop\ShopBundle\Entity\Category',
-                'property' => 'name'
+                'choice_label' => 'name'
             ))
             ->add('manufacturer', EntityType::class, array(
                 'required'  => true,
                 'multiple' => false,
                 'class' => 'Eshop\ShopBundle\Entity\Manufacturer',
-                'property' => 'name'
+                'choice_label' => 'name'
             ))
             ->add('quantity', IntegerType::class)
             ->add('metaKeys', TextType::class)
@@ -43,8 +43,8 @@ class ProductType extends AbstractType
                 'required'  => true,
                 'multiple' => false,
                 'expanded' => false,
-                'class' => 'Eshop\ShopBundle\Entity\MEasure',
-                'property' => 'name'))
+                'class' => 'Eshop\ShopBundle\Entity\Measure',
+                'choice_label' => 'name'))
             ->add('measureQuantity', IntegerType::class)
         ;
     }
