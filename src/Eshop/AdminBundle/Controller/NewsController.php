@@ -17,7 +17,6 @@ use Eshop\ShopBundle\Form\Type\NewsType;
  */
 class NewsController extends Controller
 {
-
     /**
      * Lists all News entities.
      *
@@ -34,78 +33,41 @@ class NewsController extends Controller
         $qb = $newsRepository->getAllNewsAdminQB();
         $limit = $this->getParameter('admin_categories_pagination_count');
 
-        $categories = $paginator->paginate(
+        $news = $paginator->paginate(
             $qb,
             $request->query->getInt('page', 1),
             $limit
         );
 
         return array(
-            'entities' => $categories,
+            'entities' => $news,
         );
     }
 
     /**
      * Creates a new News entity.
      *
-     * @Route("/", name="admin_news_create")
-     * @Method("POST")
-     * @Template("AdminBundle:News:new.html.twig")
+     * @Route("/new", name="admin_news_new")
+     * @Method({"GET", "POST"})
+     * @Template()
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new News();
-        $form = $this->createCreateForm($entity);
+        $news = new News();
+        $form = $this->createForm('Eshop\ShopBundle\Form\Type\NewsType', $news);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($news);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_news_show', array('id' => $entity->getId())));
+            return $this->redirectToRoute('admin_news_show', array('id' => $news->getId()));
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a News entity.
-     *
-     * @param News $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(News $entity)
-    {
-        $form = $this->createForm(NewsType::class, $entity, array(
-            'action' => $this->generateUrl('admin_news_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new News entity.
-     *
-     * @Route("/new", name="admin_news_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new News();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'entity' => $news,
+            'form' => $form->createView(),
         );
     }
 
@@ -116,20 +78,12 @@ class NewsController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(News $news)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:News')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find News entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($news);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $news,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -138,69 +92,18 @@ class NewsController extends Controller
      * Displays a form to edit an existing News entity.
      *
      * @Route("/{id}/edit", name="admin_news_edit")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Request $request, News $news)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:News')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find News entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a News entity.
-    *
-    * @param News $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(News $entity)
-    {
-        $form = $this->createForm(NewsType::class, $entity, array(
-            'action' => $this->generateUrl('admin_news_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing News entity.
-     *
-     * @Route("/{id}", name="admin_news_update")
-     * @Method("PUT")
-     * @Template("AdminBundle:News:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:News')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find News entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($news);
+        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\NewsType', $news);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -208,35 +111,31 @@ class NewsController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl('admin_news_edit', array('id' => $id)));
+            return $this->redirectToRoute('admin_news_edit', array('id' => $news->getId()));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $news,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
+
     /**
      * Deletes a News entity.
      *
      * @Route("/{id}", name="admin_news_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, News $news)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($news);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ShopBundle:News')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find News entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($news);
             $em->flush();
         }
 
@@ -244,18 +143,17 @@ class NewsController extends Controller
     }
 
     /**
-     * Creates a form to delete a News entity by id.
+     * Creates a form to delete a News entity.
      *
-     * @param mixed $id The entity id
+     * @param News $news The News entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(News $news)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_news_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_news_delete', array('id' => $news->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
