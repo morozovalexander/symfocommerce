@@ -1,16 +1,20 @@
 {
-    "description": "symfony framework based e-commerce engine",
+    "description": "symfony framework based ecommerce project",
     "name": "alexander/symfocommerce",
     "license": "proprietary",
     "type": "project",
     "autoload": {
-        "psr-4": {
-            "": "src/"
-        },
+        "psr-4": {"": "src/"},
+        "files": ["app/AppKernel.php"],
         "classmap": [
             "app/AppKernel.php",
             "app/AppCache.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "require": {
         "php": ">=5.5.9",
@@ -33,12 +37,10 @@
         "hwi/oauth-bundle": "0.5.x-dev"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0"
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
-        "post-root-package-install": [
-            "SymfonyStandard\\Composer::hookRootPackageInstall"
-        ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
@@ -57,11 +59,16 @@
         ]
     },
     "config": {
-        "bin-dir": "bin"
+        "platform": {
+            "php": "5.5.9"
+        }
     },
     "extra": {
         "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
         "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
