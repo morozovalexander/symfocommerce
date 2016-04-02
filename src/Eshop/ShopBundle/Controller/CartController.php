@@ -74,7 +74,7 @@ class CartController extends Controller
     public function orderFormAction(Request $request)
     {
         $order = new Orders();
-        $form = $this->createCreateOrderForm($order);
+        $form = $this->createForm('Eshop\ShopBundle\Form\Type\OrdersType', $order);
 
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -123,11 +123,11 @@ class CartController extends Controller
     public function createOrderAction(Request $request)
     {
         $order = new Orders();
-        $form = $this->createCreateOrderForm($order);
+        $form = $this->createForm('Eshop\ShopBundle\Form\Type\OrdersType', $order);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $orderSuccess = $this->get('app.page_utilities')->createOrderDBRecord($request, $order, $this->getUser());
 
             if (!$orderSuccess) {
@@ -160,23 +160,6 @@ class CartController extends Controller
     public function cartIsEmptyAction()
     {
         return array();
-    }
-
-    /**
-     * Creates a form to create a Orders entity.
-     *
-     * @param Orders $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateOrderForm(Orders $entity)
-    {
-        $form = $this->createForm(OrdersType::class, $entity, array(
-            'action' => $this->generateUrl('order_create'),
-            'method' => 'POST',
-        ));
-
-        return $form;
     }
 
     /**
