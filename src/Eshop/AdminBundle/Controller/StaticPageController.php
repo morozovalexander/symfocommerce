@@ -17,7 +17,6 @@ use Eshop\ShopBundle\Entity\StaticPage;
  */
 class StaticPageController extends Controller
 {
-
     /**
      * Lists all StaticPage entities.
      *
@@ -28,74 +27,38 @@ class StaticPageController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entities = $em->getRepository('ShopBundle:StaticPage')->findBy(array(), array('orderNum' => 'ASC'));
 
         return array(
             'entities' => $entities,
         );
     }
-    /**
-     * Creates a new StaticPage entity.
-     *
-     * @Route("/", name="admin_staticpage_create")
-     * @Method("POST")
-     * @Template("AdminBundle:StaticPage:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new StaticPage();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_staticpage_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a StaticPage entity.
-     *
-     * @param StaticPage $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(StaticPage $entity)
-    {
-        $form = $this->createForm(StaticPageType::class, $entity, array(
-            'action' => $this->generateUrl('admin_staticpage_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
 
     /**
      * Displays a form to create a new StaticPage entity.
      *
      * @Route("/new", name="admin_staticpage_new")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $entity = new StaticPage();
-        $form   = $this->createCreateForm($entity);
+        $staticPage = new StaticPage();
+        $form = $this->createForm('Eshop\ShopBundle\Form\Type\StaticPageType', $staticPage);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($staticPage);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_staticpage_show', array('id' => $staticPage->getId()));
+        }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'entity' => $staticPage,
+            'form' => $form->createView(),
         );
     }
 
@@ -106,20 +69,12 @@ class StaticPageController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(StaticPage $staticPage)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:StaticPage')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find StaticPage entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($staticPage);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $staticPage,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -128,69 +83,18 @@ class StaticPageController extends Controller
      * Displays a form to edit an existing StaticPage entity.
      *
      * @Route("/{id}/edit", name="admin_staticpage_edit")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Request $request, StaticPage $staticPage)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:StaticPage')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find StaticPage entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a StaticPage entity.
-    *
-    * @param StaticPage $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(StaticPage $entity)
-    {
-        $form = $this->createForm(StaticPageType::class, $entity, array(
-            'action' => $this->generateUrl('admin_staticpage_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing StaticPage entity.
-     *
-     * @Route("/{id}", name="admin_staticpage_update")
-     * @Method("PUT")
-     * @Template("AdminBundle:StaticPage:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:StaticPage')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find StaticPage entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($staticPage);
+        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\StaticPageType', $staticPage);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($staticPage);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -198,35 +102,30 @@ class StaticPageController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl('admin_staticpage_edit', array('id' => $id)));
+            return $this->redirectToRoute('admin_staticpage_edit', array('id' => $staticPage->getId()));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $staticPage,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a StaticPage entity.
      *
      * @Route("/{id}", name="admin_staticpage_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, StaticPage $staticPage)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($staticPage);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ShopBundle:StaticPage')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find StaticPage entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($staticPage);
             $em->flush();
         }
 
@@ -236,16 +135,15 @@ class StaticPageController extends Controller
     /**
      * Creates a form to delete a StaticPage entity by id.
      *
-     * @param mixed $id The entity id
+     * @param StaticPage $staticPage The StaticPage entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(StaticPage $staticPage)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_staticpage_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_staticpage_delete', array('id' => $staticPage->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
