@@ -156,4 +156,4 @@ registration:
     phone: Phone number
     address: Address
     successful: Registration completed successful!
-
+    back: Back
