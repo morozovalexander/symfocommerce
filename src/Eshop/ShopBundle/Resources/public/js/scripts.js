@@ -106,8 +106,6 @@ function getLastSeenProducts() {
         success: function (data) {
             if (data.success === true) {
                 $(data.html).appendTo('#latest-products');
-                //reinit likes
-                likesInit();
             }
         }
     });
@@ -115,7 +113,7 @@ function getLastSeenProducts() {
 
 function likesInit() {
     //like click handle
-    $('.like').on('click', function (e) {
+    $(document).on('click', '.like', function (e) {
         e.preventDefault();
         var clickedIcon = $(this);
         var productId = $(this).parent().parent().data('id');
