@@ -121,7 +121,6 @@ class NewsController extends Controller
         );
     }
 
-
     /**
      * Deletes a News entity.
      *
