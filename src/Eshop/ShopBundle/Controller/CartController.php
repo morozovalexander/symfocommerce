@@ -4,7 +4,6 @@ namespace Eshop\ShopBundle\Controller;
 
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
-use Eshop\ShopBundle\Form\Type\OrdersType;
 use Eshop\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
