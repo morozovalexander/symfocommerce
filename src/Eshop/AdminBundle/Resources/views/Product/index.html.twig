@@ -48,15 +48,7 @@
                 </td>
                 <td>{{ entity.price }}</td>
                 <td>
-                    {% if entity.images|length %}
-                        {% for image in entity.images|slice(0, 3) %}
-                            <a class="fancybox" rel="group" href="{{ asset(('uploads/gallery/' ~ image.path)) }}">
-                                <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
-                            </a>
-                        {% endfor %} ...
-                    {% else %}
-                        {{ 'no photos'|trans }}
-                    {% endif %}
+                    {{ include('@Admin/Partials/productImages.twig') }}
                 </td>
                 <td>{{ entity.quantity }}</td>
                 <td>
@@ -108,13 +100,13 @@
                     },
                     success: function (data) {
                         if (data.success === true) {
-                            changeFeturedValue(link);
+                            changeFeaturedValue(link);
                         }
                     }
                 });
             });
 
-            function changeFeturedValue(link) {
+            function changeFeaturedValue(link) {
                 if (link.html() == '{{ NOT_FEATURED }}') {
                     link.html('{{ FEATURED }}')
                 } else {
