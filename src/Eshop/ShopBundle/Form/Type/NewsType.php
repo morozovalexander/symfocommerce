@@ -3,8 +3,10 @@
 namespace Eshop\ShopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NewsType extends AbstractType
 {
@@ -15,18 +17,18 @@ class NewsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('slug')
-            ->add('text')
-            ->add('metaKeys')
-            ->add('metaDescription')
+            ->add('title', TextType::class)
+            ->add('slug', TextType::class)
+            ->add('text', TextareaType::class)
+            ->add('metaKeys', TextType::class)
+            ->add('metaDescription', TextType::class)
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Eshop\ShopBundle\Entity\News'
@@ -36,7 +38,7 @@ class NewsType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'eshop_shopbundle_news';
     }

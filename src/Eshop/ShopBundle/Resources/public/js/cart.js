@@ -1,8 +1,7 @@
 $(document).ready(function () {
     $('[data-toggle="confirmation"]').confirmation();
 
-
-    $('.addtocart-btn').on('click', function(e){
+    $(document).on('click', '.addtocart-btn', function (e) {
         e.preventDefault();
         //define var
         var cartObj;

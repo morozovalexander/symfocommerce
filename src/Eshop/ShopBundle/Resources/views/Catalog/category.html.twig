@@ -47,7 +47,7 @@
         <h3 class="group inner list-group-item-heading">{{ category.name }}</h3>
         <div class="caption">
             <p class="group inner list-group-item-text">
-                {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': category.description} %}
+                {{ category.description|rawdescr|nl2br }}
             </p>
         </div>
     </div>

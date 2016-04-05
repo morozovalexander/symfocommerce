@@ -1,4 +1,6 @@
 {% extends '@Admin/adminLayout.html.twig' %}
+{% set FEATURED = 'featured'|trans %}
+{% set NOT_FEATURED = 'not featured'|trans %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -25,14 +27,14 @@
             <th class="col-md-2">{{ knp_pagination_sortable(entities, 'Category'|trans, 'pc.name') }}</th>
             <th class="col-md-2">{{ knp_pagination_sortable(entities, 'Manufacturer'|trans, 'pm.name') }}</th>
             <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Price'|trans, 'p.price') }}</th>
-            <th class="col-md-4">{{ 'Photo'|trans }}</th>
+            <th class="col-md-3">{{ 'Photo'|trans }}</th>
             <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Q-ty'|trans, 'p.quantity') }}</th>
-            <th class="col-md-1">{{ 'Actions'|trans }}</th>
+            <th class="col-md-2">{{ 'Actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr data-id="{{ entity.id }}">
                 <td><a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>
                     <a href="{{ path('admin_category_show', {'id': entity.category.id}) }}">
@@ -46,20 +48,17 @@
                 </td>
                 <td>{{ entity.price }}</td>
                 <td>
-                    {% if entity.images|length %}
-                        {% for image in entity.images|slice(0, 3) %}
-                            <a class="fancybox" rel="group" href="{{ asset(('uploads/gallery/' ~ image.path)) }}">
-                                <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
-                            </a>
-                        {% endfor %} ...
-                    {% else %}
-                        {{ 'no photos'|trans }}
-                    {% endif %}
+                    {{ include('@Admin/Partials/productImages.twig') }}
                 </td>
                 <td>{{ entity.quantity }}</td>
                 <td>
                     <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
-                    <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
+                    <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a><br>
+                    {% if entity.featured|length %}
+                        <a href="#" class="featured">{{ FEATURED }}</a>
+                    {% else %}
+                        <a href="#" class="featured">{{ NOT_FEATURED }}</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
@@ -80,6 +79,40 @@
     <script>
         $(document).ready(function () {
             $(".fancybox").fancybox();
+
+            $(".featured").on("click", function (e) {
+                e.preventDefault();
+                var link = $(this);
+                var productId = link.closest('tr').data('id');
+                var value = link.text();
+
+                var newValue = false;
+                if (value == '{{ NOT_FEATURED }}') {
+                    newValue = true;
+                }
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('admin_featured_product_edit_ajax') }}',
+                    data: {
+                        product_id: productId,
+                        new_value: newValue
+                    },
+                    success: function (data) {
+                        if (data.success === true) {
+                            changeFeaturedValue(link);
+                        }
+                    }
+                });
+            });
+
+            function changeFeaturedValue(link) {
+                if (link.html() == '{{ NOT_FEATURED }}') {
+                    link.html('{{ FEATURED }}')
+                } else {
+                    link.html('{{ NOT_FEATURED }}')
+                }
+            }
         });
     </script>
 {% endblock javascripts %}

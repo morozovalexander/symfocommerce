@@ -24,6 +24,7 @@ Show: Show
 edit: edit
 Edit: Edit
 no photos: no photos
+no photo: no photo
 Product: Product
 Slug: Slug
 Description: Description
@@ -108,3 +109,11 @@ Firstname: Firstname
 Lastname: Lastname
 Phone number: Phone number
 Join date: Join date
+Featured products: Featured products
+Featured products list: Featured products list
+save: save
+cancel: cancel
+featured: featured
+not featured: not featured
+not registered: not registered
+Product deleted: this product was deleted

@@ -19,6 +19,11 @@ layout:
     messages:
         mustberegistered: You must be registered for this
         productnotfound: Product not found
+    index:
+        latestproducts: Latest products
+        featuredproducts: Featured products
+    lastseen:
+        header: Your last seen products
 
 # Categories menu
 categories:
@@ -151,4 +156,4 @@ registration:
     phone: Phone number
     address: Address
     successful: Registration completed successful!
-
+    back: Back

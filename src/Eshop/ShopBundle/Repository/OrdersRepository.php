@@ -22,8 +22,9 @@ class OrdersRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('o')
+            ->select(array('o', 'u'))
             ->from('ShopBundle:Orders', 'o')
+            ->leftJoin('o.user', 'u')
             ->addOrderBy('o.date', 'DESC');
 
         return $qb;

@@ -13,7 +13,7 @@
                     <strong>{{ page.title }}</strong>
                 </h4>
                 <div>
-                    {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': page.content} %}
+                    {{ page.content|rawdescr|nl2br }}
                 </div>
             </div>
         </div>

@@ -18,7 +18,6 @@ use Eshop\ShopBundle\Entity\Orders;
  */
 class OrdersController extends Controller
 {
-
     /**
      * Lists all Orders entities.
      *
@@ -42,7 +41,7 @@ class OrdersController extends Controller
         );
 
         return array(
-            'entities' => $orders,
+            'orders' => $orders,
         );
     }
 
@@ -68,16 +67,15 @@ class OrdersController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $orderProducts = $order->getOrderProducts();
         $productsArray = array();
-        $totalSum = 0;
 
-        foreach($orderProducts as $orderProduct){
+        foreach ($orderProducts as $orderProduct) {
             $productPosition = array();
             /**
              * @var Product $product
              * @var OrderProduct $orderProduct
              */
             $product = $orderProduct->getProduct();
-            $price = $product->getPrice();
+            $price = $orderProduct->getPrice();
             $quantity = $orderProduct->getQuantity();
             $sum = $price * $quantity;
 
@@ -85,15 +83,13 @@ class OrdersController extends Controller
             $productPosition['quantity'] = $quantity;
             $productPosition['price'] = $price;
             $productPosition['sum'] = $sum;
-            $totalSum += $sum;
 
             $productsArray[] = $productPosition;
         }
 
         return array(
-            'entity' => $order,
+            'order' => $order,
             'delete_form' => $deleteForm->createView(),
-            'totalsum' => $totalSum,
             'products' => $productsArray
         );
     }
@@ -111,12 +107,7 @@ class OrdersController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_order_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array(
-                'label' => 'Delete',
-                'attr' => array('onclick' => 'return confirm("Are you sure?")')
-            ))
-            ->getForm()
-            ;
+            ->getForm();
     }
 
     /**

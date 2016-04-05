@@ -54,14 +54,14 @@ class SettingsController extends Controller
 
 
         $editingSetting = $request->get('editing_setting');
-        $newValue = $request->get('new_value');
+        $newValue = $request->request->getBoolean('new_value');
 
         switch ($editingSetting) {
             case 'show_empty_categories';
-                $settings->setShowEmptyCategories((bool)$newValue);
+                $settings->setShowEmptyCategories($newValue);
                 break;
             case 'show_empty_manufacturers';
-                $settings->setShowEmptyManufacturers((bool)$newValue);
+                $settings->setShowEmptyManufacturers($newValue);
                 break;
         }
 

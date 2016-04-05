@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Manufacturer;
-use Eshop\ShopBundle\Form\Type\ManufacturerType;
 
 /**
  * Manufacturer controller.
@@ -17,7 +16,6 @@ use Eshop\ShopBundle\Form\Type\ManufacturerType;
  */
 class ManufacturerController extends Controller
 {
-
     /**
      * Lists all Manufacturer entities.
      *
@@ -44,67 +42,31 @@ class ManufacturerController extends Controller
             'entities' => $manufacturers,
         );
     }
-    /**
-     * Creates a new Manufacturer entity.
-     *
-     * @Route("/", name="admin_manufacturer_create")
-     * @Method("POST")
-     * @Template("ShopBundle:Manufacturer:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new Manufacturer();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('admin_manufacturer_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Manufacturer entity.
-     *
-     * @param Manufacturer $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Manufacturer $entity)
-    {
-        $form = $this->createForm(new ManufacturerType(), $entity, array(
-            'action' => $this->generateUrl('admin_manufacturer_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
 
     /**
      * Displays a form to create a new Manufacturer entity.
      *
      * @Route("/new", name="admin_manufacturer_new")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $entity = new Manufacturer();
-        $form   = $this->createCreateForm($entity);
+        $manufacturer = new Manufacturer();
+        $form = $this->createForm('Eshop\ShopBundle\Form\Type\ManufacturerType', $manufacturer);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($manufacturer);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_manufacturer_show', array('id' => $manufacturer->getId()));
+        }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'entity' => $manufacturer,
+            'form' => $form->createView(),
         );
     }
 
@@ -115,20 +77,12 @@ class ManufacturerController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Manufacturer $manufacturer)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Manufacturer entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($manufacturer);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $manufacturer,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -137,75 +91,24 @@ class ManufacturerController extends Controller
      * Displays a form to edit an existing Manufacturer entity.
      *
      * @Route("/{id}/edit", name="admin_manufacturer_edit")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Request $request, Manufacturer $manufacturer)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Manufacturer entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Manufacturer entity.
-    *
-    * @param Manufacturer $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Manufacturer $entity)
-    {
-        $form = $this->createForm(new ManufacturerType(), $entity, array(
-            'action' => $this->generateUrl('admin_manufacturer_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Manufacturer entity.
-     *
-     * @Route("/{id}", name="admin_manufacturer_update")
-     * @Method("PUT")
-     * @Template("ShopBundle:Manufacturer:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Manufacturer entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($manufacturer);
+        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\ManufacturerType', $manufacturer);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
             if ($editForm->get('file')->getData() !== null) { // if any file was updated
                 $file = $editForm->get('file')->getData();
-                $entity->removeUpload(); // remove old file, see this at the bottom
-                $entity->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
+                $manufacturer->removeUpload(); // remove old file, see this at the bottom
+                $manufacturer->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
             }
 
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($manufacturer);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -213,35 +116,30 @@ class ManufacturerController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirect($this->generateUrl('admin_manufacturer_edit', array('id' => $id)));
+            return $this->redirectToRoute('admin_manufacturer_edit', array('id' => $manufacturer->getId()));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $manufacturer,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Manufacturer entity.
      *
      * @Route("/{id}", name="admin_manufacturer_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Manufacturer $manufacturer)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($manufacturer);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ShopBundle:Manufacturer')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Manufacturer entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($manufacturer);
             $em->flush();
         }
 
@@ -251,17 +149,15 @@ class ManufacturerController extends Controller
     /**
      * Creates a form to delete a Manufacturer entity by id.
      *
-     * @param mixed $id The entity id
+     * @param Manufacturer $manufacturer The Manufacturer entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Manufacturer $manufacturer)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_manufacturer_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_manufacturer_delete', array('id' => $manufacturer->getId())))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

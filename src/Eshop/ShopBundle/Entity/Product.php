@@ -96,6 +96,13 @@ class Product
     private $quantity;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="deleted", type="boolean", nullable=false)
+     */
+    private $deleted;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="measure_quantity", type="integer", nullable=true)
@@ -139,6 +146,11 @@ class Product
      **/
     private $favourites;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Featured", mappedBy="product")
+     */
+    private $featured;
+
     public function __construct()
     {
         $this->dateCreated = new \DateTime();
@@ -147,6 +159,7 @@ class Product
         $this->images = new ArrayCollection();
         $this->favourites = new ArrayCollection();
         $this->quantity = 1;
+        $this->deleted = false;
     }
 
     public function __toString()
@@ -570,5 +583,51 @@ class Product
     public function getFavourites()
     {
         return $this->favourites;
+    }
+
+    /**
+     * Set featured
+     *
+     * @param \Eshop\ShopBundle\Entity\Featured $featured
+     * @return Product
+     */
+    public function setFeatured(\Eshop\ShopBundle\Entity\Featured $featured = null)
+    {
+        $this->featured = $featured;
+
+        return $this;
+    }
+
+    /**
+     * Get featured
+     *
+     * @return \Eshop\ShopBundle\Entity\Featured 
+     */
+    public function getFeatured()
+    {
+        return $this->featured;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return Product
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
 }

@@ -67,6 +67,17 @@ class Category
     private $metaDescription;
 
     /**
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_created", type="datetime")
@@ -113,6 +124,7 @@ class Category
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = $this->dateCreated;
         $this->products = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     public function __toString()
@@ -408,6 +420,62 @@ class Category
     }
 
     /**
+     * Add children
+     *
+     * @param \Eshop\ShopBundle\Entity\Category $children
+     * @return Category
+     */
+    public function addChild(\Eshop\ShopBundle\Entity\Category $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Eshop\ShopBundle\Entity\Category $children
+     */
+    public function removeChild(\Eshop\ShopBundle\Entity\Category $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Eshop\ShopBundle\Entity\Category $parent
+     * @return Category
+     */
+    public function setParent(\Eshop\ShopBundle\Entity\Category $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Eshop\ShopBundle\Entity\Category
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Set dateCreated
      *
      * @param \DateTime $dateCreated
@@ -423,7 +491,7 @@ class Category
     /**
      * Get dateCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateCreated()
     {
@@ -446,7 +514,7 @@ class Category
     /**
      * Get dateUpdated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateUpdated()
     {

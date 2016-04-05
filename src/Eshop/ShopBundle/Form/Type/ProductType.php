@@ -2,9 +2,14 @@
 
 namespace Eshop\ShopBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
 {
@@ -15,39 +20,39 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('slug')
-            ->add('description')
-            ->add('price')
-            ->add('category', 'entity', array(
+            ->add('name', TextType::class)
+            ->add('slug', TextType::class)
+            ->add('description', TextareaType::class)
+            ->add('price', NumberType::class)
+            ->add('category', EntityType::class, array(
                 'required'  => true,
                 'multiple' => false,
                 'class' => 'Eshop\ShopBundle\Entity\Category',
-                'property' => 'name'
+                'choice_label' => 'name'
             ))
-            ->add('manufacturer', 'entity', array(
+            ->add('manufacturer', EntityType::class, array(
                 'required'  => true,
                 'multiple' => false,
                 'class' => 'Eshop\ShopBundle\Entity\Manufacturer',
-                'property' => 'name'
+                'choice_label' => 'name'
             ))
-            ->add('quantity')
-            ->add('metaKeys')
-            ->add('metaDescription')
-            ->add('measure', 'entity', array(
+            ->add('quantity', IntegerType::class)
+            ->add('metaKeys', TextType::class)
+            ->add('metaDescription', TextType::class)
+            ->add('measure', EntityType::class, array(
                 'required'  => true,
                 'multiple' => false,
                 'expanded' => false,
-                'class' => 'Eshop\ShopBundle\Entity\MEasure',
-                'property' => 'name'))
-            ->add('measureQuantity')
+                'class' => 'Eshop\ShopBundle\Entity\Measure',
+                'choice_label' => 'name'))
+            ->add('measureQuantity', IntegerType::class)
         ;
     }
-    
+
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Eshop\ShopBundle\Entity\Product'
@@ -57,7 +62,7 @@ class ProductType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'eshop_shopbundle_product';
     }

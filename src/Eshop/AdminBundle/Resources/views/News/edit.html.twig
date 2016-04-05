@@ -16,48 +16,52 @@
         </div>
     {% endfor %}
 
-    <form action="{{ path('admin_news_update', {'id' : entity.id}) }}" {{ form_enctype(edit_form) }} class="form-horizontal" method="post">
-        <div class="form-group">
-            {{ form_label(edit_form.title, 'Title'|trans) }}
-            <div class="col-sm-10">
-                {{ form_widget(edit_form.title, {'attr': {'class': 'product-name'}}) }}
-            </div>
+    {{ form_start(edit_form) }}
+    <div class="form-group">
+        {{ form_label(edit_form.title, 'Title'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.title, {'attr': {'class': 'product-name'}}) }}
         </div>
-        <div class="form-group">
-            {{ form_label(edit_form.text, 'Text'|trans) }}
-            <div class="col-sm-10">
-                {{ form_widget(edit_form.text, {'attr': {'class': 'summernote'}}) }}
-            </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.text, 'Text'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.text, {'attr': {'class': 'summernote'}}) }}
         </div>
-        <div class="form-group">
-            {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
-            <div class="col-sm-10">
-                {{ form_widget(edit_form.metaKeys) }}
-            </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.metaKeys) }}
         </div>
-        <div class="form-group">
-            {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
-            <div class="col-sm-10">
-                {{ form_widget(edit_form.metaDescription) }}
-            </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.metaDescription) }}
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label"></label>
-            <div class="col-sm-10">
-                <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
-            </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
         </div>
-        <div class="form-group">
-            {{ form_label(edit_form.slug, 'Slug'|trans) }}
-            <div class="col-sm-10">
-                {{ form_errors(edit_form.slug) }}
-                {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
-            </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.slug, 'Slug'|trans) }}
+        <div class="col-sm-10">
+            {{ form_errors(edit_form.slug) }}
+            {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
         </div>
-        <input type='hidden' name='_method' value='PUT'>
-        {{ form_rest(edit_form) }}
-
-    </form>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <input type="submit" value="Edit" class="btn btn-warning"/>
+        </div>
+    </div>
+    {{ form_rest(edit_form) }}
+    {{ form_end(edit_form) }}
 
     <div class="col-md-5 col-md-offset-2 ">
         <ul class="list-group">
@@ -67,7 +71,10 @@
                 </a>
             </li>
             <li class="list-group-item">
-                {{ form(delete_form) }}
+                {{ form_start(delete_form, { 'attr': {'class': 'delete-form'} }) }}
+                {{ form_widget(delete_form) }}
+                <input type="submit" value="Delete" class="btn btn-danger"/>
+                {{ form_end(delete_form) }}
             </li>
         </ul>
     </div>
@@ -79,7 +86,7 @@
     <script src="{{ asset('bundles/shop/js/summernote.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('.generate-slug').on('click', function(e) {
+            $('.generate-slug').on('click', function (e) {
                 e.preventDefault();
                 //get field value
                 var productName = $('.product-name').val();
@@ -91,10 +98,20 @@
                     custom: {
                         '%': ' percent '
                     },
-                    uric:true
+                    uric: true
                 });
                 //record to slug input
                 slugInut.val(slug);
+            });
+
+            $('.delete-form').submit(function (e) {
+                var currentForm = this;
+                e.preventDefault();
+                bootbox.confirm("Are you sure?", function (result) {
+                    if (result) {
+                        currentForm.submit();
+                    }
+                });
             });
         });
         {% include '@Admin/Partials/initSummernote.js.twig' with {'height': 300} %}

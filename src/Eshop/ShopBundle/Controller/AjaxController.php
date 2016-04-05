@@ -24,6 +24,7 @@ class AjaxController extends Controller
         $favouritesRepository = $em->getRepository('ShopBundle:Favourites');
 
         $productId = $request->request->getInt('product_id');
+
         $product = $productRepository->find($productId);
         $user = $this->getUser();
 
@@ -54,6 +55,56 @@ class AjaxController extends Controller
 
         return new JsonResponse(array(
             'favourite' => $liked,
+            'success' => true
+        ), 200);
+    }
+
+    /**
+     * Сhecks if user liked this project.
+     *
+     * @Route("/ajax_is_liked_product", name="ajax_is_liked_product")
+     * @Method("POST")
+     */
+    public function checkIsLikedAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $favouritesRepository = $em->getRepository('ShopBundle:Favourites');
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->returnErrorJson('mustberegistered');
+        }
+
+        $productId = $request->request->getInt('product_id');
+
+        $liked = $favouritesRepository->checkIsLiked($user, $productId);
+
+        return new JsonResponse(array(
+            'liked' => $liked,
+            'success' => true
+        ), 200);
+    }
+
+    /**
+     * Render last seen products from cookies
+     *
+     * @Route("/ajax_get_last_seen_products", name="ajax_get_last_seen_products")
+     * @Method("POST")
+     */
+    public function getLastSeenProductsAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $productRepository = $em->getRepository('ShopBundle:Product');
+
+        $productIdsArray = $this->get('app.page_utilities')->getLastSeenProducts($request);
+
+        $products = $productRepository->getLastSeen(4, $productIdsArray, $this->getUser());
+        if (!$products) {
+            $this->returnErrorJson('product not forund');
+        }
+        $html = $this->renderView('@Shop/Partials/lastSeenProducts.html.twig', array('products' => $products));
+
+        return new JsonResponse(array(
+            'html' => $html,
             'success' => true
         ), 200);
     }

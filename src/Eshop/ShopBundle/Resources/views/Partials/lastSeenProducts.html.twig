@@ -1,0 +1,7 @@
+{% trans_default_domain 'ShopBundle' %}
+<h3 class="text-center">{{ 'layout.lastseen.header'|trans }}</h3>
+<div class="col-md-12">
+    {% for product in products %}
+        {{ include('@Shop/Partials/productPreview.html.twig') }}
+    {% endfor %}
+</div>

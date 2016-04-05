@@ -3,7 +3,7 @@ Symfocommerce
 
 [![Join the chat at https://gitter.im/morozovalexander/symfocommerce](https://badges.gitter.im/morozovalexander/symfocommerce.svg)](https://gitter.im/morozovalexander/symfocommerce?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Symfony2 Standart Edition based ecommerce project.
+Symfony3 Standart Edition based ecommerce project.
 
 - Products with related categories and manufacturers.
 - Products sorting by name or price

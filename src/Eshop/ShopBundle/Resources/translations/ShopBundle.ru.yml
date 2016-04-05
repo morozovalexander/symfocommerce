@@ -19,6 +19,11 @@ layout:
     messages:
         mustberegistered: Для этого действия необходима регистрация
         productnotfound: Продукт не найден
+    index:
+        latestproducts: Новые поступления
+        featuredproducts: Рекомендованные
+    lastseen:
+        header: Вы недавно смотрели
 
 # Categories menu
 categories:
@@ -151,3 +156,4 @@ registration:
     phone: Телефон
     address: Адрес
     successful: Регистрация прошла успешно!
+    back: Вернуться

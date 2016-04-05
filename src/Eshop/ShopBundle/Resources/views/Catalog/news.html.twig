@@ -15,7 +15,7 @@
                             <strong>{{ entity.title }}</strong>
                         </h4>
                         <div>
-                            {% include '@Shop/Partials/rawDescription.html.twig' with {'descr': entity.text} %}
+                            {{ entity.text|rawdescr|nl2br }}
                         </div>
                         <p class="pull-right">{{ entity.date|date() }}</p>
                     </div>
