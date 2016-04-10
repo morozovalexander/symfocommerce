@@ -40,7 +40,7 @@
                             <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
                         </a>
                     {% else %}
-                        {{ 'Actions'|trans }}x
+                        {{ 'no photo'|trans }}
                     {% endif %}
                 </td>
                 <td>
