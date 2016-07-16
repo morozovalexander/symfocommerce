@@ -2,6 +2,8 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -44,9 +46,18 @@ class SlideController extends Controller
     {
         $slide = new Slide();
         $form = $this->createForm('Eshop\ShopBundle\Form\Type\SlideType', $slide);
+        $form->add('file', FileType::class, array('required' => true)); //reinit field to make file required
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+             if ($form->get('file')->getData() == null){
+                 $form->get('file')->addError(new FormError('file is required'));
+                 return array(
+                     'entity' => $slide,
+                     'form' => $form->createView(),
+                 );
+             };
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($slide);
             $em->flush();

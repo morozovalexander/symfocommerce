@@ -26,9 +26,9 @@ Print /admin to access admin section.
 To start use project run next console commands:
 
 - $ composer update
-- $ php app/console doctrine:database:create
-- $ php app/console doctrine:migrations:migrate
-- $ php app/console assets:install --symlink
+- $ php bin/console doctrine:database:create
+- $ php bin/console doctrine:migrations:migrate
+- $ php bin/console assets:install --symlink
 
 You can load some test data and admin account (admin/admin) if you want
 
