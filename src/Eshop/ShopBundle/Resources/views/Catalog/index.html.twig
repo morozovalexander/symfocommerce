@@ -21,7 +21,7 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <img src="{{ asset('uploads/images/' ~ slides.0.path) }}" alt="{{ slides.0.name }}">
+                            <img src="{{ asset('uploads/images/' ~ slides.0.path) | imagine_filter('slide') }}" alt="{{ slides.0.name }}">
                             <div class="carousel-caption">
                             </div>
                         </div>
