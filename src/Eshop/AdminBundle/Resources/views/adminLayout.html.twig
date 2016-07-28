@@ -49,4 +49,24 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/shop/js/bootbox.min.js') }}"></script>
+    <script>
+        $(function() {
+            bootbox.addLocale('{{ app.request.locale }}', {
+                OK : '{{ 'OK'|trans }}',
+                CANCEL : '{{ 'cancel'|trans }}',
+                CONFIRM : '{{ 'yes'|trans }}'
+            });
+            bootbox.setDefaults({ locale: '{{ app.request.locale }}' });
+
+            $('.bootbox-submit-confirm').submit(function (e) {
+                var currentForm = this;
+                e.preventDefault();
+                bootbox.confirm("{{ 'Are you sure?'|trans }}", function (result) {
+                    if (result) {
+                        currentForm.submit();
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
