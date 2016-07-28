@@ -50,7 +50,7 @@ class SlideController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-             if ($form->get('file')->getData() == null){
+             if ($form->get('file')->getData() === null){
                  $form->get('file')->addError(new FormError('file is required'));
                  return array(
                      'entity' => $slide,
