@@ -62,7 +62,7 @@
         <li class="list-group-item">
             {{ form_start(delete_form, { 'attr': {'class': 'delete-form'} }) }}
             {{ form_widget(delete_form) }}
-            <input type="submit" value="Delete" class="btn btn-danger"/>
+            <input type="submit" value="{{ 'Delete'|trans }}" class="btn btn-danger"/>
             {{ form_end(delete_form) }}
         </li>
     </ul>
