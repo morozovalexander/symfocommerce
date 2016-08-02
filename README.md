@@ -6,6 +6,7 @@ Symfocommerce
 Symfony3 Standart Edition based ecommerce project.
 
 - Products with related categories and manufacturers.
+- Advanced and convenient admin panel
 - Products sorting by name or price
 - Disabling products by set zero quantity
 - Ability to add products to favourites
