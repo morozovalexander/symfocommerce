@@ -55,19 +55,6 @@ $(function () {
     likesInit();
 });
 
-//menu items highlight
-function highlightMenu() {
-    //get requestUri
-    var requestUri = '{{ app.request.requestUri }}';
-
-    //highlight current route
-    $('.menu-link').each(function () {
-        if ($(this).attr('href') == requestUri) {
-            $(this).addClass('active');
-        }
-    });
-}
-
 function changeGlyphicon(clickedIcon) {
     if (clickedIcon.hasClass('glyphicon-heart-empty')) {
         clickedIcon.removeClass('glyphicon-heart-empty');
