@@ -15,9 +15,4 @@ class RawDescriptionExtension extends \Twig_Extension
     {
         return $descr;
     }
-
-    public function getName()
-    {
-        return 'eshop_extension';
-    }
 }
