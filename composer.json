@@ -17,8 +17,8 @@
         }
     },
     "require": {
-        "php": ">=5.5.9",
-        "symfony/symfony": "3.0.*",
+        "php": ">=5.6",
+        "symfony/symfony": "3.2.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "symfony/swiftmailer-bundle": "^2.3",
@@ -60,7 +60,7 @@
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
+            "php": "5.6"
         }
     },
     "extra": {

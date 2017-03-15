@@ -81,6 +81,9 @@ fos_user:
     registration:
         form:
             type: Eshop\UserBundle\Form\Type\RegistrationType
+    from_email:
+        address: you@example.com
+        sender_name: You
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
