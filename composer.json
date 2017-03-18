@@ -1,8 +1,16 @@
 {
     "description": "symfony framework based ecommerce project",
-    "name": "alexander/symfocommerce",
-    "license": "proprietary",
+    "name": "morozovalexander/symfocommerce",
+    "license": "MIT",
     "type": "project",
+    "authors": [
+        {
+            "name": "Morozov Alexander",
+            "email": "webdevelopacc@gmail.com",
+            "homepage": "https://github.com/morozovalexander/symfocommerce",
+            "role": "Developer"
+        }
+    ],
     "autoload": {
         "psr-4": {"": "src/"},
         "files": ["app/AppKernel.php"],
