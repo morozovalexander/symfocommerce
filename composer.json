@@ -42,7 +42,7 @@
         "liip/imagine-bundle": "^1.5",
         "knplabs/knp-paginator-bundle": "2.5.1",
         "presta/sitemap-bundle": "1.4.2",
-        "hwi/oauth-bundle": "0.5.x-dev"
+        "hwi/oauth-bundle": "0.5.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
