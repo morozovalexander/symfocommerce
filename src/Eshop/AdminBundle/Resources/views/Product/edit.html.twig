@@ -3,10 +3,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/shop/css/dropzone.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/shop/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('bundles/shop/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/shop/css/summernote.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/dropzone.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/summernote.css') }}" rel="stylesheet">
 {% endblock stylesheets %}
 
 {% block page_content -%}
@@ -115,7 +115,7 @@
                         {{ 'remove'|trans }}
                     </a>
                     <img id="gif-loading" style="width:17px; height:17px; display: none;"
-                         src="{{ asset('bundles/shop/images/ajax-loader.gif') }}"/>
+                         src="{{ asset('assets/images/ajax-loader.gif') }}"/>
                 </div>
             {% endfor %}
         {% else %}
@@ -156,13 +156,13 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/shop/js/dropzone.min.js') }}"></script>
-    <script src="{{ asset('bundles/shop/js/speakingurl.min.js') }}"></script>
-    <script src="{{ asset('bundles/shop/fancybox/jquery.mousewheel-3.0.6.pack.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/shop/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/shop/js/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/shop/js/cart.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/shop/js/summernote.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dropzone.min.js') }}"></script>
+    <script src="{{ asset('assets/js/speakingurl.min.js') }}"></script>
+    <script src="{{ asset('assets/fancybox/jquery.mousewheel-3.0.6.pack.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/cart.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/summernote.min.js') }}"></script>
     <script>
         {% include '@Admin/Partials/initSummernote.js.twig' with {'height': 300} %}
         $(document).ready(function () {

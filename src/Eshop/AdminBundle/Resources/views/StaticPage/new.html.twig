@@ -3,8 +3,8 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/shop/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/shop/css/summernote.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/summernote.css') }}" rel="stylesheet">
 {% endblock stylesheets %}
 
 {% block page_content -%}
@@ -78,8 +78,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/shop/js/speakingurl.min.js') }}"></script>
-    <script src="{{ asset('bundles/shop/js/summernote.min.js') }}"></script>
+    <script src="{{ asset('assets/js/speakingurl.min.js') }}"></script>
+    <script src="{{ asset('assets/js/summernote.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.generate-slug').on('click', function (e) {

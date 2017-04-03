@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/shop/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
+    <link href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
           type="text/css"/>
 {% endblock stylesheets %}
 
@@ -70,9 +70,9 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/shop/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
+    <script src="{{ asset('assets/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
             type="text/javascript"></script>
-    <script src="{{ asset('bundles/shop/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
             $(".fancybox").fancybox();

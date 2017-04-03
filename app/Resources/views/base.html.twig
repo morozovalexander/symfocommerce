@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!--    <link rel="icon" href="../favicon.ico">-->
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link href="{{ asset('bundles/shop/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
     {% block header_javascripts %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
@@ -24,9 +24,9 @@
 {% block body %}{% endblock %}
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="{{ asset('bundles/shop/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{{ asset('bundles/shop/js/ie10-viewport-bug-workaround.js') }}"></script>
+    <script src="{{ asset('assets/js/ie10-viewport-bug-workaround.js') }}"></script>
 {% endblock %}
 </body>
 </html>
