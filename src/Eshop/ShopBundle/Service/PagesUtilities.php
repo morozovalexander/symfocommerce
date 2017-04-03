@@ -123,8 +123,8 @@ class PagesUtilities
         if (isset($cookies['cart'])) {
             $cart = json_decode($cookies['cart']);
 
-            $cartArray = $cart; //check if cart not empty
-            if (!empty($cartArray)) {
+            $cartObj = $cart; //check if cart not empty
+            if (!empty($cartObj) && count((array)$cartObj)) {
                 return $cart;
             }
         }
