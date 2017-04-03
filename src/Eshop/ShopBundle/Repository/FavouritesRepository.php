@@ -28,10 +28,10 @@ class FavouritesRepository extends EntityRepository
             ->innerJoin('f.product', 'p')
             ->where('u = :user')
             ->andWhere('p.id = :product_id')
-            ->setParameters(array(
+            ->setParameters([
                 'product_id' => $productId,
                 'user' => $user
-            ));
+            ]);
 
         if ($qb->getQuery()->getSingleScalarResult()) {
             return true;

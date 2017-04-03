@@ -36,7 +36,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
         $userAdmin->setPhone('1234567890');
         $userAdmin->setAddress('admin address');
         $userAdmin->setEnabled(true);
-        $userAdmin->setRoles(array('ROLE_ADMIN'));
+        $userAdmin->setRoles(['ROLE_ADMIN']);
         $userAdmin->setEmail('admin@email.com');
 
         $encoder = $this->container

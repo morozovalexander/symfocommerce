@@ -34,9 +34,7 @@ class StaticPageType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\StaticPage'
-        ));
+        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\StaticPage']);
     }
 
     /**

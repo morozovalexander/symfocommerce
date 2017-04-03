@@ -30,9 +30,7 @@ class NewsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\News'
-        ));
+        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\News']);
     }
 
     /**

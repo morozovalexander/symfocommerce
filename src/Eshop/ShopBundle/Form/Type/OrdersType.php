@@ -22,9 +22,7 @@ class OrdersType extends AbstractType
             ->add('email', EmailType::class)
             ->add('phone', TextType::class)
             ->add('address', TextType::class)
-            ->add('comment', TextareaType::class, array(
-                'required' => false
-            ))
+            ->add('comment', TextareaType::class, ['required' => false])
         ;
     }
 
@@ -33,9 +31,7 @@ class OrdersType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Orders'
-        ));
+        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Orders']);
     }
 
     /**

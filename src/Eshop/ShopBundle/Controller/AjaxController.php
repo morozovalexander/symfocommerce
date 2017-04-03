@@ -34,10 +34,10 @@ class AjaxController extends Controller
             return $this->returnErrorJson('mustberegistered');
         }
 
-        $favoriteRecord = $favouritesRepository->findOneBy(array(
+        $favoriteRecord = $favouritesRepository->findOneBy([
             'user' => $this->getUser(),
             'product' => $product
-        ));
+        ]);
 
         $liked = false;
         if (!is_object($favoriteRecord)) {
@@ -53,10 +53,10 @@ class AjaxController extends Controller
 
         $em->flush();
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'favourite' => $liked,
             'success' => true
-        ), 200);
+        ], 200);
     }
 
     /**
@@ -78,10 +78,10 @@ class AjaxController extends Controller
 
         $liked = $favouritesRepository->checkIsLiked($user, $productId);
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'liked' => $liked,
             'success' => true
-        ), 200);
+        ], 200);
     }
 
     /**
@@ -101,12 +101,12 @@ class AjaxController extends Controller
         if (!$products) {
             $this->returnErrorJson('product not forund');
         }
-        $html = $this->renderView('@Shop/Partials/lastSeenProducts.html.twig', array('products' => $products));
+        $html = $this->renderView('@Shop/Partials/lastSeenProducts.html.twig', ['products' => $products]);
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'html' => $html,
             'success' => true
-        ), 200);
+        ], 200);
     }
 
     /**
@@ -115,9 +115,9 @@ class AjaxController extends Controller
      */
     private function returnErrorJson($message)
     {
-        return new JsonResponse(array(
+        return new JsonResponse([
             'success' => false,
             'message' => $message
-        ), 400);
+        ], 400);
     }
 }

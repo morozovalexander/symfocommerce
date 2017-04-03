@@ -31,9 +31,7 @@ class SettingsController extends Controller
         $settingRepository = $em->getRepository('ShopBundle:Settings');
         $entities = $settingRepository->findAll();
 
-        return array(
-            'settings' => $entities[0]
-        );
+        return ['settings' => $entities[0]];
     }
 
     /**
@@ -67,8 +65,6 @@ class SettingsController extends Controller
 
         $em->flush();
 
-        return new JsonResponse(
-            array('success' => true)
-        );
+        return new JsonResponse(['success' => true]);
     }
 }

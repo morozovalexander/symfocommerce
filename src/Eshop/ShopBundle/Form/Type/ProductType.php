@@ -24,27 +24,28 @@ class ProductType extends AbstractType
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class)
             ->add('price', NumberType::class)
-            ->add('category', EntityType::class, array(
+            ->add('category', EntityType::class, [
                 'required'  => true,
                 'multiple' => false,
                 'class' => 'Eshop\ShopBundle\Entity\Category',
                 'choice_label' => 'name'
-            ))
-            ->add('manufacturer', EntityType::class, array(
+            ])
+            ->add('manufacturer', EntityType::class, [
                 'required'  => true,
                 'multiple' => false,
                 'class' => 'Eshop\ShopBundle\Entity\Manufacturer',
                 'choice_label' => 'name'
-            ))
+            ])
             ->add('quantity', IntegerType::class)
             ->add('metaKeys', TextType::class)
             ->add('metaDescription', TextType::class)
-            ->add('measure', EntityType::class, array(
+            ->add('measure', EntityType::class, [
                 'required'  => true,
                 'multiple' => false,
                 'expanded' => false,
                 'class' => 'Eshop\ShopBundle\Entity\Measure',
-                'choice_label' => 'name'))
+                'choice_label' => 'name'
+            ])
             ->add('measureQuantity', IntegerType::class)
         ;
     }
@@ -54,9 +55,7 @@ class ProductType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Product'
-        ));
+        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Product']);
     }
 
     /**

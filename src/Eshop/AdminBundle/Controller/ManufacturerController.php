@@ -38,9 +38,7 @@ class ManufacturerController extends Controller
             $limit
         );
 
-        return array(
-            'entities' => $manufacturers,
-        );
+        return ['entities' => $manufacturers];
     }
 
     /**
@@ -61,13 +59,12 @@ class ManufacturerController extends Controller
             $em->persist($manufacturer);
             $em->flush();
 
-            return $this->redirectToRoute('admin_manufacturer_show', array('id' => $manufacturer->getId()));
+            return $this->redirectToRoute('admin_manufacturer_show', ['id' => $manufacturer->getId()]);
         }
 
-        return array(
-            'entity' => $manufacturer,
-            'form' => $form->createView(),
-        );
+        return ['entity' => $manufacturer,
+                'form' => $form->createView()
+        ];
     }
 
     /**
@@ -81,10 +78,9 @@ class ManufacturerController extends Controller
     {
         $deleteForm = $this->createDeleteForm($manufacturer);
 
-        return array(
-            'entity' => $manufacturer,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $manufacturer,
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -116,14 +112,13 @@ class ManufacturerController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_manufacturer_edit', array('id' => $manufacturer->getId()));
+            return $this->redirectToRoute('admin_manufacturer_edit', ['id' => $manufacturer->getId()]);
         }
 
-        return array(
-            'entity' => $manufacturer,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $manufacturer,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -156,7 +151,7 @@ class ManufacturerController extends Controller
     private function createDeleteForm(Manufacturer $manufacturer)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_manufacturer_delete', array('id' => $manufacturer->getId())))
+            ->setAction($this->generateUrl('admin_manufacturer_delete', ['id' => $manufacturer->getId()]))
             ->setMethod('DELETE')
             ->getForm();
     }

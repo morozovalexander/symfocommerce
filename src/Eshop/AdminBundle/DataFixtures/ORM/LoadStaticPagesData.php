@@ -28,11 +28,11 @@ class LoadStaticPagesData implements FixtureInterface, ContainerAwareInterface, 
      */
     public function load(ObjectManager $manager)
     {
-        $titles = array(
+        $titles = [
             'Information',
             'Contacts',
             'Discounts'
-        );
+        ];
 
         $i = 1;
         foreach ($titles as $title) {

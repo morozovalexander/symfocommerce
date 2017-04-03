@@ -38,9 +38,7 @@ class CategoryController extends Controller
             $limit
         );
 
-        return array(
-            'entities' => $categories,
-        );
+        return ['entities' => $categories];
     }
 
     /**
@@ -61,13 +59,11 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('admin_category_show', array('id' => $category->getId()));
+            return $this->redirectToRoute('admin_category_show', ['id' => $category->getId()]);
         }
 
-        return array(
-            'entity' => $category,
-            'form' => $form->createView(),
-        );
+        return ['entity' => $category,
+                'form' => $form->createView()];
     }
 
     /**
@@ -81,10 +77,9 @@ class CategoryController extends Controller
     {
         $deleteForm = $this->createDeleteForm($category);
 
-        return array(
-            'entity' => $category,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $category,
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -116,14 +111,13 @@ class CategoryController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_category_edit', array('id' => $category->getId()));
+            return $this->redirectToRoute('admin_category_edit', ['id' => $category->getId()]);
         }
 
-        return array(
-            'entity' => $category,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $category,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -156,7 +150,7 @@ class CategoryController extends Controller
     private function createDeleteForm(Category $category)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_category_delete', array('id' => $category->getId())))
+            ->setAction($this->generateUrl('admin_category_delete', ['id' => $category->getId()]))
             ->setMethod('DELETE')
             ->getForm();
     }

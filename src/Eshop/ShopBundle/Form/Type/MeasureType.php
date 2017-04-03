@@ -25,9 +25,7 @@ class MeasureType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Measure'
-        ));
+        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Measure']);
     }
 
     /**

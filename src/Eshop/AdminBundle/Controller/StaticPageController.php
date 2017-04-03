@@ -26,12 +26,9 @@ class StaticPageController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        
-        $entities = $em->getRepository('ShopBundle:StaticPage')->findBy(array(), array('orderNum' => 'ASC'));
+        $entities = $em->getRepository('ShopBundle:StaticPage')->findBy([], ['orderNum' => 'ASC']);
 
-        return array(
-            'entities' => $entities,
-        );
+        return ['entities' => $entities];
     }
 
     /**
@@ -52,13 +49,12 @@ class StaticPageController extends Controller
             $em->persist($staticPage);
             $em->flush();
 
-            return $this->redirectToRoute('admin_staticpage_show', array('id' => $staticPage->getId()));
+            return $this->redirectToRoute('admin_staticpage_show', ['id' => $staticPage->getId()]);
         }
 
-        return array(
-            'entity' => $staticPage,
-            'form' => $form->createView(),
-        );
+        return ['entity' => $staticPage,
+                'form' => $form->createView()
+        ];
     }
 
     /**
@@ -72,10 +68,9 @@ class StaticPageController extends Controller
     {
         $deleteForm = $this->createDeleteForm($staticPage);
 
-        return array(
-            'entity' => $staticPage,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $staticPage,
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -101,14 +96,13 @@ class StaticPageController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_staticpage_edit', array('id' => $staticPage->getId()));
+            return $this->redirectToRoute('admin_staticpage_edit', ['id' => $staticPage->getId()]);
         }
 
-        return array(
-            'entity' => $staticPage,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $staticPage,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -141,7 +135,7 @@ class StaticPageController extends Controller
     private function createDeleteForm(StaticPage $staticPage)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_staticpage_delete', array('id' => $staticPage->getId())))
+            ->setAction($this->generateUrl('admin_staticpage_delete', ['id' => $staticPage->getId()]))
             ->setMethod('DELETE')
             ->getForm();
     }

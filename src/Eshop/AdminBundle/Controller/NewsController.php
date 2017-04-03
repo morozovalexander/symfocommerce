@@ -38,9 +38,7 @@ class NewsController extends Controller
             $limit
         );
 
-        return array(
-            'entities' => $news,
-        );
+        return ['entities' => $news];
     }
 
     /**
@@ -61,13 +59,12 @@ class NewsController extends Controller
             $em->persist($news);
             $em->flush();
 
-            return $this->redirectToRoute('admin_news_show', array('id' => $news->getId()));
+            return $this->redirectToRoute('admin_news_show', ['id' => $news->getId()]);
         }
 
-        return array(
-            'entity' => $news,
-            'form' => $form->createView(),
-        );
+        return ['entity' => $news,
+                'form' => $form->createView()
+        ];
     }
 
     /**
@@ -81,10 +78,9 @@ class NewsController extends Controller
     {
         $deleteForm = $this->createDeleteForm($news);
 
-        return array(
-            'entity' => $news,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $news,
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -110,14 +106,13 @@ class NewsController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_news_edit', array('id' => $news->getId()));
+            return $this->redirectToRoute('admin_news_edit', ['id' => $news->getId()]);
         }
 
-        return array(
-            'entity' => $news,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $news,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -150,7 +145,7 @@ class NewsController extends Controller
     private function createDeleteForm(News $news)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_news_delete', array('id' => $news->getId())))
+            ->setAction($this->generateUrl('admin_news_delete', ['id' => $news->getId()]))
             ->setMethod('DELETE')
             ->getForm();
     }

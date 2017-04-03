@@ -13,13 +13,13 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class,
-                array('label' => 'registration.firstname', 'translation_domain' => 'ShopBundle'))
+                ['label' => 'registration.firstname', 'translation_domain' => 'ShopBundle'])
             ->add('lastname', TextType::class,
-                array('label' => 'registration.lastname', 'translation_domain' => 'ShopBundle'))
+                ['label' => 'registration.lastname', 'translation_domain' => 'ShopBundle'])
             ->add('phone', TextType::class,
-                array('label' => 'registration.phone', 'translation_domain' => 'ShopBundle'))
+                ['label' => 'registration.phone', 'translation_domain' => 'ShopBundle'])
             ->add('address', TextareaType::class,
-                array('label' => 'registration.address', 'translation_domain' => 'ShopBundle'));
+                ['label' => 'registration.address', 'translation_domain' => 'ShopBundle']);
     }
 
     public function getParent()

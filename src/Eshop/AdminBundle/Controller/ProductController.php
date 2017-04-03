@@ -41,9 +41,7 @@ class ProductController extends Controller
             $limit
         );
 
-        return array(
-            'entities' => $products,
-        );
+        return ['entities' => $products];
     }
 
     /**
@@ -80,13 +78,12 @@ class ProductController extends Controller
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute('admin_product_show', array('id' => $product->getId()));
+            return $this->redirectToRoute('admin_product_show', ['id' => $product->getId()]);
         }
 
-        return array(
-            'entity' => $product,
-            'form' => $form->createView(),
-        );
+        return ['entity' => $product,
+                'form' => $form->createView()
+        ];
     }
 
     /**
@@ -104,10 +101,9 @@ class ProductController extends Controller
             return $this->render('@Admin/Product/deleted.html.twig');
         }
 
-        return array(
-            'entity' => $product,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $product,
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -149,14 +145,13 @@ class ProductController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_product_edit', array('id' => $product->getId()));
+            return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
         }
 
-        return array(
-            'entity' => $product,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $product,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -189,7 +184,7 @@ class ProductController extends Controller
     private function createDeleteForm(Product $product)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_product_delete', array('id' => $product->getId())))
+            ->setAction($this->generateUrl('admin_product_delete', ['id' => $product->getId()]))
             ->setMethod('DELETE')
             ->getForm();
     }
@@ -219,8 +214,8 @@ class ProductController extends Controller
 
         $em->flush();
 
-        $data = json_encode(array('success' => true));
-        $headers = array('Content-type' => 'application-json; charset=utf8');
+        $data = json_encode(['success' => true]);
+        $headers = ['Content-type' => 'application-json; charset=utf8'];
         $response = new Response($data, 200, $headers);
         return $response;
     }

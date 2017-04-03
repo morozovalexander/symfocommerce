@@ -38,9 +38,7 @@ class UserController extends Controller
             $limit
         );
 
-        return array(
-            'entities' => $entities
-        );
+        return ['entities' => $entities];
     }
 
     /**
@@ -52,7 +50,7 @@ class UserController extends Controller
      */
     public function showUserInfoAction(User $user)
     {
-        return array('user' => $user);
+        return ['user' => $user];
     }
 
     /**
@@ -77,9 +75,6 @@ class UserController extends Controller
             $limit
         );
 
-        return array(
-            'user' => $user,
-            'orders' => $orders,
-        );
+        return ['user' => $user, 'orders' => $orders];
     }
 }

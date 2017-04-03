@@ -29,9 +29,7 @@ class MeasureController extends Controller
 
         $entities = $em->getRepository('ShopBundle:Measure')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return ['entities' => $entities];
     }
 
     /**
@@ -52,13 +50,12 @@ class MeasureController extends Controller
             $em->persist($measure);
             $em->flush();
 
-            return $this->redirectToRoute('admin_measure_show', array('id' => $measure->getId()));
+            return $this->redirectToRoute('admin_measure_show', ['id' => $measure->getId()]);
         }
 
-        return array(
-            'entity' => $measure,
-            'form' => $form->createView(),
-        );
+        return ['entity' => $measure,
+                'form' => $form->createView()
+        ];
     }
 
     /**
@@ -72,10 +69,9 @@ class MeasureController extends Controller
     {
         $deleteForm = $this->createDeleteForm($measure);
 
-        return array(
-            'entity' => $measure,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $measure,
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -101,14 +97,13 @@ class MeasureController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_measure_edit', array('id' => $measure->getId()));
+            return $this->redirectToRoute('admin_measure_edit', ['id' => $measure->getId()]);
         }
 
-        return array(
-            'entity' => $measure,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $measure,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -141,7 +136,7 @@ class MeasureController extends Controller
     private function createDeleteForm(Measure $measure)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_measure_delete', array('id' => $measure->getId())))
+            ->setAction($this->generateUrl('admin_measure_delete', ['id' => $measure->getId()]))
             ->setMethod('DELETE')
             ->getForm();
     }

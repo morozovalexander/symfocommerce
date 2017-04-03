@@ -19,7 +19,7 @@ class UserRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select(array('u', 'uo'))
+            ->select(['u', 'uo'])
             ->from('UserBundle:User', 'u')
             ->leftJoin('u.orders', 'uo')
             ->where('u.roles NOT LIKE :roles')

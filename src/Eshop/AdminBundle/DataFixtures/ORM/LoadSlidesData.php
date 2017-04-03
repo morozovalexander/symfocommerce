@@ -28,10 +28,7 @@ class LoadSlidesData implements FixtureInterface, ContainerAwareInterface, Order
      */
     public function load(ObjectManager $manager)
     {
-        $titles = array(
-            'slide1',
-            'slide2'
-        );
+        $titles = ['slide1', 'slide2'];
 
         $i = 1;
         foreach ($titles as $title) {

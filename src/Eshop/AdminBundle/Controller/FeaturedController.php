@@ -29,9 +29,9 @@ class FeaturedController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $featuredRepository = $em->getRepository('ShopBundle:Featured');
-        $products = $featuredRepository->findBy(array(), array('productOrder' => 'ASC'));
+        $products = $featuredRepository->findBy([], ['productOrder' => 'ASC']);
 
-        return array('products' => $products);
+        return ['products' => $products];
     }
 
     /**
@@ -55,9 +55,7 @@ class FeaturedController extends Controller
 
         $this->createOrDeleteFeaturedProduct($product, $addFeaturedValue);
 
-        return new JsonResponse(array(
-            'success' => true
-        ), 200);
+        return new JsonResponse(['success' => true], 200);
     }
 
     /**
@@ -74,7 +72,7 @@ class FeaturedController extends Controller
         $featuredId = $request->request->getInt('featured_id');
         $newOrder = $request->request->getInt('new_value');
 
-        $featuredWithNewOrder = $featuredRepository->findOneBy(array('productOrder' => $newOrder));
+        $featuredWithNewOrder = $featuredRepository->findOneBy(['productOrder' => $newOrder]);
         if (is_object($featuredWithNewOrder)) {
             return $this->returnErrorJson('order exists');
         }
@@ -87,9 +85,7 @@ class FeaturedController extends Controller
         $featured->setProductOrder($newOrder);
         $em->flush();
 
-        return new JsonResponse(array(
-            'success' => true
-        ), 200);
+        return new JsonResponse(['success' => true], 200);
     }
 
     /**
@@ -120,7 +116,7 @@ class FeaturedController extends Controller
                 $em->persist($featured);
             }
         } else {
-            $featured = $featuredRepository->findOneBy(array('product' => $product));
+            $featured = $featuredRepository->findOneBy(['product' => $product]);
             $em->remove($featured);
         }
         $em->flush();
@@ -131,9 +127,9 @@ class FeaturedController extends Controller
      * @return JsonResponse
      */
     private function returnErrorJson($message) {
-        return new JsonResponse(array(
+        return new JsonResponse([
             'success' => false,
             'message' => $message
-        ), 400);
+        ], 400);
     }
 }

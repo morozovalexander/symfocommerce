@@ -30,17 +30,16 @@ class CatalogController extends Controller
         $productRepository = $em->getRepository('ShopBundle:Product');
 
         //sorted by order number
-        $slides = $slideRepository->findBy(array('enabled' => true), array('slideOrder' => 'ASC'));
+        $slides = $slideRepository->findBy(['enabled' => true], ['slideOrder' => 'ASC']);
         $lastNews = $newsRepository->getLastNews();
         $latestProducts = $productRepository->getLatest(12, $this->getUser());
         $featuredProducts = $productRepository->getFeatured(12, $this->getUser());
 
-        return array(
-            'featured_products' => $featuredProducts,
-            'latest_products' => $latestProducts,
-            'news' => $lastNews,
-            'slides' => $slides
-        );
+        return ['featured_products' => $featuredProducts,
+                'latest_products' => $latestProducts,
+                'news' => $lastNews,
+                'slides' => $slides
+        ];
     }
 
     /**
@@ -65,11 +64,10 @@ class CatalogController extends Controller
             $limit
         );
 
-        return array(
-            'category' => $category,
-            'products' => $products,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
-        );
+        return ['category' => $category,
+                'products' => $products,
+                'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+        ];
     }
 
     /**
@@ -94,11 +92,10 @@ class CatalogController extends Controller
             $limit
         );
 
-        return array(
-            'manufacturer' => $manufacturer,
-            'products' => $products,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
-        );
+        return ['manufacturer' => $manufacturer,
+                'products' => $products,
+                'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+        ];
     }
 
     /**
@@ -108,7 +105,7 @@ class CatalogController extends Controller
      */
     public function showProductAction(Product $product)
     {
-        return array('product' => $product);
+        return ['product' => $product];
     }
 
     /**
@@ -133,7 +130,7 @@ class CatalogController extends Controller
             $limit
         );
 
-        return array('news' => $news);
+        return ['news' => $news];
     }
 
     /**
@@ -145,7 +142,7 @@ class CatalogController extends Controller
      */
     public function searchProductAction(Request $request)
     {
-        $searchResults = array();
+        $searchResults = [];
 
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -165,11 +162,10 @@ class CatalogController extends Controller
                 $limit
             );
         }
-        return array(
-            'products' => $searchResults,
-            'search_phrase' => $search_phrase,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
-        );
+        return ['products' => $searchResults,
+                'search_phrase' => $search_phrase,
+                'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+        ];
     }
 
     /**
@@ -181,6 +177,6 @@ class CatalogController extends Controller
      */
     public function showStaticPageAction(StaticPage $page)
     {
-        return array('page' => $page);
+        return ['page' => $page];
     }
 }

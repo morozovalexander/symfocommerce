@@ -42,7 +42,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.category', 'ca')
             ->leftJoin('p.images', 'pi')
@@ -67,7 +67,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->innerJoin('p.manufacturer', 'ma')
             ->leftJoin('p.images', 'pi')
@@ -91,7 +91,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
@@ -113,7 +113,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
@@ -123,13 +123,13 @@ class ProductRepository extends EntityRepository
             ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setParameter('user', $user);
 
-        $cqbORX = array();
+        $cqbORX = [];
         foreach ($searchWords as $searchWord) {
             $cqbORX[] = $qb->expr()->like('p.name', $qb->expr()->literal('%' . $searchWord . '%'));
             $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
         }
 
-        $qb->andWhere(call_user_func_array(array($qb->expr(), "orx"), $cqbORX));
+        $qb->andWhere(call_user_func_array([$qb->expr(), "orx"], $cqbORX));
 
         return $qb;
     }
@@ -143,7 +143,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
@@ -167,7 +167,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
@@ -192,7 +192,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pfa', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
@@ -201,12 +201,7 @@ class ProductRepository extends EntityRepository
             ->where('p.quantity <> 0')
             ->andWhere('p.id IN (:ids)')
             ->setMaxResults($quantity)
-            ->setParameters(
-                array(
-                    'user' => $user,
-                    'ids' => $productIdsArray
-                )
-            );
+            ->setParameters(['user' => $user, 'ids' => $productIdsArray]);
 
         return $qb->getQuery()->getResult();
     }
@@ -220,7 +215,7 @@ class ProductRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(array('p', 'pi', 'pm', 'pc', 'pfe'))
+        $qb->select(['p', 'pi', 'pm', 'pc', 'pfe'])
             ->from('ShopBundle:Product', 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.manufacturer', 'pm')

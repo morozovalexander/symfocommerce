@@ -40,9 +40,7 @@ class OrdersController extends Controller
             $limit
         );
 
-        return array(
-            'orders' => $orders,
-        );
+        return ['orders' => $orders];
     }
 
     /**
@@ -66,10 +64,10 @@ class OrdersController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $orderProducts = $order->getOrderProducts();
-        $productsArray = array();
+        $productsArray = [];
 
         foreach ($orderProducts as $orderProduct) {
-            $productPosition = array();
+            $productPosition = [];
             /**
              * @var Product $product
              * @var OrderProduct $orderProduct
@@ -87,11 +85,10 @@ class OrdersController extends Controller
             $productsArray[] = $productPosition;
         }
 
-        return array(
-            'order' => $order,
-            'delete_form' => $deleteForm->createView(),
-            'products' => $productsArray
-        );
+        return ['order' => $order,
+                'delete_form' => $deleteForm->createView(),
+                'products' => $productsArray
+        ];
     }
 
 
@@ -105,7 +102,7 @@ class OrdersController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_order_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('admin_order_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->getForm();
     }

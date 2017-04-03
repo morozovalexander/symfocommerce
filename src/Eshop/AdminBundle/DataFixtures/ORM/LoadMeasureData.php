@@ -28,13 +28,13 @@ class LoadMeasureData implements FixtureInterface, ContainerAwareInterface, Orde
      */
     public function load(ObjectManager $manager)
     {
-        $measureArray = array(
+        $measureArray = [
             'Grammes',
             'Pieces',
             'Caps',
             'Ml',
             'Packs'
-        );
+        ];
 
         //create measures
         foreach ($measureArray as $measureName) {

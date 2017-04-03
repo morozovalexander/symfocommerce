@@ -25,8 +25,8 @@ class CartController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
-        $productsArray = array();
-        $cart = array();
+        $productsArray = [];
+        $cart = [];
         $totalSum = 0;
 
         $cookies = $request->cookies->all();
@@ -41,7 +41,7 @@ class CartController extends Controller
              */
             $product = $productRepository->find((int)$productId);
             if (is_object($product)) {
-                $productPosition = array();
+                $productPosition = [];
 
                 $quantity = abs((int)$productQuantity);
                 $price = $product->getPrice();
@@ -57,10 +57,9 @@ class CartController extends Controller
             }
         }
 
-        return array(
-            'products' => $productsArray,
-            'totalsum' => $totalSum
-        );
+        return ['products' => $productsArray,
+                'totalsum' => $totalSum
+        ];
     }
 
     /**
@@ -84,11 +83,11 @@ class CartController extends Controller
             }
 
             //send email notification
-            $this->get('app.email_notifier')->handleNotification(array(
+            $this->get('app.email_notifier')->handleNotification([
                 'event' => 'new_order',
                 'order_id' => $order->getId(),
                 'admin_email' => $this->getParameter('admin_email')
-            ));
+            ]);
 
             return $this->render('@Shop/Cart/thankYou.html.twig'); //redirect to thankyou page
         }
@@ -97,10 +96,10 @@ class CartController extends Controller
             $this->fillWithUserData($user, $form);
         }
 
-        return array(
+        return [
             'order' => $order,
-            'form' => $form->createView(),
-        );
+            'form' => $form->createView()
+        ];
     }
 
     /**
@@ -112,7 +111,7 @@ class CartController extends Controller
      */
     public function cartIsEmptyAction()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -125,9 +124,7 @@ class CartController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         //quantity -> sum array
-        $cartArray = array(
-            'cart' => array('quantity' => 0, 'sum' => 0)
-        );
+        $cartArray = ['cart' => ['quantity' => 0, 'sum' => 0]];
         $cookies = $request->cookies->all();
 
         if (isset($cookies['cart'])) {

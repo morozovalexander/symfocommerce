@@ -28,11 +28,9 @@ class SlideController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('ShopBundle:Slide')->findBy(array(), array('slideOrder' => 'ASC'));
+        $entities = $em->getRepository('ShopBundle:Slide')->findBy([], ['slideOrder' => 'ASC']);
 
-        return array(
-            'entities' => $entities,
-        );
+        return ['entities' => $entities];
     }
 
     /**
@@ -46,29 +44,28 @@ class SlideController extends Controller
     {
         $slide = new Slide();
         $form = $this->createForm('Eshop\ShopBundle\Form\Type\SlideType', $slide);
-        $form->add('file', FileType::class, array('required' => true)); //reinit field to make file required
+        $form->add('file', FileType::class, ['required' => true]); //reinit field to make file required
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
              if ($form->get('file')->getData() === null){
                  $form->get('file')->addError(new FormError('file is required'));
-                 return array(
-                     'entity' => $slide,
-                     'form' => $form->createView(),
-                 );
+
+                 return ['entity' => $slide,
+                        'form' => $form->createView()
+                 ];
              };
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($slide);
             $em->flush();
 
-            return $this->redirectToRoute('admin_slide_show', array('id' => $slide->getId()));
+            return $this->redirectToRoute('admin_slide_show', ['id' => $slide->getId()]);
         }
 
-        return array(
-            'entity' => $slide,
-            'form' => $form->createView(),
-        );
+        return ['entity' => $slide,
+                'form' => $form->createView()
+        ];
     }
 
     /**
@@ -82,10 +79,9 @@ class SlideController extends Controller
     {
         $deleteForm = $this->createDeleteForm($slide);
 
-        return array(
-            'entity' => $slide,
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $slide,
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -117,14 +113,13 @@ class SlideController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_slide_edit', array('id' => $slide->getId()));
+            return $this->redirectToRoute('admin_slide_edit', ['id' => $slide->getId()]);
         }
 
-        return array(
-            'entity' => $slide,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return ['entity' => $slide,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView()
+        ];
     }
 
     /**
@@ -157,7 +152,7 @@ class SlideController extends Controller
     private function createDeleteForm(Slide $slide)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_slide_delete', array('id' => $slide->getId())))
+            ->setAction($this->generateUrl('admin_slide_delete', ['id' => $slide->getId()]))
             ->setMethod('DELETE')
             ->getForm();
     }

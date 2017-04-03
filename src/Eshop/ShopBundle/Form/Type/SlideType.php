@@ -21,7 +21,7 @@ class SlideType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('enabled', CheckboxType::class)
-            ->add('file', FileType::class, array('required' => false))
+            ->add('file', FileType::class, ['required' => false])
             ->add('slideOrder', IntegerType::class)
         ;
     }
@@ -31,9 +31,7 @@ class SlideType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Slide'
-        ));
+        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Slide']);
     }
 
     /**

@@ -47,9 +47,7 @@ class EmailNotifier
         //url generation
         $url = $this->router->generate(
             'admin_order_show',
-            array(
-                'id' => $orderId
-            ),
+            ['id' => $orderId],
             true
         );
 
@@ -59,10 +57,10 @@ class EmailNotifier
             ->setTo($to)
             ->setBody(
                 $this->templating->render(
-                    'ShopBundle:Mail:orderNotificationEmail.txt.twig', array(
+                    'ShopBundle:Mail:orderNotificationEmail.txt.twig', [
                         'subject' => $subject,
                         'url' => $url
-                    )
+                    ]
                 ));
 
         $this->mailer->send($message);

@@ -32,9 +32,8 @@ class ProfileController extends Controller
             $limit
         );
 
-        return array(
-            'products' => $products,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
-        );
+        return ['products' => $products,
+                'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+        ];
     }
 }

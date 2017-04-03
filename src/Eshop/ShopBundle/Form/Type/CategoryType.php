@@ -21,7 +21,7 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('file', FileType::class, array('required' => false))
+            ->add('file', FileType::class, ['required' => false])
             ->add('metaKeys', TextType::class)
             ->add('metaDescription', TextType::class)
         ;
@@ -32,9 +32,7 @@ class CategoryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Eshop\ShopBundle\Entity\Category'
-        ));
+        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Category']);
     }
 
     /**
