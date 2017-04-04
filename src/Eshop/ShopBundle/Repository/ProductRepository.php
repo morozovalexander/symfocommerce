@@ -225,4 +225,35 @@ class ProductRepository extends EntityRepository
 
         return $qb;
     }
+
+    /**
+     * return products for admin
+     *
+     * @param string $searchWords
+     * @return QueryBuilder
+     */
+    public function searchProductsAdminQB($searchWords)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('p', 'pi', 'pm', 'pc', 'pfe')
+            ->from('ShopBundle:Product', 'p')
+            ->leftJoin('p.images', 'pi')
+            ->leftJoin('p.manufacturer', 'pm')
+            ->leftJoin('p.category', 'pc')
+            ->leftJoin('p.featured', 'pfe')
+            ->where($qb->expr()->neq('p.deleted', 1));
+
+        $searchWords = explode(' ', $searchWords);
+        $cqbORX = [];
+
+        foreach ($searchWords as $searchWord) {
+            $cqbORX[] = $qb->expr()->like('p.name', $qb->expr()->literal('%' . $searchWord . '%'));
+            $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
+        }
+
+        $qb->andWhere(call_user_func_array([$qb->expr(), "orx"], $cqbORX));
+
+        return $qb;
+    }
 }

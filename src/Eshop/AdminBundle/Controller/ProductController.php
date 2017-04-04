@@ -32,7 +32,10 @@ class ProductController extends Controller
         $productRepository = $em->getRepository('ShopBundle:Product');
         $paginator = $this->get('knp_paginator');
 
-        $qb = $productRepository->getAllProductsAdminQB();
+        //if search is required
+        $searchWords = trim($request->get('search_words'));
+
+        $qb = $productRepository->searchProductsAdminQB($searchWords);
         $limit = $this->getParameter('admin_products_pagination_count');
 
         $products = $paginator->paginate(
@@ -41,7 +44,9 @@ class ProductController extends Controller
             $limit
         );
 
-        return ['entities' => $products];
+        return ['entities' => $products,
+                'search_words' => $searchWords
+        ];
     }
 
     /**

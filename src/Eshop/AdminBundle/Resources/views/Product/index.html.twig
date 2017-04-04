@@ -14,12 +14,34 @@
 
 {% block page_content -%}
     <h3>{{ 'Products list'|trans }}</h3>
-    <p>
-        <a href="{{ path('admin_product_new') }}">
-            <span class="glyphicon glyphicon-plus"></span>
-            {{ 'Create new Product'|trans }}
-        </a>
-    </p>
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            <a href="{{ path('admin_product_new') }}">
+                <span class="glyphicon glyphicon-plus"></span>
+                {{ 'Create new Product'|trans }}
+            </a>
+        </div>
+        <div class="col-md-6 pull-right">
+            <form class="form-inline pull-right" action="{{ path('admin_product') }}" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search_words"
+                           placeholder="{{ 'Search phrase'|trans }}"
+                            {% if search_words|length %} value="{{ search_words }}" {% endif %}
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">{{ 'Search'|trans }}</button>
+            </form>
+        </div>
+    </div>
+
+    {% if not entities|length %}
+        <div class="row" style="margin-top: 10px">
+            <div class="col-md-12 alert alert-warning" role="alert">
+                {{ 'Products not sound'|trans }}
+            </div>
+        </div>
+    {% endif %}
+
     <table class="records_list table table-striped">
         <thead>
         <tr>
