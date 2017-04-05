@@ -44,7 +44,7 @@ class ProductController extends Controller
             $limit
         );
 
-        return ['entities' => $products,
+        return ['products' => $products,
                 'search_words' => $searchWords
         ];
     }

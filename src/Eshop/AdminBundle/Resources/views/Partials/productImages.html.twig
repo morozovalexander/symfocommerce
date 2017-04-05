@@ -1,5 +1,5 @@
-{% if entity.images|length %}
-    {% for image in entity.images|slice(0, 3) %}
+{% if product.images|length %}
+    {% for image in product.images|slice(0, 3) %}
         <a class="fancybox" rel="group" href="{{ asset(('uploads/gallery/' ~ image.path)) }}">
             <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
         </a>

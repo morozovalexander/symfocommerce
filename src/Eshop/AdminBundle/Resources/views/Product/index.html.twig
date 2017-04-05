@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    {% if not entities|length %}
+    {% if not products|length %}
         <div class="row" style="margin-top: 10px">
             <div class="col-md-12 alert alert-warning" role="alert">
                 {{ 'Products not sound'|trans }}
@@ -45,50 +45,24 @@
     <table class="records_list table table-striped">
         <thead>
         <tr>
-            <th class="col-md-2">{{ knp_pagination_sortable(entities, 'Name'|trans, 'p.name') }}</th>
-            <th class="col-md-2">{{ knp_pagination_sortable(entities, 'Category'|trans, 'pc.name') }}</th>
-            <th class="col-md-2">{{ knp_pagination_sortable(entities, 'Manufacturer'|trans, 'pm.name') }}</th>
-            <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Price'|trans, 'p.price') }}</th>
+            <th class="col-md-2">{{ knp_pagination_sortable(products, 'Name'|trans, 'p.name') }}</th>
+            <th class="col-md-2">{{ knp_pagination_sortable(products, 'Category'|trans, 'pc.name') }}</th>
+            <th class="col-md-2">{{ knp_pagination_sortable(products, 'Manufacturer'|trans, 'pm.name') }}</th>
+            <th class="col-md-1">{{ knp_pagination_sortable(products, 'Price'|trans, 'p.price') }}</th>
             <th class="col-md-3">{{ 'Photo'|trans }}</th>
-            <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Q-ty'|trans, 'p.quantity') }}</th>
+            <th class="col-md-1">{{ knp_pagination_sortable(products, 'Q-ty'|trans, 'p.quantity') }}</th>
             <th class="col-md-2">{{ 'Actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            <tr data-id="{{ entity.id }}">
-                <td><a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-                <td>
-                    <a href="{{ path('admin_category_show', {'id': entity.category.id}) }}">
-                        {{ entity.category }}
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ path('admin_manufacturer_show', {'id': entity.manufacturer.id}) }}">
-                        {{ entity.manufacturer }}
-                    </a>
-                </td>
-                <td>{{ entity.price }}</td>
-                <td>
-                    {{ include('@Admin/Partials/productImages.twig') }}
-                </td>
-                <td>{{ entity.quantity }}</td>
-                <td>
-                    <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
-                    <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a><br>
-                    {% if entity.featured|length %}
-                        <a href="#" class="featured">{{ FEATURED }}</a>
-                    {% else %}
-                        <a href="#" class="featured">{{ NOT_FEATURED }}</a>
-                    {% endif %}
-                </td>
-            </tr>
+        {% for product in products %}
+            {{ include('@Admin/Partials/indexProductItem.html.twig') }}
         {% endfor %}
         </tbody>
     </table>
     <div class="row">
         <div class="col-md-12">
-            {{ knp_pagination_render(entities) }}
+            {{ knp_pagination_render(products) }}
         </div>
     </div>
 {% endblock page_content %}

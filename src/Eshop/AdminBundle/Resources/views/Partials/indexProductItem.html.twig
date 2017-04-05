@@ -1,0 +1,27 @@
+<tr data-id="{{ product.id }}">
+    <td><a href="{{ path('admin_product_show', { 'id': product.id }) }}">{{ product.name }}</a></td>
+    <td>
+        <a href="{{ path('admin_category_show', {'id': product.category.id}) }}">
+            {{ product.category }}
+        </a>
+    </td>
+    <td>
+        <a href="{{ path('admin_manufacturer_show', {'id': product.manufacturer.id}) }}">
+            {{ product.manufacturer }}
+        </a>
+    </td>
+    <td>{{ product.price }}</td>
+    <td>
+        {{ include('@Admin/Partials/productImages.html.twig') }}
+    </td>
+    <td>{{ product.quantity }}</td>
+    <td>
+        <a href="{{ path('admin_product_show', { 'id': product.id }) }}">{{ 'show'|trans }}</a><br>
+        <a href="{{ path('admin_product_edit', { 'id': product.id }) }}">{{ 'edit'|trans }}</a><br>
+        {% if product.featured|length %}
+            <a href="#" class="featured">{{ FEATURED }}</a>
+        {% else %}
+            <a href="#" class="featured">{{ NOT_FEATURED }}</a>
+        {% endif %}
+    </td>
+</tr>
