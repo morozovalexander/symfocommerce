@@ -6,6 +6,8 @@ Symfocommerce
 
 Symfony3 Standart Edition based ecommerce project.
 
+Demo version: [http://symfocommerce.webgrowth.xyz](http://symfocommerce.webgrowth.xyz)
+
 - Products with related categories and manufacturers.
 - Advanced and convenient admin panel
 - Products sorting by name or price
