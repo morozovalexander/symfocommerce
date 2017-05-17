@@ -28,7 +28,6 @@
         <tr>
             <th>{{ 'Image'|trans }}</th>
             <td>
-                {{ dump(entity.image) }}
                 {% if entity.image %}
                     <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.image.filename)) }}">
                         <img src="{{ asset( ('uploads/images/' ~ entity.image.filename) | imagine_filter('some_thumb')) }}"/>

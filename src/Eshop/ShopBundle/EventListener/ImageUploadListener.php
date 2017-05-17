@@ -95,7 +95,6 @@ class ImageUploadListener
     /**
      * Upload image file
      *
-     * @param $entity
      */
     private function uploadFile($entity)
     {
