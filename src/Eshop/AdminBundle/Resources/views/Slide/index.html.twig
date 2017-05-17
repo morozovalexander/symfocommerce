@@ -35,9 +35,9 @@
                     <a href="{{ path('admin_slide_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
                 </td>
                 <td>
-                    {% if entity.path %}
-                        <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
-                            <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                    {% if entity.image %}
+                        <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.image.filename)) }}">
+                            <img src="{{ asset( ('uploads/images/' ~ entity.image.filename) | imagine_filter('some_thumb')) }}"/>
                         </a>
                     {% else %}
                         {{ 'no photo'|trans }}

@@ -4,7 +4,7 @@
         <a href="{{ path('category', {'slug' : category.slug}) }}">
             {% if category.path %}
                 <img class="group list-group-image"
-                     src="{{ asset( ('uploads/images/' ~ category.path) | imagine_filter('category_mainpage_thumb')) }}"
+                     src="{{ asset( ('uploads/images/' ~ category.image) | imagine_filter('category_mainpage_thumb')) }}"
                      alt="{{ category.name }}"/>
             {% else %}
                 <img class="group list-group-image"

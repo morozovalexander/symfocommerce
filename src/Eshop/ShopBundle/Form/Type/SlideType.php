@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Form\Type;
 
+use Eshop\ShopBundle\Entity\Slide;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -21,7 +22,7 @@ class SlideType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('enabled', CheckboxType::class)
-            ->add('file', FileType::class, ['required' => false])
+            ->add('image', FileType::class, ['required' => false])
             ->add('slideOrder', IntegerType::class)
         ;
     }
@@ -31,7 +32,9 @@ class SlideType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Slide']);
+        $resolver->setDefaults([
+            'data_class' => Slide::class
+        ]);
     }
 
     /**

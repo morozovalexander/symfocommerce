@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Form\Type;
 
+use Eshop\ShopBundle\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -21,7 +22,7 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('file', FileType::class, ['required' => false])
+            ->add('image', FileType::class, ['required' => false])
             ->add('metaKeys', TextType::class)
             ->add('metaDescription', TextType::class)
         ;
@@ -32,7 +33,9 @@ class CategoryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Category']);
+        $resolver->setDefaults([
+            'data_class' => Category::class
+        ]);
     }
 
     /**

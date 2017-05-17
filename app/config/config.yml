@@ -3,14 +3,12 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
-# Put parameters here that don't need to change on each machine where the app is deployed
-# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    uploads_directory: "%kernel.root_dir%/../web/uploads/images"
 
 framework:
-    #esi:             ~
-    translator:      { fallback: %my_locale% }
+    translator:      { fallback: "%my_locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -18,15 +16,12 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        #assets_version: SomeVersionScheme
     default_locale:  "%my_locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
-        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
         cookie_lifetime: 2592000 # 30 days
@@ -35,12 +30,10 @@ framework:
     http_method_override: true
     assets: ~
 
-# Twig Configuration
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
-# Doctrine Configuration
 doctrine:
     dbal:
         default_connection: default
@@ -66,7 +59,6 @@ doctrine_migrations:
     table_name: migration_versions
     name: Application Migrations
 
-# Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
@@ -128,6 +120,8 @@ oneup_uploader:
     mappings:
         gallery:
             frontend: dropzone
+            storage:
+                directory: "%kernel.root_dir%/../web/uploads/images"
 
 presta_sitemap:
     timetolive: 3600
@@ -139,7 +133,6 @@ hwi_oauth:
     fosub:
         username_iterations: 30
         properties:
-            # these properties will be used/redefined later in the custom FOSUBUserProvider service.
             facebook: facebook_id
             google: google_id
     resource_owners:

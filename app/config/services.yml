@@ -49,3 +49,16 @@ services:
     my_user_provider:
         class:        Eshop\UserBundle\Security\Core\User\FOSUBUserProvider
         arguments:    ["@fos_user.user_manager", {facebook: facebook_id, google: google_id}]
+
+    app.image_uploader:
+        class: Eshop\ShopBundle\Service\FileUploader
+        arguments: ['%uploads_directory%']
+
+    app.doctrine_image_upload_listener:
+        class: Eshop\ShopBundle\EventListener\ImageUploadListener
+        arguments: ['@app.image_uploader']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
+            - { name: doctrine.event_listener, event: preRemove }

@@ -23,7 +23,7 @@
         <tr>
             <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Name'|trans, 'c.name') }}</th>
             <th class="col-md-9">{{ knp_pagination_sortable(entities, 'Description'|trans, 'c.description') }}</th>
-            <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Photo'|trans, 'c.path') }}</th>
+            <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Photo'|trans, 'c.image') }}</th>
             <th class="col-md-1">{{ 'Actions'|trans }}</th>
         </tr>
         </thead>
@@ -34,12 +34,12 @@
                     <a href="{{ path('admin_category_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
                 </td>
                 <td>
-                    {{ entity.description|slice(0,300) }}...
+                    {{ entity.description|striptags|slice(0,300) }}...
                 </td>
                 <td>
-                    {% if entity.path %}
-                        <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
-                            <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                    {% if entity.image %}
+                        <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.image.filename)) }}">
+                            <img src="{{ asset( ('uploads/images/' ~ entity.image.filename) | imagine_filter('some_thumb')) }}"/>
                         </a>
                     {% else %}
                         {{ 'no photos'|trans }}

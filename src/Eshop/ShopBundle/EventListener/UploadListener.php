@@ -23,7 +23,8 @@ class UploadListener
         $file = $event->getFile();
 
         $image = new Image();
-        $image->setPath($file->getFilename());
+        /**@var Image $image */
+        $image->setImage($file->getFilename());
 
         $this->manager->persist($image);
         $this->manager->flush();

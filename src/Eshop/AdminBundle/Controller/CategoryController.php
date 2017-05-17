@@ -96,12 +96,6 @@ class CategoryController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if ($editForm->get('file')->getData() !== null) { // if any file was updated
-                $file = $editForm->get('file')->getData();
-                $category->removeUpload(); // remove old file, see this at the bottom
-                $category->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
-            }
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->flush();

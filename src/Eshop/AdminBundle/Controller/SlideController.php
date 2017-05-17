@@ -48,8 +48,8 @@ class SlideController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-             if ($form->get('file')->getData() === null){
-                 $form->get('file')->addError(new FormError('file is required'));
+             if ($form->get('image')->getData() === null){
+                 $form->get('image')->addError(new FormError('file is required'));
 
                  return ['entity' => $slide,
                         'form' => $form->createView()
@@ -98,12 +98,6 @@ class SlideController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if ($editForm->get('file')->getData() !== null) { // if any file was updated
-                $file = $editForm->get('file')->getData();
-                $slide->removeUpload(); // remove old file, see this at the bottom
-                $slide->setPath(($file->getClientOriginalName())); // set Image Path because preUpload and upload method will not be called if any doctrine entity will not be changed. It tooks me long time to learn it too.
-            }
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($slide);
             $em->flush();

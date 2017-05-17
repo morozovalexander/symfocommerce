@@ -32,10 +32,10 @@
                             <td>
                                 <a href="#" class="thumbnail pull-left" style="margin-right: 15px;">
                                     {% if product.product.images|length %}
-                                        <img src="{{ asset( ('uploads/gallery/' ~ product.product.images.first().path) | imagine_filter('some_thumb')) }}"
+                                        <img src="{{ asset( ('uploads/images/' ~ product.product.images.first().image) | imagine_filter('some_thumb')) }}"
                                              alt="{{ product.product.name }}">
                                     {% else %}
-                                        <img src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('some_thumb')) }}"
+                                        <img src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('some_thumb')) }}"
                                              alt="{{ product.product.name }}">
                                     {% endif %}
                                 </a>

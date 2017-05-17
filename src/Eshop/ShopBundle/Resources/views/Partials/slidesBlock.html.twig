@@ -13,13 +13,13 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <div class="item active">
-                    <img src="{{ asset('uploads/images/' ~ slides.0.path) | imagine_filter('slide') }}" alt="{{ slides.0.name }}">
+                    <img src="{{ asset('uploads/images/' ~ slides.0.image.filename) | imagine_filter('slide') }}" alt="{{ slides.0.name }}">
                     <div class="carousel-caption">
                     </div>
                 </div>
                 {% for slide in slides|slice(1) %}
                     <div class="item">
-                        <img src="{{ asset('uploads/images/' ~ slide.path) | imagine_filter('slide') }}"
+                        <img src="{{ asset('uploads/images/' ~ slide.image.filename) | imagine_filter('slide') }}"
                              alt="{{ slide.name }}">
                         <div class="carousel-caption">
                         </div>

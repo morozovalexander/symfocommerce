@@ -4,11 +4,11 @@
         <a href="{{ path('show_product', {'slug' : product.slug}) }}">
             {% if product.images|length %}
                 <img class="group list-group-image"
-                     src="{{ asset( ('uploads/gallery/' ~ product.images.first().path) | imagine_filter('category_mainpage_thumb')) }}"
+                     src="{{ asset( ('uploads/images/' ~ product.images.first().image) | imagine_filter('category_mainpage_thumb')) }}"
                      alt="{{ product.name }}"/>
             {% else %}
                 <img class="group list-group-image"
-                     src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
+                     src="{{ asset( ('uploads/images/no_image_available.png') | imagine_filter('category_mainpage_thumb')) }}"
                      alt="{{ product.name }}"/>
             {% endif %}
 

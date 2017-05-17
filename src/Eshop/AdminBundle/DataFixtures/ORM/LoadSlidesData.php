@@ -34,7 +34,7 @@ class LoadSlidesData implements FixtureInterface, ContainerAwareInterface, Order
         foreach ($titles as $title) {
             $slide = new Slide();
             $slide->setName($title);
-            $slide->setPath($title . '.jpg');
+            $slide->setImage($title . '.jpg');
             $slide->setEnabled(true);
             $slide->setSlideOrder($i);
             $i++;
