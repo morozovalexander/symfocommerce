@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\EventListener;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -95,8 +96,9 @@ class ImageUploadListener
     /**
      * Upload image file
      *
+     * @param EntityRepository $entity
      */
-    private function uploadFile($entity)
+    private function uploadFile(EntityRepository $entity)
     {
 
         $file = $entity->getImage();
