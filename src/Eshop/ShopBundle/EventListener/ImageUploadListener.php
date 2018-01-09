@@ -98,7 +98,7 @@ class ImageUploadListener
      *
      * @param EntityRepository $entity
      */
-    private function uploadFile(EntityRepository $entity)
+    private function uploadFile($entity)
     {
 
         $file = $entity->getImage();

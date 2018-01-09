@@ -1,0 +1,6 @@
+services:
+    app.faker_provider:
+        class: Eshop\FixturesBundle\DataFixtures\ORM\FakerProvider
+        arguments:    ["@nelmio_alice.faker.generator"]
+        tags:
+            - { name: nelmio_alice.faker.provider }
