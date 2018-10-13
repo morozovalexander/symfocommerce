@@ -106,8 +106,7 @@ class Category
     {
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = $this->dateCreated;
-        $this->products = new ArrayCollection();
-        $this->children = new ArrayCollection();
+        $this->products = $this->children = new ArrayCollection();
     }
 
     public function __toString()
