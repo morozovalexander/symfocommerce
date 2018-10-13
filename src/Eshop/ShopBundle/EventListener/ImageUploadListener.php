@@ -77,13 +77,13 @@ class ImageUploadListener
         }
 
         // 'image' not changed
-        if (!$args->hasChangedField('image')){
+        if (!$args->hasChangedField('image')) {
             return;
         }
 
         $oldImage = $args->getOldValue('image');
 
-        if (is_null($args->getNewValue('image'))) {
+        if ($args->getNewValue('image') === null) {
             // don't overwrite if no file submitted
             $entity->setImage($oldImage);
         } else {
@@ -100,6 +100,9 @@ class ImageUploadListener
      */
     private function uploadFile($entity)
     {
+        if (!method_exists($entity, 'getImage') || !method_exists($entity, 'setImage')) {
+            return; //todo: probably can add an interface for image holder entities
+        }
 
         $file = $entity->getImage();
 
