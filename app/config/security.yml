@@ -14,6 +14,7 @@ security:
 
     firewalls:
         main:
+            logout_on_user_change: true
             pattern: ^/
             form_login:
                 provider: fos_userbundle
