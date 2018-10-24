@@ -21,7 +21,7 @@ class FileUploader
      */
     public function upload(UploadedFile $file)
     {
-        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+        $fileName = md5(uniqid('random', true)) . '.' . $file->guessExtension();
         $file->move($this->targetDir, $fileName);
 
         return $fileName;
@@ -37,7 +37,7 @@ class FileUploader
     {
         $fullPath = $this->targetDir . DIRECTORY_SEPARATOR . $fileName;
 
-        if (is_file($fullPath)){
+        if (is_file($fullPath)) {
             return unlink($fullPath);
         }
         return false;
