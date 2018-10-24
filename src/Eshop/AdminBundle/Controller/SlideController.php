@@ -44,7 +44,6 @@ class SlideController extends Controller
     {
         $slide = new Slide();
         $form = $this->createForm('Eshop\ShopBundle\Form\Type\SlideType', $slide);
-        $form->add('file', FileType::class, ['required' => true]); //reinit field to make file required
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
