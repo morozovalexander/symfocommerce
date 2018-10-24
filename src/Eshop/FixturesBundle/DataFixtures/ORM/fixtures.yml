@@ -50,7 +50,6 @@ Eshop\ShopBundle\Entity\Product:
     product_{1..100}:
         name: <text(20)>
         slug (unique): <slug()>
-        description: <text(2000)>
         category: '@category_*'
         quantity: <numberBetween(1, 12)>
         manufacturer: '@manufacturer_*'
