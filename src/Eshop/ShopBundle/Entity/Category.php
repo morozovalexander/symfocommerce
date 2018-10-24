@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     message="This slug is already in use."
  * @ORM\HasLifecycleCallbacks()
  */
-class Category
+class Category implements ImageHolderInterface
 {
     /**
      * @var integer
@@ -375,23 +375,15 @@ class Category
     }
 
     /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Category
+     * @inheritdoc
      */
-    public function setImage($image)
+    public function setImage($image): void
     {
         $this->image = $image;
-
-        return $this;
     }
 
     /**
-     * Get image
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getImage()
     {

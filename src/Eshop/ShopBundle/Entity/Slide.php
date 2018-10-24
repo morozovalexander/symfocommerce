@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("slideOrder")
  * @ORM\HasLifecycleCallbacks()
  */
-class Slide
+class Slide implements ImageHolderInterface
 {
     /**
      * @var integer
@@ -142,23 +142,15 @@ class Slide
     }
 
     /**
-     * Set image
-     *
-     * @param string $image
-     *
-     * @return Slide
+     * @inheritdoc
      */
-    public function setImage($image)
+    public function setImage($image): void
     {
         $this->image = $image;
-
-        return $this;
     }
 
     /**
-     * Get image
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getImage()
     {

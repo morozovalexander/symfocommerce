@@ -3,15 +3,13 @@
 namespace Eshop\ShopBundle\EventListener;
 
 use Doctrine\ORM\EntityRepository;
+use Eshop\ShopBundle\Entity\Image;
+use Eshop\ShopBundle\Entity\ImageHolderInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Eshop\ShopBundle\Service\FileUploader;
-use Eshop\ShopBundle\Entity\Category;
-use Eshop\ShopBundle\Entity\Manufacturer;
-use Eshop\ShopBundle\Entity\Slide;
-use Eshop\ShopBundle\Entity\Image;
 
 class ImageUploadListener
 {
@@ -33,8 +31,7 @@ class ImageUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Manufacturer && !$entity instanceof Category &&
-            !$entity instanceof Slide) {
+        if (!$entity instanceof ImageHolderInterface) {
             return;
         }
 
@@ -50,8 +47,7 @@ class ImageUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Manufacturer && !$entity instanceof Category &&
-            !$entity instanceof Slide && !$entity instanceof Image) {
+        if (!$entity instanceof ImageHolderInterface && !$entity instanceof Image) {
             return;
         }
 
@@ -71,8 +67,7 @@ class ImageUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Manufacturer && !$entity instanceof Category &&
-            !$entity instanceof Slide) {
+        if (!$entity instanceof ImageHolderInterface) {
             return;
         }
 
@@ -100,8 +95,8 @@ class ImageUploadListener
      */
     private function uploadFile($entity)
     {
-        if (!method_exists($entity, 'getImage') || !method_exists($entity, 'setImage')) {
-            return; //todo: probably can add an interface for image holder entities
+        if (!$entity instanceof ImageHolderInterface) {
+            return;
         }
 
         $file = $entity->getImage();
@@ -124,8 +119,7 @@ class ImageUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Manufacturer && !$entity instanceof Category &&
-            !$entity instanceof Slide) {
+        if (!$entity instanceof ImageHolderInterface) {
             return;
         }
 
