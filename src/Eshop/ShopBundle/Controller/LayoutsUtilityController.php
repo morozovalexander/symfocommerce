@@ -36,7 +36,7 @@ class LayoutsUtilityController extends Controller
 
         $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
 
-        return $this->render('manufacturers_menu.html.twig',
+        return $this->render('@Shop/Partials/manufacturers_menu.html.twig',
             ['manufacturers' => $manufacturers]);
     }
 
@@ -47,6 +47,6 @@ class LayoutsUtilityController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $headers = $em->getRepository('ShopBundle:StaticPage')->getHeaders();
-        return $this->render('static_pages_menu.html.twig', ['headers' => $headers]);
+        return $this->render('@Shop/Partials/static_pages_menu.html.twig', ['headers' => $headers]);
     }
 }

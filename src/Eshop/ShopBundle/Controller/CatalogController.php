@@ -8,8 +8,7 @@ use Eshop\ShopBundle\Entity\Manufacturer;
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\StaticPage;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,8 +17,7 @@ class CatalogController extends Controller
     /**
      * Lists all Category entities.
      *
-     * @Route("/", name="index_main")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="index_main")
      * @Template()
      */
     public function indexAction()
@@ -43,8 +41,7 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/category/{slug}", name="category")
-     * @Method("GET")
+     * @Route("/category/{slug}", methods={"GET"}, name="category")
      * @Template()
      */
     public function categoryAction(Request $request, Category $category)
@@ -71,8 +68,7 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/manufacturer/{slug}", name="manufacturer")
-     * @Method("GET")
+     * @Route("/manufacturer/{slug}", methods={"GET"}, name="manufacturer")
      * @Template()
      */
     public function manufacturerAction(Request $request, Manufacturer $manufacturer)
@@ -99,8 +95,7 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/product/{slug}", name="show_product")
-     * @Method("GET")
+     * @Route("/product/{slug}", methods={"GET"}, name="show_product")
      * @Template()
      */
     public function showProductAction(Product $product)
@@ -111,8 +106,7 @@ class CatalogController extends Controller
     /**
      * Lists news entities.
      *
-     * @Route("/news", name="news")
-     * @Method("GET")
+     * @Route("/news", methods={"GET"}, name="news")
      * @Template()
      */
     public function newsAction(Request $request)
@@ -136,8 +130,7 @@ class CatalogController extends Controller
     /**
      * search product by title or description
      *
-     * @Route("/search", name="search")
-     * @Method("GET")
+     * @Route("/search", methods={"GET"}, name="search")
      * @Template()
      */
     public function searchProductAction(Request $request)
@@ -171,8 +164,7 @@ class CatalogController extends Controller
     /**
      * Shows static page.
      *
-     * @Route("/{slug}.html",name="show_static_page")
-     * @Method("GET")
+     * @Route("/{slug}.html", methods={"GET"}, name="show_static_page")
      * @Template()
      */
     public function showStaticPageAction(StaticPage $page)

@@ -2,10 +2,10 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Eshop\ShopBundle\Form\Type\ManufacturerType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Manufacturer;
 
@@ -19,8 +19,7 @@ class ManufacturerController extends Controller
     /**
      * Lists all Manufacturer entities.
      *
-     * @Route("/", name="admin_manufacturer")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_manufacturer")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -44,14 +43,13 @@ class ManufacturerController extends Controller
     /**
      * Displays a form to create a new Manufacturer entity.
      *
-     * @Route("/new", name="admin_manufacturer_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", methods={"GET", "POST"}, name="admin_manufacturer_new")
      * @Template()
      */
     public function newAction(Request $request)
     {
         $manufacturer = new Manufacturer();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\ManufacturerType', $manufacturer);
+        $form = $this->createForm(ManufacturerType::class, $manufacturer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,8 +68,7 @@ class ManufacturerController extends Controller
     /**
      * Finds and displays a Manufacturer entity.
      *
-     * @Route("/{id}", name="admin_manufacturer_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_manufacturer_show")
      * @Template()
      */
     public function showAction(Manufacturer $manufacturer)
@@ -86,8 +83,7 @@ class ManufacturerController extends Controller
     /**
      * Displays a form to edit an existing Manufacturer entity.
      *
-     * @Route("/{id}/edit", name="admin_manufacturer_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_manufacturer_edit")
      * @Template()
      */
     public function editAction(Request $request, Manufacturer $manufacturer)
@@ -118,8 +114,7 @@ class ManufacturerController extends Controller
     /**
      * Deletes a Manufacturer entity.
      *
-     * @Route("/{id}", name="admin_manufacturer_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_manufacturer_delete")
      */
     public function deleteAction(Request $request, Manufacturer $manufacturer)
     {
@@ -139,7 +134,6 @@ class ManufacturerController extends Controller
      * Creates a form to delete a Manufacturer entity by id.
      *
      * @param Manufacturer $manufacturer The Manufacturer entity
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(Manufacturer $manufacturer)

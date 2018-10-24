@@ -2,10 +2,10 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Eshop\ShopBundle\Form\Type\CategoryType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Category;
 
@@ -19,8 +19,7 @@ class CategoryController extends Controller
     /**
      * Lists all Category entities.
      *
-     * @Route("/", name="admin_category")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_category")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -44,8 +43,7 @@ class CategoryController extends Controller
     /**
      * Displays a form to create a new Category entity.
      *
-     * @Route("/new", name="admin_category_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", methods={"GET", "POST"}, name="admin_category_new")
      * @Template()
      */
     public function newAction(Request $request)
@@ -69,8 +67,7 @@ class CategoryController extends Controller
     /**
      * Finds and displays a Category entity.
      *
-     * @Route("/{id}", name="admin_category_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_category_show")
      * @Template()
      */
     public function showAction(Category $category)
@@ -85,14 +82,13 @@ class CategoryController extends Controller
     /**
      * Displays a form to edit an existing Category entity.
      *
-     * @Route("/{id}/edit", name="admin_category_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_category_edit")
      * @Template()
      */
     public function editAction(Request $request, Category $category)
     {
         $deleteForm = $this->createDeleteForm($category);
-        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\CategoryType', $category);
+        $editForm = $this->createForm(CategoryType::class, $category);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -117,8 +113,7 @@ class CategoryController extends Controller
     /**
      * Deletes a Category entity.
      *
-     * @Route("/{id}", name="admin_category_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_category_delete")
      */
     public function deleteAction(Request $request, Category $category)
     {

@@ -4,8 +4,7 @@ namespace Eshop\ShopBundle\Controller;
 
 use Eshop\ShopBundle\Entity\Favourites;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,8 +13,7 @@ class AjaxController extends Controller
     /**
      * Lists all Category entities.
      *
-     * @Route("/ajax_like", name="ajax_like")
-     * @Method("POST")
+     * @Route("/ajax_like", methods={"POST"}, name="ajax_like")
      */
     public function likeAction(Request $request)
     {
@@ -62,8 +60,7 @@ class AjaxController extends Controller
     /**
      * Сhecks if user liked this project.
      *
-     * @Route("/ajax_is_liked_product", name="ajax_is_liked_product")
-     * @Method("POST")
+     * @Route("/ajax_is_liked_product", methods={"POST"}, name="ajax_is_liked_product")
      */
     public function checkIsLikedAction(Request $request)
     {
@@ -87,8 +84,7 @@ class AjaxController extends Controller
     /**
      * Render last seen products from cookies
      *
-     * @Route("/ajax_get_last_seen_products", name="ajax_get_last_seen_products")
-     * @Method("POST")
+     * @Route("/ajax_get_last_seen_products", methods={"POST"}, name="ajax_get_last_seen_products")
      */
     public function getLastSeenProductsAction(Request $request)
     {

@@ -6,8 +6,7 @@ use Eshop\ShopBundle\Entity\Settings;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
@@ -21,8 +20,7 @@ class SettingsController extends Controller
     /**
      * Show current settings.
      *
-     * @Route("/", name="admin_settings")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_settings")
      * @Template()
      */
     public function indexAction()
@@ -36,8 +34,7 @@ class SettingsController extends Controller
 
     /**
      * @param Request $request
-     * @Route("/settings_edit", name="admin_settings_edit")
-     * @Method("POST")
+     * @Route("/settings_edit", methods={"POST"}, name="admin_settings_edit")
      * @return JsonResponse
      */
     public function settingsEditAction(Request $request)

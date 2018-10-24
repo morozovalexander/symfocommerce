@@ -4,11 +4,11 @@ namespace Eshop\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Eshop\ShopBundle\Entity\Image;
+use Eshop\ShopBundle\Form\Type\ProductType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Product;
 
@@ -22,8 +22,7 @@ class ProductController extends Controller
     /**
      * Lists all Product entities.
      *
-     * @Route("/", name="admin_product")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_product")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -52,14 +51,13 @@ class ProductController extends Controller
     /**
      * Displays a form to create a new Product entity.
      *
-     * @Route("/new", name="admin_product_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", methods={"GET", "POST"}, name="admin_product_new")
      * @Template()
      */
     public function newAction(Request $request)
     {
         $product = new Product();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\ProductType', $product);
+        $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,8 +92,7 @@ class ProductController extends Controller
     /**
      * Finds and displays a Product entity.
      *
-     * @Route("/{id}", name="admin_product_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_product_show")
      * @Template()
      */
     public function showAction(Product $product)
@@ -114,14 +111,13 @@ class ProductController extends Controller
     /**
      * Displays a form to edit an existing Product entity.
      *
-     * @Route("/{id}/edit", name="admin_product_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_product_edit")
      * @Template()
      */
     public function editAction(Request $request, Product $product)
     {
         $deleteForm = $this->createDeleteForm($product);
-        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\ProductType', $product);
+        $editForm = $this->createForm(ProductType::class, $product);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -162,8 +158,7 @@ class ProductController extends Controller
     /**
      * Deletes a Product entity.
      *
-     * @Route("/{id}", name="admin_product_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_product_delete")
      */
     public function deleteAction(Request $request, Product $product)
     {
@@ -180,23 +175,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Creates a form to delete a Product entity by id.
-     *
-     * @param Product $product The Product id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Product $product)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_product_delete', ['id' => $product->getId()]))
-            ->setMethod('DELETE')
-            ->getForm();
-    }
-
-    /**
-     * @Route("/remove_image", name="remove_image", defaults={"_format"="json"})
-     * @Method("POST")
+     * @Route("/remove_image", methods={"POST"} , name="remove_image", defaults={"_format"="json"})
      */
     public function removeImageAction(Request $request)
     {
@@ -221,7 +200,20 @@ class ProductController extends Controller
 
         $data = json_encode(['success' => true]);
         $headers = ['Content-type' => 'application-json; charset=utf8'];
-        $response = new Response($data, 200, $headers);
-        return $response;
+        return new Response($data, 200, $headers);
+    }
+
+    /**
+     * Creates a form to delete a Product entity by id.
+     *
+     * @param Product $product The Product id
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Product $product)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_product_delete', ['id' => $product->getId()]))
+            ->setMethod('DELETE')
+            ->getForm();
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Eshop\ShopBundle\Form\Type\StaticPageType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\StaticPage;
 
@@ -19,8 +19,7 @@ class StaticPageController extends Controller
     /**
      * Lists all StaticPage entities.
      *
-     * @Route("/", name="admin_staticpage")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_staticpage")
      * @Template()
      */
     public function indexAction()
@@ -34,14 +33,13 @@ class StaticPageController extends Controller
     /**
      * Displays a form to create a new StaticPage entity.
      *
-     * @Route("/new", name="admin_staticpage_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", methods={"GET", "POST"}, name="admin_staticpage_new")
      * @Template()
      */
     public function newAction(Request $request)
     {
         $staticPage = new StaticPage();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\StaticPageType', $staticPage);
+        $form = $this->createForm(StaticPageType::class, $staticPage);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -60,8 +58,7 @@ class StaticPageController extends Controller
     /**
      * Finds and displays a StaticPage entity.
      *
-     * @Route("/{id}", name="admin_staticpage_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_staticpage_show")
      * @Template()
      */
     public function showAction(StaticPage $staticPage)
@@ -76,14 +73,13 @@ class StaticPageController extends Controller
     /**
      * Displays a form to edit an existing StaticPage entity.
      *
-     * @Route("/{id}/edit", name="admin_staticpage_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_staticpage_edit")
      * @Template()
      */
     public function editAction(Request $request, StaticPage $staticPage)
     {
         $deleteForm = $this->createDeleteForm($staticPage);
-        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\StaticPageType', $staticPage);
+        $editForm = $this->createForm(StaticPageType::class, $staticPage);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -108,8 +104,7 @@ class StaticPageController extends Controller
     /**
      * Deletes a StaticPage entity.
      *
-     * @Route("/{id}", name="admin_staticpage_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_staticpage_delete")
      */
     public function deleteAction(Request $request, StaticPage $staticPage)
     {

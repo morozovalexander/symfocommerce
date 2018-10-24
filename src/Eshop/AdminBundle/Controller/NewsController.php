@@ -2,10 +2,10 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Eshop\ShopBundle\Form\Type\NewsType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\News;
 
@@ -19,8 +19,7 @@ class NewsController extends Controller
     /**
      * Lists all News entities.
      *
-     * @Route("/", name="admin_news")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_news")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -44,14 +43,13 @@ class NewsController extends Controller
     /**
      * Creates a new News entity.
      *
-     * @Route("/new", name="admin_news_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", methods={"GET", "POST"}, name="admin_news_new")
      * @Template()
      */
     public function newAction(Request $request)
     {
         $news = new News();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\NewsType', $news);
+        $form = $this->createForm(NewsType::class, $news);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,8 +68,7 @@ class NewsController extends Controller
     /**
      * Finds and displays a News entity.
      *
-     * @Route("/{id}", name="admin_news_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_news_show")
      * @Template()
      */
     public function showAction(News $news)
@@ -86,14 +83,13 @@ class NewsController extends Controller
     /**
      * Displays a form to edit an existing News entity.
      *
-     * @Route("/{id}/edit", name="admin_news_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_news_edit")
      * @Template()
      */
     public function editAction(Request $request, News $news)
     {
         $deleteForm = $this->createDeleteForm($news);
-        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\NewsType', $news);
+        $editForm = $this->createForm(NewsType::class, $news);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -118,8 +114,7 @@ class NewsController extends Controller
     /**
      * Deletes a News entity.
      *
-     * @Route("/{id}", name="admin_news_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_news_delete")
      */
     public function deleteAction(Request $request, News $news)
     {

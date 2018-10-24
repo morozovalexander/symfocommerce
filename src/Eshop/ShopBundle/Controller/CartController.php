@@ -6,8 +6,7 @@ use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
 use Eshop\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +16,7 @@ class CartController extends Controller
     /**
      * Lists all Category entities.
      *
-     * @Route("/showcart", name="showcart")
-     * @Method("GET")
+     * @Route("/showcart", methods={"GET"}, name="showcart")
      * @Template()
      */
     public function showCartAction(Request $request)
@@ -65,8 +63,7 @@ class CartController extends Controller
     /**
      * Shows order form.
      *
-     * @Route("/orderform", name="orderform")
-     * @Method({"GET", "POST"})
+     * @Route("/orderform", methods={"GET", "POST"}, name="orderform")
      * @Template()
      */
     public function orderFormAction(Request $request)
@@ -105,8 +102,7 @@ class CartController extends Controller
     /**
      * If cart is empty.
      *
-     * @Route("/cartisempty", name="cartisempty")
-     * @Method("GET")
+     * @Route("/cartisempty", methods={"GET"}, name="cartisempty")
      * @Template()
      */
     public function cartIsEmptyAction()
@@ -116,8 +112,7 @@ class CartController extends Controller
 
     /**
      * Count cart from cookies
-     *
-     * @Method("GET")
+     * @Route("navbar_cart", methods={"GET"})
      * @Template()
      */
     public function navbarCartAction(Request $request)

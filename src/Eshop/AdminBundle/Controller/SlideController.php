@@ -2,12 +2,11 @@
 
 namespace Eshop\AdminBundle\Controller;
 
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Eshop\ShopBundle\Form\Type\SlideType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Slide;
 
@@ -21,8 +20,7 @@ class SlideController extends Controller
     /**
      * Lists all Slide entities.
      *
-     * @Route("/", name="admin_slide")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_slide")
      * @Template()
      */
     public function indexAction()
@@ -36,14 +34,13 @@ class SlideController extends Controller
     /**
      * Displays a form to create a new Slide entity.
      *
-     * @Route("/new", name="admin_slide_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", methods={"GET", "POST"}, name="admin_slide_new")
      * @Template()
      */
     public function newAction(Request $request)
     {
         $slide = new Slide();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\SlideType', $slide);
+        $form = $this->createForm(SlideType::class, $slide);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,8 +67,7 @@ class SlideController extends Controller
     /**
      * Finds and displays a Slide entity.
      *
-     * @Route("/{id}", name="admin_slide_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_slide_show")
      * @Template()
      */
     public function showAction(Slide $slide)
@@ -86,14 +82,13 @@ class SlideController extends Controller
     /**
      * Displays a form to edit an existing Slide entity.
      *
-     * @Route("/{id}/edit", name="admin_slide_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_slide_edit")
      * @Template()
      */
     public function editAction(Request $request, Slide $slide)
     {
         $deleteForm = $this->createDeleteForm($slide);
-        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\SlideType', $slide);
+        $editForm = $this->createForm(SlideType::class, $slide);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -118,8 +113,7 @@ class SlideController extends Controller
     /**
      * Deletes a Slide entity.
      *
-     * @Route("/{id}", name="admin_slide_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_slide_delete")
      */
     public function deleteAction(Request $request, Slide $slide)
     {
@@ -139,7 +133,6 @@ class SlideController extends Controller
      * Creates a form to delete a Slide entity by id.
      *
      * @param Slide $slide The Slide entity
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(Slide $slide)

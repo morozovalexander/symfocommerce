@@ -5,8 +5,7 @@ namespace Eshop\AdminBundle\Controller;
 use Eshop\ShopBundle\Entity\Featured;
 use Eshop\ShopBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +20,7 @@ class FeaturedController extends Controller
     /**
      * show featured products
      *
-     * @Route("/", name="admin_featured")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_featured")
      * @Template()
      */
     public function indexAction()
@@ -36,8 +34,7 @@ class FeaturedController extends Controller
 
     /**
      * @param Request $request
-     * @Route("/featured_product_edit_ajax", name="admin_featured_product_edit_ajax")
-     * @Method("POST")
+     * @Route("/featured_product_edit_ajax", methods={"POST"}, name="admin_featured_product_edit_ajax")
      * @return JsonResponse
      */
     public function featuredProductEditAction(Request $request)
@@ -60,8 +57,7 @@ class FeaturedController extends Controller
 
     /**
      * @param Request $request
-     * @Route("/featured_order_edit_ajax", name="admin_featured_order_edit_ajax")
-     * @Method("POST")
+     * @Route("/featured_order_edit_ajax", methods={"POST"}, name="admin_featured_order_edit_ajax")
      * @return JsonResponse
      */
     public function featuredOrderEditAction(Request $request)

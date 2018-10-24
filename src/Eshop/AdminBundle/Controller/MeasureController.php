@@ -2,10 +2,10 @@
 
 namespace Eshop\AdminBundle\Controller;
 
+use Eshop\ShopBundle\Form\Type\MeasureType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Measure;
 
@@ -19,8 +19,7 @@ class MeasureController extends Controller
     /**
      * Lists all Measure entities.
      *
-     * @Route("/", name="admin_measure")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_measure")
      * @Template()
      */
     public function indexAction()
@@ -35,14 +34,13 @@ class MeasureController extends Controller
     /**
      * Displays a form to create a new Measure entity.
      *
-     * @Route("/new", name="admin_measure_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", methods={"GET", "POST"}, name="admin_measure_new")
      * @Template()
      */
     public function newAction(Request $request)
     {
         $measure = new Measure();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\MeasureType', $measure);
+        $form = $this->createForm(MeasureType::class, $measure);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,8 +59,7 @@ class MeasureController extends Controller
     /**
      * Finds and displays a Measure entity.
      *
-     * @Route("/{id}", name="admin_measure_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_measure_show")
      * @Template()
      */
     public function showAction(Measure $measure)
@@ -77,8 +74,7 @@ class MeasureController extends Controller
     /**
      * Displays a form to edit an existing Measure entity.
      *
-     * @Route("/{id}/edit", name="admin_measure_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_measure_edit")
      * @Template()
      */
     public function editAction(Request $request, Measure $measure)
@@ -109,8 +105,7 @@ class MeasureController extends Controller
     /**
      * Deletes a Measure entity.
      *
-     * @Route("/{id}", name="admin_measure_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_measure_delete")
      */
     public function deleteAction(Request $request, Measure $measure)
     {

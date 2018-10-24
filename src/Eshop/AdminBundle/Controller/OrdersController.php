@@ -6,8 +6,7 @@ use Eshop\ShopBundle\Entity\OrderProduct;
 use Eshop\ShopBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Orders;
 
@@ -21,8 +20,7 @@ class OrdersController extends Controller
     /**
      * Lists all Orders entities.
      *
-     * @Route("/", name="admin_orders")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_orders")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -46,8 +44,7 @@ class OrdersController extends Controller
     /**
      * Finds and displays a Orders entity.
      *
-     * @Route("/{id}", name="admin_order_show")
-     * @Method("GET")
+     * @Route("/{id}", methods={"GET"}, name="admin_order_show")
      * @Template()
      */
     public function showAction($id)
@@ -110,8 +107,7 @@ class OrdersController extends Controller
     /**
      * Deletes a Orders entity.
      *
-     * @Route("/{id}", name="admin_order_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", methods={"DELETE"}, name="admin_order_delete")
      */
     public function deleteAction(Request $request, $id)
     {

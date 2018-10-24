@@ -4,8 +4,7 @@ namespace Eshop\AdminBundle\Controller;
 
 use Eshop\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,8 +18,7 @@ class UserController extends Controller
     /**
      * Lists all User entities.
      *
-     * @Route("/", name="admin_user_list")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_user_list")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -44,8 +42,7 @@ class UserController extends Controller
     /**
      * Shows user info
      *
-     * @Route("/user/{id}", name="admin_user_info")
-     * @Method("GET")
+     * @Route("/user/{id}", methods={"GET"}, name="admin_user_info")
      * @Template()
      */
     public function showUserInfoAction(User $user)
@@ -56,8 +53,7 @@ class UserController extends Controller
     /**
      * Shows users orders
      *
-     * @Route("/user/{id}/orders", name="admin_user_orders")
-     * @Method("GET")
+     * @Route("/user/{id}/orders", methods={"GET"}, name="admin_user_orders")
      * @Template()
      */
     public function showUserOrdersAction(Request $request, User $user)

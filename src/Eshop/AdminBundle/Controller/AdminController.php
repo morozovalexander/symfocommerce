@@ -3,9 +3,8 @@
 namespace Eshop\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Category controller.
@@ -15,8 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="admin_index")
-     * @Method("GET")
+     * @Route("/", methods={"GET"}, name="admin_index")
      * @Template()
      */
     public function indexAction()
