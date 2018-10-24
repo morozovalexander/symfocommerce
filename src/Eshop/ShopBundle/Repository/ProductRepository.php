@@ -2,7 +2,7 @@
 
 namespace Eshop\ShopBundle\Repository;
 
-use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
@@ -20,7 +20,7 @@ class ProductRepository extends EntityRepository
      * @param string $slug
      * @return mixed
      */
-    public function findBySlug($slug)
+    public function findBySlug(string $slug)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -38,7 +38,7 @@ class ProductRepository extends EntityRepository
      * @param User $user
      * @return QueryBuilder
      */
-    public function findByCategoryQB($category, $user = null)
+    public function findByCategoryQB(Category $category, $user = null): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -63,7 +63,7 @@ class ProductRepository extends EntityRepository
      * @param User $user
      * @return QueryBuilder
      */
-    public function findByManufacturerQB($manufacturer, $user = null)
+    public function findByManufacturerQB(Manufacturer $manufacturer, $user = null): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -87,7 +87,7 @@ class ProductRepository extends EntityRepository
      * @param User $user
      * @return QueryBuilder
      */
-    public function getFavouritesQB($user = null)
+    public function getFavouritesQB(User $user = null): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -109,7 +109,7 @@ class ProductRepository extends EntityRepository
      * @param User $user
      * @return QueryBuilder
      */
-    public function getSearchQB($searchWords, $user = null)
+    public function getSearchQB(array $searchWords, $user = null): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -129,7 +129,7 @@ class ProductRepository extends EntityRepository
             $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
         }
 
-        $qb->andWhere(call_user_func_array([$qb->expr(), "orx"], $cqbORX));
+        $qb->andWhere(\call_user_func_array([$qb->expr(), 'orx'], $cqbORX));
 
         return $qb;
     }
@@ -183,12 +183,12 @@ class ProductRepository extends EntityRepository
     }
 
     /**
-     * @param int $quantity
      * @param array $productIdsArray
      * @param User $user
+     * @param int $quantity
      * @return array
      */
-    public function getLastSeen($quantity = 1, $productIdsArray, $user)
+    public function getLastSeen($productIdsArray, $user, $quantity = 1)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -211,7 +211,7 @@ class ProductRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function getAllProductsAdminQB()
+    public function getAllProductsAdminQB(): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -229,10 +229,10 @@ class ProductRepository extends EntityRepository
     /**
      * return products for admin
      *
-     * @param string $searchWords
+     * @param string $searchPhrase
      * @return QueryBuilder
      */
-    public function searchProductsAdminQB($searchWords)
+    public function searchProductsAdminQB($searchPhrase): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -244,7 +244,7 @@ class ProductRepository extends EntityRepository
             ->leftJoin('p.featured', 'pfe')
             ->where($qb->expr()->neq('p.deleted', 1));
 
-        $searchWords = explode(' ', $searchWords);
+        $searchWords = explode(' ', $searchPhrase);
         $cqbORX = [];
 
         foreach ($searchWords as $searchWord) {
@@ -252,7 +252,7 @@ class ProductRepository extends EntityRepository
             $cqbORX[] = $qb->expr()->like('p.description', $qb->expr()->literal('%' . $searchWord . '%'));
         }
 
-        $qb->andWhere(call_user_func_array([$qb->expr(), "orx"], $cqbORX));
+        $qb->andWhere(\call_user_func_array([$qb->expr(), 'orx'], $cqbORX));
 
         return $qb;
     }

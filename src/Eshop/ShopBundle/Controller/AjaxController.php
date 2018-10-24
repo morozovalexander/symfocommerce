@@ -95,7 +95,7 @@ class AjaxController extends Controller
 
         $productIdsArray = $this->get('app.page_utilities')->getLastSeenProducts($request);
 
-        $products = $productRepository->getLastSeen(4, $productIdsArray, $this->getUser());
+        $products = $productRepository->getLastSeen($productIdsArray, $this->getUser(), 4);
         if (!$products) {
             $this->returnErrorJson('product not forund');
         }
