@@ -89,7 +89,7 @@ class CartController extends Controller
                 'admin_email' => $this->getParameter('admin_email')
             ]);
 
-            return $this->render('@Shop/Cart/thankYou.html.twig'); //redirect to thankyou page
+            return $this->render('@Shop/Cart/thank_you.html.twig'); //redirect to thankyou page
         }
 
         if (is_object($user = $this->getUser())) {
