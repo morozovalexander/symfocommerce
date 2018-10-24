@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Form\Type;
 
+use Eshop\ShopBundle\Entity\Measure;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +26,7 @@ class MeasureType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Measure']);
+        $resolver->setDefaults(['data_class' => Measure::class]);
     }
 
     /**

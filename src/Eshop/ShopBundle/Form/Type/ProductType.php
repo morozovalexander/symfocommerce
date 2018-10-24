@@ -2,6 +2,10 @@
 
 namespace Eshop\ShopBundle\Form\Type;
 
+use Eshop\ShopBundle\Entity\Category;
+use Eshop\ShopBundle\Entity\Manufacturer;
+use Eshop\ShopBundle\Entity\Measure;
+use Eshop\ShopBundle\Entity\Product;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -27,13 +31,13 @@ class ProductType extends AbstractType
             ->add('category', EntityType::class, [
                 'required'  => true,
                 'multiple' => false,
-                'class' => 'Eshop\ShopBundle\Entity\Category',
+                'class' => Category::class,
                 'choice_label' => 'name'
             ])
             ->add('manufacturer', EntityType::class, [
                 'required'  => true,
                 'multiple' => false,
-                'class' => 'Eshop\ShopBundle\Entity\Manufacturer',
+                'class' => Manufacturer::class,
                 'choice_label' => 'name'
             ])
             ->add('quantity', IntegerType::class)
@@ -43,7 +47,7 @@ class ProductType extends AbstractType
                 'required'  => true,
                 'multiple' => false,
                 'expanded' => false,
-                'class' => 'Eshop\ShopBundle\Entity\Measure',
+                'class' => Measure::class,
                 'choice_label' => 'name'
             ])
             ->add('measureQuantity', IntegerType::class)
@@ -55,7 +59,7 @@ class ProductType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => 'Eshop\ShopBundle\Entity\Product']);
+        $resolver->setDefaults(['data_class' => Product::class]);
     }
 
     /**
