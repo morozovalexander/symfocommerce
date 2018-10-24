@@ -1,4 +1,4 @@
-{% extends '@Admin/adminLayout.html.twig' %}
+{% extends '@Admin/admin_layout.html.twig' %}
 {% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block stylesheets %}
@@ -20,7 +20,7 @@
     <div class="form-group">
         {{ form_label(edit_form.name, 'Name'|trans) }}
         <div class="col-sm-10">
-            {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
+            {{ form_widget(edit_form.name, {'attr': {'class': 'sluggable-input'}}) }}
         </div>
     </div>
     <div class="form-group">
@@ -57,7 +57,7 @@
         {{ form_label(edit_form.slug, 'Slug'|trans) }}
         <div class="col-sm-10">
             {{ form_errors(edit_form.slug) }}
-            {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
+            {{ form_widget(edit_form.slug, {'attr': {'class': 'sluggable-output'}}) }}
         </div>
     </div>
     <div class="form-group">
@@ -92,24 +92,8 @@
     <script src="{{ asset('assets/js/summernote.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('.generate-slug').on('click', function (e) {
-                e.preventDefault();
-                //get field value
-                var productName = $('.product-name').val();
-                var slugInut = $('.product-slug');
-                var nameToSlug = productName;
-
-                //generate slug
-                var slug = getSlug(nameToSlug, {
-                    custom: {
-                        '%': ' percent '
-                    },
-                    uric: true
-                });
-                //record to slug input
-                slugInut.val(slug);
-            });
+            {% include '@Admin/Partials/slug_generation.js.twig' %}
+            {% include '@Admin/Partials/init_summernote.js.twig' with {'height': 300} %}
         });
-        {% include '@Admin/Partials/initSummernote.js.twig' with {'height': 300} %}
     </script>
 {% endblock javascripts %}

@@ -1,4 +1,4 @@
-{% extends '@Admin/adminLayout.html.twig' %}
+{% extends '@Admin/admin_layout.html.twig' %}
 {% set FEATURED = 'featured'|trans %}
 {% set NOT_FEATURED = 'not featured'|trans %}
 
@@ -56,7 +56,7 @@
         </thead>
         <tbody>
         {% for product in products %}
-            {{ include('@Admin/Partials/indexProductItem.html.twig') }}
+            {{ include('@Admin/Partials/index_product_item.html.twig') }}
         {% endfor %}
         </tbody>
     </table>

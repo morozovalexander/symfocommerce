@@ -1,0 +1,16 @@
+$('.generate-slug').on('click', function (e) {
+    e.preventDefault();
+    //get field value
+    var sluggableInput = $('.sluggable-input').val();
+    var slugOutput = $('.sluggable-output');
+
+    //generate slug
+    var slug = getSlug(sluggableInput, {
+        custom: {
+            '%': ' percent '
+        },
+        uric: true
+    });
+    //record to slug input
+    slugOutput.val(slug);
+});

@@ -19,7 +19,7 @@ class LayoutsUtilityController extends Controller
 
         $categories = $categoryRepository->getAllCategories($showEmpty);
 
-        return $this->render('ShopBundle:Partials:categoriesMenu.html.twig',
+        return $this->render('ShopBundle:Partials:categories_menu.html.twig',
             ['categories' => $categories]);
     }
 
@@ -36,7 +36,7 @@ class LayoutsUtilityController extends Controller
 
         $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
 
-        return $this->render('ShopBundle:Partials:manufacturersMenu.html.twig',
+        return $this->render('manufacturers_menu.html.twig',
             ['manufacturers' => $manufacturers]);
     }
 
@@ -47,6 +47,6 @@ class LayoutsUtilityController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $headers = $em->getRepository('ShopBundle:StaticPage')->getHeaders();
-        return $this->render('ShopBundle:Partials:staticPagesMenu.html.twig', ['headers' => $headers]);
+        return $this->render('static_pages_menu.html.twig', ['headers' => $headers]);
     }
 }

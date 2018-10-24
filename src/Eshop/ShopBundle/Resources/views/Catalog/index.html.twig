@@ -7,7 +7,7 @@
 
 {% block page_content -%}
     {% if slides|length %}
-        {{ include('@Shop/Partials/slidesBlock.html.twig') }}
+        {{ include('@Shop/Partials/slides_block.html.twig') }}
     {% endif %}
     <div class="row">
         <div class="col-md-12">
@@ -30,7 +30,7 @@
         <div class="col-md-12">
             <h3 class="text-center">{{ 'layout.index.latestproducts'|trans }}</h3>
             {% for product in latest_products %}
-                {{ include('@Shop/Partials/productPreview.html.twig') }}
+                {{ include('@Shop/Partials/product_preview.html.twig') }}
             {% endfor %}
         </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="col-md-12">
             <h3 class="text-center">{{ 'layout.index.featuredproducts'|trans }}</h3>
             {% for product in featured_products %}
-                {{ include('@Shop/Partials/productPreview.html.twig') }}
+                {{ include('@Shop/Partials/product_preview.html.twig') }}
             {% endfor %}
         </div>
     </div>

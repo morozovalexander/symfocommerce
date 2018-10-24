@@ -30,7 +30,7 @@
     <div id="products" class="row list-group">
     {% if products|length %}
         {% for product in products %}
-            {{ include('@Shop/Partials/productPreview.html.twig') }}
+            {{ include('@Shop/Partials/product_preview.html.twig') }}
         {% endfor %}
     {% else %}
         <h3>{{ 'favourites.noproducts'|trans }}</h3>

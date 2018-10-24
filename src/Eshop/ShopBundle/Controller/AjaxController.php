@@ -101,7 +101,7 @@ class AjaxController extends Controller
         if (!$products) {
             $this->returnErrorJson('product not forund');
         }
-        $html = $this->renderView('@Shop/Partials/lastSeenProducts.html.twig', ['products' => $products]);
+        $html = $this->renderView('@Shop/Partials/last_seen_products.html.twig', ['products' => $products]);
 
         return new JsonResponse([
             'html' => $html,

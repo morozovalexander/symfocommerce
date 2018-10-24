@@ -57,7 +57,7 @@ class EmailNotifier
             ->setTo($to)
             ->setBody(
                 $this->templating->render(
-                    'ShopBundle:Mail:orderNotificationEmail.txt.twig', [
+                    'ShopBundle:Mail:order_notification_email.txt.twig', [
                         'subject' => $subject,
                         'url' => $url
                     ]
