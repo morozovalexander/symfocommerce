@@ -3,8 +3,8 @@
 namespace Eshop\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Category controller.
@@ -15,10 +15,9 @@ class AdminController extends Controller
 {
     /**
      * @Route("/", methods={"GET"}, name="admin_index")
-     * @Template()
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
-        return [];
+        return $this->render('admin/admin/index.html.twig'); //todo remove completely or add some stats
     }
 }

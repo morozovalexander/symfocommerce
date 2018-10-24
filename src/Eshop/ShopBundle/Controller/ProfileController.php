@@ -3,8 +3,8 @@
 namespace Eshop\ShopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends Controller
@@ -13,9 +13,8 @@ class ProfileController extends Controller
      * Display favourite products.
      *
      * @Route("/favourites", methods={"GET"}, name="favourites")
-     * @Template()
      */
-    public function favouritesAction(Request $request)
+    public function favouritesAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
@@ -30,8 +29,9 @@ class ProfileController extends Controller
             $limit
         );
 
-        return ['products' => $products,
-                'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
-        ];
+        return $this->render('shop/profile/favourites.html.twig', [
+            'products' => $products,
+            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+        ]);
     }
 }

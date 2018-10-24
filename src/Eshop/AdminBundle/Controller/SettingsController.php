@@ -6,8 +6,8 @@ use Eshop\ShopBundle\Entity\Settings;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Settings controller.
@@ -21,15 +21,16 @@ class SettingsController extends Controller
      * Show current settings.
      *
      * @Route("/", methods={"GET"}, name="admin_settings")
-     * @Template()
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $em = $this->getDoctrine()->getManager();
         $settingRepository = $em->getRepository('ShopBundle:Settings');
         $entities = $settingRepository->findAll();
 
-        return ['settings' => $entities[0]];
+        return $this->render('admin/settings/index.html.twig', [
+            'settings' => $entities[0]
+        ]);
     }
 
     /**
@@ -37,7 +38,7 @@ class SettingsController extends Controller
      * @Route("/settings_edit", methods={"POST"}, name="admin_settings_edit")
      * @return JsonResponse
      */
-    public function settingsEditAction(Request $request)
+    public function settingsEditAction(Request $request): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $settingRepository = $em->getRepository('ShopBundle:Settings');

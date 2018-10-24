@@ -5,11 +5,11 @@ namespace Eshop\AdminBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Eshop\ShopBundle\Entity\Image;
 use Eshop\ShopBundle\Form\Type\ProductType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Product;
 
 /**
@@ -23,9 +23,8 @@ class ProductController extends Controller
      * Lists all Product entities.
      *
      * @Route("/", methods={"GET"}, name="admin_product")
-     * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -43,18 +42,18 @@ class ProductController extends Controller
             $limit
         );
 
-        return ['products' => $products,
-                'search_words' => $searchWords
-        ];
+        return $this->render('admin/product/index.html.twig', [
+            'products' => $products,
+            'search_words' => $searchWords
+        ]);
     }
 
     /**
      * Displays a form to create a new Product entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_product_new")
-     * @Template()
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -63,7 +62,7 @@ class ProductController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             //update uploaded images entities
             $imageIdString = $request->request->get('filenames');
-            if ($imageIdString != '') {
+            if ($imageIdString !== '') {
                 $imageIdArray = explode(',', $imageIdString);
                 array_pop($imageIdArray);
 
@@ -81,40 +80,42 @@ class ProductController extends Controller
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute('admin_product_show', ['id' => $product->getId()]);
+            return $this->redirectToRoute('admin_product_show', [
+                'id' => $product->getId()
+            ]);
         }
 
-        return ['entity' => $product,
-                'form' => $form->createView()
-        ];
+        return $this->render('admin/product/new.html.twig', [
+            'entity' => $product,
+            'form' => $form->createView()
+        ]);
     }
 
     /**
      * Finds and displays a Product entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_product_show")
-     * @Template()
      */
-    public function showAction(Product $product)
+    public function showAction(Product $product): Response
     {
         $deleteForm = $this->createDeleteForm($product);
 
         if ($product->getDeleted()) {
-            return $this->render('@Admin/Product/deleted.html.twig');
+            return $this->render('admin/product/deleted.html.twig');
         }
 
-        return ['entity' => $product,
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/product/show.html.twig', [
+            'entity' => $product,
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
      * Displays a form to edit an existing Product entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_product_edit")
-     * @Template()
      */
-    public function editAction(Request $request, Product $product)
+    public function editAction(Request $request, Product $product): Response
     {
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm(ProductType::class, $product);
@@ -123,7 +124,7 @@ class ProductController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             //update uploaded images entities
             $imageIdString = $request->request->get('filenames');
-            if ($imageIdString != '') {
+            if ($imageIdString !== '') {
                 $imageIdArray = explode(',', $imageIdString);
                 array_pop($imageIdArray);
 
@@ -146,13 +147,16 @@ class ProductController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
+            return $this->redirectToRoute('admin_product_edit', [
+                'id' => $product->getId()
+            ]);
         }
 
-        return ['entity' => $product,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/product/edit.html.twig', [
+            'entity' => $product,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
@@ -160,7 +164,7 @@ class ProductController extends Controller
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_product_delete")
      */
-    public function deleteAction(Request $request, Product $product)
+    public function deleteAction(Request $request, Product $product): Response
     {
         $form = $this->createDeleteForm($product);
         $form->handleRequest($request);
@@ -177,7 +181,7 @@ class ProductController extends Controller
     /**
      * @Route("/remove_image", methods={"POST"} , name="remove_image", defaults={"_format"="json"})
      */
-    public function removeImageAction(Request $request)
+    public function removeImageAction(Request $request): Response
     {
         $requestData = $request->request;
         $imageEntityId = (int)$requestData->get('imageEntityId');
@@ -207,9 +211,9 @@ class ProductController extends Controller
      * Creates a form to delete a Product entity by id.
      *
      * @param Product $product The Product id
-     * @return \Symfony\Component\Form\Form The form
+     * @return FormInterface
      */
-    private function createDeleteForm(Product $product)
+    private function createDeleteForm(Product $product): FormInterface
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_product_delete', ['id' => $product->getId()]))

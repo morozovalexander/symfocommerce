@@ -3,10 +3,11 @@
 namespace Eshop\AdminBundle\Controller;
 
 use Eshop\ShopBundle\Form\Type\ManufacturerType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Manufacturer;
 
 /**
@@ -20,9 +21,8 @@ class ManufacturerController extends Controller
      * Lists all Manufacturer entities.
      *
      * @Route("/", methods={"GET"}, name="admin_manufacturer")
-     * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
@@ -37,16 +37,17 @@ class ManufacturerController extends Controller
             $limit
         );
 
-        return ['entities' => $manufacturers];
+        return $this->render('admin/manufacturer/index.html.twig', [
+            'entities' => $manufacturers
+        ]);
     }
 
     /**
      * Displays a form to create a new Manufacturer entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_manufacturer_new")
-     * @Template()
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $manufacturer = new Manufacturer();
         $form = $this->createForm(ManufacturerType::class, $manufacturer);
@@ -57,39 +58,41 @@ class ManufacturerController extends Controller
             $em->persist($manufacturer);
             $em->flush();
 
-            return $this->redirectToRoute('admin_manufacturer_show', ['id' => $manufacturer->getId()]);
+            return $this->redirectToRoute('admin_manufacturer_show', [
+                'id' => $manufacturer->getId()
+            ]);
         }
 
-        return ['entity' => $manufacturer,
-                'form' => $form->createView()
-        ];
+        return $this->render('admin/manufacturer/new.html.twig', [
+            'entity' => $manufacturer,
+            'form' => $form->createView()
+        ]);
     }
 
     /**
      * Finds and displays a Manufacturer entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_manufacturer_show")
-     * @Template()
      */
-    public function showAction(Manufacturer $manufacturer)
+    public function showAction(Manufacturer $manufacturer): Response
     {
         $deleteForm = $this->createDeleteForm($manufacturer);
 
-        return ['entity' => $manufacturer,
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/manufacturer/show.html.twig', [
+            'entity' => $manufacturer,
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
      * Displays a form to edit an existing Manufacturer entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_manufacturer_edit")
-     * @Template()
      */
-    public function editAction(Request $request, Manufacturer $manufacturer)
+    public function editAction(Request $request, Manufacturer $manufacturer): Response
     {
         $deleteForm = $this->createDeleteForm($manufacturer);
-        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\ManufacturerType', $manufacturer);
+        $editForm = $this->createForm(ManufacturerType::class, $manufacturer);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -102,13 +105,16 @@ class ManufacturerController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_manufacturer_edit', ['id' => $manufacturer->getId()]);
+            return $this->redirectToRoute('admin_manufacturer_edit', [
+                'id' => $manufacturer->getId()
+            ]);
         }
 
-        return ['entity' => $manufacturer,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/manufacturer/edit.html.twig', [
+            'entity' => $manufacturer,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
@@ -116,7 +122,7 @@ class ManufacturerController extends Controller
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_manufacturer_delete")
      */
-    public function deleteAction(Request $request, Manufacturer $manufacturer)
+    public function deleteAction(Request $request, Manufacturer $manufacturer): Response
     {
         $form = $this->createDeleteForm($manufacturer);
         $form->handleRequest($request);
@@ -134,9 +140,9 @@ class ManufacturerController extends Controller
      * Creates a form to delete a Manufacturer entity by id.
      *
      * @param Manufacturer $manufacturer The Manufacturer entity
-     * @return \Symfony\Component\Form\Form The form
+     * @return FormInterface
      */
-    private function createDeleteForm(Manufacturer $manufacturer)
+    private function createDeleteForm(Manufacturer $manufacturer): FormInterface
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_manufacturer_delete', ['id' => $manufacturer->getId()]))

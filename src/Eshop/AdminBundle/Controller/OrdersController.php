@@ -4,10 +4,11 @@ namespace Eshop\AdminBundle\Controller;
 
 use Eshop\ShopBundle\Entity\OrderProduct;
 use Eshop\ShopBundle\Entity\Product;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Orders;
 
 /**
@@ -21,9 +22,8 @@ class OrdersController extends Controller
      * Lists all Orders entities.
      *
      * @Route("/", methods={"GET"}, name="admin_orders")
-     * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $ordersRepository = $em->getRepository('ShopBundle:Orders');
@@ -38,21 +38,23 @@ class OrdersController extends Controller
             $limit
         );
 
-        return ['orders' => $orders];
+        return $this->render('admin/orders/index.html.twig', [
+            'orders' => $orders
+        ]);
     }
 
     /**
      * Finds and displays a Orders entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_order_show")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction($id): Response
     {
         $em = $this->getDoctrine()->getManager();
         /**
          * @var Orders $order
          */
+        //todo: find order automatically and get as parameter
         $order = $em->getRepository('ShopBundle:Orders')->find($id);
 
         if (!$order) {
@@ -82,34 +84,20 @@ class OrdersController extends Controller
             $productsArray[] = $productPosition;
         }
 
-        return ['order' => $order,
-                'delete_form' => $deleteForm->createView(),
-                'products' => $productsArray
-        ];
+        return $this->render('admin/orders/show.html.twig', [
+            'order' => $order,
+            'delete_form' => $deleteForm->createView(),
+            'products' => $productsArray
+        ]);
     }
 
-
-    /**
-     * Creates a form to delete a Orders entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_order_delete', ['id' => $id]))
-            ->setMethod('DELETE')
-            ->getForm();
-    }
 
     /**
      * Deletes a Orders entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_order_delete")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): Response
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
@@ -127,5 +115,19 @@ class OrdersController extends Controller
         }
 
         return $this->redirect($this->generateUrl('admin_orders'));
+    }
+
+    /**
+     * Creates a form to delete a Orders entity by id.
+     *
+     * @param mixed $id The entity id
+     * @return FormInterface
+     */
+    private function createDeleteForm($id): FormInterface
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_order_delete', ['id' => $id]))
+            ->setMethod('DELETE')
+            ->getForm();
     }
 }

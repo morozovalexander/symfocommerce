@@ -3,10 +3,11 @@
 namespace Eshop\AdminBundle\Controller;
 
 use Eshop\ShopBundle\Form\Type\NewsType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\News;
 
 /**
@@ -20,9 +21,8 @@ class NewsController extends Controller
      * Lists all News entities.
      *
      * @Route("/", methods={"GET"}, name="admin_news")
-     * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $newsRepository = $em->getRepository('ShopBundle:News');
@@ -37,16 +37,17 @@ class NewsController extends Controller
             $limit
         );
 
-        return ['entities' => $news];
+        return $this->render('admin/news/index.html.twig', [
+            'entities' => $news
+        ]);
     }
 
     /**
      * Creates a new News entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_news_new")
-     * @Template()
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
@@ -57,36 +58,38 @@ class NewsController extends Controller
             $em->persist($news);
             $em->flush();
 
-            return $this->redirectToRoute('admin_news_show', ['id' => $news->getId()]);
+            return $this->redirectToRoute('admin_news_show', [
+                'id' => $news->getId()
+            ]);
         }
 
-        return ['entity' => $news,
-                'form' => $form->createView()
-        ];
+        return $this->render(':admin/news:new.html.twig', [
+            'entity' => $news,
+            'form' => $form->createView()
+        ]);
     }
 
     /**
      * Finds and displays a News entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_news_show")
-     * @Template()
      */
-    public function showAction(News $news)
+    public function showAction(News $news): Response
     {
         $deleteForm = $this->createDeleteForm($news);
 
-        return ['entity' => $news,
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/news/show.html.twig', [
+            'entity' => $news,
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
      * Displays a form to edit an existing News entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_news_edit")
-     * @Template()
      */
-    public function editAction(Request $request, News $news)
+    public function editAction(Request $request, News $news): Response
     {
         $deleteForm = $this->createDeleteForm($news);
         $editForm = $this->createForm(NewsType::class, $news);
@@ -102,13 +105,16 @@ class NewsController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_news_edit', ['id' => $news->getId()]);
+            return $this->redirectToRoute('admin_news_edit', [
+                'id' => $news->getId()
+            ]);
         }
 
-        return ['entity' => $news,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/news/edit.html.twig', [
+            'entity' => $news,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
@@ -116,7 +122,7 @@ class NewsController extends Controller
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_news_delete")
      */
-    public function deleteAction(Request $request, News $news)
+    public function deleteAction(Request $request, News $news): Response
     {
         $form = $this->createDeleteForm($news);
         $form->handleRequest($request);
@@ -134,10 +140,9 @@ class NewsController extends Controller
      * Creates a form to delete a News entity.
      *
      * @param News $news The News entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @return FormInterface
      */
-    private function createDeleteForm(News $news)
+    private function createDeleteForm(News $news): FormInterface
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_news_delete', ['id' => $news->getId()]))

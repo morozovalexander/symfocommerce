@@ -4,8 +4,8 @@ namespace Eshop\AdminBundle\Controller;
 
 use Eshop\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,9 +19,8 @@ class UserController extends Controller
      * Lists all User entities.
      *
      * @Route("/", methods={"GET"}, name="admin_user_list")
-     * @Template()
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $userRepository = $em->getRepository('UserBundle:User');
@@ -36,27 +35,29 @@ class UserController extends Controller
             $limit
         );
 
-        return ['entities' => $entities];
+        return $this->render('admin/user/index.html.twig', [
+            'entities' => $entities
+        ]);
     }
 
     /**
      * Shows user info
      *
      * @Route("/user/{id}", methods={"GET"}, name="admin_user_info")
-     * @Template()
      */
-    public function showUserInfoAction(User $user)
+    public function showUserInfoAction(User $user): Response
     {
-        return ['user' => $user];
+        return $this->render('admin/user/show_user_info.html.twig', [
+            'user' => $user
+        ]);
     }
 
     /**
      * Shows users orders
      *
      * @Route("/user/{id}/orders", methods={"GET"}, name="admin_user_orders")
-     * @Template()
      */
-    public function showUserOrdersAction(Request $request, User $user)
+    public function showUserOrdersAction(Request $request, User $user): Response
     {
         $em = $this->getDoctrine()->getManager();
         $ordersRepository = $em->getRepository('ShopBundle:Orders');
@@ -71,6 +72,9 @@ class UserController extends Controller
             $limit
         );
 
-        return ['user' => $user, 'orders' => $orders];
+        return $this->render('admin/user/show_user_orders.html.twig', [
+            'user' => $user,
+            'orders' => $orders
+        ]);
     }
 }

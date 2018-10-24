@@ -15,7 +15,7 @@ class AjaxController extends Controller
      *
      * @Route("/ajax_like", methods={"POST"}, name="ajax_like")
      */
-    public function likeAction(Request $request)
+    public function likeAction(Request $request): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -26,9 +26,11 @@ class AjaxController extends Controller
         $product = $productRepository->find($productId);
         $user = $this->getUser();
 
-        if (!is_object($product)) {
+        if (!\is_object($product)) {
             return $this->returnErrorJson('productnotfound');
-        } elseif (!is_object($user)) {
+        }
+
+        if (!\is_object($user)) {
             return $this->returnErrorJson('mustberegistered');
         }
 
@@ -38,7 +40,7 @@ class AjaxController extends Controller
         ]);
 
         $liked = false;
-        if (!is_object($favoriteRecord)) {
+        if (!\is_object($favoriteRecord)) {
             $favoriteRecord = new Favourites; //add like
             $favoriteRecord->setUser($this->getUser());
             $favoriteRecord->setProduct($product);
@@ -62,7 +64,7 @@ class AjaxController extends Controller
      *
      * @Route("/ajax_is_liked_product", methods={"POST"}, name="ajax_is_liked_product")
      */
-    public function checkIsLikedAction(Request $request)
+    public function checkIsLikedAction(Request $request): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $favouritesRepository = $em->getRepository('ShopBundle:Favourites');
@@ -86,7 +88,7 @@ class AjaxController extends Controller
      *
      * @Route("/ajax_get_last_seen_products", methods={"POST"}, name="ajax_get_last_seen_products")
      */
-    public function getLastSeenProductsAction(Request $request)
+    public function getLastSeenProductsAction(Request $request): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -97,7 +99,9 @@ class AjaxController extends Controller
         if (!$products) {
             $this->returnErrorJson('product not forund');
         }
-        $html = $this->renderView('@Shop/Partials/last_seen_products.html.twig', ['products' => $products]);
+        $html = $this->renderView('shop/_partials/last_seen_products.html.twig', [
+            'products' => $products]
+        );
 
         return new JsonResponse([
             'html' => $html,
@@ -109,7 +113,7 @@ class AjaxController extends Controller
      * @param string $message
      * @return JsonResponse
      */
-    private function returnErrorJson($message)
+    private function returnErrorJson($message): JsonResponse
     {
         return new JsonResponse([
             'success' => false,

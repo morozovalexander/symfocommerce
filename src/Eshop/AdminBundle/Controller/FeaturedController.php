@@ -5,8 +5,8 @@ namespace Eshop\AdminBundle\Controller;
 use Eshop\ShopBundle\Entity\Featured;
 use Eshop\ShopBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,15 +21,16 @@ class FeaturedController extends Controller
      * show featured products
      *
      * @Route("/", methods={"GET"}, name="admin_featured")
-     * @Template()
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $em = $this->getDoctrine()->getManager();
         $featuredRepository = $em->getRepository('ShopBundle:Featured');
         $products = $featuredRepository->findBy([], ['productOrder' => 'ASC']);
 
-        return ['products' => $products];
+        return $this->render('admin/featured/index.html.twig', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -37,7 +38,7 @@ class FeaturedController extends Controller
      * @Route("/featured_product_edit_ajax", methods={"POST"}, name="admin_featured_product_edit_ajax")
      * @return JsonResponse
      */
-    public function featuredProductEditAction(Request $request)
+    public function featuredProductEditAction(Request $request): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -60,7 +61,7 @@ class FeaturedController extends Controller
      * @Route("/featured_order_edit_ajax", methods={"POST"}, name="admin_featured_order_edit_ajax")
      * @return JsonResponse
      */
-    public function featuredOrderEditAction(Request $request)
+    public function featuredOrderEditAction(Request $request): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $featuredRepository = $em->getRepository('ShopBundle:Featured');
@@ -69,7 +70,7 @@ class FeaturedController extends Controller
         $newOrder = $request->request->getInt('new_value');
 
         $featuredWithNewOrder = $featuredRepository->findOneBy(['productOrder' => $newOrder]);
-        if (is_object($featuredWithNewOrder)) {
+        if (\is_object($featuredWithNewOrder)) {
             return $this->returnErrorJson('order exists');
         }
 
@@ -89,7 +90,7 @@ class FeaturedController extends Controller
      * @param bool $addFeaturedValue
      * @return void
      */
-    private function createOrDeleteFeaturedProduct($product, $addFeaturedValue)
+    private function createOrDeleteFeaturedProduct($product, $addFeaturedValue): void
     {
         $em = $this->getDoctrine()->getManager();
         $featuredRepository = $em->getRepository('ShopBundle:Featured');
@@ -97,10 +98,10 @@ class FeaturedController extends Controller
         if ($addFeaturedValue) {
             $alreadyFeatured = $product->getFeatured(); //check if already featured
 
-            if (!is_object($alreadyFeatured)) {
+            if (!\is_object($alreadyFeatured)) {
                 $order = $featuredRepository->getLatestProductOrder(); //create new featured entity
 
-                if (is_array($order)) {
+                if (\is_array($order)) {
                     $newOrder = $order['productOrder'] + 1;
                 } else {
                     $newOrder = 1;
@@ -122,7 +123,8 @@ class FeaturedController extends Controller
      * @param string $message
      * @return JsonResponse
      */
-    private function returnErrorJson($message) {
+    private function returnErrorJson($message): JsonResponse
+    {
         return new JsonResponse([
             'success' => false,
             'message' => $message

@@ -4,11 +4,12 @@ namespace Eshop\ShopBundle\Controller;
 
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
+use Eshop\ShopBundle\Form\Type\OrdersType;
 use Eshop\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartController extends Controller
@@ -17,9 +18,8 @@ class CartController extends Controller
      * Lists all Category entities.
      *
      * @Route("/showcart", methods={"GET"}, name="showcart")
-     * @Template()
      */
-    public function showCartAction(Request $request)
+    public function showCartAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -38,7 +38,7 @@ class CartController extends Controller
              * @var Product $product
              */
             $product = $productRepository->find((int)$productId);
-            if (is_object($product)) {
+            if (\is_object($product)) {
                 $productPosition = [];
 
                 $quantity = abs((int)$productQuantity);
@@ -55,21 +55,21 @@ class CartController extends Controller
             }
         }
 
-        return ['products' => $productsArray,
-                'totalsum' => $totalSum
-        ];
+        return $this->render('shop/cart/show_cart.html.twig', [
+            'products' => $productsArray,
+            'totalsum' => $totalSum
+        ]);
     }
 
     /**
      * Shows order form.
      *
      * @Route("/orderform", methods={"GET", "POST"}, name="orderform")
-     * @Template()
      */
-    public function orderFormAction(Request $request)
+    public function orderFormAction(Request $request): Response
     {
         $order = new Orders();
-        $form = $this->createForm('Eshop\ShopBundle\Form\Type\OrdersType', $order);
+        $form = $this->createForm(OrdersType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,36 +86,34 @@ class CartController extends Controller
                 'admin_email' => $this->getParameter('admin_email')
             ]);
 
-            return $this->render('@Shop/Cart/thank_you.html.twig'); //redirect to thankyou page
+            return $this->render('shop/cart/thank_you.html.twig'); //redirect to thankyou page
         }
 
-        if (is_object($user = $this->getUser())) {
+        if (\is_object($user = $this->getUser())) {
             $this->fillWithUserData($user, $form);
         }
 
-        return [
+        return $this->render('shop/cart/order_form.html.twig', [
             'order' => $order,
             'form' => $form->createView()
-        ];
+        ]);
     }
 
     /**
      * If cart is empty.
      *
      * @Route("/cartisempty", methods={"GET"}, name="cartisempty")
-     * @Template()
      */
-    public function cartIsEmptyAction()
+    public function cartIsEmptyAction(): Response
     {
-        return [];
+        return $this->render('shop/cart/cart_is_empty.html.twig');
     }
 
     /**
      * Count cart from cookies
      * @Route("navbar_cart", methods={"GET"})
-     * @Template()
      */
-    public function navbarCartAction(Request $request)
+    public function navbarCartAction(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
         //quantity -> sum array
@@ -124,11 +122,11 @@ class CartController extends Controller
 
         if (isset($cookies['cart'])) {
             $cart = json_decode($cookies['cart']);
-            if ($cart == '') {
-                return $cartArray;
+            if ($cart === '') {
+                return $this->render('shop/cart/navbar_cart.html.twig', $cartArray);
             }
         } else {
-            return $cartArray;
+            return $this->render('shop/cart/navbar_cart.html.twig', $cartArray);
         }
 
         $productRepository = $em->getRepository('ShopBundle:Product');
@@ -138,21 +136,21 @@ class CartController extends Controller
              * @var Product $product
              */
             $product = $productRepository->find((int)$productId);
-            if (is_object($product)) {
+            if (\is_object($product)) {
                 $cartArray['cart']['sum'] += ($product->getPrice() * abs((int)$productQuantity));
                 $cartArray['cart']['quantity'] += abs((int)$productQuantity);
             }
         }
 
-        return $cartArray;
+        return $this->render('shop/cart/navbar_cart.html.twig', $cartArray);
     }
 
     /**
      * @param User $user
-     * @param Form $form
+     * @param FormInterface $form
      * @return void
      */
-    private function fillWithUserData($user, $form)
+    private function fillWithUserData(User $user, FormInterface $form): void
     {
         $form->get('name')->setData($user->getFirstname() . ' ' . $user->getLastname());
         $form->get('email')->setData($user->getEmail());

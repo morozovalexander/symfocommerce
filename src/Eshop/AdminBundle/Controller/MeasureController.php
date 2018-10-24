@@ -3,10 +3,11 @@
 namespace Eshop\AdminBundle\Controller;
 
 use Eshop\ShopBundle\Form\Type\MeasureType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Eshop\ShopBundle\Entity\Measure;
 
 /**
@@ -20,24 +21,24 @@ class MeasureController extends Controller
      * Lists all Measure entities.
      *
      * @Route("/", methods={"GET"}, name="admin_measure")
-     * @Template()
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ShopBundle:Measure')->findAll();
 
-        return ['entities' => $entities];
+        return $this->render('admin/measure/index.html.twig', [
+            'entities' => $entities
+        ]);
     }
 
     /**
      * Displays a form to create a new Measure entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_measure_new")
-     * @Template()
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $measure = new Measure();
         $form = $this->createForm(MeasureType::class, $measure);
@@ -48,39 +49,41 @@ class MeasureController extends Controller
             $em->persist($measure);
             $em->flush();
 
-            return $this->redirectToRoute('admin_measure_show', ['id' => $measure->getId()]);
+            return $this->redirectToRoute('admin_measure_show', [
+                'id' => $measure->getId()
+            ]);
         }
 
-        return ['entity' => $measure,
-                'form' => $form->createView()
-        ];
+        return $this->render('admin/measure/new.html.twig', [
+            'entity' => $measure,
+            'form' => $form->createView()
+        ]);
     }
 
     /**
      * Finds and displays a Measure entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_measure_show")
-     * @Template()
      */
-    public function showAction(Measure $measure)
+    public function showAction(Measure $measure): Response
     {
         $deleteForm = $this->createDeleteForm($measure);
 
-        return ['entity' => $measure,
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/measure/show.html.twig', [
+            'entity' => $measure,
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
      * Displays a form to edit an existing Measure entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_measure_edit")
-     * @Template()
      */
-    public function editAction(Request $request, Measure $measure)
+    public function editAction(Request $request, Measure $measure): Response
     {
         $deleteForm = $this->createDeleteForm($measure);
-        $editForm = $this->createForm('Eshop\ShopBundle\Form\Type\MeasureType', $measure);
+        $editForm = $this->createForm(MeasureType::class, $measure);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -93,13 +96,16 @@ class MeasureController extends Controller
                 'Your changes were saved!'
             );
 
-            return $this->redirectToRoute('admin_measure_edit', ['id' => $measure->getId()]);
+            return $this->redirectToRoute('admin_measure_edit', [
+                'id' => $measure->getId()
+            ]);
         }
 
-        return ['entity' => $measure,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView()
-        ];
+        return $this->render('admin/measure/edit.html.twig', [
+            'entity' => $measure,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
+        ]);
     }
 
     /**
@@ -107,7 +113,7 @@ class MeasureController extends Controller
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_measure_delete")
      */
-    public function deleteAction(Request $request, Measure $measure)
+    public function deleteAction(Request $request, Measure $measure): Response
     {
         $form = $this->createDeleteForm($measure);
         $form->handleRequest($request);
@@ -125,10 +131,9 @@ class MeasureController extends Controller
      * Creates a form to delete a Measure entity by id.
      *
      * @param Measure $measure The measure entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @return FormInterface
      */
-    private function createDeleteForm(Measure $measure)
+    private function createDeleteForm(Measure $measure): FormInterface
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_measure_delete', ['id' => $measure->getId()]))
