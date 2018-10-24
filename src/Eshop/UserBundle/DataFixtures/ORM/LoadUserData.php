@@ -28,24 +28,24 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
      */
     public function load(ObjectManager $manager)
     {
-//        //create admin
-//        $userAdmin = new User();
-//        $userAdmin->setFirstname('admin');
-//        $userAdmin->setLastname('admin');
-//        $userAdmin->setUsername('admin');
-//        $userAdmin->setPhone('1234567890');
-//        $userAdmin->setAddress('admin address');
-//        $userAdmin->setEnabled(true);
-//        $userAdmin->setRoles(['ROLE_ADMIN']);
-//        $userAdmin->setEmail('admin@email.com');
-//
-//        $encoder = $this->container
-//            ->get('security.encoder_factory')
-//            ->getEncoder($userAdmin);
-//
-//        $userAdmin->setPassword($encoder->encodePassword('admin', $userAdmin->getSalt()));
-//
-//        $manager->persist($userAdmin);
+        //create admin
+        $userAdmin = new User();
+        $userAdmin->setFirstname('admin');
+        $userAdmin->setLastname('admin');
+        $userAdmin->setUsername('admin');
+        $userAdmin->setPhone('1234567890');
+        $userAdmin->setAddress('admin address');
+        $userAdmin->setEnabled(true);
+        $userAdmin->setRoles(['ROLE_ADMIN']);
+        $userAdmin->setEmail('admin@email.com');
+
+        $encoder = $this->container
+            ->get('security.encoder_factory')
+            ->getEncoder($userAdmin);
+
+        $userAdmin->setPassword($encoder->encodePassword('admin', $userAdmin->getSalt()));
+
+        $manager->persist($userAdmin);
 
         //create test users
         for ($i = 1; $i < 50; $i++) {
