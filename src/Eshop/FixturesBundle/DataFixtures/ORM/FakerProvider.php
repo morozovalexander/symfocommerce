@@ -83,7 +83,7 @@ class FakerProvider
     {
         $categories = [
             'Notebooks and PC\'s', 'Computers', 'Computer Periferias', 'Phones', 'Smart Watches',
-            'TV', 'TV Accessoirs', 'Games', 'Consoles', 'Audio Technics', 'Foto Technics', 'Network Devices'
+            'TV', 'Accessories for TV', 'Games', 'Consoles', 'Audio Technics', 'Foto Technics', 'Network Devices'
         ];
         return $categories[array_rand($categories)];
     }
@@ -92,7 +92,7 @@ class FakerProvider
     {
         $manufacturers = [
             'HP', 'Lenovo', 'Asus', 'Acer', 'Dell', 'Apple', 'Packard Bell', 'MSI', 'Panasonic', 'Xiaomi',
-            'Samsumng', 'Nokia', 'Accorp', 'Sony', 'Toshiba', 'Fujitsu'
+            'Samsung', 'Nokia', 'Accorp', 'Sony', 'Toshiba', 'Fujitsu'
         ];
         return $manufacturers[array_rand($manufacturers)];
     }
