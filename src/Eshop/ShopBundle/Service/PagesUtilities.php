@@ -1,4 +1,5 @@
 <?php
+
 namespace Eshop\ShopBundle\Service;
 
 use Doctrine\ORM\EntityManager;
@@ -10,9 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PagesUtilities
 {
-    /**
-     * @var EntityManager $em
-     */
+    /** @var EntityManager */
     private $em;
 
     public function __construct(EntityManager $entityManager)
@@ -26,9 +25,8 @@ class PagesUtilities
      * @param Request $request
      * @return string
      */
-    public function getSortingParamName(Request $request)
+    public function getSortingParamName(Request $request): string
     {
-        $sortedBy = '';
         $sortParam = $request->get('sort');
 
         switch ($sortParam) {
@@ -51,18 +49,18 @@ class PagesUtilities
      * @param Request $request
      * @return array
      */
-    public function getLastSeenProducts(Request $request)
+    public function getLastSeenProducts(Request $request): ?array
     {
         $cookies = $request->cookies->all();
 
         if (isset($cookies['last-seen'])) {
             $productIdsArray = json_decode($cookies['last-seen']);
 
-            if (is_array($productIdsArray) && !empty($productIdsArray)) {
+            if (\is_array($productIdsArray) && !empty($productIdsArray)) {
                 return $productIdsArray;
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -73,12 +71,12 @@ class PagesUtilities
      * @param User $user
      * @return bool
      */
-    public function createOrderDBRecord(Request $request, Orders $order, User $user = null)
+    public function createOrderDBRecord(Request $request, Orders $order, User $user = null): bool
     {
         $productRepository = $this->em->getRepository('ShopBundle:Product');
 
         $cart = $this->getCartFromCookies($request);
-        if ((!$cart) || !(count($cart))) {
+        if (!$cart || !\count($cart)) {
             return false;
         }
 
@@ -86,7 +84,7 @@ class PagesUtilities
         $sum = 0; //total control sum of the order
         foreach ($cart as $productId => $productQuantity) {
             $product = $productRepository->find((int)$productId);
-            if (is_object($product)) {
+            if (\is_object($product)) {
                 $quantity = abs((int)$productQuantity);
                 $sum += ($quantity * $product->getPrice());
 
@@ -111,12 +109,24 @@ class PagesUtilities
     }
 
     /**
+     * clear cookies cart
+     *
+     * @return void
+     */
+    public function clearCart(): void
+    {
+        $response = new Response();
+        $response->headers->clearCookie('cart');
+        $response->sendHeaders();
+    }
+
+    /**
      * Get cart from cookies and return cart or false.
      *
      * @param Request $request
-     * @return mixed
+     * @return array|null
      */
-    private function getCartFromCookies(Request $request)
+    private function getCartFromCookies(Request $request): ?array
     {
         $cookies = $request->cookies->all();
 
@@ -124,23 +134,11 @@ class PagesUtilities
             $cart = json_decode($cookies['cart']);
 
             $cartObj = $cart; //check if cart not empty
-            if (!empty($cartObj) && count((array)$cartObj)) {
+            if (!empty($cartObj) && \count((array)$cartObj)) {
                 return $cart;
             }
         }
 
-        return false;
-    }
-
-    /**
-     * clear cookies cart
-     *
-     * @return void
-     */
-    public function clearCart()
-    {
-        $response = new Response();
-        $response->headers->clearCookie('cart');
-        $response->sendHeaders();
+        return null;
     }
 }

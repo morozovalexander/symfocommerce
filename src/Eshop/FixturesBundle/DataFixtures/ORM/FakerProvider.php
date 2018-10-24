@@ -9,7 +9,7 @@ class FakerProvider
      *
      * @var array List of job titles.
      */
-    const TITLE_PROVIDER = [
+    public const TITLE_PROVIDER = [
         'firstname' => [
             'Audience Recognition',
             'Big Data',
@@ -44,7 +44,7 @@ class FakerProvider
      *
      * @var array List of job abbreviations.
      */
-    const ABBREVIATION_PROVIDER = [
+    public const ABBREVIATION_PROVIDER = [
         'ABATE',
         'ACAD',
         'ACCT',

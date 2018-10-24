@@ -44,13 +44,10 @@ final class SymfonyPasswordProvider implements ContainerAwareInterface
      */
     public function symfonyPassword(string $userClass, string $plainPassword, string $salt = null): string
     {
-        dump($this->container);
         $encoder = $this->container
             ->get('security.encoder_factory')
             ->getEncoder($userClass);
-        $password = $encoder->encodePassword($plainPassword, $salt);
 
-        return $password;
-//        return $this->generator->parse($password);
+        return $encoder->encodePassword($plainPassword, $salt);
     }
 }

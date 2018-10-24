@@ -1,4 +1,5 @@
 <?php
+
 namespace Eshop\ShopBundle\Service;
 
 use Symfony\Bridge\Twig\TwigEngine;
@@ -6,13 +7,16 @@ use Symfony\Component\Routing\Router;
 
 class EmailNotifier
 {
-    /**
-     * @var Router $router
-     */
+    /** @var \Swift_Mailer */
     private $mailer;
+
+    /** @var Router */
     private $router;
+
+    /** @var TwigEngine */
     private $templating;
-    const FROM_EMAIL = 'server@website.com';
+
+    public const FROM_EMAIL = 'server@website.com';
 
     public function __construct(\Swift_Mailer $mailer, Router $router, TwigEngine $templating)
     {
@@ -24,8 +28,9 @@ class EmailNotifier
 
     /**
      * @param $parametersArray array
+     * @throws \Twig\Error\Error
      */
-    public function handleNotification($parametersArray)
+    public function handleNotification(array $parametersArray): void
     {
         $event = $parametersArray['event'];
         switch ($event) {
@@ -37,8 +42,9 @@ class EmailNotifier
 
     /**
      * @param $parametersArray array
+     * @throws \Twig\Error\Error
      */
-    private function sendNewOrderNotification($parametersArray)
+    private function sendNewOrderNotification(array $parametersArray): void
     {
         $orderId = $parametersArray['order_id'];
         $to = $parametersArray['admin_email'];
@@ -57,7 +63,7 @@ class EmailNotifier
             ->setTo($to)
             ->setBody(
                 $this->templating->render(
-                    'ShopBundle:Mail:order_notification_email.txt.twig', [
+                    'shop/mail/order_notification_email.txt.twig', [
                         'subject' => $subject,
                         'url' => $url
                     ]

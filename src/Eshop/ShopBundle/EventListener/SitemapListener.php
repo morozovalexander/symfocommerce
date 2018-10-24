@@ -1,4 +1,5 @@
 <?php
+
 namespace Eshop\ShopBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
@@ -10,8 +11,13 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
 class SitemapListener implements SitemapListenerInterface
 {
+    /** @var SitemapPopulateEvent */
     private $event;
+
+    /** @var RouterInterface */
     private $router;
+
+    /** @var EntityManager */
     private $entityManager;
 
     public function __construct(RouterInterface $router, EntityManager $entityManager)
@@ -20,12 +26,12 @@ class SitemapListener implements SitemapListenerInterface
         $this->entityManager = $entityManager;
     }
 
-    public function populateSitemap(SitemapPopulateEvent $event)
+    public function populateSitemap(SitemapPopulateEvent $event): void
     {
         $this->event = $event;
         $section = $this->event->getSection();
 
-        if (is_null($section) || $section == 'default') {
+        if ($section === null || $section === 'default') {
             $dateTime = new \DateTime();
 
             $products = $this->entityManager->getRepository('ShopBundle:Product')->findAll();
@@ -39,21 +45,33 @@ class SitemapListener implements SitemapListenerInterface
 
             //for manufacturers
             foreach ($manufacturers as $manufacturer) {
-                $url = $this->router->generate('manufacturer', ['slug' => $manufacturer->getSlug()], RouterInterface::ABSOLUTE_URL);
+                $url = $this->router->generate(
+                    'manufacturer',
+                    ['slug' => $manufacturer->getSlug()],
+                    RouterInterface::ABSOLUTE_URL
+                );
                 $modified = $manufacturer->getDateUpdated();
                 $this->createSitemapEntry($url, $modified, UrlConcrete::CHANGEFREQ_MONTHLY, 1);
             }
 
             //for categories
             foreach ($categories as $category) {
-                $url = $this->router->generate('category', ['slug' => $category->getSlug()], RouterInterface::ABSOLUTE_URL);
+                $url = $this->router->generate(
+                    'category',
+                    ['slug' => $category->getSlug()],
+                    RouterInterface::ABSOLUTE_URL
+                );
                 $modified = $category->getDateUpdated();
                 $this->createSitemapEntry($url, $modified, UrlConcrete::CHANGEFREQ_MONTHLY, 1);
             }
 
             //for products
             foreach ($products as $product) {
-                $url = $this->router->generate('show_product', ['slug' => $product->getSlug()], RouterInterface::ABSOLUTE_URL);
+                $url = $this->router->generate(
+                    'show_product',
+                    ['slug' => $product->getSlug()],
+                    RouterInterface::ABSOLUTE_URL
+                );
                 $modified = $product->getDateUpdated();
                 $this->createSitemapEntry($url, $modified, UrlConcrete::CHANGEFREQ_MONTHLY, 0.7);
             }
@@ -64,7 +82,11 @@ class SitemapListener implements SitemapListenerInterface
 
             //for staticPages
             foreach ($staticPages as $staticPage) {
-                $url = $this->router->generate('show_static_page', ['slug' => $staticPage->getSlug()], RouterInterface::ABSOLUTE_URL);
+                $url = $this->router->generate(
+                    'show_static_page',
+                    ['slug' => $staticPage->getSlug()],
+                    RouterInterface::ABSOLUTE_URL
+                );
                 $this->createSitemapEntry($url, $dateTime, UrlConcrete::CHANGEFREQ_MONTHLY, 0.7);
             }
         }
@@ -76,7 +98,7 @@ class SitemapListener implements SitemapListenerInterface
      * @param $changeFrequency float
      * @param $priority int
      */
-    private function createSitemapEntry($url, $modifiedDate, $changeFrequency, $priority)
+    private function createSitemapEntry(string $url, \DateTime $modifiedDate, float $changeFrequency, int $priority): void
     {
         $this->event->getGenerator()->addUrl(
             new UrlConcrete(

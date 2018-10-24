@@ -17,8 +17,9 @@ class FavouritesRepository extends EntityRepository
      * @param User $user
      * @param integer $productId
      * @return bool
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function checkIsLiked($user, $productId)
+    public function checkIsLiked(User $user, int $productId): bool
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
@@ -35,8 +36,8 @@ class FavouritesRepository extends EntityRepository
 
         if ($qb->getQuery()->getSingleScalarResult()) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }
