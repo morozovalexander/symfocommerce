@@ -45,8 +45,8 @@
         "oneup/uploader-bundle": "~1.4",
         "cocur/slugify": "^1.4",
         "liip/imagine-bundle": "^1.5",
-        "knplabs/knp-paginator-bundle": "2.5.1",
-        "presta/sitemap-bundle": "1.4.2",
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "presta/sitemap-bundle": "^1.5",
         "hwi/oauth-bundle": "0.5.3",
         "nelmio/alice": "3.*"
     },
