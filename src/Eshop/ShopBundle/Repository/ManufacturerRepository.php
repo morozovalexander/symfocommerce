@@ -74,4 +74,15 @@ class ManufacturerRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * @return array
+     */
+    public function getArrayForSitemap(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.slug, m.dateUpdated')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

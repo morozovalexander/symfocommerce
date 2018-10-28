@@ -33,4 +33,15 @@ class StaticPageRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * @return array
+     */
+    public function getArrayForSitemap(): array
+    {
+        return $this->createQueryBuilder('sp')
+            ->select('sp.slug')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

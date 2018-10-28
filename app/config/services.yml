@@ -28,11 +28,13 @@ services:
         class:        Eshop\ShopBundle\Service\PagesUtilities
         arguments:    ["@doctrine.orm.entity_manager"]
 
-    my.sitemap.listener:
-        class:        Eshop\ShopBundle\EventListener\SitemapListener
-        arguments:    ["@router", "@doctrine.orm.entity_manager"]
+    app.sitemap.blog_post_subscriber:
+        class: Eshop\ShopBundle\EventListener\SitemapSubscriber
+        arguments:
+            - "@router"
+            - "@doctrine"
         tags:
-            - { name: "presta.sitemap.listener" }
+            - { name: "kernel.event_subscriber", priority: 100 }
 
     app.form.registration:
         class:        Eshop\UserBundle\Form\Type\RegistrationType

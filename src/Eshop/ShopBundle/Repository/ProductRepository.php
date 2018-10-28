@@ -256,4 +256,15 @@ class ProductRepository extends EntityRepository
 
         return $qb;
     }
+
+    /**
+     * @return array
+     */
+    public function getArrayForSitemap(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.slug, p.dateUpdated')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

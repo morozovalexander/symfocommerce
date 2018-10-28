@@ -81,4 +81,15 @@ class CategoryRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * @return array
+     */
+    public function getArrayForSitemap(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.slug, c.dateUpdated')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }
