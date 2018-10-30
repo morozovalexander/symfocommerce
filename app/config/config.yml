@@ -125,3 +125,7 @@ oneup_uploader:
 
 presta_sitemap:
     timetolive: 3600
+
+sensio_framework_extra:
+    router:
+        annotations: false
