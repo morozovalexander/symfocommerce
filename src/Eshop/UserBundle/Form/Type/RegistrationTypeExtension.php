@@ -3,14 +3,22 @@
 namespace Eshop\UserBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType;
+use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RegistrationType extends AbstractType
+class RegistrationTypeExtension extends AbstractTypeExtension
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @return string The name of the type being extended
+     */
+    public function getExtendedType(): string
+    {
+        return RegistrationFormType::class;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('firstname', TextType::class,
@@ -21,20 +29,5 @@ class RegistrationType extends AbstractType
                 ['label' => 'registration.phone', 'translation_domain' => 'ShopBundle'])
             ->add('address', TextareaType::class,
                 ['label' => 'registration.address', 'translation_domain' => 'ShopBundle']);
-    }
-
-    public function getParent()
-    {
-        return RegistrationFormType::class;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'app_user_registration';
-    }
-
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }
