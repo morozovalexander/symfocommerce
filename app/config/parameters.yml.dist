@@ -27,7 +27,3 @@ parameters:
     search_pagination_count: 24
     admin_users_pagination_count: 20
     admin_user_orders_pagination_count: 10
-    facebook_app_id: addyourfacebookappid
-    facebook_app_secret: addyourfacebookapsecret
-    google_app_id: addyourgoogleappid
-    google_app_secret: addyourgoogleappsecret

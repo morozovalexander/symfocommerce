@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Oneup\UploaderBundle\OneupUploaderBundle(),
             new Presta\SitemapBundle\PrestaSitemapBundle(),
-            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Eshop\AdminBundle\AdminBundle(),
             new Eshop\FixturesBundle\EshopFixturesBundle(),
             new Eshop\ShopBundle\ShopBundle(),

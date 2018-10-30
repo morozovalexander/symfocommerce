@@ -37,19 +37,15 @@ services:
             - { name: "kernel.event_subscriber", priority: 100 }
 
     app.form.registration:
-        class:        Eshop\UserBundle\Form\Type\RegistrationType
+        class:        Eshop\UserBundle\Form\Type\RegistrationTypeExtension
         tags:
-            - { name: form.type, alias: app_user_registration }
+            - { name: form.type_extension, extended_type: FOS\UserBundle\Form\Type\RegistrationFormType }
 
     app.twig_extension:
         class:        Eshop\ShopBundle\Twig\RawDescriptionExtension
         public:       false
         tags:
             - { name: twig.extension }
-
-    my_user_provider:
-        class:        Eshop\UserBundle\Security\Core\User\FOSUBUserProvider
-        arguments:    ["@fos_user.user_manager", {facebook: facebook_id, google: google_id}]
 
     app.image_uploader:
         class: Eshop\ShopBundle\Service\FileUploader

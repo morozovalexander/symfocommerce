@@ -1,5 +1,5 @@
 <?php
-namespace Eshop\UserBundle\DataFixtures\ORM;
+namespace Eshop\FixturesBundle\DataFixtures\ORM;
 
 use Eshop\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;

@@ -46,15 +46,14 @@
         "cocur/slugify": "^1.4",
         "liip/imagine-bundle": "^1.5",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "presta/sitemap-bundle": "^1.5",
-        "hwi/oauth-bundle": "0.5.3",
-        "nelmio/alice": "3.*"
+        "presta/sitemap-bundle": "^1.5"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "2.3.*",
         "roave/security-advisories": "dev-master",
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "nelmio/alice": "3.*"
     },
     "scripts": {
         "symfony-scripts": [

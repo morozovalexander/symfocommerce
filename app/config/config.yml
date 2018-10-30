@@ -125,24 +125,3 @@ oneup_uploader:
 
 presta_sitemap:
     timetolive: 3600
-
-hwi_oauth:
-    connect:
-        account_connector: my_user_provider
-    firewall_names: [main]
-    fosub:
-        username_iterations: 30
-        properties:
-            facebook: facebook_id
-            google: google_id
-    resource_owners:
-        facebook:
-            type:                facebook
-            client_id:           "%facebook_app_id%"
-            client_secret:       "%facebook_app_secret%"
-            scope:               ""
-        google:
-            type:                google
-            client_id:           "%google_app_id%"
-            client_secret:       "%google_app_secret%"
-            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
