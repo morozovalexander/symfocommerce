@@ -37,7 +37,6 @@ class AppKernel extends Kernel
                 $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
                 $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
                 $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
-                $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
             }
         }
 
