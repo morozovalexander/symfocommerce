@@ -18,6 +18,6 @@ class AdminController extends Controller
      */
     public function indexAction(): Response
     {
-        return $this->render('admin/admin/index.html.twig'); //todo remove completely or add some stats
+        return $this->render('admin/admin/index.html.twig');
     }
 }
