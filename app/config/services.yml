@@ -47,6 +47,9 @@ services:
         tags:
             - { name: twig.extension }
 
+    app.slugger:
+        class:        Eshop\FixturesBundle\Utils\Slugger
+
     app.image_uploader:
         class: Eshop\ShopBundle\Service\FileUploader
         arguments: ['%uploads_directory%']

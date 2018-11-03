@@ -3,12 +3,11 @@ namespace Eshop\FixturesBundle\DataFixtures\ORM;
 
 use Eshop\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserData implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -37,7 +36,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
         $userAdmin->setAddress('admin address');
         $userAdmin->setEnabled(true);
         $userAdmin->setRoles(['ROLE_ADMIN']);
-        $userAdmin->setEmail('admin@email.com');
+        $userAdmin->setEmail('admin@example.com');
 
         $encoder = $this->container
             ->get('security.encoder_factory')
@@ -50,8 +49,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
         //create test users
         for ($i = 1; $i < 50; $i++) {
             $user = new User();
-            $user->setFirstname('firstname' . $i);
-            $user->setLastname('lastname' . $i);
+            $user->setFirstname('Firstname' . $i);
+            $user->setLastname('Lastname' . $i);
             $user->setPhone('1234567890 ' . $i);
             $user->setAddress('address ' . $i);
             $user->setUsername('user' . $i);
@@ -66,13 +65,5 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
         }
 
         $manager->flush();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getOrder()
-    {
-        return 1; // the order in which fixtures will be loaded
     }
 }
