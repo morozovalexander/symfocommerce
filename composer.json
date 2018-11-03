@@ -43,7 +43,6 @@
         "friendsofsymfony/user-bundle": "2.0.*",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "oneup/uploader-bundle": "~1.4",
-        "cocur/slugify": "^1.4",
         "liip/imagine-bundle": "^1.5",
         "knplabs/knp-paginator-bundle": "^2.5",
         "presta/sitemap-bundle": "^1.5"
