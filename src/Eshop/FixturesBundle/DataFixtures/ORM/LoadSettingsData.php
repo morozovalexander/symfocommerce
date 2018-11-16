@@ -1,6 +1,6 @@
 <?php
 
-namespace Eshop\AdminBundle\DataFixtures\ORM;
+namespace Eshop\FixturesBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Eshop\ShopBundle\Entity\Settings;

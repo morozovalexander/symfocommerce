@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AdminBundle\Utils;
+namespace Tests\FixturesBundle\Utils;
 
 use Eshop\FixturesBundle\Utils\Slugger;
 use PHPUnit\Framework\TestCase;
@@ -25,5 +25,10 @@ class SluggerTest extends TestCase
         yield ['lorem 日本語 ipsum', 'lorem-日本語-ipsum'];
         yield ['lorem русский язык ipsum', 'lorem-русский-язык-ipsum'];
         yield ['lorem العَرَبِيَّة‎‎ ipsum', 'lorem-العَرَبِيَّة‎‎-ipsum'];
+    }
+
+    public function testThatMyComputerWorks()
+    {
+        $this->assertTrue(true);
     }
 }

@@ -1,10 +1,13 @@
 imports:
     - { resource: config_dev.yml }
 
+liip_functional_test: ~
+
 framework:
     test: ~
     session:
         storage_id: session.storage.mock_file
+        name: MOCKSESSION
     profiler:
         collect: false
 
@@ -14,3 +17,20 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_sqlite
+                path:     "%kernel.cache_dir%/test.db"
+
+security:
+    firewalls:
+        main:
+            http_basic: ~
+        login:
+            http_basic: ~
+

@@ -62,3 +62,7 @@ services:
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postLoad }
             - { name: doctrine.event_listener, event: preRemove }
+
+    Eshop\FixturesBundle\DataFixtures\:
+        resource: '../../src/Eshop/FixturesBundle/DataFixtures'
+        tags: ['doctrine.fixture.orm']
