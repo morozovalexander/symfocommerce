@@ -27,6 +27,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
      */
     public function load(ObjectManager $manager)
     {
+        $passwordEncoder = $this->container->get('security.password_encoder');
+
         //create admin
         $userAdmin = new User();
         $userAdmin->setFirstname('admin');
@@ -38,11 +40,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $userAdmin->setRoles(['ROLE_ADMIN']);
         $userAdmin->setEmail('admin@example.com');
 
-        $encoder = $this->container
-            ->get('security.encoder_factory')
-            ->getEncoder($userAdmin);
-
-        $userAdmin->setPassword($encoder->encodePassword('admin', $userAdmin->getSalt()));
+        $encodedPassword = $passwordEncoder->encodePassword($userAdmin, 'admin');
+        $userAdmin->setPassword($encodedPassword);
 
         $manager->persist($userAdmin);
 
@@ -57,10 +56,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
             $user->setEnabled(true);
             $user->setEmail('user' . $i . '@email.com');
 
-            $encoder = $this->container
-                ->get('security.encoder_factory')
-                ->getEncoder($user);
-            $user->setPassword($encoder->encodePassword('user' . $i, $user->getSalt()));
+            $encodedPassword = $passwordEncoder->encodePassword($user, 'user' . $i);
+            $user->setPassword($encodedPassword);
             $manager->persist($user);
         }
 
