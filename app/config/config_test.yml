@@ -1,7 +1,9 @@
 imports:
     - { resource: config_dev.yml }
 
-liip_functional_test: ~
+liip_functional_test:
+    cache_db:
+        sqlite: liip_functional_test.services_database_backup.sqlite
 
 framework:
     test: ~
@@ -31,6 +33,6 @@ security:
     firewalls:
         main:
             http_basic: ~
-        login:
-            http_basic: ~
+#        login:
+#            http_basic: ~
 
