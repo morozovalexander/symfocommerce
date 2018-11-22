@@ -42,7 +42,7 @@ class AdminControllerTest extends WebTestCase
         ]);
 
         $client->followRedirects();
-        $crawler = $client->request('GET', 'admin/');
+        $crawler = $client->request('GET', '/admin/');
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
         $this->assertGreaterThanOrEqual(
@@ -54,9 +54,9 @@ class AdminControllerTest extends WebTestCase
 
     public function getUrlsForRegularUsers()
     {
-        yield ['GET', 'admin/'];
-        yield ['GET', 'admin/category'];
-        yield ['GET', 'admin/category/1/edit'];
-        yield ['DELETE', 'admin/category/1'];
+        yield ['GET', '/admin/'];
+        yield ['GET', '/admin/category'];
+        yield ['DELETE', '/admin/category/1'];
+        yield ['GET', '/admin/category/1/edit'];
     }
 }
