@@ -11,7 +11,7 @@
 {% endblock title %}
 
 {% block page_content -%}
-    <h3>{{ 'Manufacturer list'|trans }}</h3>
+    <h3 id="admin-manufacturers-index">{{ 'Manufacturer list'|trans }}</h3>
     <p>
         <a href="{{ path('admin_manufacturer_new') }}">
             <span class="glyphicon glyphicon-plus"></span>
@@ -31,7 +31,9 @@
         {% for entity in entities %}
             <tr>
                 <td>
-                    <a href="{{ path('admin_manufacturer_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                    <a class="manufacturer-name" href="{{ path('admin_manufacturer_show', { 'id': entity.id }) }}">
+                        {{ entity.name }}
+                    </a>
                 </td>
                 <td>
                     {{ entity.description|striptags|slice(0,300) }}...
