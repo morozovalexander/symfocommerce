@@ -38,7 +38,7 @@ class ManufacturerControllerTest extends WebTestCase
         $this->assertGreaterThanOrEqual(
             1,
             $crawler->filter('#admin-manufacturers-index')->count(),
-            'Manufacturers list shownx.'
+            'Manufacturers list title shown.'
         );
 
         $this->assertGreaterThanOrEqual(

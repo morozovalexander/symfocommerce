@@ -13,7 +13,7 @@ use Eshop\ShopBundle\Entity\News;
 /**
  * News controller.
  *
- * @Route("/admin_news")
+ * @Route("/admin/news")
  */
 class NewsController extends Controller
 {

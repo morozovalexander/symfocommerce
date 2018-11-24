@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block page_content -%}
-    <h3>{{ 'News list'|trans }}</h3>
+    <h3 id="admin-news-index">{{ 'News list'|trans }}</h3>
     <p>
         <a href="{{ path('admin_news_new') }}">
             <span class="glyphicon glyphicon-plus"></span>
@@ -24,7 +24,9 @@
         {% for entity in entities %}
             <tr>
                 <td>
-                    <a href="{{ path('admin_news_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+                    <a class="news-title" href="{{ path('admin_news_show', { 'id': entity.id }) }}">
+                        {{ entity.title }}
+                    </a>
                 </td>
                 <td>
                     {{ entity.text|slice(0, 130) }}...

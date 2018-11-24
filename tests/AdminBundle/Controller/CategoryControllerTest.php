@@ -38,7 +38,7 @@ class CategoryControllerTest extends WebTestCase
         $this->assertGreaterThanOrEqual(
             1,
             $crawler->filter('#admin-categories-index')->count(),
-            'Categories list shown.'
+            'Categories list title shown.'
         );
 
         $this->assertGreaterThanOrEqual(
