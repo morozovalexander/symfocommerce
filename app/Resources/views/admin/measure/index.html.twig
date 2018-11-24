@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block page_content -%}
-    <h3>{{ 'Measure list'|trans }}</h3>
+    <h3 id="admin-measures-index">{{ 'Measure list'|trans }}</h3>
     <p>
         <a href="{{ path('admin_measure_new') }}">
             <span class="glyphicon glyphicon-plus"></span>
@@ -23,7 +23,9 @@
         {% for entity in entities %}
             <tr>
                 <td>
-                    <a href="{{ path('admin_measure_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                    <a class="measure-name" href="{{ path('admin_measure_show', { 'id': entity.id }) }}">
+                        {{ entity.name }}
+                    </a>
                 </td>
                 <td>
                     <a href="{{ path('admin_measure_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
