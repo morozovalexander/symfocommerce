@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block page_content -%}
-    <h3>{{ 'Static pages'|trans }}</h3>
+    <h3 id="admin-staticpage-index">{{ 'Static pages'|trans }}</h3>
     <p>
         <a href="{{ path('admin_staticpage_new') }}">
             <span class="glyphicon glyphicon-plus"></span>
@@ -25,7 +25,9 @@
         {% for entity in entities %}
             <tr>
                 <td>
-                    <a href="{{ path('admin_staticpage_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+                    <a class="staticpage-title" href="{{ path('admin_staticpage_show', { 'id': entity.id }) }}">
+                        {{ entity.title }}
+                    </a>
                 </td>
                 <td>
                     {{ entity.orderNum }}
