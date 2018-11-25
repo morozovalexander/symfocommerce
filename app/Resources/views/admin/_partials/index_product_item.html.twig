@@ -1,5 +1,7 @@
 <tr data-id="{{ product.id }}">
-    <td><a href="{{ path('admin_product_show', { 'id': product.id }) }}">{{ product.name }}</a></td>
+    <td>
+        <a class="product-name" href="{{ path('admin_product_show', { 'id': product.id }) }}">{{ product.name }}</a>
+    </td>
     <td>
         <a href="{{ path('admin_category_show', {'id': product.category.id}) }}">
             {{ product.category }}
