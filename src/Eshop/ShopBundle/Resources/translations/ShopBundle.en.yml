@@ -1,0 +1,159 @@
+# Layout
+layout:
+    navbar:
+        sitename: Symfocommerce
+        home: Home
+        news: News
+        favourites: Favourites
+        information: Information
+        contacts: Contacts
+        discounts: Discounts
+        adminpanel: Admin panel
+        loggedas: Logged as
+        signin: Sign in
+        logout: Logout
+        login: Login
+        enter: Enter
+        signup: Sign up
+        admin: Admin
+    messages:
+        mustberegistered: You must be registered for this
+        productnotfound: Product not found
+    index:
+        latestproducts: Latest products
+        featuredproducts: Featured products
+    lastseen:
+        header: Your last seen products
+
+# Categories menu
+categories:
+    menu:
+        header: Categories
+
+# Manufacturers menu
+manufacturers:
+    menu:
+        header: Manufacturers
+
+# Category page
+category:
+    view:
+        grid: Grid
+        list: List
+    sort:
+        by: Sort by
+        default: Default
+        price: Price
+        name: Name
+    noproducts: Sorry, no products in this category yet!
+
+# Manufacturer page
+manufacturer:
+    view:
+        grid: Grid
+        list: List
+    sort:
+        by: Sort by
+        default: Default
+        price: Price
+        name: Name
+    noproducts: Sorry, no products of this manufacturer yet!
+
+# currency money
+currency: $
+
+# Cart buttons and order pages
+cart:
+    addtocart: Add to cart
+    navbar:
+        goods: goods for
+    title:
+        cart: Cart
+    isempty: Your cart is empty
+    isemptyyet: Your cart is empty yet
+    continue: continue shopping
+    yourcart: Your cart
+    table:
+        product: Product
+        quantity: Quantity
+        price: Price
+        sum: Sum
+        totalsum: Total sum of the order
+    checkout: CHECKOUT
+    clear: Clear
+    pleasereg: Please Registrate!
+    regadvadtages: Please registrate to use all site advantage!
+    login: Login
+    register: Register
+    continuewithout: Continue without registration
+
+orderform:
+    orderform: Order Form
+    name: Name
+    email: Email
+    phone: Phone
+    address: Address
+    yourcomment: Your comment
+    submit: Submit
+    totalsumis: Total sum is
+
+thankyou:
+    handleorder: Thank you! We handle your oder as soon as possible!
+    continue: continue shopping
+    thankyou: Thank you!
+
+# News
+news:
+    nonews: No news yet
+
+# Slider
+slider:
+    previous: previous
+    next: next
+
+# Search
+search:
+    searchfor: Search for
+    search: search
+
+#email notifications
+notification:
+    neworder: You have recieved a new order
+
+#error pages
+errors:
+    pnf:
+        header: Page not found
+        description: The requested page couldn't be located. Checkout for any URL misspelling or return to the homepage
+        tohomepage: To homepage
+    err:
+        header: Ooops! Something went wrong!
+        description: An error was occuped. We will fix it as soon as possible, you can go to the homepage
+        tohomepage: To homepage
+
+#product page
+product:
+    notavailable: Sorry, this product is not available!
+
+#favourites
+favourites:
+    view:
+        grid: Grid
+        list: List
+    sort:
+        by: Sort by
+        default: Default
+        price: Price
+        name: Name
+        added: Added
+    yourfavouriteproducts: Your Favourite Products
+    noproducts: You have not favourite products yet!
+
+#registration
+registration:
+    firstname: Firstname
+    lastname: Lastname
+    phone: Phone number
+    address: Address
+    successful: Registration completed successful!
+    back: Back

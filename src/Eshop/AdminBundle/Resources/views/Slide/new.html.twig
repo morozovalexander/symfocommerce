@@ -1,0 +1,20 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block page_content -%}
+    <h3>{{ 'Slide creation'|trans }}</h3>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <input type="submit" value="{{ 'Create'|trans }}" class="btn btn-success"/>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_slide') }}">
+        {{ 'Back to the list'|trans }}
+    </a>
+{% endblock page_content %}

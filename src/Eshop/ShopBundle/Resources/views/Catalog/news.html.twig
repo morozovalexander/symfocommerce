@@ -1,0 +1,33 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ 'layout.navbar.sitename'|trans }} - {{ 'layout.navbar.news'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    {% if news|length %}
+        {% for entity in news %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="well">
+                        <h4>
+                            <strong>{{ entity.title }}</strong>
+                        </h4>
+                        <div>
+                            {{ entity.text|rawdescr|nl2br }}
+                        </div>
+                        <p class="pull-right">{{ entity.date|date() }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>{{ 'news.nonews'|trans }}</h3>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+            {{ knp_pagination_render(news) }}
+        </div>
+    </div>
+{% endblock page_content %}

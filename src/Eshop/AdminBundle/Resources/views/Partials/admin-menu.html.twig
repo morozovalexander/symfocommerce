@@ -1,0 +1,42 @@
+{% set route = app.request.get('_route') %}
+
+<ul class="nav nav-sidebar">
+    <li {{ route == 'admin_orders' ? 'class="active"' }}>
+        <a href="{{ path('admin_orders') }}">{{ 'Orders'|trans }}</a>
+    </li>
+    <li {{ route == 'admin_user_list' ? 'class="active"' }}>
+        <a href="{{ path('admin_user_list') }}">{{ 'User list'|trans }}</a>
+    </li>
+</ul>
+
+<ul class="nav nav-sidebar">
+    <li {{ route == 'admin_product' ? 'class="active"' }}>
+        <a href="{{ path('admin_product') }}">{{ 'Products'|trans }}</a>
+    </li>
+    <li {{ route == 'admin_category' ? 'class="active"' }}>
+        <a href="{{ path('admin_category') }}">{{ 'Categories'|trans }}</a>
+    </li>
+    <li {{ route == 'admin_manufacturer' ? 'class="active"' }}>
+        <a href="{{ path('admin_manufacturer') }}">{{ 'Manufacturers'|trans }}</a>
+    </li>
+    <li {{ route == 'admin_measure' ? 'class="active"' }}>
+        <a href="{{ path('admin_measure') }}">{{ 'Measures'|trans }}</a>
+    </li>
+</ul>
+
+<ul class="nav nav-sidebar">
+    <li {{ route == 'admin_news' ? 'class="active"' }}>
+        <a href="{{ path('admin_news') }}">{{ 'News'|trans }}</a>
+    </li>
+    <li {{ route == 'admin_slide' ? 'class="active"' }}>
+        <a href="{{ path('admin_slide') }}">{{ 'Slides'|trans }}</a>
+    <li {{ route == 'admin_staticpage' ? 'class="active"' }}>
+        <a href="{{ path('admin_staticpage') }}">{{ 'Static pages'|trans }}</a>
+    </li>
+    <li {{ route == 'admin_featured' ? 'class="active"' }}>
+        <a href="{{ path('admin_featured') }}">{{ 'Featured products'|trans }}</a>
+    </li>
+    <li {{ route == 'admin_settings' ? 'class="active"' }}>
+        <a href="{{ path('admin_settings') }}">{{ 'Site settings'|trans }}</a>
+    </li>
+</ul>

@@ -1,0 +1,159 @@
+# Layout
+layout:
+    navbar:
+        sitename: Symfocommerce
+        home: Главная
+        news: Новости
+        favourites: Избранные
+        information: Информация
+        contacts: Контакты
+        discounts: Скидки
+        adminpanel: Панель управления
+        loggedas: Вы вошли как
+        signin: Войти
+        logout: Выйти
+        login: Войти
+        enter: Войти
+        signup: Зарегистрироваться
+        admin: Админ
+    messages:
+        mustberegistered: Для этого действия необходима регистрация
+        productnotfound: Продукт не найден
+    index:
+        latestproducts: Новые поступления
+        featuredproducts: Рекомендованные
+    lastseen:
+        header: Вы недавно смотрели
+
+# Categories menu
+categories:
+    menu:
+        header: Категории
+
+# Manufacturers menu
+manufacturers:
+    menu:
+        header: Производители
+
+# Category page
+category:
+    view:
+        grid: Сетка
+        list: Список
+    sort:
+        by: Сортировать по
+        default: Умолчанию
+        price: Цене
+        name: Названию
+    noproducts: Извините, нет товаров в данной категории!
+
+# Manufacturer page
+manufacturer:
+    view:
+        grid: Сетка
+        list: Список
+    sort:
+        by: Сортировать по
+        default: Умолчанию
+        price: Цене
+        name: Названию
+    noproducts: Извините, нет товаров данного производителя!
+
+# currency money
+currency: р.
+
+# Cart buttons and order pages
+cart:
+    addtocart: В корзину
+    navbar:
+        goods: товаров на
+    title:
+        cart: Корзина
+    isempty: Ваша корзина пуста
+    isemptyyet: Ваша корзина пока что пуста
+    continue: продолжить покупки
+    yourcart: Ваша корзина
+    table:
+        product: Продукт
+        quantity: Количество
+        price: Цена
+        sum: Сумма
+        totalsum: Cумма заказа
+    checkout: ПРОДОЛЖИТЬ
+    clear: Очистить
+    pleasereg: Пожалуйста зарегистрируйтесь!
+    regadvadtages: Пожалуйста зарегистрируйтесь для того, чтобы использовать все преимущества сайта!
+    login: Войти
+    register: Зарегистрироваться
+    continuewithout: Продолжить без регистрации
+
+orderform:
+    orderform: Форма заказа
+    name: Имя
+    email: Email
+    phone: Телефон
+    address: Адрес
+    yourcomment: Комментарий к закау
+    submit: Заказать
+    totalsumis: Сумма заказа
+
+thankyou:
+    handleorder: Спасибо! Ваш заказ принят и поступил в обработку!
+    continue: продолжить покупки
+    thankyou: Cпасибо!
+
+# News
+news:
+    nonews: Еще нет новостей
+    
+# Slider
+slider:
+    previous: предыдущий
+    next: следующий
+
+# Search
+search:
+    searchfor: Поиск по запросу
+    search: поиск
+
+#email notifications
+notification:
+    neworder: Вы получили новый заказ
+
+#error pages
+errors:
+    pnf:
+        header: Страница не найдена
+        description: Запрашиваемая страница не найдена. Проверьте правильность написания URL или вернитесь на главную страницу
+        tohomepage: На главную страницу
+    err:
+        header: Упс! Что-то пошло не так!
+        description: Возникла ошибка. Мы исправим ее так скоро, как сможем, а пока предлагаем перейти на главную страницу
+        tohomepage: На главную страницу
+
+#product page
+product:
+    notavailable: Извините, товара нет в наличии!
+
+#favourites
+favourites:
+    view:
+        grid: Сетка
+        list: Список
+    sort:
+        by: Сортировать по
+        default: Умолчанию
+        price: Цене
+        name: Названию
+        added: Добавлен
+    yourfavouriteproducts: Ваши избранные товары
+    noproducts: У вас нет избранных товаров!
+
+#registration
+registration:
+    firstname: Имя
+    lastname: Фамилия
+    phone: Телефон
+    address: Адрес
+    successful: Регистрация прошла успешно!
+    back: Вернуться

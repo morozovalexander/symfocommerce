@@ -1,0 +1,38 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block page_content -%}
+    <h3>{{ 'Measure edit'|trans }}</h3>
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <input type="submit" value="{{ 'Edit'|trans }}" class="btn btn-warning"/>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+
+    <div class="col-md-5 col-md-offset-2 ">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{{ path('admin_measure') }}">
+                    {{ 'Back to the list'|trans }}
+                </a>
+            </li>
+            <li class="list-group-item">
+                {{ form_start(delete_form, { 'attr': {'class': 'bootbox-submit-confirm'} }) }}
+                {{ form_widget(delete_form) }}
+                <input type="submit" value="{{ 'Delete'|trans }}" class="btn btn-danger"/>
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    </div>
+{% endblock page_content %}

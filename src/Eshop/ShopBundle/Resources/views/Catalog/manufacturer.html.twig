@@ -1,0 +1,54 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ manufacturer.name }}
+{% endblock title %}
+
+{% block metadescription %}{{ manufacturer.metaDescription }}{% endblock %}
+{% block metakeys %}{{ manufacturer.metaKeys }}{% endblock %}
+
+{% block page_content -%}
+    <div class="well well-sm">
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>{{ 'manufacturer.view.list'|trans }}</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                        class="glyphicon glyphicon-th"></span>{{ 'category.view.grid'|trans }}</a>
+        </div>
+        <strong>{{ manufacturer.name }}</strong>
+        <div class="dropdown pull-right">
+            <strong>{{ 'manufacturer.sort.by'|trans }}</strong>
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                {{ sortedby|trans }}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>{{ knp_pagination_sortable(products, 'manufacturer.sort.name'|trans, 'p.name') }}</li>
+                <li>{{ knp_pagination_sortable(products, 'manufacturer.sort.price'|trans, 'p.price') }}</li>
+            </ul>
+        </div>
+    </div>
+    <div id="products" class="row list-group">
+    {% if products|length %}
+        {% for product in products %}
+            {{ include('@Shop/Partials/productPreview.html.twig') }}
+        {% endfor %}
+    {% else %}
+        <h3>{{ 'manufacturer.noproducts'|trans }}</h3>
+    {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+            {{ knp_pagination_render(products) }}
+        </div>
+    </div>
+    <div class="row well well-lg">
+        <h3 class="group inner list-group-item-heading">{{ manufacturer.name }}</h3>
+        <div class="caption">
+            <p class="group inner list-group-item-text">
+                {{ manufacturer.description|rawdescr|nl2br }}
+            </p>
+        </div>
+    </div>
+{% endblock page_content %}

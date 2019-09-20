@@ -1,0 +1,50 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block page_content -%}
+    <h3>{{ 'News'|trans }}</h3>
+    <table class="record_properties table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th>{{ 'Title'|trans }}</th>
+            <td>{{ entity.title }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Slug'|trans }}</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Text'|trans }}</th>
+            <td>
+                {{ entity.text|rawdescr|nl2br }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ 'Meta keys'|trans }}</th>
+            <td>{{ entity.metaKeys }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Meta description'|trans }}</th>
+            <td>{{ entity.metaDescription }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ path('admin_news') }}">
+                {{ 'Back to the list'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ path('admin_news_edit', { 'id': entity.id }) }}">
+                {{ 'Edit'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            {{ form_start(delete_form, { 'attr': {'class': 'bootbox-submit-confirm'} }) }}
+            {{ form_widget(delete_form) }}
+            <input type="submit" value="{{ 'Delete'|trans }}" class="btn btn-danger"/>
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock page_content %}

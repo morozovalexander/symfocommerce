@@ -1,0 +1,124 @@
+eShop: Iron Club
+Products: Продукты
+Categories: Категории
+Manufacturers: Производтели
+News: Новости
+Orders: Заказы
+Measures: Меры
+Slides: Слайды
+Static pages: Статичные страницы
+Logout: Выйти
+Administration panel: Панель администратора
+Hello, choose a category!: Выберите категорию для начала работы!
+Products list: Список товаров
+Create new Product: Создать новый товар
+Name: Название
+Category: Категория
+Manufacturer: Производитель
+Price: Цена
+Photo: Фото
+Q-ty: Кол-во
+Actions: Действия
+show: показать
+Show: Показать
+edit: редактировоать
+Edit: Редактировоать
+no photos: нет фото
+no photo: нет фото
+Product: Продукт
+Slug: Слаг
+Description: Описание
+Image: Изображение
+Quantity: Количество
+Measure: Мера
+Measure quantity: Количество меры
+Meta keys: Ключевые слова, SEO
+Meta description: Описание страницы, SEO
+Back to the list: Назад к списку
+Products list: Список продуктов
+Product edit: Редактировать продукт
+generate slug: сгенерировать слаг
+remove: удалить
+attach photos here: прикрепите фото
+Product create: Создание продукта
+Category list: Список категорий
+Category edit: Редактирование категории
+Category creation: Создание категории
+Create a new category: Создать категорию
+Manufacturer list: Список производителей
+Manufacturer edit: Редактирвоание производителя
+Manufacturer creation: Создание производителя
+Create a new manufacturer: Создать производителя
+News list: Список новостей
+News edit: Редактировать новость
+News creation: Создание новости
+Create a new news: Создать новость
+Measure list: Список мер
+Measure edit: Редактировать меру
+Measure creation: Создание меры
+Create a new measure: Создать меру
+Title: Заголовок
+Text: Текст
+Orders list: Список заказов
+No orders yet: Заказов еще нет
+Client name: Имя клиента
+Order date: Дата заказа
+Id: Id
+Client Name: Имя клиента
+Email: Email
+Phone: Телефон
+Address: Адрес
+Comment: Комментарий
+No comment: Без комментария
+Slide: Слайд
+Slide list: Список слайдов
+Slide edit: Редактировать слайд
+Slide creation: Создание слайда
+Create a new slide: Создать слайд
+File: Файл
+Slide order: Порядковый номер слайда
+Update: Обновить
+Create: Создать
+Delete: Удалить
+Enabled: Активен
+yes: да
+no: нет
+Please sign in: Авторизуйтесь
+Previous: Предыдущая
+Next: Следующая
+Create a new page: Создать статичную страницу
+Page order: Порядковый номер страницы
+Static page edit: Редактирование статичной страницы
+Static page creation: Создание статичной страницы
+Static page: Статичная страница
+Content: Контент
+Order num: Порядковый номер
+Order No: Заказ
+currency: р.
+Order totalsum: Общая сумма заказа
+Total: Всего
+Site settings: Настройки сайта
+Settings list: Список настроек
+Show empty categories: Показывать категории без товаров
+Show empty manufacturers: Показывать прозводителей без товаров
+User list: Список пользователей
+Username: Имя пользователя
+Registration date: Дата регистрации
+User: Пользователь
+Firstname: Имя
+Lastname: Фамилия
+Phone number: Телефон
+Join date: Дата регистрации
+Featured products: Избранные продукты
+Featured products list: Список избранных продуктов
+save: сохранить
+cancel: отмена
+featured: избранный
+not featured: не избранный
+not registered: не зарегистрирован
+Product deleted: продукт удален
+Are you sure?: Вы уверены?
+OK: OK
+Search: Search
+Search phrase: Search phrase
+Products not sound: Products not sound

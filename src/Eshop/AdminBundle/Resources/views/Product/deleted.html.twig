@@ -1,0 +1,15 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block page_content -%}
+    <h3>{{ 'Product'|trans }}</h3>
+
+    <p>{{ 'Product deleted'|trans }}</p>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ path('admin_product') }}">
+                {{ 'Back to the list'|trans }}
+            </a>
+        </li>
+    </ul>
+{% endblock page_content %}

@@ -1,0 +1,77 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
+          type="text/css"/>
+{% endblock stylesheets %}
+
+{% block page_content -%}
+    <h3>{{ 'Slide'|trans }}</h3>
+
+    <table class="record_properties table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th>{{ 'Name'|trans }}</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Enabled'|trans }}</th>
+            <td>
+                {% if entity.enabled %}
+                    {{ 'yes'|trans }}
+                {% else %}
+                    {{ 'no'|trans }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ 'Image'|trans }}</th>
+            <td>
+                {% if entity.path %}
+                    <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
+                        <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                    </a>
+                {% else %}
+                    {{ 'no photos'|trans }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ 'Slide order'|trans }}</th>
+            <td>{{ entity.slideOrder }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ path('admin_slide') }}">
+                {{ 'Back to the list'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ path('admin_slide_edit', { 'id': entity.id }) }}">
+                {{ 'Edit'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            {{ form_start(delete_form, { 'attr': {'class': 'bootbox-submit-confirm'} }) }}
+            {{ form_widget(delete_form) }}
+            <input type="submit" value="{{ 'Delete'|trans }}" class="btn btn-danger"/>
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox();
+        });
+    </script>
+{% endblock javascripts %}

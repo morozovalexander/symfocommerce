@@ -1,0 +1,145 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ 'cart.title.cart'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            {% if products|length %}
+                <div class="row">
+                    <div>
+                        <h2>{{ 'cart.yourcart'|trans }}</h2>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'cart.table.product'|trans }}</th>
+                        <th>{{ 'cart.table.quantity'|trans }}</th>
+                        <th></th>
+                        <th>{{ 'cart.table.price'|trans }}</th>
+                        <th style="text-align: right;">{{ 'cart.table.sum'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr class="product-position">
+                            <td class="col-md-1">{{ loop.index }}</td>
+                            <td>
+                                <a href="#" class="thumbnail pull-left" style="margin-right: 15px;">
+                                    {% if product.product.images|length %}
+                                        <img src="{{ asset( ('uploads/gallery/' ~ product.product.images.first().path) | imagine_filter('some_thumb')) }}"
+                                             alt="{{ product.product.name }}">
+                                    {% else %}
+                                        <img src="{{ asset( ('uploads/gallery/no_image_available.png') | imagine_filter('some_thumb')) }}"
+                                             alt="{{ product.product.name }}">
+                                    {% endif %}
+                                </a>
+                                <div>
+                                    <a href="{{ path('show_product', {'slug' : product.product.slug}) }}">
+                                        <strong>{{ product.product.name }}</strong>
+                                    </a>
+                                    <ul class="list-unstyled">
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="col-md-2">
+                                <div class="form-group">
+                                    <div>
+                                        <input type="number" name="quantity" required="required" min="1"
+                                               data-id="{{ product.product.id }}" class="form-control quantity"
+                                               value="{{ product.quantity }}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-md-1">
+                                <a href="#" class="btn btn-danger glyphicon glyphicon-remove product-remove"
+                                   data-toggle="confirmation" data-popout="true" data-placement="left">
+                                    <i class="icon-trash icon-white"></i>
+                                </a>
+                            </td>
+                            <td class="col-md-1 price">
+                                <span>{{ product.price }}</span>
+                            </td>
+                            <td class="col-md-1 sum" style="text-align: right">
+                                {{ product.sum }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="6" style="text-align: right;">
+                            <strong>{{ 'cart.table.totalsum'|trans }}:</strong>
+                            <span class="totalsum">{{ totalsum }} {{ 'currency'|trans }}</span>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+                <div class="row">
+                    <div>
+                        <div class="pull-right">
+                            <a href="{{ path('orderform') }}" class="btn btn-success glyphicon glyphicon-ok"
+                               id="{% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}showModal{% endif %}">
+                                {{ 'cart.checkout'|trans }}
+                            </a>
+                            <a href="#" class="btn btn-danger glyphicon glyphicon-trash clear-cart"
+                               data-toggle="confirmation" data-popout="true" data-placement="left">
+                                {{ 'cart.clear'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div>
+                        <h2>{{ 'cart.isemptyyet'|trans }}</h2>
+                        <p><a href="{{ path('index_main') }}">{{ 'cart.continue'|trans }}</a></p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="authSuggest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'cart.pleasereg'|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ 'cart.regadvadtages'|trans }}
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-success">
+                        {{ 'cart.login'|trans }}
+                    </a>
+                    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-success">
+                        {{ 'cart.register'|trans }}
+                    </a>
+                    <a href="{{ path('orderform') }}" class="btn btn-primary">
+                        {{ 'cart.continuewithout'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function (e) {
+            $('#showModal').on('click', function (e) {
+                e.preventDefault();
+                $('#authSuggest').modal('show');
+            });
+        });
+    </script>
+{% endblock javascripts %}

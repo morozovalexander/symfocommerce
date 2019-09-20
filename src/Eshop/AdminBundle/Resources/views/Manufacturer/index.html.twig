@@ -1,0 +1,73 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
+          type="text/css"/>
+{% endblock stylesheets %}
+
+{% block title %}
+    {{ 'Manufacturer list'|trans }} - {{ 'Administration panel'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <h3>{{ 'Manufacturer list'|trans }}</h3>
+    <p>
+        <a href="{{ path('admin_manufacturer_new') }}">
+            <span class="glyphicon glyphicon-plus"></span>
+            {{ 'Create a new manufacturer'|trans }}
+        </a>
+    </p>
+    <table class="records_list table table-striped">
+        <thead>
+        <tr>
+            <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Name'|trans, 'm.name') }}</th>
+            <th class="col-md-9">{{ knp_pagination_sortable(entities, 'Description'|trans, 'm.description') }}</th>
+            <th class="col-md-1">{{ knp_pagination_sortable(entities, 'Photo'|trans, 'a.path') }}</th>
+            <th class="col-md-1">{{ 'Actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    <a href="{{ path('admin_manufacturer_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                </td>
+                <td>
+                    {{ entity.description|slice(0,300) }}...
+                </td>
+                <td>
+                    {% if entity.path %}
+                        <a class="fancybox" rel="group" href="{{ asset(('uploads/images/' ~ entity.path)) }}">
+                            <img src="{{ asset( ('uploads/images/' ~ entity.path) | imagine_filter('some_thumb')) }}"/>
+                        </a>
+                    {% else %}
+                        {{ 'no photos'|trans }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('admin_manufacturer_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
+                    <a href="{{ path('admin_manufacturer_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-md-12">
+            {{ knp_pagination_render(entities) }}
+        </div>
+    </div>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox();
+        });
+    </script>
+{% endblock javascripts %}

@@ -1,0 +1,115 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/summernote.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block page_content -%}
+    <h3>{{ 'Manufacturer edit'|trans }}</h3>
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(edit_form) }}
+    <div class="form-group">
+        {{ form_label(edit_form.name, 'Name'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.description, 'Description'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.description, {'attr': {'class': 'summernote'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.file, 'Image'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.file) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.metaKeys) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.metaDescription) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.slug, 'Slug'|trans) }}
+        <div class="col-sm-10">
+            {{ form_errors(edit_form.slug) }}
+            {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <input type="submit" value="{{ 'Edit'|trans }}" class="btn btn-warning"/>
+        </div>
+    </div>
+    {{ form_rest(edit_form) }}
+    {{ form_end(edit_form) }}
+
+    <div class="col-md-5 col-md-offset-2 ">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{{ path('admin_manufacturer') }}">
+                    {{ 'Back to the list'|trans }}
+                </a>
+            </li>
+            <li class="list-group-item">
+                {{ form_start(delete_form, { 'attr': {'class': 'bootbox-submit-confirm'} }) }}
+                {{ form_widget(delete_form) }}
+                <input type="submit" value="{{ 'Delete'|trans }}" class="btn btn-danger"/>
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    </div>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/speakingurl.min.js') }}"></script>
+    <script src="{{ asset('assets/js/summernote.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.generate-slug').on('click', function (e) {
+                e.preventDefault();
+                //get field value
+                var productName = $('.product-name').val();
+                var slugInut = $('.product-slug');
+                var nameToSlug = productName;
+
+                //generate slug
+                var slug = getSlug(nameToSlug, {
+                    custom: {
+                        '%': ' percent '
+                    },
+                    uric: true
+                });
+                //record to slug input
+                slugInut.val(slug);
+            });
+        });
+        {% include '@Admin/Partials/initSummernote.js.twig' with {'height': 300} %}
+    </script>
+{% endblock javascripts %}

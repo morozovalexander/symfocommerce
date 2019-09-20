@@ -1,0 +1,19 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ 'thankyou.thankyou'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h2>{{ 'thankyou.handleorder'|trans }}</h2>
+            <p>
+                <a href="{{ path('index_main') }}">
+                    {{ 'thankyou.continue'|trans }}
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock page_content %}

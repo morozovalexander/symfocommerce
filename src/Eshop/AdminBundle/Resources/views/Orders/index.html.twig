@@ -1,0 +1,58 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block title %}
+    {{ 'Orders list'|trans }} - {{ 'Administration panel'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <h3>{{ 'Orders list'|trans }}</h3>
+    {% if orders|length %}
+        <table class="records_list table table-striped">
+            <thead>
+            <tr>
+                <th class="col-md-2">{{ 'Order No'|trans }} #</th>
+                <th class="col-md-3">{{ knp_pagination_sortable(orders, 'Client name'|trans, 'o.name') }}</th>
+                <th class="col-md-2">{{ knp_pagination_sortable(orders, 'User'|trans, 'u.username') }}</th>
+                <th class="col-md-1">{{ knp_pagination_sortable(orders, 'Order totalsum'|trans, 'o.sum') }}</th>
+                <th class="col-md-2">{{ knp_pagination_sortable(orders, 'Order date'|trans, 'o.date') }}</th>
+                <th class="col-md-2">{{ 'Actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_order_show', { 'id': order.id }) }}">{{ order.id }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_order_show', { 'id': order.id }) }}">{{ order.name }}</a>
+                    </td>
+                    <td>
+                        {% if order.user %}
+                            <a href="{{ path('admin_user_info', { 'id': order.user.id }) }}">{{ order.user.username }}</a>
+                        {% else %}
+                            {{ 'not registered'|trans }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ order.sum }} {{ 'currency'|trans }}
+                    </td>
+                    <td>
+                        {{ order.date|date('Y-m-d H:i') }}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_order_show', { 'id': order.id }) }}">{{ 'Show'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <strong>{{ 'No orders yet'|trans }}</strong>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            {{ knp_pagination_render(orders) }}
+        </div>
+    </div>
+{% endblock page_content %}

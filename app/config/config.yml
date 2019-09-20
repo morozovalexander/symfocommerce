@@ -1,0 +1,155 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
+framework:
+    #esi:             ~
+    translator:      { fallback: %my_locale% }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%my_locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        cookie_lifetime: 2592000 # 30 days
+        name:        symfocommerce
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:          pdo_mysql
+                host:            "%database_host%"
+                port:            "%database_port%"
+                dbname:          "%database_name%"
+                user:            "%database_user%"
+                password:        "%database_password%"
+                server_version:  "%database_version%"
+                charset:         UTF8
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: file }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: Eshop\UserBundle\Entity\User
+    registration:
+        form:
+            type: Eshop\UserBundle\Form\Type\RegistrationType
+    from_email:
+        address: you@example.com
+        sender_name: You
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        some_thumb:
+            quality: 75
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
+        category_mainpage_thumb:
+            quality: 100
+            filters:
+                thumbnail: { size: [300, 300], mode: outbound }
+        product_preview_thumb:
+            quality: 100
+            filters:
+                thumbnail: { size: [150, 150], mode: outbound }
+        product_main_thumb:
+            quality: 100
+            filters:
+                thumbnail: { size: [600, 600], mode: outbound }
+        slide:
+            quality: 100
+            filters:
+                thumbnail: { size: [1500, 500], mode: outbound }
+
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: dropzone
+
+presta_sitemap:
+    timetolive: 3600
+
+hwi_oauth:
+    connect:
+        account_connector: my_user_provider
+    firewall_names: [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            # these properties will be used/redefined later in the custom FOSUBUserProvider service.
+            facebook: facebook_id
+            google: google_id
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           "%facebook_app_id%"
+            client_secret:       "%facebook_app_secret%"
+            scope:               ""
+        google:
+            type:                google
+            client_id:           "%google_app_id%"
+            client_secret:       "%google_app_secret%"
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"

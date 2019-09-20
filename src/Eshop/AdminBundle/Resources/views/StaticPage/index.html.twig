@@ -1,0 +1,48 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block title %}
+    {{ 'Static pages'|trans }} - {{ 'Administration panel'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <h3>{{ 'Static pages'|trans }}</h3>
+    <p>
+        <a href="{{ path('admin_staticpage_new') }}">
+            <span class="glyphicon glyphicon-plus"></span>
+            {{ 'Create a new page'|trans }}
+        </a>
+    </p>
+    <table class="records_list table table-striped">
+        <thead>
+        <tr>
+            <th class="col-md-5">{{ 'Title'|trans }}</th>
+            <th class="col-md-2">{{ 'Page order'|trans }}</th>
+            <th class="col-md-2">{{ 'Enabled'|trans }}</th>
+            <th class="col-md-3">{{ 'Actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    <a href="{{ path('admin_staticpage_show', { 'id': entity.id }) }}">{{ entity.title }}</a>
+                </td>
+                <td>
+                    {{ entity.orderNum }}
+                </td>
+                <td>
+                    {% if entity.enabled %}
+                        {{ 'yes'|trans }}
+                    {% else %}
+                        {{ 'no'|trans }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('admin_staticpage_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
+                    <a href="{{ path('admin_staticpage_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock page_content %}

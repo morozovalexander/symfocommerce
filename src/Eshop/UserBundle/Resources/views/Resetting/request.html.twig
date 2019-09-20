@@ -1,0 +1,26 @@
+{% extends "@Shop/layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}
+    {{ 'resetting.request.submit'|trans }}
+{% endblock title %}
+
+{% block page_content %}
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST"
+          class="fos_user_resetting_request form-inline">
+
+        {% if invalid_username is defined %}
+            <p class="text-danger">
+                {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}
+            </p>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="username">{{ 'resetting.request.username'|trans }}</label>
+            <input type="text" id="username" name="username" required="required" class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{{ 'resetting.request.submit'|trans }}</button>
+
+    </form>
+{% endblock page_content %}

@@ -1,0 +1,230 @@
+body {
+    /*min-height: 2000px;*/
+}
+
+.navbar-static-top {
+    margin-bottom: 19px;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+/* Categories main page styles
+-------------------------------------------------- */
+.glyphicon { margin-right:5px; }
+.thumbnail
+{
+    margin-bottom: 20px;
+    padding: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.item.list-group-item
+{
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
+{
+    background: #428bca;
+}
+
+.item.list-group-item .list-group-image
+{
+    margin-right: 10px;
+}
+.item.list-group-item .thumbnail
+{
+    margin-bottom: 0px;
+}
+.item.list-group-item .caption
+{
+    padding: 9px 9px 0px 9px;
+}
+.item.list-group-item:nth-of-type(odd)
+{
+    background: #eeeeee;
+}
+
+.item.list-group-item:before, .item.list-group-item:after
+{
+    display: table;
+    content: " ";
+}
+
+.item.list-group-item img
+{
+    float: left;
+}
+.item.list-group-item:after
+{
+    clear: both;
+}
+.list-group-item-text
+{
+    margin: 0 0 11px;
+}
+
+.list-group-item-heading
+{
+    min-height: 40px;
+    font-size: medium;
+}
+
+/*
+-------------------------------------------------- */
+
+.description-container {
+    min-height: 180px;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.product-title {
+    display: inline-block;
+    height: 70px;
+    overflow: hidden;
+}
+
+.main-categpory-title {
+    display: inline-block;
+    height: 50px;
+    overflow: hidden;
+}
+
+/* top search
+-------------------------------------------------- */
+
+.navbar-collapse {
+    position: relative;
+    padding-top: 30px !important;
+    max-height: 270px;
+}
+.navbar-collapse form[role="search"] {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    z-index: 0;
+}
+.navbar-collapse form[role="search"] button,
+.navbar-collapse form[role="search"] input {
+    padding: 8px 12px;
+    border-radius: 0px;
+    border-width: 0px;
+    color: rgb(119, 119, 119);
+    background-color: rgb(248, 248, 248);
+    border-color: rgb(231, 231, 231);
+    box-shadow: none;
+    outline: none;
+}
+.navbar-collapse form[role="search"] input {
+    padding: 16px 12px;
+    font-size: 14pt;
+    font-style: italic;
+    color: rgb(160, 160, 160);
+    box-shadow: none;
+}
+.navbar-collapse form[role="search"] button[type="reset"] {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-collapse {
+        padding-top: 0px !important;
+        padding-right: 38px !important;
+    }
+    .navbar-collapse form[role="search"] {
+        width: 38px;
+    }
+    .navbar-collapse form[role="search"] button,
+    .navbar-collapse form[role="search"] input {
+        padding: 15px 12px;
+    }
+    .navbar-collapse form[role="search"] input {
+        font-size: 18pt;
+        opacity: 0;
+        display: none;
+        height: 50px;
+    }
+    .navbar-collapse form[role="search"].active {
+        width: 100%;
+    }
+    .navbar-collapse form[role="search"].active button,
+    .navbar-collapse form[role="search"].active input {
+        display: table-cell;
+        opacity: 1;
+    }
+    .navbar-collapse form[role="search"].active input {
+        width: 100%;
+    }
+
+    .navbar-form .form-control {
+        width: 100%; /*This is the issue*/
+    }
+}
+
+
+/*INPUT GROUP WIDTH FIX*/
+/* Boostrap CSS 3.2.0 had these new lines in the navbar-form that
+   were different from 3.1.1 [it's all in @media (min-width: 768px)
+   so this behavior only shows up on higher resolutions] */
+.navbar-form .input-group {
+    display: inline-table;
+    vertical-align: middle;
+}
+.navbar-form .input-group .input-group-addon,
+.navbar-form .input-group .input-group-btn,
+.navbar-form .input-group .form-control {
+    width: auto;  /* HERE IS THE CULPRIT */
+}
+/** SOLUTION: in custom CSS **/
+/* make sure navbar-form's input-group goes 100% i.e. full width of screen
+   to compliment the display: inline-table; that showed up in 3.2.0 */
+.navbar-form .input-group {
+    width: 100%;
+}
+/* override width: auto; that showed up in 3.2.0
+   with at least 1px for the addon or btn (I had an addon) */
+.navbar-form .input-group .input-group-addon,
+.navbar-form .input-group .input-group-btn {
+    width: 1px;
+}
+/* separate .form-control and give it width: 100%; */
+.navbar-form .input-group .form-control {
+    width: 100%;
+}
+/*
+-------------------------------------------------- */
+
+.like {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5em;
+}

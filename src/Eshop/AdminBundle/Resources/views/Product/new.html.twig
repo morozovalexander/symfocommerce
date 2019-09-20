@@ -1,0 +1,157 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/dropzone.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/summernote.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block page_content -%}
+    <h3>{{ 'Product create'|trans }}</h3>
+
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.name, 'Name'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.name, {'attr': {'class': 'product-name'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description, 'Description'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.description, {'attr': {'class': 'summernote'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.price, 'Price'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.price) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.category, 'Category'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.category) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.manufacturer, 'Manufacturer'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.manufacturer) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.quantity, 'Quantity'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.quantity) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.metaKeys, 'Meta keys'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.metaKeys) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.metaDescription, 'Meta description'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.metaDescription) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.measure, 'Measure'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.measure, {'attr': {'class': 'measure-name'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.measureQuantity, 'Measure quantity'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.measureQuantity, {'attr': {'class': 'measure-quantity'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.slug, 'Slug'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.slug, {'attr': {'class': 'product-slug'}}) }}
+        </div>
+    </div>
+    <input type="hidden" name="filenames" id="filenames">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <input type="submit" value="{{ 'Create'|trans }}" class="btn btn-success"/>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+    <div class="panel panel-default" style="margin: 30px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                {{ 'attach photos here'|trans }}
+            </h3>
+        </div>
+        <form action="{{ oneup_uploader_endpoint('gallery') }}" class="dropzone dz-clickable"
+              id="my-dropzone" style="min-height: 100px;" enctype="multipart/form-data">
+        </form>
+    </div>
+
+    <a href="{{ path('admin_product') }}">
+        {{ 'Back to the list'|trans }}
+    </a>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/dropzone.min.js') }}"></script>
+    <script src="{{ asset('assets/js/speakingurl.min.js') }}"></script>
+    <script src="{{ asset('assets/js/summernote.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            Dropzone.options.myDropzone = {
+                init: function () {
+                    thisDropzone = this;
+                    this.on("success", function (file, response) {
+                        var filename = response['image_id'];
+                        //check for normal file uploaded
+                        if (filename) {
+                            $('#filenames').val($('#filenames').val() + filename + ',');
+                        }
+                    });
+                }
+            };
+
+            $('.generate-slug').on('click', function (e) {
+                e.preventDefault();
+                //get field value
+                var productName = $('.product-name').val();
+                var measureQuantity = $('.measure-quantity').val();
+                var measureName = $('.measure-name').find('option:selected').text();
+
+                var slugInut = $('.product-slug');
+                var nameToSlug = productName + '-' + measureQuantity + '-' + measureName;
+
+                //generate slug
+                var slug = getSlug(nameToSlug, {
+                    custom: {
+                        '%': ' percent '
+                    },
+                    uric: true
+                });
+                //record to slug input
+                slugInut.val(slug);
+            });
+        });
+        {% include '@Admin/Partials/initSummernote.js.twig' with {'height': 300} %}
+    </script>
+{% endblock javascripts %}

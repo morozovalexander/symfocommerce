@@ -1,0 +1,51 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+
+services:
+    eshop.upload_listener:
+        class:        Eshop\ShopBundle\EventListener\UploadListener
+        arguments:    ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onUpload }
+
+    app.locale_listener:
+        class: Eshop\ShopBundle\EventListener\LocaleListener
+        arguments:    ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    fos_user.doctrine_registry:
+        alias: doctrine
+
+    app.email_notifier:
+        class:        Eshop\ShopBundle\Service\EmailNotifier
+        arguments:    ["@swiftmailer.mailer", "@router", "@templating"]
+
+    app.site_settings:
+        class:        Eshop\ShopBundle\Service\SettingsService
+        arguments:    ["@doctrine.orm.entity_manager"]
+
+    app.page_utilities:
+        class:        Eshop\ShopBundle\Service\PagesUtilities
+        arguments:    ["@doctrine.orm.entity_manager"]
+
+    my.sitemap.listener:
+        class:        Eshop\ShopBundle\EventListener\SitemapListener
+        arguments:    ["@router", "@doctrine.orm.entity_manager"]
+        tags:
+            - { name: "presta.sitemap.listener" }
+
+    app.form.registration:
+        class:        Eshop\UserBundle\Form\Type\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    app.twig_extension:
+        class:        Eshop\ShopBundle\Twig\RawDescriptionExtension
+        public:       false
+        tags:
+            - { name: twig.extension }
+
+    my_user_provider:
+        class:        Eshop\UserBundle\Security\Core\User\FOSUBUserProvider
+        arguments:    ["@fos_user.user_manager", {facebook: facebook_id, google: google_id}]

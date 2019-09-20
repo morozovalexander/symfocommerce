@@ -1,0 +1,59 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block page_content -%}
+    <h3>{{ 'User'|trans }}</h3>
+
+    <table class="record_properties table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th>{{ 'Firstname'|trans }}</th>
+            <td>{{ user.firstname }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Lastname'|trans }}</th>
+            <td>{{ user.lastname }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Username'|trans }}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Email'|trans }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Phone number'|trans }}</th>
+            <td>{{ user.phone }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Address'|trans }}</th>
+            <td>{{ user.address }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Join date'|trans }}</th>
+            <td>{{ user.joinDate|date('Y-m-d h:i') }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Orders'|trans }}</th>
+            <td>
+                {% if user.orders|length %}
+                    <a href="{{ path('admin_user_orders', {'id': user.id}) }}">
+                        {{ 'Orders'|trans }} ({{ user.orders|length }})
+                    </a>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ path('admin_user_list') }}">
+                {{ 'Back to the list'|trans }}
+            </a>
+        </li>
+    </ul>
+{% endblock page_content %}
+

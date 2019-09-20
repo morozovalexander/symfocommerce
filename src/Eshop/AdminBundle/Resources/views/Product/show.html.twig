@@ -1,0 +1,99 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet"
+          type="text/css"/>
+{% endblock stylesheets %}
+
+{% block page_content -%}
+    <h3>{{ 'Product'|trans }}</h3>
+
+    <table class="record_properties table table-bordered table-striped">
+        <tbody>
+        <tr>
+            <th>{{ 'Name'|trans }}</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Slug'|trans }}</th>
+            <td>{{ entity.slug }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Description'|trans }}</th>
+            <td>
+                {{ entity.description|rawdescr|nl2br }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ 'Price'|trans }}</th>
+            <td>{{ entity.price }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Image'|trans }}</th>
+            <td>
+                {% if entity.images|length %}
+                    {% for image in entity.images %}
+                        <a class="fancybox" rel="group" href="{{ asset(('uploads/gallery/' ~ image.path)) }}">
+                            <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <span class="text-danger">{{ 'no photos'|trans }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ 'Quantity'|trans }}</th>
+            <td>{{ entity.quantity }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Measure'|trans }}</th>
+            <td>{{ entity.measure.name }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Measure quantity'|trans }}</th>
+            <td>{{ entity.measureQuantity }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Meta keys'|trans }}</th>
+            <td>{{ entity.metaKeys }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'Meta description'|trans }}</th>
+            <td>{{ entity.metaDescription }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="{{ path('admin_product') }}">
+                {{ 'Back to the list'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">
+                {{ 'Edit'|trans }}
+            </a>
+        </li>
+        <li class="list-group-item">
+            {{ form_start(delete_form, { 'attr': {'class': 'bootbox-submit-confirm'} }) }}
+            {{ form_widget(delete_form) }}
+            <input type="submit" value="{{ 'Delete'|trans }}" class="btn btn-danger"/>
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/fancybox/jquery.mousewheel-3.0.6.pack.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox();
+        });
+    </script>
+{% endblock javascripts %}

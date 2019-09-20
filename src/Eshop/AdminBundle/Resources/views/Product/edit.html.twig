@@ -1,0 +1,237 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+{% form_theme edit_form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/dropzone.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/fancybox/jquery.fancybox.css') }}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/summernote.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block page_content -%}
+    <h3>{{ 'Product edit'|trans }}</h3>
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(edit_form) }}
+    <div class="form-group">
+        {{ form_label(edit_form.name, 'Name'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.name, {'attr': {'class': 'product-name'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.description, 'Description'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.description, {'attr': {'class': 'summernote'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.price, 'Price'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.price) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.category, 'Category'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.category) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.manufacturer, 'Manufacturer'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.manufacturer) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.quantity, 'Quantity'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.quantity) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.metaKeys, 'Meta keys'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.metaKeys) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.metaDescription, 'Meta description'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.metaDescription) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.measure, 'Measure'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.measure, {'attr': {'class': 'measure-name'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.measureQuantity, 'Measure quantity'|trans) }}
+        <div class="col-sm-10">
+            {{ form_widget(edit_form.measureQuantity, {'attr': {'class': 'measure-quantity'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <a href="#" class="btn btn-default generate-slug">{{ 'generate slug'|trans }}</a>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(edit_form.slug, 'Slug'|trans) }}
+        <div class="col-sm-10">
+            {{ form_errors(edit_form.slug) }}
+            {{ form_widget(edit_form.slug, {'attr': {'class': 'product-slug'}}) }}
+        </div>
+    </div>
+
+    <input type="hidden" name="filenames" id="filenames">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+            <input type="submit" value="{{ 'Edit'|trans }}" class="btn btn-warning"/>
+        </div>
+    </div>
+    {{ form_rest(edit_form) }}
+    {{ form_end(edit_form) }}
+
+    <div class="row" style="margin: 30px;">
+        {% if entity.images|length %}
+            {% for image in entity.images %}
+                <div class="col-md-3 image-container">
+                    <a class="fancybox" rel="group" href="{{ asset(('uploads/gallery/' ~ image.path)) }}">
+                        <img src="{{ asset( ('uploads/gallery/' ~ image.path) | imagine_filter('some_thumb')) }}"/>
+                    </a>
+                    <a href="#" class="text-danger image-remove" data-toggle="confirmation"
+                       data-popout="true" data-placement="left" data-id="{{ image.id }}">
+                        {{ 'remove'|trans }}
+                    </a>
+                    <img id="gif-loading" style="width:17px; height:17px; display: none;"
+                         src="{{ asset('assets/images/ajax-loader.gif') }}"/>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>
+                <strong class="text-danger">{{ 'no photos'|trans }}</strong>
+            </p>
+        {% endif %}
+    </div>
+
+    <div class="panel panel-default" style="margin: 30px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                {{ 'attach photos here'|trans }}
+            </h3>
+        </div>
+        <form action="{{ oneup_uploader_endpoint('gallery') }}" class="dropzone dz-clickable"
+              id="my-dropzone" style="min-height: 100px;" enctype="multipart/form-data">
+        </form>
+    </div>
+
+    <div class="col-md-5 col-md-offset-2 ">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{{ path('admin_product') }}">
+                    {{ 'Back to the list'|trans }}
+                </a>
+            </li>
+            <li class="list-group-item">
+                {{ form_start(delete_form, { 'attr': {'class': 'bootbox-submit-confirm'} }) }}
+                {{ form_widget(delete_form) }}
+                <input type="submit" value="{{ 'Delete'|trans }}" class="btn btn-danger"/>
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    </div>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/dropzone.min.js') }}"></script>
+    <script src="{{ asset('assets/js/speakingurl.min.js') }}"></script>
+    <script src="{{ asset('assets/fancybox/jquery.mousewheel-3.0.6.pack.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/fancybox/jquery.fancybox.pack.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/cart.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/summernote.min.js') }}"></script>
+    <script>
+        {% include '@Admin/Partials/initSummernote.js.twig' with {'height': 300} %}
+        $(document).ready(function () {
+            Dropzone.options.myDropzone = {
+                init: function () {
+                    thisDropzone = this;
+                    this.on("success", function (file, response) {
+                        var filename = response['image_id'];
+                        //check for normal file uploaded
+                        if (filename) {
+                            $('#filenames').val($('#filenames').val() + filename + ',');
+                        }
+                    });
+                }
+            };
+
+            $(".fancybox").fancybox();
+
+            $('.generate-slug').on('click', function (e) {
+                e.preventDefault();
+                //get field value
+                var productName = $('.product-name').val();
+                var measureQuantity = $('.measure-quantity').val();
+                var measureName = $('.measure-name').find('option:selected').text();
+
+                var slugInut = $('.product-slug');
+                var nameToSlug = productName + '-' + measureQuantity + '-' + measureName;
+
+                //generate slug
+                var slug = getSlug(nameToSlug, {
+                    custom: {
+                        '%': ' percent '
+                    },
+                    uric: true
+                });
+                //record to slug input
+                slugInut.val(slug);
+            });
+
+            var removeImageLink = $('.image-remove');
+            removeImageLink.css('cursor', 'pointer');
+            removeImageLink.on('click', function (e) {
+                e.preventDefault();
+                var imageEntityId = $(this).data('id');
+                var objToRemove = $(this).parent();
+                console.log(imageEntityId);
+                removeImageEntity(imageEntityId, objToRemove);
+            });
+        });
+
+        //send request to remove image entity
+        function removeImageEntity(imageEntityId, objToRemove) {
+            var imgObj = objToRemove.find("#gif-loading");
+            imgObj.show();
+
+            $.ajax({
+                url: "{{ path('remove_image') }}",
+                type: 'POST',
+                data: {imageEntityId: imageEntityId},
+                success: function () {
+                    //remove image
+                    objToRemove.remove();
+                },
+                error: function (data) {
+                    data = JSON.stringify(data);
+                    data = JSON.parse(data);
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+{% endblock javascripts %}

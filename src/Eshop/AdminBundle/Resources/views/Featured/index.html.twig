@@ -1,0 +1,134 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block title %}
+    {{ 'Featured products list'|trans }} - {{ 'Administration panel'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <h3>{{ 'Featured products list'|trans }}</h3>
+    <table class="records_list table table-striped">
+        <thead>
+        <tr>
+            <th class="col-md-3">{{ 'Order No'|trans }} #</th>
+            <th class="col-md-3">{{ 'Name'|trans }}</th>
+            <th class="col-md-2">{{ 'Price'|trans }}</th>
+            <th class="col-md-2">{{ 'Q-ty'|trans }}</th>
+            <th class="col-md-2">{{ 'Actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in products %}
+            <tr data-product-id="{{ entity.product.id }}" data-featured-id="{{ entity.id }}">
+                <td>
+                    <span class="order-num" data-id="{{ entity.id }}">{{ entity.productOrder }}</span>
+                    <input type="number" id="productInput{{ entity.id }}" value="{{ entity.productOrder }}"
+                           style="display: none; width: auto"/>
+                    <a href="#" class="btn btn-default order-edit">{{ 'edit'|trans }}</a>
+                    <a href="#" class="btn btn-default order-save" style="display: none">{{ 'save'|trans }}</a>
+                    <a href="#" class="btn btn-default order-cancel" style="display: none">{{ 'cancel'|trans }}</a>
+                </td>
+                <td>
+                    <a href="{{ path('admin_product_show', { 'id': entity.product.id }) }}">{{ entity.product.name }}</a>
+                </td>
+                <td>{{ entity.product.price }}</td>
+                <td>{{ entity.product.quantity }}</td>
+                <td>
+                    <a href="{{ path('admin_product_show', { 'id': entity.product.id }) }}">{{ 'show'|trans }}</a>
+                    <a href="#" class="btn btn-default remove">{{ 'remove'|trans }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            //remove product from featured
+            $(".remove").on("click", function (e) {
+                e.preventDefault();
+                var link = $(this);
+                var featuredId = link.closest('tr').data('product-id');
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('admin_featured_product_edit_ajax') }}',
+                    data: {
+                        product_id: featuredId,
+                        new_value: false
+                    },
+                    success: function (data) {
+                        if (data.success === true) {
+                            link.closest('tr').remove();
+                        }
+                    },
+                    error: function (data) {
+                        if (data.message) {
+                            bootbox.alert(data.message);
+                        } else if (data.responseJSON.message) {
+                            bootbox.alert(data.responseJSON.message);
+                        }
+                    }
+                });
+            });
+
+            // change order num
+            $(".order-edit").on("click", function (e) {
+                e.preventDefault();
+                var parentTD = $(this).parent();
+                parentTD.find('.order-num').hide();
+                parentTD.find('input').show();
+                parentTD.find('.order-edit').hide();
+                parentTD.find('.order-save').show();
+                parentTD.find('.order-cancel').show();
+            });
+
+            // cancel editing
+            $(".order-cancel").on("click", function (e) {
+                e.preventDefault();
+                var parentTD = $(this).parent();
+                parentTD.find('input').hide();
+                parentTD.find('.order-save').hide();
+                parentTD.find('.order-cancel').hide();
+                parentTD.find('.order-num').show();
+                parentTD.find('.order-edit').show();
+            });
+
+            // change order num
+            $(".order-save").on("click", function (e) {
+                e.preventDefault();
+                var parentTD = $(this).parent();
+                var featuredId = parentTD.parent().data('featured-id');
+                var newValue = parentTD.find('input').val();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('admin_featured_order_edit_ajax') }}',
+                    data: {
+                        featured_id: featuredId,
+                        new_value: newValue
+                    },
+                    success: function (data) {
+                        if (data.success === true) {
+                            parentTD.find('input').hide();
+                            parentTD.find('.order-save').hide();
+                            parentTD.find('.order-cancel').hide();
+                            parentTD.find('.order-num').html(newValue);
+                            parentTD.find('.order-num').show();
+                            parentTD.find('.order-edit').show();
+                        }
+                    },
+                    error: function (data) {
+                        if (data.message) {
+                            bootbox.alert(data.message);
+                        } else if (data.responseJSON.message) {
+                            bootbox.alert(data.responseJSON.message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock javascripts %}

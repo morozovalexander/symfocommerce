@@ -1,0 +1,45 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ 'layout.navbar.sitename'|trans }} - {{ 'categories.menu.header'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    {% if slides|length %}
+        {{ include('@Shop/Partials/slidesBlock.html.twig') }}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well">
+                {% if news | length %}
+                    <h4>
+                        <strong>{{ news.title }}</strong>
+                    </h4>
+                    <div>
+                        {{ news.text|rawdescr|nl2br }}
+                    </div>
+                    <p class="pull-right">{{ news.date|date() }}</p>
+                {% else %}
+                    {{ 'news.nonews'|trans }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">{{ 'layout.index.latestproducts'|trans }}</h3>
+            {% for product in latest_products %}
+                {{ include('@Shop/Partials/productPreview.html.twig') }}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">{{ 'layout.index.featuredproducts'|trans }}</h3>
+            {% for product in featured_products %}
+                {{ include('@Shop/Partials/productPreview.html.twig') }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock page_content %}

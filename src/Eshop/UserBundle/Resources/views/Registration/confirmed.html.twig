@@ -1,0 +1,11 @@
+{% extends "@Shop/layout.html.twig" %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block page_content %}
+    <h2>{{ 'registration.successful'|trans }}</h2>
+    {% if targetUrl %}
+        <p>
+            <a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a>
+        </p>
+    {% endif %}
+{% endblock page_content %}

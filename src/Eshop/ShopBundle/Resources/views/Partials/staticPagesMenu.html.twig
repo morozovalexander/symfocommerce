@@ -1,0 +1,7 @@
+{% for header in headers %}
+    <li>
+        <a href="{{ path('show_static_page', {'slug' : header.slug}) }}">
+            {{ header.title }}
+        </a>
+    </li>
+{% endfor %}

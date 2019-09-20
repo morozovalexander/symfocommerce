@@ -1,0 +1,21 @@
+{% extends '@Shop/layout.html.twig' %}
+{% trans_default_domain 'ShopBundle' %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock title %}
+
+{% block page_content -%}
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <h4>
+                    <strong>{{ page.title }}</strong>
+                </h4>
+                <div>
+                    {{ page.content|rawdescr|nl2br }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}

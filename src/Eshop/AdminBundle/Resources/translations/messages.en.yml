@@ -1,0 +1,124 @@
+eShop: eShop
+Products: Products
+Categories: Categories
+Manufacturers: Manufacturers
+News: News
+Orders: Orders
+Measures: Measures
+Slides: Slides
+Static pages: Static pages
+Logout: Logout
+Administration panel: Administration panel
+Hello, choose a category!: Hello, choose a category!
+Products list: Products list
+Create new Product: Create new Product
+Name: Name
+Category: Category
+Manufacturer: Manufacturer
+Price: Price
+Photo: Photo
+Q-ty: Q-ty
+Actions: Actions
+show: show
+Show: Show
+edit: edit
+Edit: Edit
+no photos: no photos
+no photo: no photo
+Product: Product
+Slug: Slug
+Description: Description
+Image: Image
+Quantity: Quantity
+Measure: Measure
+Measure quantity: Measure quantity
+Meta keys: Meta keys
+Meta description: Meta description
+Back to the list: Back to the list
+Products list: Products list
+Product edit: Product edit
+generate slug: generate slug
+remove: remove
+attach photos here: attach photos here
+Product create: Product create
+Category list: Category list
+Category edit: Category edit
+Category creation: Category creation
+Create a new category: Create a new category
+Manufacturer list: Manufacturer list
+Manufacturer edit: Manufacturer edit
+Manufacturer creation: Manufacturer creation
+Create a new manufacturer: Create a new manufacturer
+News list: News list
+News edit: News edit
+News creation: News creation
+Create a new news: Create a new news
+Measure list: Measure list
+Measure edit: Measure edit
+Measure creation: Measure creation
+Create a new measure: Create a new measure
+Title: Title
+Text: Text
+Orders list: Orders list
+No orders yet: No orders yet
+Client name: Client name
+Order date: Order date
+Id: Id
+Client Name: Client Name
+Email: Email
+Phone: Phone
+Address: Address
+Comment: Comment
+No comment: No comment
+Slide: Slide
+Slide list: Slide list
+Slide edit: Slide edit
+Slide creation: Slide creation
+Create a new slide: Create a new slide
+File: File
+Slide order: Slide order
+Update: Update
+Create: Create
+Delete: Delete
+Enabled: Enabled
+yes: yes
+no: no
+Please sign in: Please sign in
+Previous: Previous
+Next: Next
+Create a new page: Create a new page
+Page order: Page order
+Static page edit: Static page edit
+Static page creation: Static page creation
+Static page: Static page
+Content: Content
+Order num: Order num
+Order No: Order
+currency: $
+Order totalsum: Total sum of this order
+Total: Total
+Site settings: Site settings
+Settings list: Settings list
+Show empty categories: Show categories without products
+Show empty manufacturers: Show manufacturers without products
+User list: User list
+Username: Username
+Registration date: Registration date
+User: User
+Firstname: Firstname
+Lastname: Lastname
+Phone number: Phone number
+Join date: Join date
+Featured products: Featured products
+Featured products list: Featured products list
+save: save
+cancel: cancel
+featured: featured
+not featured: not featured
+not registered: not registered
+Product deleted: this product was deleted
+Are you sure?: Are you sure?
+OK: OK
+Search: Search
+Search phrase: Search phrase
+Products not sound: Products not sound

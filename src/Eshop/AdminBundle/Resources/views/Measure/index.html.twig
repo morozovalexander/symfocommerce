@@ -1,0 +1,36 @@
+{% extends '@Admin/adminLayout.html.twig' %}
+
+{% block title %}
+    {{ 'Measure list'|trans }} - {{ 'Administration panel'|trans }}
+{% endblock title %}
+
+{% block page_content -%}
+    <h3>{{ 'Measure list'|trans }}</h3>
+    <p>
+        <a href="{{ path('admin_measure_new') }}">
+            <span class="glyphicon glyphicon-plus"></span>
+            {{ 'Create a new measure'|trans }}
+        </a>
+    </p>
+    <table class="records_list table table-striped">
+        <thead>
+        <tr>
+            <th class="col-md-2">{{ 'Name'|trans }}</th>
+            <th class="col-md-2">{{ 'Actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    <a href="{{ path('admin_measure_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                </td>
+                <td>
+                    <a href="{{ path('admin_measure_show', { 'id': entity.id }) }}">{{ 'show'|trans }}</a><br>
+                    <a href="{{ path('admin_measure_edit', { 'id': entity.id }) }}">{{ 'edit'|trans }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock page_content %}
