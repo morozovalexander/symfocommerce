@@ -18,7 +18,8 @@ class LayoutsUtilityController extends Controller
         $showEmpty = $settings->getShowEmptyCategories();
 
         $categories = $categoryRepository->getAllCategories($showEmpty);
-
+        dump($categories);
+        exit();
         return $this->render('ShopBundle:Partials:categoriesMenu.html.twig',
             ['categories' => $categories]);
     }
@@ -35,7 +36,8 @@ class LayoutsUtilityController extends Controller
         $showEmpty = $settings->getShowEmptyManufacturers();
 
         $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
-
+        dump($manufacturers);
+        exit();
         return $this->render('ShopBundle:Partials:manufacturersMenu.html.twig',
             ['manufacturers' => $manufacturers]);
     }

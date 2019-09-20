@@ -12,7 +12,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"": "src/"},
+        "psr-4": {"": "src/Eshop"},
         "files": ["app/AppKernel.php"],
         "classmap": [
             "app/AppKernel.php",

@@ -27,7 +27,8 @@
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li><a href="{{ path('favourites') }}">{{ 'layout.navbar.favourites'|trans }}</a></li>
                     {% endif %}
-                    {{ render(controller('ShopBundle:LayoutsUtility:staticPagesMenu')) }}
+
+                    {{ render(controller('Eshop\\ShopBundle\\Controller\\LayoutsUtilityController::staticPagesMenuAction')) }}
 
                     <li>
                         <a href="{{ path('showcart') }}">
@@ -63,52 +64,53 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                {{ render(controller('ShopBundle:LayoutsUtility:categoriesMenu')) }}
-            </div>
-            <div class="col-md-8">
-                {% block page_content %}
-                {% endblock page_content %}
-                <div class="row" id="latest-products"></div>
-            </div>
-            <div class="col-md-2">
-                {{ render(controller('ShopBundle:LayoutsUtility:manufacturersMenu')) }}
-            </div>
-        </div>
-    </div>
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted">{{ 'layout.navbar.sitename'|trans }}, 2015.</p>
-        </div>
-    </footer>
+            {#{ render(controller('Eshop\\ShopBundle\\Controller\\LayoutsUtilityController::categoriesMenuAction' )) }#}
+
+</div>
+<div class="col-md-8">
+{% block page_content %}
+{% endblock page_content %}
+<div class="row" id="latest-products"></div>
+</div>
+<div class="col-md-2">
+{#{ render(controller('Eshop\\ShopBundle\\Controller\\LayoutsUtilityController::manufacturersMenuAction')) }#}
+</div>
+</div>
+</div>
+<footer class="footer">
+<div class="container">
+<p class="text-muted">{{ 'layout.navbar.sitename'|trans }}, 2015.</p>
+</div>
+</footer>
 {% endblock %}
 {% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('assets/js/js.cookie.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/cart.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/scripts.js') }}" type="text/javascript"></script>
-    <script>
-        //set path urls
-        var urls = [];
-        urls['ajax_like'] = '{{ path('ajax_like') }}';
-        urls['ajax_is_liked_product'] = '{{ path('ajax_is_liked_product') }}';
-        urls['ajax_get_last_seen_products'] = '{{ path('ajax_get_last_seen_products') }}';
-        //set translated messages
-        var messages = [];
-        messages['mustberegistered'] = '{{ 'layout.messages.mustberegistered'|trans }}';
-        messages['productnotfound'] = '{{ 'layout.messages.productnotfound'|trans }}';
+{{ parent() }}
+<script src="{{ asset('assets/js/js.cookie.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/cart.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/scripts.js') }}" type="text/javascript"></script>
+<script>
+//set path urls
+var urls = [];
+urls['ajax_like'] = '{{ path('ajax_like') }}';
+urls['ajax_is_liked_product'] = '{{ path('ajax_is_liked_product') }}';
+urls['ajax_get_last_seen_products'] = '{{ path('ajax_get_last_seen_products') }}';
+//set translated messages
+var messages = [];
+messages['mustberegistered'] = '{{ 'layout.messages.mustberegistered'|trans }}';
+messages['productnotfound'] = '{{ 'layout.messages.productnotfound'|trans }}';
 
-        //menu items highlight
-        function highlightMenu() {
-            //get requestUri
-            var requestUri = '{{ app.request.requestUri }}';
+//menu items highlight
+function highlightMenu() {
+//get requestUri
+var requestUri = '{{ app.request.requestUri }}';
 
-            //highlight current route
-            $('.menu-link').each(function () {
-                if ($(this).attr('href') == requestUri) {
-                    $(this).addClass('active');
-                }
-            });
-        }
-    </script>
+//highlight current route
+$('.menu-link').each(function () {
+if ($(this).attr('href') == requestUri) {
+   $(this).addClass('active');
+}
+});
+}
+</script>
 {% endblock %}
