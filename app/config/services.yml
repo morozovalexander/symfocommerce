@@ -23,10 +23,12 @@ services:
         arguments:    ["@swiftmailer.mailer", "@router", "@templating"]
         public: true
 
+
     app.site_settings:
         class:        Eshop\ShopBundle\Service\SettingsService
         arguments:    ["@doctrine.orm.entity_manager"]
         public: true
+
 
     app.page_utilities:
         class:        Eshop\ShopBundle\Service\PagesUtilities
@@ -36,6 +38,7 @@ services:
         class:        Eshop\ShopBundle\EventListener\SitemapListener
         arguments:    ["@router", "@doctrine.orm.entity_manager"]
         public: true
+
         tags:
             - { name: "presta.sitemap.listener" }
 

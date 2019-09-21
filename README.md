@@ -37,4 +37,8 @@ You can load some test data and admin account (admin/admin) if you want
 
 - $ php bin/console doctrine:fixtures:load
 
+<<<<<<< HEAD
 Do not forget to set permissions for var/cache/, var/logs/, var/sessions/, web/media/ to run symfony   - $ php bin/console server:run    ;)
+=======
+Do not forget to set permissions for var/cache/, var/logs/, var/sessions/, web/media/ to run symfony ;)
+>>>>>>> ffa6fc323b5475431f1d30d744c30ab69daf3c95

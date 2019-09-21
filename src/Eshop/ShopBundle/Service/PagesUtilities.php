@@ -79,18 +79,22 @@ class PagesUtilities
     {
         $productRepository = $this->em->getRepository('ShopBundle:Product');
 
+
         $cart = (array) $this->getCartFromCookies($request);
 
         if ((!isset($cart)) || !(count($cart))) {
+
             return false;
         }
 
         //parse cart json form cookies
         $sum = 0; //total control sum of the order
         foreach ($cart as $productId => $productQuantity) {
+
             $product = $productRepository->find((int) $productId);
             if (is_object($product)) {
                 $quantity = abs((int) $productQuantity);
+
                 $sum += ($quantity * $product->getPrice());
 
                 $orderProduct = new OrderProduct();
@@ -127,7 +131,9 @@ class PagesUtilities
             $cart = json_decode($cookies['cart']);
 
             $cartObj = $cart; //check if cart not empty
+
             if (!empty($cartObj) && count((array) $cartObj)) {
+
                 return $cart;
             }
         }
