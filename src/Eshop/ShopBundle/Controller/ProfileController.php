@@ -7,9 +7,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Eshop\ShopBundle\Entity\Product;
 
 class ProfileController extends Controller
 {
+
     /**
      * Display favourite products.
      *
@@ -21,19 +23,20 @@ class ProfileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
         $limit = $this->getParameter('products_pagination_count');
 
         $query = $productRepository->getFavouritesQB($this->getUser());
 
         $products = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            $limit
+                $query,
+                $request->query->getInt('page', 1),
+                $limit
         );
 
         return ['products' => $products,
-                'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
         ];
     }
+
 }

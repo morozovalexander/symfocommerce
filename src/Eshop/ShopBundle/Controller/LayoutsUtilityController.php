@@ -3,6 +3,8 @@
 namespace Eshop\ShopBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Eshop\ShopBundle\Entity\Category;
+use Eshop\ShopBundle\Entity\Manufacturer;
 
 class LayoutsUtilityController extends Controller
 {
@@ -13,7 +15,7 @@ class LayoutsUtilityController extends Controller
     public function categoriesMenuAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $categoryRepository = $em->getRepository('ShopBundle:Category');
+        $categoryRepository = $em->getRepository(Category::class);
 
         $settings = $this->get('app.site_settings');
         $showEmpty = $settings->getShowEmptyCategories();
@@ -30,7 +32,7 @@ class LayoutsUtilityController extends Controller
     public function manufacturersMenuAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
+        $manufacturerRepository = $em->getRepository(Manufacturer::class);
 
         $settings = $this->get('app.site_settings');
         $showEmpty = $settings->getShowEmptyManufacturers();

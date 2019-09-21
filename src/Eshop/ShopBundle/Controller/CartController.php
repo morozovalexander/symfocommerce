@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CartController extends Controller
 {
+
     /**
      * Lists all Category entities.
      *
@@ -24,7 +25,7 @@ class CartController extends Controller
     public function showCartAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
         $productsArray = [];
         $cart = [];
         $totalSum = 0;
@@ -39,11 +40,11 @@ class CartController extends Controller
             /**
              * @var Product $product
              */
-            $product = $productRepository->find((int)$productId);
+            $product = $productRepository->find((int) $productId);
             if (is_object($product)) {
                 $productPosition = [];
 
-                $quantity = abs((int)$productQuantity);
+                $quantity = abs((int) $productQuantity);
                 $price = $product->getPrice();
                 $sum = $price * $quantity;
 
@@ -58,7 +59,7 @@ class CartController extends Controller
         }
 
         return ['products' => $productsArray,
-                'totalsum' => $totalSum
+            'totalsum' => $totalSum
         ];
     }
 
@@ -136,16 +137,16 @@ class CartController extends Controller
             return $cartArray;
         }
 
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
 
         foreach ($cart as $productId => $productQuantity) {
             /**
              * @var Product $product
              */
-            $product = $productRepository->find((int)$productId);
+            $product = $productRepository->find((int) $productId);
             if (is_object($product)) {
-                $cartArray['cart']['sum'] += ($product->getPrice() * abs((int)$productQuantity));
-                $cartArray['cart']['quantity'] += abs((int)$productQuantity);
+                $cartArray['cart']['sum'] += ($product->getPrice() * abs((int) $productQuantity));
+                $cartArray['cart']['quantity'] += abs((int) $productQuantity);
             }
         }
 
@@ -164,4 +165,5 @@ class CartController extends Controller
         $form->get('phone')->setData($user->getPhone());
         $form->get('address')->setData($user->getAddress());
     }
+
 }

@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Controller;
 
+use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Favourites;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AjaxController extends Controller
 {
+
     /**
      * Lists all Category entities.
      *
@@ -20,8 +22,8 @@ class AjaxController extends Controller
     public function likeAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository('ShopBundle:Product');
-        $favouritesRepository = $em->getRepository('ShopBundle:Favourites');
+        $productRepository = $em->getRepository(Product::class);
+        $favouritesRepository = $em->getRepository(Favourites::class);
 
         $productId = $request->request->getInt('product_id');
 
@@ -56,7 +58,7 @@ class AjaxController extends Controller
         return new JsonResponse([
             'favourite' => $liked,
             'success' => true
-        ], 200);
+                ], 200);
     }
 
     /**
@@ -68,7 +70,7 @@ class AjaxController extends Controller
     public function checkIsLikedAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $favouritesRepository = $em->getRepository('ShopBundle:Favourites');
+        $favouritesRepository = $em->getRepository(Favourites::class);
         $user = $this->getUser();
         if (!$user) {
             return $this->returnErrorJson('mustberegistered');
@@ -81,7 +83,7 @@ class AjaxController extends Controller
         return new JsonResponse([
             'liked' => $liked,
             'success' => true
-        ], 200);
+                ], 200);
     }
 
     /**
@@ -93,7 +95,7 @@ class AjaxController extends Controller
     public function getLastSeenProductsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
 
         $productIdsArray = $this->get('app.page_utilities')->getLastSeenProducts($request);
 
@@ -106,7 +108,7 @@ class AjaxController extends Controller
         return new JsonResponse([
             'html' => $html,
             'success' => true
-        ], 200);
+                ], 200);
     }
 
     /**
@@ -118,6 +120,7 @@ class AjaxController extends Controller
         return new JsonResponse([
             'success' => false,
             'message' => $message
-        ], 400);
+                ], 400);
     }
+
 }

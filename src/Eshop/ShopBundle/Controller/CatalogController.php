@@ -27,7 +27,7 @@ class CatalogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $newsRepository = $em->getRepository('ShopBundle:News');
         $slideRepository = $em->getRepository('ShopBundle:Slide');
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
 
         //sorted by order number
         $slides = $slideRepository->findBy(['enabled' => true], ['slideOrder' => 'ASC']);
@@ -54,7 +54,7 @@ class CatalogController extends Controller
          */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
 
         $productsQuery = $productRepository->findByCategoryQB($category, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
@@ -82,7 +82,7 @@ class CatalogController extends Controller
          */
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
 
         $productsQuery = $productRepository->findByManufacturerQB($manufacturer, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
@@ -146,7 +146,7 @@ class CatalogController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
 
         $search_phrase = 'search';
         if ($request->getMethod() == 'GET') {

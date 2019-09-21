@@ -16,6 +16,7 @@ use Eshop\ShopBundle\Entity\Category;
  */
 class CategoryController extends Controller
 {
+
     /**
      * Lists all Category entities.
      *
@@ -26,16 +27,16 @@ class CategoryController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $categoryRepository = $em->getRepository('ShopBundle:Category');
+        $categoryRepository = $em->getRepository(Category::class);
         $paginator = $this->get('knp_paginator');
 
         $qb = $categoryRepository->getAllCategoriesAdminQB();
         $limit = $this->getParameter('admin_categories_pagination_count');
 
         $categories = $paginator->paginate(
-            $qb,
-            $request->query->getInt('page', 1),
-            $limit
+                $qb,
+                $request->query->getInt('page', 1),
+                $limit
         );
 
         return ['entities' => $categories];
@@ -63,7 +64,7 @@ class CategoryController extends Controller
         }
 
         return ['entity' => $category,
-                'form' => $form->createView()];
+            'form' => $form->createView()];
     }
 
     /**
@@ -78,7 +79,7 @@ class CategoryController extends Controller
         $deleteForm = $this->createDeleteForm($category);
 
         return ['entity' => $category,
-                'delete_form' => $deleteForm->createView()
+            'delete_form' => $deleteForm->createView()
         ];
     }
 
@@ -107,16 +108,16 @@ class CategoryController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
-                'notice',
-                'Your changes were saved!'
+                    'notice',
+                    'Your changes were saved!'
             );
 
             return $this->redirectToRoute('admin_category_edit', ['id' => $category->getId()]);
         }
 
         return ['entity' => $category,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView()
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
         ];
     }
 
@@ -150,8 +151,9 @@ class CategoryController extends Controller
     private function createDeleteForm(Category $category)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_category_delete', ['id' => $category->getId()]))
-            ->setMethod('DELETE')
-            ->getForm();
+                        ->setAction($this->generateUrl('admin_category_delete', ['id' => $category->getId()]))
+                        ->setMethod('DELETE')
+                        ->getForm();
     }
+
 }

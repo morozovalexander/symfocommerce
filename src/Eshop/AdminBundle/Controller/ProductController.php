@@ -19,6 +19,7 @@ use Eshop\ShopBundle\Entity\Product;
  */
 class ProductController extends Controller
 {
+
     /**
      * Lists all Product entities.
      *
@@ -29,7 +30,7 @@ class ProductController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
         $paginator = $this->get('knp_paginator');
 
         //if search is required
@@ -39,13 +40,13 @@ class ProductController extends Controller
         $limit = $this->getParameter('admin_products_pagination_count');
 
         $products = $paginator->paginate(
-            $qb,
-            $request->query->getInt('page', 1),
-            $limit
+                $qb,
+                $request->query->getInt('page', 1),
+                $limit
         );
 
         return ['products' => $products,
-                'search_words' => $searchWords
+            'search_words' => $searchWords
         ];
     }
 
@@ -87,7 +88,7 @@ class ProductController extends Controller
         }
 
         return ['entity' => $product,
-                'form' => $form->createView()
+            'form' => $form->createView()
         ];
     }
 
@@ -107,7 +108,7 @@ class ProductController extends Controller
         }
 
         return ['entity' => $product,
-                'delete_form' => $deleteForm->createView()
+            'delete_form' => $deleteForm->createView()
         ];
     }
 
@@ -146,16 +147,16 @@ class ProductController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
-                'notice',
-                'Your changes were saved!'
+                    'notice',
+                    'Your changes were saved!'
             );
 
             return $this->redirectToRoute('admin_product_edit', ['id' => $product->getId()]);
         }
 
         return ['entity' => $product,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView()
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
         ];
     }
 
@@ -189,9 +190,9 @@ class ProductController extends Controller
     private function createDeleteForm(Product $product)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_product_delete', ['id' => $product->getId()]))
-            ->setMethod('DELETE')
-            ->getForm();
+                        ->setAction($this->generateUrl('admin_product_delete', ['id' => $product->getId()]))
+                        ->setMethod('DELETE')
+                        ->getForm();
     }
 
     /**
@@ -201,7 +202,7 @@ class ProductController extends Controller
     public function removeImageAction(Request $request)
     {
         $requestData = $request->request;
-        $imageEntityId = (int)$requestData->get('imageEntityId');
+        $imageEntityId = (int) $requestData->get('imageEntityId');
         /**
          * @var EntityManager $em
          */
@@ -224,4 +225,5 @@ class ProductController extends Controller
         $response = new Response($data, 200, $headers);
         return $response;
     }
+
 }

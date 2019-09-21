@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FeaturedController extends Controller
 {
+
     /**
      * show featured products
      *
@@ -28,7 +29,7 @@ class FeaturedController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $featuredRepository = $em->getRepository('ShopBundle:Featured');
+        $featuredRepository = $em->getRepository(Featured::class);
         $products = $featuredRepository->findBy([], ['productOrder' => 'ASC']);
 
         return ['products' => $products];
@@ -43,7 +44,7 @@ class FeaturedController extends Controller
     public function featuredProductEditAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository('ShopBundle:Product');
+        $productRepository = $em->getRepository(Product::class);
 
         $productId = $request->request->getInt('product_id');
         $addFeaturedValue = $request->request->getBoolean('new_value');
@@ -67,7 +68,7 @@ class FeaturedController extends Controller
     public function featuredOrderEditAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $featuredRepository = $em->getRepository('ShopBundle:Featured');
+        $featuredRepository = $em->getRepository(Featured::class);
 
         $featuredId = $request->request->getInt('featured_id');
         $newOrder = $request->request->getInt('new_value');
@@ -96,7 +97,7 @@ class FeaturedController extends Controller
     private function createOrDeleteFeaturedProduct($product, $addFeaturedValue)
     {
         $em = $this->getDoctrine()->getManager();
-        $featuredRepository = $em->getRepository('ShopBundle:Featured');
+        $featuredRepository = $em->getRepository(Featured::class);
 
         if ($addFeaturedValue) {
             $alreadyFeatured = $product->getFeatured(); //check if already featured
@@ -126,10 +127,12 @@ class FeaturedController extends Controller
      * @param string $message
      * @return JsonResponse
      */
-    private function returnErrorJson($message) {
+    private function returnErrorJson($message)
+    {
         return new JsonResponse([
             'success' => false,
             'message' => $message
-        ], 400);
+                ], 400);
     }
+
 }
