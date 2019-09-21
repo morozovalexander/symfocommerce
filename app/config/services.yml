@@ -11,6 +11,7 @@ services:
     app.locale_listener:
         class: Eshop\ShopBundle\EventListener\LocaleListener
         arguments:    ["%kernel.default_locale%"]
+        public: true
         tags:
             - { name: kernel.event_subscriber }
 
@@ -20,10 +21,12 @@ services:
     app.email_notifier:
         class:        Eshop\ShopBundle\Service\EmailNotifier
         arguments:    ["@swiftmailer.mailer", "@router", "@templating"]
+        public: true
 
     app.site_settings:
         class:        Eshop\ShopBundle\Service\SettingsService
         arguments:    ["@doctrine.orm.entity_manager"]
+        public: true
 
     app.page_utilities:
         class:        Eshop\ShopBundle\Service\PagesUtilities
@@ -32,6 +35,7 @@ services:
     my.sitemap.listener:
         class:        Eshop\ShopBundle\EventListener\SitemapListener
         arguments:    ["@router", "@doctrine.orm.entity_manager"]
+        public: true
         tags:
             - { name: "presta.sitemap.listener" }
 

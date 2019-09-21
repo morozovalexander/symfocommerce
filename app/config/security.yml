@@ -30,6 +30,7 @@ security:
 
             logout:       true
             anonymous:    true
+            logout_on_user_change: true
 
         login:
             pattern:  ^/login$

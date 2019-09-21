@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class LayoutsUtilityController extends Controller
 {
+
     /**
      * render categories menu
      */
@@ -18,10 +19,9 @@ class LayoutsUtilityController extends Controller
         $showEmpty = $settings->getShowEmptyCategories();
 
         $categories = $categoryRepository->getAllCategories($showEmpty);
-        dump($categories);
-        exit();
+
         return $this->render('ShopBundle:Partials:categoriesMenu.html.twig',
-            ['categories' => $categories]);
+                        ['categories' => $categories]);
     }
 
     /**
@@ -36,10 +36,9 @@ class LayoutsUtilityController extends Controller
         $showEmpty = $settings->getShowEmptyManufacturers();
 
         $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
-        dump($manufacturers);
-        exit();
+
         return $this->render('ShopBundle:Partials:manufacturersMenu.html.twig',
-            ['manufacturers' => $manufacturers]);
+                        ['manufacturers' => $manufacturers]);
     }
 
     /**
@@ -51,4 +50,5 @@ class LayoutsUtilityController extends Controller
         $headers = $em->getRepository('ShopBundle:StaticPage')->getHeaders();
         return $this->render('ShopBundle:Partials:staticPagesMenu.html.twig', ['headers' => $headers]);
     }
+
 }

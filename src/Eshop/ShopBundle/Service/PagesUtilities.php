@@ -1,4 +1,5 @@
 <?php
+
 namespace Eshop\ShopBundle\Service;
 
 use Doctrine\ORM\EntityManager;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PagesUtilities
 {
+
     /**
      * @var EntityManager $em
      */
@@ -77,17 +79,18 @@ class PagesUtilities
     {
         $productRepository = $this->em->getRepository('ShopBundle:Product');
 
-        $cart = $this->getCartFromCookies($request);
-        if ((!$cart) || !(count($cart))) {
+        $cart = (array) $this->getCartFromCookies($request);
+
+        if ((!isset($cart)) || !(count($cart))) {
             return false;
         }
 
         //parse cart json form cookies
         $sum = 0; //total control sum of the order
         foreach ($cart as $productId => $productQuantity) {
-            $product = $productRepository->find((int)$productId);
+            $product = $productRepository->find((int) $productId);
             if (is_object($product)) {
-                $quantity = abs((int)$productQuantity);
+                $quantity = abs((int) $productQuantity);
                 $sum += ($quantity * $product->getPrice());
 
                 $orderProduct = new OrderProduct();
@@ -124,7 +127,7 @@ class PagesUtilities
             $cart = json_decode($cookies['cart']);
 
             $cartObj = $cart; //check if cart not empty
-            if (!empty($cartObj) && count((array)$cartObj)) {
+            if (!empty($cartObj) && count((array) $cartObj)) {
                 return $cart;
             }
         }
@@ -143,4 +146,5 @@ class PagesUtilities
         $response->headers->clearCookie('cart');
         $response->sendHeaders();
     }
+
 }
