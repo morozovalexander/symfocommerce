@@ -24,9 +24,11 @@ class Image
     private $id;
 
     /**
+     * @var Product
+     *
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="images")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     **/
+     */
     private $product;
 
     /**
@@ -38,58 +40,45 @@ class Image
     private $image;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set product
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $product
+     * @param Product $product
      * @return Image
      */
-    public function setProduct(\Eshop\ShopBundle\Entity\Product $product = null)
+    public function setProduct(Product $product): Image
     {
         $this->product = $product;
-
         return $this;
     }
 
     /**
-     * Get product
-     *
-     * @return \Eshop\ShopBundle\Entity\Product
+     * @return Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
     /**
-     * Set image
-     *
      * @param string $image
-     *
      * @return Image
      */
-    public function setImage($image)
+    public function setImage(string $image): Image
     {
         $this->image = $image;
-
         return $this;
     }
 
     /**
-     * Get image
-     *
      * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }

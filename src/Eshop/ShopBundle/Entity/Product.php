@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,8 +34,8 @@ class Product
      *
      * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
      */
-
     private $slug;
+
     /**
      * @var string
      *
@@ -114,39 +115,53 @@ class Product
     private $measureQuantity;
 
     /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
-     **/
+     */
     private $category;
 
     /**
+     * @var Manufacturer
+     *
      * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="products")
      * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id", onDelete="CASCADE")
-     **/
+     */
     private $manufacturer;
 
     /**
+     * @var Image[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Image", mappedBy="product", cascade={"remove"})
-     **/
+     */
     private $images;
 
     /**
+     * @var OrderProduct[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="product")
-     **/
+     */
     private $productOrders;
 
     /**
+     * @var Measure
+     *
      * @ORM\ManyToOne(targetEntity="Measure", inversedBy="products")
      * @ORM\JoinColumn(name="measure_id", referencedColumnName="id")
-     **/
+     */
     private $measure;
 
     /**
+     * @var Favourites[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Favourites", mappedBy="product")
-     **/
+     */
     private $favourites;
 
     /**
+     * @var Featured
+     *
      * @ORM\OneToOne(targetEntity="Featured", mappedBy="product")
      */
     private $featured;
@@ -162,471 +177,378 @@ class Product
         $this->deleted = false;
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return $this->getName();
     }
 
     /**
-     * Called before saving the entity
-     *
      * @ORM\PreUpdate()
      */
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->dateUpdated = new \DateTime();
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Product
      */
-    public function setName($name)
+    public function setName(string $name): Product
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set description
-     *
      * @param string $description
      * @return Product
      */
-    public function setDescription($description)
+    public function setDescription(string $description): Product
     {
         $this->description = $description;
-
         return $this;
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * Set price
-     *
      * @param float $price
      * @return Product
      */
-    public function setPrice($price)
+    public function setPrice(float $price): Product
     {
         $this->price = $price;
-
         return $this;
     }
 
     /**
-     * Get price
-     *
      * @return float
      */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
 
     /**
-     * Set category
-     *
-     * @param \Eshop\ShopBundle\Entity\Category $category
+     * @param Category $category
      * @return Product
      */
-    public function setCategory(\Eshop\ShopBundle\Entity\Category $category = null)
+    public function setCategory(Category $category): Product
     {
         $this->category = $category;
-
         return $this;
     }
 
     /**
-     * Get category
-     *
-     * @return \Eshop\ShopBundle\Entity\Category
+     * @return Category
      */
-    public function getCategory()
+    public function getCategory(): Category
     {
         return $this->category;
     }
 
     /**
-     * Set manufacturer
-     *
-     * @param \Eshop\ShopBundle\Entity\Manufacturer $manufacturer
+     * @param Manufacturer $manufacturer
      * @return Product
      */
-    public function setManufacturer(\Eshop\ShopBundle\Entity\Manufacturer $manufacturer = null)
+    public function setManufacturer(Manufacturer $manufacturer): Product
     {
         $this->manufacturer = $manufacturer;
-
         return $this;
     }
 
     /**
-     * Get manufacturer
-     *
-     * @return \Eshop\ShopBundle\Entity\Manufacturer
+     * @return Manufacturer
      */
-    public function getManufacturer()
+    public function getManufacturer(): Manufacturer
     {
         return $this->manufacturer;
     }
 
     /**
-     * Add images
-     *
-     * @param \Eshop\ShopBundle\Entity\Image $images
+     * @param Image $images
      * @return Product
      */
-    public function addImage(\Eshop\ShopBundle\Entity\Image $images)
+    public function addImage(Image $images): Product
     {
         $this->images[] = $images;
-
         return $this;
     }
 
     /**
-     * Remove images
-     *
-     * @param \Eshop\ShopBundle\Entity\Image $images
+     * @param Image $images
      */
-    public function removeImage(\Eshop\ShopBundle\Entity\Image $images)
+    public function removeImage(Image $images): void
     {
         $this->images->removeElement($images);
     }
 
     /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getImages()
+    public function getImages(): Collection
     {
         return $this->images;
     }
 
     /**
-     * Add productOrders
-     *
-     * @param \Eshop\ShopBundle\Entity\OrderProduct $productOrders
+     * @param OrderProduct $productOrders
      * @return Product
      */
-    public function addProductOrder(\Eshop\ShopBundle\Entity\OrderProduct $productOrders)
+    public function addProductOrder(OrderProduct $productOrders): Product
     {
         $this->productOrders[] = $productOrders;
-
         return $this;
     }
 
     /**
-     * Remove productOrders
-     *
-     * @param \Eshop\ShopBundle\Entity\OrderProduct $productOrders
+     * @param OrderProduct $productOrders
+     * @return Product
      */
-    public function removeProductOrder(\Eshop\ShopBundle\Entity\OrderProduct $productOrders)
+    public function removeProductOrder(OrderProduct $productOrders): Product
     {
         $this->productOrders->removeElement($productOrders);
+        return $this;
     }
 
     /**
-     * Get productOrders
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return OrderProduct[]|Collection
      */
-    public function getProductOrders()
+    public function getProductOrders(): Collection
     {
         return $this->productOrders;
     }
 
     /**
-     * Set metaKeys
-     *
      * @param string $metaKeys
      * @return Product
      */
-    public function setMetaKeys($metaKeys)
+    public function setMetaKeys($metaKeys): Product
     {
         $this->metaKeys = $metaKeys;
-
         return $this;
     }
 
     /**
-     * Get metaKeys
-     *
      * @return string
      */
-    public function getMetaKeys()
+    public function getMetaKeys(): string
     {
         return $this->metaKeys;
     }
 
     /**
-     * Set metaDescription
-     *
      * @param string $metaDescription
      * @return Product
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription($metaDescription): Product
     {
         $this->metaDescription = $metaDescription;
-
         return $this;
     }
 
     /**
-     * Get metaDescription
-     *
      * @return string
      */
-    public function getMetaDescription()
+    public function getMetaDescription(): string
     {
         return $this->metaDescription;
     }
 
     /**
-     * Set quantity
-     *
      * @param integer $quantity
      * @return Product
      */
-    public function setQuantity($quantity)
+    public function setQuantity($quantity): Product
     {
         $this->quantity = $quantity;
-
         return $this;
     }
 
     /**
-     * Get quantity
-     *
      * @return integer
      */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
     /**
-     * Set measureQuantity
-     *
      * @param integer $measureQuantity
      * @return Product
      */
-    public function setMeasureQuantity($measureQuantity)
+    public function setMeasureQuantity(int $measureQuantity): Product
     {
         $this->measureQuantity = $measureQuantity;
-
         return $this;
     }
 
     /**
-     * Get measureQuantity
-     *
      * @return integer
      */
-    public function getMeasureQuantity()
+    public function getMeasureQuantity(): int
     {
         return $this->measureQuantity;
     }
 
     /**
-     * Set measure
-     *
-     * @param \Eshop\ShopBundle\Entity\Measure $measure
+     * @param Measure $measure
      * @return Product
      */
-    public function setMeasure(\Eshop\ShopBundle\Entity\Measure $measure = null)
+    public function setMeasure(Measure $measure): Product
     {
         $this->measure = $measure;
-
         return $this;
     }
 
     /**
-     * Get measure
-     *
-     * @return \Eshop\ShopBundle\Entity\Measure
+     * @return Measure
      */
-    public function getMeasure()
+    public function getMeasure(): Measure
     {
         return $this->measure;
     }
 
     /**
-     * Set slug
-     *
      * @param string $slug
      * @return Product
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug): Product
     {
         $this->slug = $slug;
-
         return $this;
     }
 
     /**
-     * Get slug
-     *
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
     /**
-     * Set dateCreated
-     *
      * @param \DateTime $dateCreated
      * @return Product
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(\DateTime $dateCreated): Product
     {
         $this->dateCreated = $dateCreated;
-
         return $this;
     }
 
     /**
-     * Get dateCreated
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateCreated()
+    public function getDateCreated(): \DateTime
     {
         return $this->dateCreated;
     }
 
     /**
-     * Set dateUpdated
-     *
      * @param \DateTime $dateUpdated
      * @return Product
      */
-    public function setDateUpdated($dateUpdated)
+    public function setDateUpdated(\DateTime $dateUpdated): Product
     {
         $this->dateUpdated = $dateUpdated;
-
         return $this;
     }
 
     /**
-     * Get dateUpdated
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateUpdated()
+    public function getDateUpdated(): \DateTime
     {
         return $this->dateUpdated;
     }
 
     /**
-     * Add favourites
-     *
-     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     * @param Favourites $favourites
      * @return Product
      */
-    public function addFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    public function addFavourite(Favourites $favourites): Product
     {
         $this->favourites[] = $favourites;
-
         return $this;
     }
 
     /**
-     * Remove favourites
-     *
-     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     * @param Favourites $favourites
+     * @return Product
      */
-    public function removeFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    public function removeFavourite(Favourites $favourites): Product
     {
         $this->favourites->removeElement($favourites);
+        return $this;
     }
 
     /**
-     * Get favourites
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Favourites[]|Collection
      */
-    public function getFavourites()
+    public function getFavourites(): Collection
     {
         return $this->favourites;
     }
 
     /**
-     * Set featured
-     *
-     * @param \Eshop\ShopBundle\Entity\Featured $featured
+     * @param Featured $featured
      * @return Product
      */
-    public function setFeatured(\Eshop\ShopBundle\Entity\Featured $featured = null)
+    public function setFeatured(Featured $featured): Product
     {
         $this->featured = $featured;
-
         return $this;
     }
 
     /**
-     * Get featured
-     *
-     * @return \Eshop\ShopBundle\Entity\Featured 
+     * @return Featured
      */
-    public function getFeatured()
+    public function getFeatured(): Featured
     {
         return $this->featured;
     }
 
     /**
-     * Set deleted
-     *
      * @param boolean $deleted
      * @return Product
      */
-    public function setDeleted($deleted)
+    public function setDeleted($deleted): Product
     {
         $this->deleted = $deleted;
-
         return $this;
     }
 
     /**
-     * Get deleted
-     *
-     * @return boolean 
+     * @return boolean
      */
-    public function getDeleted()
+    public function getDeleted(): bool
     {
         return $this->deleted;
     }

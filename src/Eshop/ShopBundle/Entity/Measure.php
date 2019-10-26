@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -30,80 +31,75 @@ class Measure
     private $name;
 
     /**
+     * @var Product[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Product", mappedBy="measure")
-     **/
+     */
     private $products;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->products = new ArrayCollection();
     }
 
-    public function __toString(){
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
         return $this->getName();
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Measure
      */
-    public function setName($name)
+    public function setName(string $name): Measure
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Add products
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $products
+     * @param Product $products
      * @return Measure
      */
-    public function addProduct(\Eshop\ShopBundle\Entity\Product $products)
+    public function addProduct(Product $products): Measure
     {
         $this->products[] = $products;
-
         return $this;
     }
 
     /**
-     * Remove products
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $products
+     * @param Product $products
+     * @return Measure
      */
-    public function removeProduct(\Eshop\ShopBundle\Entity\Product $products)
+    public function removeProduct(Product $products): Measure
     {
         $this->products->removeElement($products);
+        return $this;
     }
 
     /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
-    public function getProducts()
+    public function getProducts(): ?Collection
     {
         return $this->products;
     }

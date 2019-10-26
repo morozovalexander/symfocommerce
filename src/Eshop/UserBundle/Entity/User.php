@@ -2,6 +2,9 @@
 
 namespace Eshop\UserBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Eshop\ShopBundle\Entity\Favourites;
+use Eshop\ShopBundle\Entity\Orders;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,21 +23,29 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="firstname", type="string", length=255)
      */
     protected $firstname;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="lastname", type="string", length=255)
      */
     protected $lastname;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="phone", type="string", length=255)
      */
     protected $phone;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="address", type="text", length=1000)
      */
     protected $address;
@@ -47,11 +58,15 @@ class User extends BaseUser
     private $joinDate;
 
     /**
+     * @var Favourites[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="\Eshop\ShopBundle\Entity\Favourites", mappedBy="user")
      **/
     private $favourites;
 
     /**
+     * @var Orders[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="\Eshop\ShopBundle\Entity\Orders", mappedBy="user")
      **/
     private $orders;
@@ -65,182 +80,147 @@ class User extends BaseUser
     }
 
     /**
-     * Set joinDate
-     *
      * @param \DateTime $joinDate
      * @return User
      */
-    public function setJoinDate($joinDate)
+    public function setJoinDate(\DateTime $joinDate): User
     {
         $this->joinDate = $joinDate;
-
         return $this;
     }
 
     /**
-     * Get joinDate
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getJoinDate()
+    public function getJoinDate(): \DateTime
     {
         return $this->joinDate;
     }
 
     /**
-     * Set firstname
-     *
      * @param string $firstname
      * @return User
      */
-    public function setFirstname($firstname)
+    public function setFirstname(string $firstname): User
     {
         $this->firstname = $firstname;
-
         return $this;
     }
 
     /**
-     * Get firstname
-     *
-     * @return string 
+     * @return string
      */
-    public function getFirstname()
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
 
     /**
-     * Set lastname
-     *
      * @param string $lastname
      * @return User
      */
-    public function setLastname($lastname)
+    public function setLastname(string $lastname): User
     {
         $this->lastname = $lastname;
-
         return $this;
     }
 
     /**
-     * Get lastname
-     *
-     * @return string 
+     * @return string
      */
-    public function getLastname()
+    public function getLastname(): string
     {
         return $this->lastname;
     }
 
     /**
-     * Add favourites
-     *
-     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     * @param Favourites $favourites
      * @return User
      */
-    public function addFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    public function addFavourite(Favourites $favourites): User
     {
         $this->favourites[] = $favourites;
-
         return $this;
     }
 
     /**
-     * Remove favourites
-     *
-     * @param \Eshop\ShopBundle\Entity\Favourites $favourites
+     * @param Favourites $favourites
+     * @return User
      */
-    public function removeFavourite(\Eshop\ShopBundle\Entity\Favourites $favourites)
+    public function removeFavourite(Favourites $favourites): User
     {
         $this->favourites->removeElement($favourites);
+        return $this;
     }
 
     /**
-     * Get favourites
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
-    public function getFavourites()
+    public function getFavourites(): Collection
     {
         return $this->favourites;
     }
 
     /**
-     * Add orders
-     *
-     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     * @param Orders $orders
      * @return User
      */
-    public function addOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    public function addOrder(Orders $orders): User
     {
         $this->orders[] = $orders;
-
         return $this;
     }
 
     /**
-     * Remove orders
-     *
-     * @param \Eshop\ShopBundle\Entity\Orders $orders
+     * @param Orders $orders
+     * @return User
      */
-    public function removeOrder(\Eshop\ShopBundle\Entity\Orders $orders)
+    public function removeOrder(Orders $orders): User
     {
         $this->orders->removeElement($orders);
+        return $this;
     }
 
     /**
-     * Get orders
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
-    public function getOrders()
+    public function getOrders(): Collection
     {
         return $this->orders;
     }
 
     /**
-     * Set phone
-     *
      * @param string $phone
      * @return User
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): User
     {
         $this->phone = $phone;
-
         return $this;
     }
 
     /**
-     * Get phone
-     *
-     * @return string 
+     * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
     /**
-     * Set address
-     *
      * @param string $address
      * @return User
      */
-    public function setAddress($address)
+    public function setAddress(string $address): User
     {
         $this->address = $address;
-
         return $this;
     }
 
     /**
-     * Get address
-     *
-     * @return string 
+     * @return string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }

@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Eshop\UserBundle\Entity\User;
 
 /**
  * Favourites
@@ -29,93 +30,80 @@ class Favourites
     private $date;
 
     /**
+     * @var User
+     *
      * @ORM\ManyToOne(targetEntity="\Eshop\UserBundle\Entity\User", inversedBy="favourites")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-     **/
+     */
     private $user;
 
     /**
+     * @var Product
+     *
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="favourites")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
-     **/
+     */
     private $product;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Favourites
+     * @return \DateTime
      */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
 
     /**
-     * Set product
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $product
+     * @param \DateTime $date
      * @return Favourites
      */
-    public function setProduct(\Eshop\ShopBundle\Entity\Product $product = null)
+    public function setDate(\DateTime $date): Favourites
     {
-        $this->product = $product;
-
+        $this->date = $date;
         return $this;
     }
 
     /**
-     * Get product
-     *
-     * @return \Eshop\ShopBundle\Entity\Product 
+     * @return Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
     /**
-     * Set user
-     *
-     * @param \Eshop\UserBundle\Entity\User $user
+     * @param Product $product
      * @return Favourites
      */
-    public function setUser(\Eshop\UserBundle\Entity\User $user = null)
+    public function setProduct(Product $product): Favourites
     {
-        $this->user = $user;
-
+        $this->product = $product;
         return $this;
     }
 
     /**
-     * Get user
-     *
-     * @return \Eshop\UserBundle\Entity\User 
+     * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
+    }
+
+    /**
+     * @param User $user
+     * @return Favourites
+     */
+    public function setUser(User $user): Favourites
+    {
+        $this->user = $user;
+        return $this;
     }
 }

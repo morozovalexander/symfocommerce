@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -87,8 +88,10 @@ class Manufacturer implements ImageHolderInterface
     private $image;
 
     /**
+     * @var Product[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Product", mappedBy="manufacturer")
-     **/
+     */
     private $products;
 
     public function __construct()
@@ -98,54 +101,47 @@ class Manufacturer implements ImageHolderInterface
         $this->products = new ArrayCollection();
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return $this->getName();
     }
 
     /**
-     * Get id
-     *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Manufacturer
      */
-    public function setName($name)
+    public function setName(string $name): Manufacturer
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set description
-     *
      * @param string $description
      * @return Manufacturer
      */
-    public function setDescription($description)
+    public function setDescription(string $description): Manufacturer
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -154,83 +150,68 @@ class Manufacturer implements ImageHolderInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * Add products
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $products
+     * @param Product $products
      * @return Manufacturer
      */
-    public function addProduct(\Eshop\ShopBundle\Entity\Product $products)
+    public function addProduct(Product $products): Manufacturer
     {
         $this->products[] = $products;
-
         return $this;
     }
 
     /**
-     * Remove products
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $products
+     * @param Product $products
+     * @return Manufacturer
      */
-    public function removeProduct(\Eshop\ShopBundle\Entity\Product $products)
+    public function removeProduct(Product $products): Manufacturer
     {
         $this->products->removeElement($products);
+        return $this;
     }
 
     /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getProducts()
+    public function getProducts(): ?Collection
     {
         return $this->products;
     }
 
     /**
-     * Set metaKeys
-     *
      * @param string $metaKeys
      * @return Manufacturer
      */
-    public function setMetaKeys($metaKeys)
+    public function setMetaKeys(string $metaKeys): Manufacturer
     {
         $this->metaKeys = $metaKeys;
-
         return $this;
     }
 
     /**
-     * Get metaKeys
-     *
      * @return string
      */
-    public function getMetaKeys()
+    public function getMetaKeys(): string
     {
         return $this->metaKeys;
     }
 
     /**
-     * Set metaDescription
-     *
      * @param string $metaDescription
      * @return Manufacturer
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(string $metaDescription): Manufacturer
     {
         $this->metaDescription = $metaDescription;
-
         return $this;
     }
 
     /**
-     * Get metaDescription
-     *
      * @return string
      */
     public function getMetaDescription()
@@ -239,35 +220,28 @@ class Manufacturer implements ImageHolderInterface
     }
 
     /**
-     * Set slug
-     *
      * @param string $slug
      * @return Manufacturer
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug): Manufacturer
     {
         $this->slug = $slug;
-
         return $this;
     }
 
     /**
-     * Get slug
-     *
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
     /**
-     * Set dateCreated
-     *
      * @param \DateTime $dateCreated
      * @return Manufacturer
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(\DateTime $dateCreated): Manufacturer
     {
         $this->dateCreated = $dateCreated;
 
@@ -275,34 +249,27 @@ class Manufacturer implements ImageHolderInterface
     }
 
     /**
-     * Get dateCreated
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateCreated()
+    public function getDateCreated(): \DateTime
     {
         return $this->dateCreated;
     }
 
     /**
-     * Set dateUpdated
-     *
      * @param \DateTime $dateUpdated
      * @return Manufacturer
      */
-    public function setDateUpdated($dateUpdated)
+    public function setDateUpdated(\DateTime $dateUpdated): Manufacturer
     {
         $this->dateUpdated = $dateUpdated;
-
         return $this;
     }
 
     /**
-     * Get dateUpdated
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDateUpdated()
+    public function getDateUpdated(): \DateTime
     {
         return $this->dateUpdated;
     }
@@ -310,9 +277,10 @@ class Manufacturer implements ImageHolderInterface
     /**
      * @inheritdoc
      */
-    public function setImage($image): void
+    public function setImage($image): Manufacturer
     {
         $this->image = $image;
+        return $this;
     }
 
     /**

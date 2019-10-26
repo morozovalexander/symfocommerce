@@ -29,63 +29,53 @@ class Featured
     private $productOrder;
 
     /**
+     * @var Product
+     *
      * @ORM\OneToOne(targetEntity="Product", inversedBy="featured", fetch="EAGER")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
      */
     private $product;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set productOrder
-     *
-     * @param integer $productOrder
+     * @param int $productOrder
      * @return Featured
      */
-    public function setProductOrder($productOrder)
+    public function setProductOrder(int $productOrder): Featured
     {
         $this->productOrder = $productOrder;
-
         return $this;
     }
 
     /**
-     * Get productOrder
-     *
-     * @return integer 
+     * @return int
      */
-    public function getProductOrder()
+    public function getProductOrder(): int
     {
         return $this->productOrder;
     }
 
     /**
-     * Set product
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $product
+     * @param Product $product
      * @return Featured
      */
-    public function setProduct(\Eshop\ShopBundle\Entity\Product $product = null)
+    public function setProduct(Product $product): Featured
     {
         $this->product = $product;
-
         return $this;
     }
 
     /**
-     * Get product
-     *
-     * @return \Eshop\ShopBundle\Entity\Product 
+     * @return Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class OrderProduct
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,22 +22,26 @@ class OrderProduct
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="quantity", type="integer")
      */
     private $quantity;
 
     /**
+     * @var Orders
+     *
      * @ORM\ManyToOne(targetEntity="Orders", inversedBy="orderProducts")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", onDelete="CASCADE")
-     **/
+     */
     private $order;
 
     /**
+     * @var Product
+     *
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="productOrders")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     **/
+     */
     private $product;
 
     /**
@@ -48,103 +52,81 @@ class OrderProduct
     private $price;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set quantity
-     *
-     * @param integer $quantity
+     * @param int $quantity
      * @return OrderProduct
      */
-    public function setQuantity($quantity)
+    public function setQuantity(int $quantity): OrderProduct
     {
         $this->quantity = $quantity;
-
         return $this;
     }
 
     /**
-     * Get quantity
-     *
-     * @return integer 
+     * @return int
      */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
     /**
-     * Set order
-     *
-     * @param \Eshop\ShopBundle\Entity\Orders $order
+     * @param Orders $order
      * @return OrderProduct
      */
-    public function setOrder(\Eshop\ShopBundle\Entity\Orders $order = null)
+    public function setOrder(Orders $order): OrderProduct
     {
         $this->order = $order;
-
         return $this;
     }
 
     /**
-     * Get order
-     *
-     * @return \Eshop\ShopBundle\Entity\Orders 
+     * @return Orders
      */
-    public function getOrder()
+    public function getOrder(): Orders
     {
         return $this->order;
     }
 
     /**
-     * Set product
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $product
+     * @param Product $product
      * @return OrderProduct
      */
-    public function setProduct(\Eshop\ShopBundle\Entity\Product $product = null)
+    public function setProduct(Product $product): OrderProduct
     {
         $this->product = $product;
-
         return $this;
     }
 
     /**
-     * Get product
-     *
-     * @return \Eshop\ShopBundle\Entity\Product 
+     * @return Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
 
     /**
-     * Set price
-     *
      * @param float $price
      * @return OrderProduct
      */
-    public function setPrice($price)
+    public function setPrice(float $price): OrderProduct
     {
         $this->price = $price;
-
         return $this;
     }
 
     /**
-     * Get price
-     *
-     * @return float 
+     * @return float
      */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }

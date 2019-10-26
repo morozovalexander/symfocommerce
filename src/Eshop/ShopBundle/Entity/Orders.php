@@ -4,6 +4,8 @@ namespace Eshop\ShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Eshop\UserBundle\Entity\User;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Orders
@@ -65,9 +67,11 @@ class Orders
     private $date;
 
     /**
+     * @var User
+     *
      * @ORM\ManyToOne(targetEntity="\Eshop\UserBundle\Entity\User", inversedBy="orders")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
-     **/
+     */
     private $user;
 
     /**
@@ -78,238 +82,194 @@ class Orders
     private $sum;
 
     /**
+     * @var OrderProduct[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="OrderProduct", mappedBy="order")
-     **/
+     */
     private $orderProducts;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->orderProducts = new ArrayCollection();
         $this->date = new \DateTime();
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Orders
      */
-    public function setName($name)
+    public function setName($name): Orders
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set phone
-     *
      * @param string $phone
      * @return Orders
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): Orders
     {
         $this->phone = $phone;
-
         return $this;
     }
 
     /**
-     * Get phone
-     *
-     * @return string 
+     * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
     /**
-     * Set email
-     *
      * @param string $email
      * @return Orders
      */
-    public function setEmail($email)
+    public function setEmail(string $email): Orders
     {
         $this->email = $email;
-
         return $this;
     }
 
     /**
-     * Get email
-     *
-     * @return string 
+     * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
-     * Set date
-     *
      * @param \DateTime $date
      * @return Orders
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date): Orders
     {
         $this->date = $date;
-
         return $this;
     }
 
     /**
-     * Get date
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
 
     /**
-     * Set address
-     *
      * @param string $address
      * @return Orders
      */
-    public function setAddress($address)
+    public function setAddress(string $address): Orders
     {
         $this->address = $address;
-
         return $this;
     }
 
     /**
-     * Get address
-     *
-     * @return string 
+     * @return string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
 
     /**
-     * Set comment
-     *
      * @param string $comment
      * @return Orders
      */
-    public function setComment($comment)
+    public function setComment(string $comment): Orders
     {
         $this->comment = $comment;
-
         return $this;
     }
 
     /**
-     * Get comment
-     *
-     * @return string 
+     * @return string
      */
-    public function getComment()
+    public function getComment(): string
     {
         return $this->comment;
     }
 
     /**
-     * Add orderProducts
-     *
-     * @param \Eshop\ShopBundle\Entity\OrderProduct $orderProducts
+     * @param OrderProduct $orderProducts
      * @return Orders
      */
-    public function addOrderProduct(\Eshop\ShopBundle\Entity\OrderProduct $orderProducts)
+    public function addOrderProduct(OrderProduct $orderProducts): Orders
     {
         $this->orderProducts[] = $orderProducts;
-
         return $this;
     }
 
     /**
-     * Remove orderProducts
-     *
-     * @param \Eshop\ShopBundle\Entity\OrderProduct $orderProducts
+     * @param OrderProduct $orderProducts
+     * @return Orders
      */
-    public function removeOrderProduct(\Eshop\ShopBundle\Entity\OrderProduct $orderProducts)
+    public function removeOrderProduct(OrderProduct $orderProducts): Orders
     {
         $this->orderProducts->removeElement($orderProducts);
+        return $this;
     }
 
     /**
-     * Get orderProducts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return OrderProduct[]|Collection
      */
-    public function getOrderProducts()
+    public function getOrderProducts(): Collection
     {
         return $this->orderProducts;
     }
 
     /**
-     * Set user
-     *
-     * @param \Eshop\UserBundle\Entity\User $user
+     * @param User $user
      * @return Orders
      */
-    public function setUser(\Eshop\UserBundle\Entity\User $user = null)
+    public function setUser(User $user): Orders
     {
         $this->user = $user;
-
         return $this;
     }
 
     /**
-     * Get user
-     *
-     * @return \Eshop\UserBundle\Entity\User 
+     * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
     /**
-     * Set sum
-     *
      * @param float $sum
      * @return Orders
      */
-    public function setSum($sum)
+    public function setSum(float $sum): Orders
     {
         $this->sum = $sum;
-
         return $this;
     }
 
     /**
-     * Get sum
-     *
-     * @return float 
+     * @return float
      */
-    public function getSum()
+    public function getSum(): float
     {
         return $this->sum;
     }

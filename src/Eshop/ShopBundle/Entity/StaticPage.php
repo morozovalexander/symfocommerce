@@ -73,172 +73,135 @@ class StaticPage
     private $metaDescription;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      * @return StaticPage
      */
-    public function setTitle($title)
+    public function setTitle(string $title): StaticPage
     {
         $this->title = $title;
-
         return $this;
     }
 
     /**
-     * Get title
-     *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * Set content
-     *
      * @param string $content
      * @return StaticPage
      */
-    public function setContent($content)
+    public function setContent(string $content): StaticPage
     {
         $this->content = $content;
-
         return $this;
     }
 
     /**
-     * Get content
-     *
-     * @return string 
+     * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
     /**
-     * Set enabled
-     *
      * @param boolean $enabled
      * @return StaticPage
      */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): StaticPage
     {
         $this->enabled = $enabled;
-
         return $this;
     }
 
     /**
-     * Get enabled
-     *
-     * @return boolean 
+     * @return boolean
      */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
     /**
-     * Set orderNum
-     *
      * @param integer $orderNum
      * @return StaticPage
      */
-    public function setOrderNum($orderNum)
+    public function setOrderNum(int $orderNum): StaticPage
     {
         $this->orderNum = $orderNum;
-
         return $this;
     }
 
     /**
-     * Get orderNum
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getOrderNum()
+    public function getOrderNum(): int
     {
         return $this->orderNum;
     }
 
     /**
-     * Set slug
-     *
      * @param string $slug
      * @return StaticPage
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug): StaticPage
     {
         $this->slug = $slug;
-
         return $this;
     }
 
     /**
-     * Get slug
-     *
-     * @return string 
+     * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
     /**
-     * Set metaKeys
-     *
      * @param string $metaKeys
      * @return StaticPage
      */
-    public function setMetaKeys($metaKeys)
+    public function setMetaKeys(string $metaKeys): StaticPage
     {
         $this->metaKeys = $metaKeys;
-
         return $this;
     }
 
     /**
-     * Get metaKeys
-     *
-     * @return string 
+     * @return string
      */
-    public function getMetaKeys()
+    public function getMetaKeys(): string
     {
         return $this->metaKeys;
     }
 
     /**
-     * Set metaDescription
-     *
      * @param string $metaDescription
      * @return StaticPage
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(string $metaDescription): StaticPage
     {
         $this->metaDescription = $metaDescription;
-
         return $this;
     }
 
     /**
-     * Get metaDescription
-     *
-     * @return string 
+     * @return string
      */
-    public function getMetaDescription()
+    public function getMetaDescription(): string
     {
         return $this->metaDescription;
     }
