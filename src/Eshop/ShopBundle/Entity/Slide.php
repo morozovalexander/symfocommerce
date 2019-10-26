@@ -54,89 +54,77 @@ class Slide implements ImageHolderInterface
      */
     private $image;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->enabled = true;
     }
 
-    public function __toString(){
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
         return $this->getName();
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      * @return Slide
      */
-    public function setName($name)
+    public function setName(string $name): Slide
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set enabled
-     *
      * @param boolean $enabled
      * @return Slide
      */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): Slide
     {
         $this->enabled = $enabled;
-
         return $this;
     }
 
     /**
-     * Get enabled
-     *
-     * @return boolean 
+     * @return boolean
      */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
     /**
-     * Set slideOrder
-     *
      * @param integer $slideOrder
      * @return Slide
      */
-    public function setSlideOrder($slideOrder)
+    public function setSlideOrder(int $slideOrder): Slide
     {
         $this->slideOrder = $slideOrder;
-
         return $this;
     }
 
     /**
-     * Get slideOrder
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getSlideOrder()
+    public function getSlideOrder(): int
     {
         return $this->slideOrder;
     }
@@ -144,9 +132,10 @@ class Slide implements ImageHolderInterface
     /**
      * @inheritdoc
      */
-    public function setImage($image): void
+    public function setImage($image): Slide
     {
         $this->image = $image;
+        return $this;
     }
 
     /**

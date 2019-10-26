@@ -37,22 +37,18 @@ class Settings
 
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set showEmptyCategories
-     *
      * @param boolean $showEmptyCategories
      * @return Settings
      */
-    public function setShowEmptyCategories($showEmptyCategories)
+    public function setShowEmptyCategories(bool $showEmptyCategories): Settings
     {
         $this->showEmptyCategories = $showEmptyCategories;
 
@@ -60,22 +56,18 @@ class Settings
     }
 
     /**
-     * Get showEmptyCategories
-     *
-     * @return boolean 
+     * @return boolean
      */
-    public function getShowEmptyCategories()
+    public function getShowEmptyCategories(): bool
     {
         return $this->showEmptyCategories;
     }
 
     /**
-     * Set showEmptyManufacturers
-     *
      * @param boolean $showEmptyManufacturers
      * @return Settings
      */
-    public function setShowEmptyManufacturers($showEmptyManufacturers)
+    public function setShowEmptyManufacturers(bool $showEmptyManufacturers): Settings
     {
         $this->showEmptyManufacturers = $showEmptyManufacturers;
 
@@ -83,11 +75,9 @@ class Settings
     }
 
     /**
-     * Get showEmptyManufacturers
-     *
-     * @return boolean 
+     * @return boolean
      */
-    public function getShowEmptyManufacturers()
+    public function getShowEmptyManufacturers(): bool
     {
         return $this->showEmptyManufacturers;
     }

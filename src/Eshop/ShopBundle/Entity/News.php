@@ -74,149 +74,117 @@ class News
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      * @return News
      */
-    public function setTitle($title)
+    public function setTitle(string $title): News
     {
         $this->title = $title;
-
         return $this;
     }
 
     /**
-     * Get title
-     *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * Set text
-     *
      * @param string $text
      * @return News
      */
-    public function setText($text)
+    public function setText(string $text): News
     {
         $this->text = $text;
-
         return $this;
     }
 
     /**
-     * Get text
-     *
-     * @return string 
+     * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
     /**
-     * Set date
-     *
      * @param \DateTime $date
      * @return News
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date): News
     {
         $this->date = $date;
-
         return $this;
     }
 
     /**
-     * Get date
-     *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDate()
+    public function getDate(): \DateTime
     {
         return $this->date;
     }
 
     /**
-     * Set metaKeys
-     *
      * @param string $metaKeys
      * @return News
      */
-    public function setMetaKeys($metaKeys)
+    public function setMetaKeys(string $metaKeys): News
     {
         $this->metaKeys = $metaKeys;
-
         return $this;
     }
 
     /**
-     * Get metaKeys
-     *
-     * @return string 
+     * @return string
      */
-    public function getMetaKeys()
+    public function getMetaKeys(): string
     {
         return $this->metaKeys;
     }
 
     /**
-     * Set metaDescription
-     *
      * @param string $metaDescription
      * @return News
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(string $metaDescription): News
     {
         $this->metaDescription = $metaDescription;
-
         return $this;
     }
 
     /**
-     * Get metaDescription
-     *
-     * @return string 
+     * @return string
      */
-    public function getMetaDescription()
+    public function getMetaDescription(): string
     {
         return $this->metaDescription;
     }
 
     /**
-     * Set slug
-     *
      * @param string $slug
      * @return News
      */
-    public function setSlug($slug)
+    public function setSlug(string $slug): News
     {
         $this->slug = $slug;
-
         return $this;
     }
 
     /**
-     * Get slug
-     *
-     * @return string 
+     * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }

@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,11 +66,15 @@ class Category implements ImageHolderInterface
     private $metaDescription;
 
     /**
+     * @var Category[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      */
     private $children;
 
     /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
@@ -98,8 +103,10 @@ class Category implements ImageHolderInterface
     private $image;
 
     /**
+     * @var Product[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
-     **/
+     */
     private $products;
 
     public function __construct()
@@ -115,249 +122,200 @@ class Category implements ImageHolderInterface
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Category
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
+     * @param string $name
      * @return Category
      */
-    public function setDescription($description)
+    public function setName(string $name): Category
     {
-        $this->description = $description;
-
+        $this->name = $name;
         return $this;
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * Add products
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $products
+     * @param string $description
      * @return Category
      */
-    public function addProduct(\Eshop\ShopBundle\Entity\Product $products)
+    public function setDescription(string $description): Category
     {
-        $this->products[] = $products;
-
+        $this->description = $description;
         return $this;
     }
 
     /**
-     * Remove products
-     *
-     * @param \Eshop\ShopBundle\Entity\Product $products
+     * @param Product $products
+     * @return Category
      */
-    public function removeProduct(\Eshop\ShopBundle\Entity\Product $products)
+    public function addProduct(Product $products): Category
     {
-        $this->products->removeElement($products);
+        $this->products[] = $products;
+        return $this;
     }
 
     /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param Product $products
+     * @return Category
      */
-    public function getProducts()
+    public function removeProduct(Product $products): Category
+    {
+        $this->products->removeElement($products);
+        return $this;
+    }
+
+    /**
+     * @return Product[]|Collection
+     */
+    public function getProducts(): array
     {
         return $this->products;
     }
 
     /**
-     * Set metaKeys
-     *
      * @param string $metaKeys
      * @return Category
      */
-    public function setMetaKeys($metaKeys)
+    public function setMetaKeys($metaKeys): Category
     {
         $this->metaKeys = $metaKeys;
-
         return $this;
     }
 
     /**
-     * Get metaKeys
-     *
      * @return string
      */
-    public function getMetaKeys()
+    public function getMetaKeys(): string
     {
         return $this->metaKeys;
     }
 
     /**
-     * Set metaDescription
-     *
      * @param string $metaDescription
      * @return Category
      */
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription($metaDescription): Category
     {
         $this->metaDescription = $metaDescription;
-
         return $this;
     }
 
     /**
-     * Get metaDescription
-     *
      * @return string
      */
-    public function getMetaDescription()
+    public function getMetaDescription(): string
     {
         return $this->metaDescription;
     }
 
     /**
-     * Set slug
-     *
      * @param string $slug
      * @return Category
      */
-    public function setSlug($slug)
+    public function setSlug($slug): Category
     {
         $this->slug = $slug;
-
         return $this;
     }
 
     /**
-     * Get slug
-     *
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
     /**
-     * Add children
-     *
-     * @param \Eshop\ShopBundle\Entity\Category $children
+     * @param Category $children
      * @return Category
      */
-    public function addChild(\Eshop\ShopBundle\Entity\Category $children)
+    public function addChild(Category $children): Category
     {
         $this->children[] = $children;
-
         return $this;
     }
 
     /**
-     * Remove children
-     *
-     * @param \Eshop\ShopBundle\Entity\Category $children
+     * @param Category $children
+     * @return Category
      */
-    public function removeChild(\Eshop\ShopBundle\Entity\Category $children)
+    public function removeChild(Category $children): Category
     {
         $this->children->removeElement($children);
+        return $this;
     }
 
     /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
-    public function getChildren()
+    public function getChildren(): ?Collection
     {
         return $this->children;
     }
 
     /**
-     * Set parent
-     *
-     * @param \Eshop\ShopBundle\Entity\Category $parent
+     * @param Category $parent
      * @return Category
      */
-    public function setParent(\Eshop\ShopBundle\Entity\Category $parent = null)
+    public function setParent(Category $parent): Category
     {
         $this->parent = $parent;
-
         return $this;
     }
 
     /**
-     * Get parent
-     *
-     * @return \Eshop\ShopBundle\Entity\Category
+     * @return Category
      */
-    public function getParent()
+    public function getParent(): ?Category
     {
         return $this->parent;
     }
 
     /**
-     * Set dateCreated
-     *
      * @param \DateTime $dateCreated
      * @return Category
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated($dateCreated): Category
     {
         $this->dateCreated = $dateCreated;
-
         return $this;
     }
 
     /**
-     * Get dateCreated
-     *
      * @return \DateTime
      */
-    public function getDateCreated()
+    public function getDateCreated(): \DateTime
     {
         return $this->dateCreated;
     }
 
     /**
-     * Set dateUpdated
-     *
      * @param \DateTime $dateUpdated
      * @return Category
      */
-    public function setDateUpdated($dateUpdated)
+    public function setDateUpdated($dateUpdated): Category
     {
         $this->dateUpdated = $dateUpdated;
 
@@ -365,11 +323,9 @@ class Category implements ImageHolderInterface
     }
 
     /**
-     * Get dateUpdated
-     *
      * @return \DateTime
      */
-    public function getDateUpdated()
+    public function getDateUpdated(): \DateTime
     {
         return $this->dateUpdated;
     }
@@ -377,9 +333,10 @@ class Category implements ImageHolderInterface
     /**
      * @inheritdoc
      */
-    public function setImage($image): void
+    public function setImage($image): Category
     {
         $this->image = $image;
+        return $this;
     }
 
     /**
