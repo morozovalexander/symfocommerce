@@ -2,7 +2,7 @@
 
 namespace Eshop\ShopBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Eshop\ShopBundle\Entity\Settings;
 
 /**
@@ -14,14 +14,14 @@ class SettingsService
     /** @var Settings $settings */
     private $settings;
 
-    /** @var EntityManager $em */
+    /** @var EntityManagerInterface $em */
     private $em;
 
     /**
      * SettingsService constructor.
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
         $allSettings = $this->em->getRepository('ShopBundle:Settings')->findAll();

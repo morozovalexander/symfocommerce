@@ -5,6 +5,8 @@ namespace Eshop\ShopBundle\Controller;
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\Orders;
 use Eshop\ShopBundle\Form\Type\OrdersType;
+use Eshop\ShopBundle\Service\EmailNotifier;
+use Eshop\ShopBundle\Service\PagesUtilities;
 use Eshop\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
@@ -79,14 +81,14 @@ class CartController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $orderSuccess = $this->get('app.page_utilities')->createOrderDBRecord($request, $order, $this->getUser());
+            $orderSuccess = $this->get(PagesUtilities::class)->createOrderDBRecord($request, $order, $this->getUser());
 
             if (!$orderSuccess) {
                 return $this->redirect($this->generateUrl('cartisempty')); //check valid cart
             }
 
             //send email notification
-            $this->get('app.email_notifier')->handleNotification([
+            $this->get(EmailNotifier::class)->handleNotification([
                 'event' => 'new_order',
                 'order_id' => $order->getId(),
                 'admin_email' => $this->getParameter('admin_email')

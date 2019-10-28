@@ -4,6 +4,7 @@ namespace Eshop\ShopBundle\Controller;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Eshop\ShopBundle\Entity\Favourites;
+use Eshop\ShopBundle\Service\PagesUtilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -102,7 +103,7 @@ class AjaxController extends Controller
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository('ShopBundle:Product');
 
-        $productIdsArray = $this->get('app.page_utilities')->getLastSeenProducts($request);
+        $productIdsArray = $this->get(PagesUtilities::class)->getLastSeenProducts($request);
 
         $products = $productRepository->getLastSeen($productIdsArray, $this->getUser(), 4);
         if (!$products) {

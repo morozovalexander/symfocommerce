@@ -2,8 +2,8 @@
 
 namespace Eshop\ShopBundle\Service;
 
-use Symfony\Bridge\Twig\TwigEngine;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Templating\EngineInterface;
 use Twig\Error\Error;
 
 /**
@@ -15,10 +15,10 @@ class EmailNotifier
     /** @var \Swift_Mailer */
     private $mailer;
 
-    /** @var Router */
+    /** @var RouterInterface */
     private $router;
 
-    /** @var TwigEngine */
+    /** @var EngineInterface */
     private $templating;
 
     /** @var string */
@@ -27,10 +27,10 @@ class EmailNotifier
     /**
      * EmailNotifier constructor.
      * @param \Swift_Mailer $mailer
-     * @param Router $router
-     * @param TwigEngine $templating
+     * @param RouterInterface $router
+     * @param EngineInterface $templating
      */
-    public function __construct(\Swift_Mailer $mailer, Router $router, TwigEngine $templating)
+    public function __construct(\Swift_Mailer $mailer, RouterInterface $router, EngineInterface $templating)
     {
         $this->mailer = $mailer;
         $this->router = $router;

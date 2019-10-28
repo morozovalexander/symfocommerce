@@ -7,6 +7,7 @@ use Eshop\ShopBundle\Entity\Category;
 use Eshop\ShopBundle\Entity\Manufacturer;
 use Eshop\ShopBundle\Entity\Product;
 use Eshop\ShopBundle\Entity\StaticPage;
+use Eshop\ShopBundle\Service\PagesUtilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -66,7 +67,7 @@ class CatalogController extends Controller
         return $this->render('shop/catalog/category.html.twig', [
             'category' => $category,
             'products' => $products,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+            'sortedby' => $this->get(PagesUtilities::class)->getSortingParamName($request)
         ]);
     }
 
@@ -96,7 +97,7 @@ class CatalogController extends Controller
         return $this->render('shop/catalog/manufacturer.html.twig', [
             'manufacturer' => $manufacturer,
             'products' => $products,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+            'sortedby' => $this->get(PagesUtilities::class)->getSortingParamName($request)
         ]);
     }
 
@@ -167,7 +168,7 @@ class CatalogController extends Controller
         return $this->render('shop/catalog/search_product.html.twig', [
             'products' => $searchResults,
             'search_phrase' => $search_phrase,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+            'sortedby' => $this->get(PagesUtilities::class)->getSortingParamName($request)
         ]);
     }
 
