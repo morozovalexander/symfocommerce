@@ -21,6 +21,8 @@ class ManufacturerController extends Controller
      * Lists all Manufacturer entities.
      *
      * @Route("/", methods={"GET"}, name="admin_manufacturer")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request): Response
     {
@@ -46,6 +48,8 @@ class ManufacturerController extends Controller
      * Displays a form to create a new Manufacturer entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_manufacturer_new")
+     * @param Request $request
+     * @return Response
      */
     public function newAction(Request $request): Response
     {
@@ -73,6 +77,8 @@ class ManufacturerController extends Controller
      * Finds and displays a Manufacturer entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_manufacturer_show")
+     * @param Manufacturer $manufacturer
+     * @return Response
      */
     public function showAction(Manufacturer $manufacturer): Response
     {
@@ -88,6 +94,9 @@ class ManufacturerController extends Controller
      * Displays a form to edit an existing Manufacturer entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_manufacturer_edit")
+     * @param Request $request
+     * @param Manufacturer $manufacturer
+     * @return Response
      */
     public function editAction(Request $request, Manufacturer $manufacturer): Response
     {
@@ -121,6 +130,9 @@ class ManufacturerController extends Controller
      * Deletes a Manufacturer entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_manufacturer_delete")
+     * @param Request $request
+     * @param Manufacturer $manufacturer
+     * @return Response
      */
     public function deleteAction(Request $request, Manufacturer $manufacturer): Response
     {

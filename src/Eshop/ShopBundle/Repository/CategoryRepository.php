@@ -3,7 +3,9 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
+use Eshop\ShopBundle\Entity\Category;
 
 /**
  * CategoryRepository
@@ -17,9 +19,9 @@ class CategoryRepository extends EntityRepository
      * @param bool $showEmpty
      * @param string $order
      * @param string $sort
-     * @return array
+     * @return Category[]|array
      */
-    public function getAllCategories($showEmpty = true, $sort = 'name', $order = 'ASC')
+    public function getAllCategories(bool $showEmpty = true, string $sort = 'name', string $order = 'ASC'): array
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
@@ -41,7 +43,7 @@ class CategoryRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function getAllCategoriesAdminQB()
+    public function getAllCategoriesAdminQB(): QueryBuilder
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
@@ -53,9 +55,10 @@ class CategoryRepository extends EntityRepository
 
     /**
      * @param $slug string
-     * @return mixed
+     * @return Category|null
+     * @throws NonUniqueResultException
      */
-    public function findBySlug($slug)
+    public function findBySlug(string $slug): ?Category
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -68,9 +71,10 @@ class CategoryRepository extends EntityRepository
     }
 
     /**
-     * @return mixed
+     * @return Category|null
+     * @throws NonUniqueResultException
      */
-    public function getFirstCategory()
+    public function getFirstCategory(): ?Category
     {
         return $this->getEntityManager()
             ->createQueryBuilder()

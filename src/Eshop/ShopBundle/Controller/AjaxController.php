@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Eshop\ShopBundle\Entity\Favourites;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +15,9 @@ class AjaxController extends Controller
      * Lists all Category entities.
      *
      * @Route("/ajax_like", methods={"POST"}, name="ajax_like")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
      */
     public function likeAction(Request $request): JsonResponse
     {
@@ -60,9 +64,12 @@ class AjaxController extends Controller
     }
 
     /**
-     * Сhecks if user liked this project.
+     * Checks if user liked this project.
      *
      * @Route("/ajax_is_liked_product", methods={"POST"}, name="ajax_is_liked_product")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws NonUniqueResultException
      */
     public function checkIsLikedAction(Request $request): JsonResponse
     {
@@ -87,6 +94,8 @@ class AjaxController extends Controller
      * Render last seen products from cookies
      *
      * @Route("/ajax_get_last_seen_products", methods={"POST"}, name="ajax_get_last_seen_products")
+     * @param Request $request
+     * @return JsonResponse
      */
     public function getLastSeenProductsAction(Request $request): JsonResponse
     {
@@ -100,7 +109,7 @@ class AjaxController extends Controller
             $this->returnErrorJson('product not forund');
         }
         $html = $this->renderView('shop/_partials/last_seen_products.html.twig', [
-            'products' => $products]
+                'products' => $products]
         );
 
         return new JsonResponse([

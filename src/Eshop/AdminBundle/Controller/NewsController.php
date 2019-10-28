@@ -21,6 +21,8 @@ class NewsController extends Controller
      * Lists all News entities.
      *
      * @Route("/", methods={"GET"}, name="admin_news")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request): Response
     {
@@ -46,6 +48,8 @@ class NewsController extends Controller
      * Creates a new News entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_news_new")
+     * @param Request $request
+     * @return Response
      */
     public function newAction(Request $request): Response
     {
@@ -73,6 +77,8 @@ class NewsController extends Controller
      * Finds and displays a News entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_news_show")
+     * @param News $news
+     * @return Response
      */
     public function showAction(News $news): Response
     {
@@ -88,6 +94,9 @@ class NewsController extends Controller
      * Displays a form to edit an existing News entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_news_edit")
+     * @param Request $request
+     * @param News $news
+     * @return Response
      */
     public function editAction(Request $request, News $news): Response
     {
@@ -121,6 +130,9 @@ class NewsController extends Controller
      * Deletes a News entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_news_delete")
+     * @param Request $request
+     * @param News $news
+     * @return Response
      */
     public function deleteAction(Request $request, News $news): Response
     {

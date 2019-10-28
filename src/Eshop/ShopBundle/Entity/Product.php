@@ -212,9 +212,9 @@ class Product
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -230,9 +230,9 @@ class Product
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -248,9 +248,9 @@ class Product
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getPrice(): float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
@@ -266,9 +266,9 @@ class Product
     }
 
     /**
-     * @return Category
+     * @return Category|null
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -284,9 +284,9 @@ class Product
     }
 
     /**
-     * @return Manufacturer
+     * @return Manufacturer|null
      */
-    public function getManufacturer(): Manufacturer
+    public function getManufacturer(): ?Manufacturer
     {
         return $this->manufacturer;
     }
@@ -356,9 +356,9 @@ class Product
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaKeys(): string
+    public function getMetaKeys(): ?string
     {
         return $this->metaKeys;
     }
@@ -374,9 +374,9 @@ class Product
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaDescription(): string
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
@@ -410,9 +410,9 @@ class Product
     }
 
     /**
-     * @return integer
+     * @return integer|null
      */
-    public function getMeasureQuantity(): int
+    public function getMeasureQuantity(): ?int
     {
         return $this->measureQuantity;
     }
@@ -428,9 +428,9 @@ class Product
     }
 
     /**
-     * @return Measure
+     * @return Measure|null
      */
-    public function getMeasure(): Measure
+    public function getMeasure(): ?Measure
     {
         return $this->measure;
     }
@@ -446,9 +446,9 @@ class Product
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -530,7 +530,7 @@ class Product
     /**
      * @return Featured
      */
-    public function getFeatured(): Featured
+    public function getFeatured(): ?Featured
     {
         return $this->featured;
     }

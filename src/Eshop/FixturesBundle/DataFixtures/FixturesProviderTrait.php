@@ -124,9 +124,9 @@ EOT;
         $categories = $this->getCategories();
 
         //the first category in array will be 'Computers'
-        $computersCategory = array_shift($categories);
-        shuffle($categories);
-        array_unshift($categories, $computersCategory);
+        $computersCategory = \array_shift($categories);
+        \shuffle($categories);
+        \array_unshift($categories, $computersCategory);
 
         return $categories;
     }
@@ -148,9 +148,9 @@ EOT;
         $phrases = $this->getPhrases();
 
         // this ensures that the first title is always 'Lorem Ipsum...'
-        $loremIpsumPhrase = array_shift($phrases);
-        shuffle($phrases);
-        array_unshift($phrases, $loremIpsumPhrase);
+        $loremIpsumPhrase = \array_shift($phrases);
+        \shuffle($phrases);
+        \array_unshift($phrases, $loremIpsumPhrase);
 
         return $phrases;
     }
@@ -158,8 +158,8 @@ EOT;
     private function getRandomMetaKeysString(): string
     {
         $words = $this->getWords();
-        $numWords = random_int(4, 7);
-        shuffle($words);
+        $numWords = \random_int(4, 7);
+        \shuffle($words);
         $words = \array_slice($words, 0, $numWords - 1);
 
         return implode(', ', $words);
@@ -168,8 +168,8 @@ EOT;
     private function getRandomMetaDescriptionString(): string
     {
         $phrases = $this->getPhrases();
-        $numPhrases = random_int(2, 5);
-        shuffle($phrases);
+        $numPhrases = \random_int(2, 5);
+        \shuffle($phrases);
         $phrases = \array_slice($phrases, 0, $numPhrases - 1);
 
         return implode('. ', $phrases) . '.';
@@ -178,11 +178,11 @@ EOT;
     private function getRandomProductName(): string
     {
         $words = $this->getWords();
-        $numWords = random_int(2, 5);
+        $numWords = \random_int(2, 5);
         shuffle($words);
         $words = \array_slice($words, 0, $numWords - 1);
 
-        return implode(' ', $words);
+        return \implode(' ', $words);
     }
 
     private function getAllStaticPageTitles(): array

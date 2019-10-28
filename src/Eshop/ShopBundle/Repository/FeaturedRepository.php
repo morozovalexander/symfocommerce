@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * FeaturedRepository
@@ -13,9 +14,11 @@ use Doctrine\ORM\EntityRepository;
 class FeaturedRepository extends EntityRepository
 {
     /**
-     * @return mixed
+     * @return array|null
+     * @throws NonUniqueResultException
      */
-    public function getLatestProductOrder(){
+    public function getLatestProductOrder(): ?array
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('f.productOrder')

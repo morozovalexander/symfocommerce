@@ -42,6 +42,9 @@ class CatalogController extends Controller
 
     /**
      * @Route("/category/{slug}", methods={"GET"}, name="category")
+     * @param Request $request
+     * @param Category $category
+     * @return Response
      */
     public function categoryAction(Request $request, Category $category): Response
     {
@@ -69,6 +72,9 @@ class CatalogController extends Controller
 
     /**
      * @Route("/manufacturer/{slug}", methods={"GET"}, name="manufacturer")
+     * @param Request $request
+     * @param Manufacturer $manufacturer
+     * @return Response
      */
     public function manufacturerAction(Request $request, Manufacturer $manufacturer): Response
     {
@@ -96,6 +102,8 @@ class CatalogController extends Controller
 
     /**
      * @Route("/product/{slug}", methods={"GET"}, name="show_product")
+     * @param Product $product
+     * @return Response
      */
     public function showProductAction(Product $product): Response
     {
@@ -108,6 +116,8 @@ class CatalogController extends Controller
      * Lists news entities.
      *
      * @Route("/news", methods={"GET"}, name="news")
+     * @param Request $request
+     * @return Response
      */
     public function newsAction(Request $request): Response
     {
@@ -133,6 +143,8 @@ class CatalogController extends Controller
      * search product by title or description
      *
      * @Route("/search", methods={"GET"}, name="search")
+     * @param Request $request
+     * @return Response
      */
     public function searchProductAction(Request $request): Response
     {
@@ -163,6 +175,8 @@ class CatalogController extends Controller
      * Shows static page.
      *
      * @Route("/{slug}.html", methods={"GET"}, name="show_static_page")
+     * @param StaticPage $page
+     * @return Response
      */
     public function showStaticPageAction(StaticPage $page): Response
     {

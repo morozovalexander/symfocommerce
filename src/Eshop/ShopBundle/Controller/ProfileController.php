@@ -13,6 +13,8 @@ class ProfileController extends Controller
      * Display favourite products.
      *
      * @Route("/favourites", methods={"GET"}, name="favourites")
+     * @param Request $request
+     * @return Response
      */
     public function favouritesAction(Request $request): Response
     {

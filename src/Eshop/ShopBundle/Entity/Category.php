@@ -118,7 +118,7 @@ class Category implements ImageHolderInterface
 
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() ?? '';
     }
 
     /**
@@ -130,9 +130,9 @@ class Category implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -148,9 +148,9 @@ class Category implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -204,9 +204,9 @@ class Category implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaKeys(): string
+    public function getMetaKeys(): ?string
     {
         return $this->metaKeys;
     }
@@ -222,9 +222,9 @@ class Category implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaDescription(): string
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
@@ -240,9 +240,9 @@ class Category implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }

@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Error\Error;
 
 class CartController extends Controller
 {
@@ -18,6 +19,8 @@ class CartController extends Controller
      * Lists all Category entities.
      *
      * @Route("/showcart", methods={"GET"}, name="showcart")
+     * @param Request $request
+     * @return Response
      */
     public function showCartAction(Request $request): Response
     {
@@ -65,6 +68,9 @@ class CartController extends Controller
      * Shows order form.
      *
      * @Route("/orderform", methods={"GET", "POST"}, name="orderform")
+     * @param Request $request
+     * @return Response
+     * @throws Error
      */
     public function orderFormAction(Request $request): Response
     {
@@ -112,6 +118,8 @@ class CartController extends Controller
     /**
      * Count cart from cookies
      * @Route("navbar_cart", methods={"GET"})
+     * @param Request $request
+     * @return Response
      */
     public function navbarCartAction(Request $request): Response
     {

@@ -3,6 +3,8 @@
 namespace Eshop\ShopBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Eshop\ShopBundle\Entity\OrderProduct;
 use Eshop\ShopBundle\Entity\Orders;
 use Eshop\UserBundle\Entity\User;
@@ -49,7 +51,7 @@ class PagesUtilities
      * @param Request $request
      * @return array
      */
-    public function getLastSeenProducts(Request $request): ?array
+    public function getLastSeenProducts(Request $request): array
     {
         $cookies = $request->cookies->all();
 
@@ -60,7 +62,7 @@ class PagesUtilities
                 return $productIdsArray;
             }
         }
-        return null;
+        return [];
     }
 
     /**
@@ -70,13 +72,15 @@ class PagesUtilities
      * @param Orders $order
      * @param User $user
      * @return bool
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
-    public function createOrderDBRecord(Request $request, Orders $order, User $user = null): bool
+    public function createOrderDBRecord(Request $request, Orders $order, ?User $user): bool
     {
         $productRepository = $this->em->getRepository('ShopBundle:Product');
 
         $cart = $this->getCartFromCookies($request);
-        if (!$cart || !\count($cart)) {
+        if (!$cart || !\count((array)$cart)) {
             return false;
         }
 
@@ -124,9 +128,8 @@ class PagesUtilities
      * Get cart from cookies and return cart or false.
      *
      * @param Request $request
-     * @return array|null
      */
-    private function getCartFromCookies(Request $request): ?array
+    private function getCartFromCookies(Request $request)
     {
         $cookies = $request->cookies->all();
 

@@ -16,21 +16,20 @@ class OrdersType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('phone', TextType::class)
             ->add('address', TextType::class)
-            ->add('comment', TextareaType::class, ['required' => false])
-        ;
+            ->add('comment', TextareaType::class, ['required' => false]);
     }
 
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Orders::class]);
     }
@@ -38,7 +37,7 @@ class OrdersType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'eshop_shopbundle_orders';
     }

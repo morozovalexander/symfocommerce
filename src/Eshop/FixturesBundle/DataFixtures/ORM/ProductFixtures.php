@@ -28,7 +28,7 @@ class ProductFixtures extends AbstractFixture implements DependentFixtureInterfa
         for ($i = 1; $i <= 1000; $i++) {
             $product = new Product();
             $product->setName($this->getRandomProductName());
-            $product->setSlug(Slugger::slugify($i.$product->getName()));
+            $product->setSlug(Slugger::slugify($i . $product->getName()));
             $product->setDescription($this->getLongTextContent());
             //set random category or manufacturer
             $product->setCategory($categories[array_rand($categories)]);

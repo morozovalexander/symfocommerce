@@ -21,7 +21,7 @@ class ProductType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class)
@@ -29,13 +29,13 @@ class ProductType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('price', NumberType::class)
             ->add('category', EntityType::class, [
-                'required'  => true,
+                'required' => true,
                 'multiple' => false,
                 'class' => Category::class,
                 'choice_label' => 'name'
             ])
             ->add('manufacturer', EntityType::class, [
-                'required'  => true,
+                'required' => true,
                 'multiple' => false,
                 'class' => Manufacturer::class,
                 'choice_label' => 'name'
@@ -44,20 +44,19 @@ class ProductType extends AbstractType
             ->add('metaKeys', TextType::class)
             ->add('metaDescription', TextType::class)
             ->add('measure', EntityType::class, [
-                'required'  => true,
+                'required' => true,
                 'multiple' => false,
                 'expanded' => false,
                 'class' => Measure::class,
                 'choice_label' => 'name'
             ])
-            ->add('measureQuantity', IntegerType::class)
-        ;
+            ->add('measureQuantity', IntegerType::class);
     }
 
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Product::class]);
     }
@@ -65,7 +64,7 @@ class ProductType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'eshop_shopbundle_product';
     }

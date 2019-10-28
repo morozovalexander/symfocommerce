@@ -37,6 +37,8 @@ class MeasureController extends Controller
      * Displays a form to create a new Measure entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_measure_new")
+     * @param Request $request
+     * @return Response
      */
     public function newAction(Request $request): Response
     {
@@ -64,6 +66,8 @@ class MeasureController extends Controller
      * Finds and displays a Measure entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_measure_show")
+     * @param Measure $measure
+     * @return Response
      */
     public function showAction(Measure $measure): Response
     {
@@ -79,6 +83,9 @@ class MeasureController extends Controller
      * Displays a form to edit an existing Measure entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_measure_edit")
+     * @param Request $request
+     * @param Measure $measure
+     * @return Response
      */
     public function editAction(Request $request, Measure $measure): Response
     {
@@ -112,6 +119,9 @@ class MeasureController extends Controller
      * Deletes a Measure entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_measure_delete")
+     * @param Request $request
+     * @param Measure $measure
+     * @return Response
      */
     public function deleteAction(Request $request, Measure $measure): Response
     {

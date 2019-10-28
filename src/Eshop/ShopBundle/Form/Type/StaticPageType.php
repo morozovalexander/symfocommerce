@@ -17,7 +17,7 @@ class StaticPageType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title', TextType::class)
@@ -26,14 +26,13 @@ class StaticPageType extends AbstractType
             ->add('orderNum', IntegerType::class)
             ->add('metaKeys', TextType::class)
             ->add('metaDescription', TextType::class)
-            ->add('content', TextareaType::class)
-        ;
+            ->add('content', TextareaType::class);
     }
 
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => StaticPage::class]);
     }
@@ -41,7 +40,7 @@ class StaticPageType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'eshop_shopbundle_staticpage';
     }

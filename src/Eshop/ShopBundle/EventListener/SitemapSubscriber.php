@@ -36,13 +36,12 @@ class SitemapSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return [
-            SitemapPopulateEvent::ON_SITEMAP_POPULATE => 'populate',
-        ];
+        return [SitemapPopulateEvent::ON_SITEMAP_POPULATE => 'populate'];
     }
 
     /**
      * @param SitemapPopulateEvent $event
+     * @throws \Exception
      */
     public function populate(SitemapPopulateEvent $event): void
     {
@@ -56,6 +55,7 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlContainerInterface $urls
+     * @throws \Exception
      */
     public function registerIndexPage(UrlContainerInterface $urls): void
     {
@@ -159,6 +159,7 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlContainerInterface $urls
+     * @throws \Exception
      */
     public function registerNewsUrls(UrlContainerInterface $urls): void
     {
@@ -181,6 +182,7 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlContainerInterface $urls
+     * @throws \Exception
      */
     public function registerStaticPagesUrls(UrlContainerInterface $urls): void
     {

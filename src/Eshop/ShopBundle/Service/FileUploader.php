@@ -4,11 +4,20 @@ namespace Eshop\ShopBundle\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class FileUploader
+ * @package Eshop\ShopBundle\Service
+ */
 class FileUploader
 {
+    /** @var string */
     private $targetDir;
 
-    public function __construct($targetDir)
+    /**
+     * FileUploader constructor.
+     * @param string $targetDir
+     */
+    public function __construct(string $targetDir)
     {
         $this->targetDir = $targetDir;
     }
@@ -19,7 +28,7 @@ class FileUploader
      * @param UploadedFile $file
      * @return string
      */
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file): string
     {
         $fileName = md5(uniqid('random', true)) . '.' . $file->guessExtension();
         $file->move($this->targetDir, $fileName);
@@ -33,7 +42,7 @@ class FileUploader
      * @param string $fileName
      * @return bool
      */
-    public function removeUpload($fileName)
+    public function removeUpload($fileName): bool
     {
         $fullPath = $this->targetDir . DIRECTORY_SEPARATOR . $fileName;
 
@@ -43,7 +52,10 @@ class FileUploader
         return false;
     }
 
-    public function getTargetDir()
+    /**
+     * @return string
+     */
+    public function getTargetDir(): string
     {
         return $this->targetDir;
     }

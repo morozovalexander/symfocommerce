@@ -15,21 +15,20 @@ class NewsType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title', TextType::class)
             ->add('slug', TextType::class)
             ->add('text', TextareaType::class)
             ->add('metaKeys', TextType::class)
-            ->add('metaDescription', TextType::class)
-        ;
+            ->add('metaDescription', TextType::class);
     }
 
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => News::class]);
     }
@@ -37,7 +36,7 @@ class NewsType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'eshop_shopbundle_news';
     }
