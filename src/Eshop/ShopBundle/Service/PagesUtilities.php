@@ -2,7 +2,7 @@
 
 namespace Eshop\ShopBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Eshop\ShopBundle\Entity\OrderProduct;
@@ -13,10 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PagesUtilities
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $em;
 
-    public function __construct(EntityManager $entityManager)
+    /**
+     * PagesUtilities constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }

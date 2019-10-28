@@ -13,6 +13,9 @@ use Eshop\ShopBundle\Service\FileUploader;
 
 class ImageUploadListener
 {
+    /**
+     * @var FileUploader
+     */
     private $uploader;
 
     /**

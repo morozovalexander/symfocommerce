@@ -1,62 +1,45 @@
 services:
-    _defaults: { public: true }
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
 
-    eshop.upload_listener:
-        class:        Eshop\ShopBundle\EventListener\UploadListener
-        arguments:    ["@doctrine.orm.entity_manager"]
+    Eshop\ShopBundle\EventListener\UploadListener:
         tags:
             - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onUpload }
 
-    app.locale_listener:
-        class: Eshop\ShopBundle\EventListener\LocaleListener
-        arguments:    ["%kernel.default_locale%"]
+    Eshop\ShopBundle\EventListener\LocaleListener:
         tags:
             - { name: kernel.event_subscriber }
 
     fos_user.doctrine_registry:
         alias: doctrine
 
-    app.email_notifier:
-        class:        Eshop\ShopBundle\Service\EmailNotifier
-        arguments:    ["@swiftmailer.mailer", "@router", "@templating"]
+    Eshop\ShopBundle\Service\EmailNotifier: ~
 
-    app.site_settings:
-        class:        Eshop\ShopBundle\Service\SettingsService
-        arguments:    ["@doctrine.orm.entity_manager"]
+    Eshop\ShopBundle\Service\SettingsService: ~
 
-    app.page_utilities:
-        class:        Eshop\ShopBundle\Service\PagesUtilities
-        arguments:    ["@doctrine.orm.entity_manager"]
+    Eshop\ShopBundle\Service\PagesUtilities: ~
 
-    app.sitemap.blog_post_subscriber:
-        class: Eshop\ShopBundle\EventListener\SitemapSubscriber
-        arguments:
-            - "@router"
-            - "@doctrine"
+    Eshop\ShopBundle\EventListener\SitemapSubscriber:
         tags:
             - { name: "kernel.event_subscriber", priority: 100 }
 
-    app.form.registration:
-        class:        Eshop\UserBundle\Form\Type\RegistrationTypeExtension
+    Eshop\UserBundle\Form\Type\RegistrationTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: FOS\UserBundle\Form\Type\RegistrationFormType }
 
-    app.twig_extension:
-        class:        Eshop\ShopBundle\Twig\RawDescriptionExtension
+    Eshop\ShopBundle\Twig\RawDescriptionExtension:
         public:       false
         tags:
             - { name: twig.extension }
 
-    app.slugger:
-        class:        Eshop\FixturesBundle\Utils\Slugger
+    Eshop\FixturesBundle\Utils\Slugger: ~
 
-    app.image_uploader:
-        class: Eshop\ShopBundle\Service\FileUploader
+    Eshop\ShopBundle\Service\FileUploader:
         arguments: ['%uploads_directory%']
 
-    app.doctrine_image_upload_listener:
-        class: Eshop\ShopBundle\EventListener\ImageUploadListener
-        arguments: ['@app.image_uploader']
+    Eshop\ShopBundle\EventListener\ImageUploadListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }

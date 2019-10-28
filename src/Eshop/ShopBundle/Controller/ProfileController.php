@@ -2,6 +2,7 @@
 
 namespace Eshop\ShopBundle\Controller;
 
+use Eshop\ShopBundle\Service\PagesUtilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,7 +34,7 @@ class ProfileController extends Controller
 
         return $this->render('shop/profile/favourites.html.twig', [
             'products' => $products,
-            'sortedby' => $this->get('app.page_utilities')->getSortingParamName($request)
+            'sortedby' => $this->get(PagesUtilities::class)->getSortingParamName($request)
         ]);
     }
 }

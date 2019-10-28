@@ -2,9 +2,7 @@
 
 namespace Eshop\ShopBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\EntityManagerInterface;
 use Eshop\ShopBundle\Entity\Image;
 use Oneup\UploaderBundle\Event\PostUploadEvent;
 use Oneup\UploaderBundle\Uploader\Response\ResponseInterface;
@@ -12,10 +10,14 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class UploadListener
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     protected $manager;
 
-    public function __construct(EntityManager $manager)
+    /**
+     * UploadListener constructor.
+     * @param EntityManagerInterface $manager
+     */
+    public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
     }
@@ -23,8 +25,6 @@ class UploadListener
     /**
      * @param PostUploadEvent $event
      * @return ResponseInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function onUpload(PostUploadEvent $event): ResponseInterface
     {

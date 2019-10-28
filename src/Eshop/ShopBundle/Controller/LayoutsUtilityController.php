@@ -2,6 +2,8 @@
 
 namespace Eshop\ShopBundle\Controller;
 
+use Eshop\ShopBundle\Entity\Settings;
+use Eshop\ShopBundle\Service\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,7 +17,7 @@ class LayoutsUtilityController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categoryRepository = $em->getRepository('ShopBundle:Category');
 
-        $settings = $this->get('app.site_settings');
+        $settings = $this->get(SettingsService::class);
         $showEmpty = $settings->getShowEmptyCategories();
 
         $categories = $categoryRepository->getAllCategories($showEmpty);
@@ -33,7 +35,7 @@ class LayoutsUtilityController extends Controller
         $em = $this->getDoctrine()->getManager();
         $manufacturerRepository = $em->getRepository('ShopBundle:Manufacturer');
 
-        $settings = $this->get('app.site_settings');
+        $settings = $this->get(SettingsService::class);
         $showEmpty = $settings->getShowEmptyManufacturers();
 
         $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
