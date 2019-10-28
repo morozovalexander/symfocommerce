@@ -50,7 +50,6 @@ class SlideController extends Controller
             if ($form->get('image')->getData() === null) {
                 $form->get('image')->addError(new FormError('file is required'));
 
-                // todo: review later
                 return $this->render('admin/slide/new.html.twig', [
                     'entity' => $slide,
                     'form' => $form->createView()
