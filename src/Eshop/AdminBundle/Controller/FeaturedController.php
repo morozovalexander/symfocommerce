@@ -90,7 +90,7 @@ class FeaturedController extends Controller
      * @param bool $addFeaturedValue
      * @return void
      */
-    private function createOrDeleteFeaturedProduct($product, $addFeaturedValue): void
+    private function createOrDeleteFeaturedProduct(Product $product, bool $addFeaturedValue): void
     {
         $em = $this->getDoctrine()->getManager();
         $featuredRepository = $em->getRepository('ShopBundle:Featured');
@@ -123,7 +123,7 @@ class FeaturedController extends Controller
      * @param string $message
      * @return JsonResponse
      */
-    private function returnErrorJson($message): JsonResponse
+    private function returnErrorJson(string $message): JsonResponse
     {
         return new JsonResponse([
             'success' => false,

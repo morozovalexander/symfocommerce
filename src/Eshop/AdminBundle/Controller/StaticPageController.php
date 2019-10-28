@@ -36,6 +36,8 @@ class StaticPageController extends Controller
      * Displays a form to create a new StaticPage entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_staticpage_new")
+     * @param Request $request
+     * @return Response
      */
     public function newAction(Request $request): Response
     {
@@ -63,6 +65,8 @@ class StaticPageController extends Controller
      * Finds and displays a StaticPage entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_staticpage_show")
+     * @param StaticPage $staticPage
+     * @return Response
      */
     public function showAction(StaticPage $staticPage): Response
     {
@@ -111,6 +115,9 @@ class StaticPageController extends Controller
      * Deletes a StaticPage entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_staticpage_delete")
+     * @param Request $request
+     * @param StaticPage $staticPage
+     * @return Response
      */
     public function deleteAction(Request $request, StaticPage $staticPage): Response
     {

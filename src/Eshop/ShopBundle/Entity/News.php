@@ -30,7 +30,6 @@ class News
      *
      * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
      */
-
     private $slug;
 
     /**
@@ -92,9 +91,9 @@ class News
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -110,9 +109,9 @@ class News
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -146,9 +145,9 @@ class News
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaKeys(): string
+    public function getMetaKeys(): ?string
     {
         return $this->metaKeys;
     }
@@ -164,9 +163,9 @@ class News
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaDescription(): string
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
@@ -182,9 +181,9 @@ class News
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }

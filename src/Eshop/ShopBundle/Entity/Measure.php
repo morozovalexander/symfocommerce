@@ -47,7 +47,7 @@ class Measure
      */
     public function __toString(): string
     {
-        return $this->getName();
+        return $this->getName() ?? '';
     }
 
     /**
@@ -69,9 +69,9 @@ class Measure
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

@@ -3,7 +3,9 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
+use Eshop\ShopBundle\Entity\Manufacturer;
 
 /**
  * ManufacturerRepository
@@ -17,9 +19,9 @@ class ManufacturerRepository extends EntityRepository
      * @param bool $showEmpty
      * @param string $order
      * @param string $sort
-     * @return array
+     * @return Manufacturer[]|null
      */
-    public function getAllManufacturers($showEmpty = true, $sort = 'name', $order = 'ASC')
+    public function getAllManufacturers(bool $showEmpty = true, string $sort = 'name', string $order = 'ASC'): array
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
@@ -41,7 +43,7 @@ class ManufacturerRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function getAllManufacturersAdminQB()
+    public function getAllManufacturersAdminQB(): QueryBuilder
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
@@ -51,7 +53,12 @@ class ManufacturerRepository extends EntityRepository
         return $qb;
     }
 
-    public function findBySlug($slug)
+    /**
+     * @param string $slug
+     * @return Manufacturer|null
+     * @throws NonUniqueResultException
+     */
+    public function findBySlug(string $slug): ?Manufacturer
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -63,7 +70,11 @@ class ManufacturerRepository extends EntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getFirstManufacturer()
+    /**
+     * @return Manufacturer|null
+     * @throws NonUniqueResultException
+     */
+    public function getFirstManufacturer(): ?Manufacturer
     {
         return $this->getEntityManager()
             ->createQueryBuilder()

@@ -19,6 +19,8 @@ class UserController extends Controller
      * Lists all User entities.
      *
      * @Route("/", methods={"GET"}, name="admin_user_list")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request): Response
     {
@@ -44,6 +46,8 @@ class UserController extends Controller
      * Shows user info
      *
      * @Route("/user/{id}", methods={"GET"}, name="admin_user_info")
+     * @param User $user
+     * @return Response
      */
     public function showUserInfoAction(User $user): Response
     {
@@ -56,6 +60,9 @@ class UserController extends Controller
      * Shows users orders
      *
      * @Route("/user/{id}/orders", methods={"GET"}, name="admin_user_orders")
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function showUserOrdersAction(Request $request, User $user): Response
     {

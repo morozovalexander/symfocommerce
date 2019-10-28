@@ -27,7 +27,7 @@ class ImageUploadListener
     /**
      * @param LifecycleEventArgs $args
      */
-    public function prePersist(LifecycleEventArgs $args)
+    public function prePersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -43,7 +43,7 @@ class ImageUploadListener
      *
      * @param LifecycleEventArgs $args
      */
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -63,7 +63,7 @@ class ImageUploadListener
     /**
      * @param PreUpdateEventArgs $args
      */
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -93,7 +93,7 @@ class ImageUploadListener
      *
      * @param EntityRepository $entity
      */
-    private function uploadFile($entity)
+    private function uploadFile($entity): void
     {
         if (!$entity instanceof ImageHolderInterface) {
             return;
@@ -115,7 +115,7 @@ class ImageUploadListener
      *
      * @param LifecycleEventArgs $args
      */
-    public function postLoad(LifecycleEventArgs $args)
+    public function postLoad(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 

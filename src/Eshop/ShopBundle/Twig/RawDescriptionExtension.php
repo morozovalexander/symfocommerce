@@ -4,14 +4,21 @@ namespace Eshop\ShopBundle\Twig;
 
 class RawDescriptionExtension extends \Twig_Extension
 {
-    public function getFilters()
+    /**
+     * @return array
+     */
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('rawdescr', [$this, 'rawdescrFilter'], ['is_safe' => ['html']])
         ];
     }
 
-    public function rawdescrFilter($descr)
+    /**
+     * @param string $descr
+     * @return string
+     */
+    public function rawdescrFilter(string $descr): string
     {
         return $descr;
     }

@@ -64,7 +64,7 @@ class Slide implements ImageHolderInterface
      */
     public function __toString(): string
     {
-        return $this->getName();
+        return $this->getName() ?? '';
     }
 
     /**
@@ -86,9 +86,9 @@ class Slide implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -122,9 +122,9 @@ class Slide implements ImageHolderInterface
     }
 
     /**
-     * @return integer
+     * @return integer|null
      */
-    public function getSlideOrder(): int
+    public function getSlideOrder(): ?int
     {
         return $this->slideOrder;
     }

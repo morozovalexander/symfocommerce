@@ -4,7 +4,12 @@ namespace Eshop\ShopBundle\Service;
 
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Routing\Router;
+use Twig\Error\Error;
 
+/**
+ * Class EmailNotifier
+ * @package Eshop\ShopBundle\Service
+ */
 class EmailNotifier
 {
     /** @var \Swift_Mailer */
@@ -16,33 +21,37 @@ class EmailNotifier
     /** @var TwigEngine */
     private $templating;
 
+    /** @var string */
     public const FROM_EMAIL = 'server@website.com';
 
+    /**
+     * EmailNotifier constructor.
+     * @param \Swift_Mailer $mailer
+     * @param Router $router
+     * @param TwigEngine $templating
+     */
     public function __construct(\Swift_Mailer $mailer, Router $router, TwigEngine $templating)
     {
         $this->mailer = $mailer;
         $this->router = $router;
         $this->templating = $templating;
-
     }
 
     /**
-     * @param $parametersArray array
-     * @throws \Twig\Error\Error
+     * @param array $parametersArray
+     * @throws Error
      */
     public function handleNotification(array $parametersArray): void
     {
         $event = $parametersArray['event'];
-        switch ($event) {
-            case 'new_order':
-                $this->sendNewOrderNotification($parametersArray);
-                break;
+        if ($event === 'new_order') {
+            $this->sendNewOrderNotification($parametersArray);
         }
     }
 
     /**
      * @param $parametersArray array
-     * @throws \Twig\Error\Error
+     * @throws Error
      */
     private function sendNewOrderNotification(array $parametersArray): void
     {

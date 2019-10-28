@@ -72,6 +72,11 @@ class StaticPage
      */
     private $metaDescription;
 
+    public function __construct()
+    {
+        $this->enabled = false;
+    }
+
     /**
      * @return integer
      */
@@ -91,9 +96,9 @@ class StaticPage
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -109,9 +114,9 @@ class StaticPage
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -145,9 +150,9 @@ class StaticPage
     }
 
     /**
-     * @return integer
+     * @return integer|null
      */
-    public function getOrderNum(): int
+    public function getOrderNum(): ?int
     {
         return $this->orderNum;
     }
@@ -163,9 +168,9 @@ class StaticPage
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -181,9 +186,9 @@ class StaticPage
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaKeys(): string
+    public function getMetaKeys(): ?string
     {
         return $this->metaKeys;
     }
@@ -199,9 +204,9 @@ class StaticPage
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaDescription(): string
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }

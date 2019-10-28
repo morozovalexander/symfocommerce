@@ -4,6 +4,7 @@ namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Eshop\UserBundle\Entity\User;
 
 /**
  * OrdersRepository
@@ -18,7 +19,7 @@ class OrdersRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function getAllOrdersAdminQB()
+    public function getAllOrdersAdminQB(): QueryBuilder
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
@@ -33,9 +34,10 @@ class OrdersRepository extends EntityRepository
     /**
      * return query to get users orders
      *
+     * @param User $user
      * @return QueryBuilder
      */
-    public function getUserOrdersAdminQB($user)
+    public function getUserOrdersAdminQB(User $user): QueryBuilder
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()

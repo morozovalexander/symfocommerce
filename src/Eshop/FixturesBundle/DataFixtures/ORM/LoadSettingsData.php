@@ -1,13 +1,14 @@
 <?php
 
 namespace Eshop\FixturesBundle\DataFixtures\ORM;
+
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Eshop\ShopBundle\Entity\Settings;
 
 class LoadSettingsData implements FixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $settings = new Settings();
 

@@ -3,6 +3,8 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Eshop\ShopBundle\Entity\StaticPage;
 
 /**
  * StaticPageRepository
@@ -12,7 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class StaticPageRepository extends EntityRepository
 {
-    public function getHeaders(){
+    /**
+     * @return array
+     */
+    public function getHeaders(): array
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('a.title, a.slug')
@@ -23,7 +29,13 @@ class StaticPageRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findBySlug($slug){
+    /**
+     * @param $slug
+     * @return StaticPage|null
+     * @throws NonUniqueResultException
+     */
+    public function findBySlug(string $slug): ?StaticPage
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('a')

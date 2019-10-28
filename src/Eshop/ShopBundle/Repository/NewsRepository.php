@@ -3,7 +3,10 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
+use Eshop\ShopBundle\Entity\News;
 
 /**
  * NewsRepository
@@ -16,8 +19,10 @@ class NewsRepository extends EntityRepository
     /**
      * @param $slug string
      * @return mixed
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function findBySlug($slug)
+    public function findBySlug(string $slug): ?News
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -34,7 +39,7 @@ class NewsRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function getAllNewsAdminQB()
+    public function getAllNewsAdminQB(): QueryBuilder
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
@@ -45,9 +50,10 @@ class NewsRepository extends EntityRepository
     }
 
     /**
-     * @return mixed
+     * @return News|null
+     * @throws NonUniqueResultException
      */
-    public function getLastNews()
+    public function getLastNews(): ?News
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
@@ -62,9 +68,9 @@ class NewsRepository extends EntityRepository
     /**
      * Create query for paginator
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function getNewsQB()
+    public function getNewsQB(): QueryBuilder
     {
         return $this->getEntityManager()
             ->createQueryBuilder()

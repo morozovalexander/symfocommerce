@@ -15,7 +15,7 @@ class UserRepository extends EntityRepository
      *
      * @return QueryBuilder
      */
-    public function getAllUsersAdminQB()
+    public function getAllUsersAdminQB(): QueryBuilder
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()

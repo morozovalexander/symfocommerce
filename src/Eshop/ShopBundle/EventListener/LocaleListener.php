@@ -1,4 +1,5 @@
 <?php
+
 namespace Eshop\ShopBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -9,12 +10,19 @@ class LocaleListener implements EventSubscriberInterface
 {
     private $defaultLocale;
 
-    public function __construct($defaultLocale = 'en')
+    /**
+     * LocaleListener constructor.
+     * @param string $defaultLocale
+     */
+    public function __construct(string $defaultLocale = 'en')
     {
         $this->defaultLocale = $defaultLocale;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    /**
+     * @param GetResponseEvent $event
+     */
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         $request = $event->getRequest();
         if (!$request->hasPreviousSession()) {
@@ -30,7 +38,10 @@ class LocaleListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
     {
         // must be registered before the default Locale listener
         return [

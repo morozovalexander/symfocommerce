@@ -106,7 +106,7 @@ class Manufacturer implements ImageHolderInterface
      */
     public function __toString(): string
     {
-        return $this->getName();
+        return $this->getName() ?? '';
     }
 
     /**
@@ -128,9 +128,9 @@ class Manufacturer implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -146,11 +146,9 @@ class Manufacturer implements ImageHolderInterface
     }
 
     /**
-     * Get description
-     *
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -194,9 +192,9 @@ class Manufacturer implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaKeys(): string
+    public function getMetaKeys(): ?string
     {
         return $this->metaKeys;
     }
@@ -212,9 +210,9 @@ class Manufacturer implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaDescription()
+    public function getMetaDescription(): ?string
     {
         return $this->metaDescription;
     }
@@ -230,9 +228,9 @@ class Manufacturer implements ImageHolderInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }

@@ -3,6 +3,8 @@
 namespace Eshop\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Eshop\ShopBundle\Entity\Image;
 use Eshop\ShopBundle\Form\Type\ProductType;
 use Symfony\Component\Form\FormInterface;
@@ -23,6 +25,8 @@ class ProductController extends Controller
      * Lists all Product entities.
      *
      * @Route("/", methods={"GET"}, name="admin_product")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request): Response
     {
@@ -52,6 +56,8 @@ class ProductController extends Controller
      * Displays a form to create a new Product entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_product_new")
+     * @param Request $request
+     * @return Response
      */
     public function newAction(Request $request): Response
     {
@@ -95,6 +101,8 @@ class ProductController extends Controller
      * Finds and displays a Product entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_product_show")
+     * @param Product $product
+     * @return Response
      */
     public function showAction(Product $product): Response
     {
@@ -114,6 +122,9 @@ class ProductController extends Controller
      * Displays a form to edit an existing Product entity.
      *
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_product_edit")
+     * @param Request $request
+     * @param Product $product
+     * @return Response
      */
     public function editAction(Request $request, Product $product): Response
     {
@@ -163,6 +174,9 @@ class ProductController extends Controller
      * Deletes a Product entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_product_delete")
+     * @param Request $request
+     * @param Product $product
+     * @return Response
      */
     public function deleteAction(Request $request, Product $product): Response
     {
@@ -180,6 +194,10 @@ class ProductController extends Controller
 
     /**
      * @Route("/remove_image", methods={"POST"} , name="remove_image", defaults={"_format"="json"})
+     * @param Request $request
+     * @return Response
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function removeImageAction(Request $request): Response
     {

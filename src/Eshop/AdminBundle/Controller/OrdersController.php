@@ -22,6 +22,8 @@ class OrdersController extends Controller
      * Lists all Orders entities.
      *
      * @Route("/", methods={"GET"}, name="admin_orders")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request): Response
     {
@@ -47,14 +49,13 @@ class OrdersController extends Controller
      * Finds and displays a Orders entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_order_show")
+     * @param int $id
+     * @return Response
      */
-    public function showAction($id): Response
+    public function showAction(int $id): Response
     {
         $em = $this->getDoctrine()->getManager();
-        /**
-         * @var Orders $order
-         */
-        //todo: find order automatically and get as parameter
+        /** @var Orders $order */
         $order = $em->getRepository('ShopBundle:Orders')->find($id);
 
         if (!$order) {
@@ -96,8 +97,11 @@ class OrdersController extends Controller
      * Deletes a Orders entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_order_delete")
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
-    public function deleteAction(Request $request, $id): Response
+    public function deleteAction(Request $request, int $id): Response
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
@@ -120,10 +124,10 @@ class OrdersController extends Controller
     /**
      * Creates a form to delete a Orders entity by id.
      *
-     * @param mixed $id The entity id
+     * @param int $id The entity id
      * @return FormInterface
      */
-    private function createDeleteForm($id): FormInterface
+    private function createDeleteForm(int $id): FormInterface
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_order_delete', ['id' => $id]))

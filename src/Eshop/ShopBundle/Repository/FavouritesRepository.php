@@ -3,6 +3,7 @@
 namespace Eshop\ShopBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Eshop\UserBundle\Entity\User;
 
 /**
@@ -17,7 +18,7 @@ class FavouritesRepository extends EntityRepository
      * @param User $user
      * @param integer $productId
      * @return bool
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function checkIsLiked(User $user, int $productId): bool
     {

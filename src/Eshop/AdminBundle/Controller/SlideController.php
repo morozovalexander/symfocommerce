@@ -37,6 +37,8 @@ class SlideController extends Controller
      * Displays a form to create a new Slide entity.
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_slide_new")
+     * @param Request $request
+     * @return Response
      */
     public function newAction(Request $request): Response
     {
@@ -74,6 +76,8 @@ class SlideController extends Controller
      * Finds and displays a Slide entity.
      *
      * @Route("/{id}", methods={"GET"}, name="admin_slide_show")
+     * @param Slide $slide
+     * @return Response
      */
     public function showAction(Slide $slide): Response
     {
@@ -120,6 +124,9 @@ class SlideController extends Controller
      * Deletes a Slide entity.
      *
      * @Route("/{id}", methods={"DELETE"}, name="admin_slide_delete")
+     * @param Request $request
+     * @param Slide $slide
+     * @return Response
      */
     public function deleteAction(Request $request, Slide $slide): Response
     {
