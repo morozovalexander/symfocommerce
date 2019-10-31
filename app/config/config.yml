@@ -68,10 +68,10 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: Eshop\UserBundle\Entity\User
+    user_class: AppBundle\Entity\User
     registration:
         form:
-            type: Eshop\UserBundle\Form\Type\RegistrationType
+            type: AppBundle\Form\Type\RegistrationType
     from_email:
         address: you@example.com
         sender_name: You
@@ -89,8 +89,8 @@ knp_paginator:
 
 liip_imagine:
     resolvers:
-       default:
-          web_path: ~
+        default:
+            web_path: ~
 
     filter_sets:
         cache: ~

@@ -4,48 +4,48 @@ services:
         autowire: true
         autoconfigure: true
 
-    Eshop\ShopBundle\EventListener\UploadListener:
+    AppBundle\EventListener\UploadListener:
         tags:
             - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onUpload }
 
-    Eshop\ShopBundle\EventListener\LocaleListener:
+    AppBundle\EventListener\LocaleListener:
         tags:
             - { name: kernel.event_subscriber }
 
     fos_user.doctrine_registry:
         alias: doctrine
 
-    Eshop\ShopBundle\Service\EmailNotifier: ~
+    AppBundle\Service\EmailNotifier: ~
 
-    Eshop\ShopBundle\Service\SettingsService: ~
+    AppBundle\Service\SettingsService: ~
 
-    Eshop\ShopBundle\Service\PagesUtilities: ~
+    AppBundle\Service\PagesUtilities: ~
 
-    Eshop\ShopBundle\EventListener\SitemapSubscriber:
+    AppBundle\EventListener\SitemapSubscriber:
         tags:
             - { name: "kernel.event_subscriber", priority: 100 }
 
-    Eshop\UserBundle\Form\Type\RegistrationTypeExtension:
+    AppBundle\Form\Type\RegistrationTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: FOS\UserBundle\Form\Type\RegistrationFormType }
 
-    Eshop\ShopBundle\Twig\RawDescriptionExtension:
+    AppBundle\Twig\RawDescriptionExtension:
         public:       false
         tags:
             - { name: twig.extension }
 
-    Eshop\FixturesBundle\Utils\Slugger: ~
+    AppBundle\Utils\Slugger: ~
 
-    Eshop\ShopBundle\Service\FileUploader:
+    AppBundle\Service\FileUploader:
         arguments: ['%uploads_directory%']
 
-    Eshop\ShopBundle\EventListener\ImageUploadListener:
+    AppBundle\EventListener\ImageUploadListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postLoad }
             - { name: doctrine.event_listener, event: preRemove }
 
-    Eshop\FixturesBundle\DataFixtures\:
-        resource: '../../src/Eshop/FixturesBundle/DataFixtures'
+    AppBundle\DataFixtures\:
+        resource: '../../src/AppBundle/DataFixtures'
         tags: ['doctrine.fixture.orm']
