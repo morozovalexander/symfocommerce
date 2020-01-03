@@ -3,14 +3,24 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
 
 /**
  * UserRepository
  */
-class UserRepository extends EntityRepository
+class UserRepository extends ServiceEntityRepository
 {
+    /**
+     * Repository constructor.
+     * @param ManagerRegistry $registry
+     */
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, User::class);
+    }
+
     /**
      * query for admin paginator
      *
