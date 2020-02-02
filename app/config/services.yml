@@ -4,6 +4,10 @@ services:
         autowire: true
         autoconfigure: true
 
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        exclude: '../../src/AppBundle/{Entity,Migrations,Tests}'
+
     AppBundle\EventListener\UploadListener:
         tags:
             - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onUpload }
