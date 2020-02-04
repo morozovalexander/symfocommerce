@@ -6,7 +6,7 @@ app:
     type: annotation
 
 _liip_imagine:
-    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
 
 oneup_uploader:
     resource: .

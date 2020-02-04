@@ -90,7 +90,9 @@ knp_paginator:
 liip_imagine:
     resolvers:
         default:
-            web_path: ~
+            web_path:
+                web_root: "%kernel.project_dir%/web"
+                cache_prefix: "media/cache"
 
     filter_sets:
         cache: ~
@@ -120,7 +122,7 @@ oneup_uploader:
         gallery:
             frontend: dropzone
             storage:
-                directory: "%kernel.root_dir%/../web/uploads/images"
+                directory: "%kernel.project_dir%/web/uploads/images"
 
 presta_sitemap:
     timetolive: 3600
