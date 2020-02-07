@@ -105,7 +105,7 @@ class AjaxController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);
 
-        $productIdsArray = $this->get(PagesUtilities::class)->getLastSeenProducts($request);
+        $productIdsArray = $pagesUtilities->getLastSeenProducts($request);
 
         $products = $productRepository->getLastSeen($productIdsArray, $this->getUser(), 4);
         if (!$products) {
