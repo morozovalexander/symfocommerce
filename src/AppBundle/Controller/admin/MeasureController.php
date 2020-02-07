@@ -5,7 +5,7 @@ namespace AppBundle\Controller\admin;
 use AppBundle\Form\Type\MeasureType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Measure;
@@ -15,7 +15,7 @@ use AppBundle\Entity\Measure;
  *
  * @Route("/admin/measure")
  */
-class MeasureController extends Controller
+class MeasureController extends AbstractController
 {
     /**
      * Lists all Measure entities.

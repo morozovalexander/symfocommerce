@@ -5,7 +5,7 @@ namespace AppBundle\Controller\admin;
 use AppBundle\Entity\Featured;
 use AppBundle\Entity\Product;
 use Doctrine\ORM\NonUniqueResultException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @Route("/admin/featured")
  */
-class FeaturedController extends Controller
+class FeaturedController extends AbstractController
 {
     /**
      * show featured products

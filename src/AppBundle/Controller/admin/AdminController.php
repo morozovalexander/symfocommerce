@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller\admin;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/admin")
  */
-class AdminController extends Controller
+class AdminController extends AbstractController
 {
     /**
      * @Route("/", methods={"GET"}, name="admin_index")

@@ -5,7 +5,7 @@ namespace AppBundle\Controller\admin;
 use AppBundle\Form\Type\CategoryType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Category;
@@ -15,7 +15,7 @@ use AppBundle\Entity\Category;
  *
  * @Route("/admin/category")
  */
-class CategoryController extends Controller
+class CategoryController extends AbstractController
 {
     /**
      * Lists all Category entities.

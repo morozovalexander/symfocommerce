@@ -6,12 +6,12 @@ use AppBundle\Entity\Product;
 use Doctrine\ORM\NonUniqueResultException;
 use AppBundle\Entity\Favourites;
 use AppBundle\Service\PagesUtilities;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class AjaxController extends Controller
+class AjaxController extends AbstractController
 {
     /**
      * Lists all Category entities.
@@ -97,9 +97,10 @@ class AjaxController extends Controller
      *
      * @Route("/ajax_get_last_seen_products", methods={"POST"}, name="ajax_get_last_seen_products")
      * @param Request $request
+     * @param PagesUtilities $pagesUtilities
      * @return JsonResponse
      */
-    public function getLastSeenProductsAction(Request $request): JsonResponse
+    public function getLastSeenProductsAction(Request $request, PagesUtilities $pagesUtilities): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $productRepository = $em->getRepository(Product::class);

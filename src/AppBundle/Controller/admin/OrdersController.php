@@ -6,7 +6,7 @@ use AppBundle\Entity\OrderProduct;
 use AppBundle\Entity\Product;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Orders;
@@ -16,7 +16,7 @@ use AppBundle\Entity\Orders;
  *
  * @Route("/admin/orders")
  */
-class OrdersController extends Controller
+class OrdersController extends AbstractController
 {
     /**
      * Lists all Orders entities.

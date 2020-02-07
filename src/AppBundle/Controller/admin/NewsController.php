@@ -5,7 +5,7 @@ namespace AppBundle\Controller\admin;
 use AppBundle\Form\Type\NewsType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\News;
@@ -15,7 +15,7 @@ use AppBundle\Entity\News;
  *
  * @Route("/admin/news")
  */
-class NewsController extends Controller
+class NewsController extends AbstractController
 {
     /**
      * Lists all News entities.

@@ -6,21 +6,22 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Manufacturer;
 use AppBundle\Entity\StaticPage;
 use AppBundle\Service\SettingsService;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class LayoutsUtilityController extends Controller
+class LayoutsUtilityController extends AbstractController
 {
     /**
      * render categories menu
+     * @param SettingsService $settingsService
+     * @return Response
      */
-    public function categoriesMenuAction(): Response
+    public function categoriesMenuAction(SettingsService $settingsService): Response
     {
         $em = $this->getDoctrine()->getManager();
         $categoryRepository = $em->getRepository(Category::class);
 
-        $settings = $this->get(SettingsService::class);
-        $showEmpty = $settings->getShowEmptyCategories();
+        $showEmpty = $settingsService->getShowEmptyCategories();
 
         $categories = $categoryRepository->getAllCategories($showEmpty);
 
@@ -31,14 +32,15 @@ class LayoutsUtilityController extends Controller
 
     /**
      * render manufacturers menu
+     * @param SettingsService $settingsService
+     * @return Response
      */
-    public function manufacturersMenuAction(): Response
+    public function manufacturersMenuAction(SettingsService $settingsService): Response
     {
         $em = $this->getDoctrine()->getManager();
         $manufacturerRepository = $em->getRepository(Manufacturer::class);
 
-        $settings = $this->get(SettingsService::class);
-        $showEmpty = $settings->getShowEmptyManufacturers();
+        $showEmpty = $settingsService->getShowEmptyManufacturers();
 
         $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
 

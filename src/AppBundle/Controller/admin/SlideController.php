@@ -6,7 +6,7 @@ use AppBundle\Form\Type\SlideType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Slide;
@@ -16,7 +16,7 @@ use AppBundle\Entity\Slide;
  *
  * @Route("/admin/slide")
  */
-class SlideController extends Controller
+class SlideController extends AbstractController
 {
     /**
      * Lists all Slide entities.

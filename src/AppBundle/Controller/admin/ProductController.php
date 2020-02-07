@@ -10,7 +10,7 @@ use AppBundle\Form\Type\ProductType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Product;
 
@@ -19,7 +19,7 @@ use AppBundle\Entity\Product;
  *
  * @Route("/admin/product")
  */
-class ProductController extends Controller
+class ProductController extends AbstractController
 {
     /**
      * Lists all Product entities.

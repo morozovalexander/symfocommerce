@@ -5,7 +5,7 @@ namespace AppBundle\Controller\admin;
 use AppBundle\Form\Type\ManufacturerType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Manufacturer;
@@ -15,7 +15,7 @@ use AppBundle\Entity\Manufacturer;
  *
  * @Route("/admin/manufacturer")
  */
-class ManufacturerController extends Controller
+class ManufacturerController extends AbstractController
 {
     /**
      * Lists all Manufacturer entities.
