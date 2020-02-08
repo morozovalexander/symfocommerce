@@ -2,3 +2,31 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+    resolvers:
+        default:
+            web_path:
+                web_root: "%kernel.project_dir%/public"
+                cache_prefix: "media/cache"
+
+    filter_sets:
+        cache: ~
+        some_thumb:
+            quality: 75
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
+        category_mainpage_thumb:
+            quality: 100
+            filters:
+                thumbnail: { size: [300, 300], mode: outbound }
+        product_preview_thumb:
+            quality: 100
+            filters:
+                thumbnail: { size: [150, 150], mode: outbound }
+        product_main_thumb:
+            quality: 100
+            filters:
+                thumbnail: { size: [600, 600], mode: outbound }
+        slide:
+            quality: 100
+            filters:
+                thumbnail: { size: [1500, 500], mode: outbound }

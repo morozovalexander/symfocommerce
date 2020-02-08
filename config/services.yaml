@@ -4,12 +4,26 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    locale: 'en'
+    uploads_directory: "%kernel.root_dir%/../public/uploads/images"
+    admin_email: null
+    products_pagination_count: 12
+    admin_products_pagination_count: 20
+    admin_categories_pagination_count: 20
+    admin_manufacturers_pagination_count: 20
+    category_products_pagination_count: 24
+    search_pagination_count: 24
+    admin_users_pagination_count: 20
+    admin_user_orders_pagination_count: 10
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -23,5 +37,43 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\EventListener\UploadListener:
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onUpload }
+
+    App\EventListener\LocaleListener:
+        tags:
+            - { name: kernel.event_subscriber }
+
+    fos_user.doctrine_registry:
+        alias: doctrine
+
+    App\Utils\Slugger: ~
+
+    App\EventListener\SitemapSubscriber:
+        tags:
+            - { name: "kernel.event_subscriber", priority: 100 }
+
+    App\Form\Type\RegistrationTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: FOS\UserBundle\Form\Type\RegistrationFormType }
+
+    App\Twig\RawDescriptionExtension:
+        public:       false
+        tags:
+            - { name: twig.extension }
+
+
+    App\Service\FileUploader:
+        arguments: ['%uploads_directory%']
+
+    App\EventListener\ImageUploadListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }
+            - { name: doctrine.event_listener, event: preRemove }
+
+    App\DataFixtures\:
+        resource: '../src/DataFixtures'
+        tags: ['doctrine.fixture.orm']

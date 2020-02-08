@@ -13,26 +13,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle",
             "App\\": "src/"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\AppBundle\\": "tests/AppBundle",
             "App\\Tests\\": "tests/"
         }
     },
     "require": {
         "php": ">=7.1.3",
-        "symfony/console": "^4.0",
-        "symfony/framework-bundle": "^4.0",
-        "symfony/yaml": "^4.0",
-        "symfony/dotenv": "^4.0",
         "doctrine/common": "^2.12",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-migrations-bundle": "^1.0",
@@ -44,16 +34,22 @@
         "oneup/uploader-bundle": "^2.1",
         "presta/sitemap-bundle": "^1.5",
         "sensio/framework-extra-bundle": "^5.0.0",
+        "symfony/apache-pack": "^1.0",
+        "symfony/console": "^4.0",
+        "symfony/dotenv": "^4.0",
         "symfony/flex": "^1.6",
+        "symfony/framework-bundle": "^4.0",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^3.4",
+        "symfony/yaml": "^4.0",
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "liip/functional-test-bundle": "~2.0@alpha",
         "symfony/debug-bundle": "^4.0",
+        "symfony/maker-bundle": "^1.14",
         "symfony/phpunit-bridge": "^4.4",
         "symfony/var-dumper": "^4.0",
         "symfony/web-profiler-bundle": "^4.0"

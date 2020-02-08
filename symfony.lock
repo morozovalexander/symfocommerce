@@ -133,6 +133,9 @@
     "monolog/monolog": {
         "version": "1.25.3"
     },
+    "nikic/php-parser": {
+        "version": "v4.3.0"
+    },
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
@@ -302,6 +305,15 @@
     "symfony/intl": {
         "version": "v5.0.4"
     },
+    "symfony/maker-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
     "symfony/mime": {
         "version": "v5.0.4"
     },
@@ -368,6 +380,9 @@
     "symfony/process": {
         "version": "v5.0.4"
     },
+    "symfony/profiler-pack": {
+        "version": "v1.0.4"
+    },
     "symfony/property-access": {
         "version": "v5.0.4"
     },
@@ -411,6 +426,9 @@
     },
     "symfony/service-contracts": {
         "version": "v2.0.1"
+    },
+    "symfony/stopwatch": {
+        "version": "v5.0.4"
     },
     "symfony/swiftmailer-bundle": {
         "version": "2.5",
@@ -462,6 +480,9 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/twig-pack": {
+        "version": "v1.0.0"
+    },
     "symfony/validator": {
         "version": "4.3",
         "recipe": {
@@ -497,6 +518,9 @@
     },
     "symfony/yaml": {
         "version": "v4.4.4"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.0.1"
     },
     "twig/twig": {
         "version": "v2.12.3"
