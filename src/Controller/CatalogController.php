@@ -161,12 +161,14 @@ class CatalogController extends AbstractController
      * @param Request $request
      * @param ProductRepository $productRepository
      * @param PaginatorInterface $paginator
+     * @param PagesUtilities $pagesUtilities
      * @return Response
      */
     public function searchProductAction(
         Request $request,
         ProductRepository $productRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        PagesUtilities $pagesUtilities
     ): Response {
         $search_phrase = trim($request->get('search_phrase'));
         $searchWords = explode(' ', $search_phrase);
@@ -183,7 +185,7 @@ class CatalogController extends AbstractController
         return $this->render('catalog/search_product.html.twig', [
             'products' => $searchResults,
             'search_phrase' => $search_phrase,
-            'sortedby' => $this->get(PagesUtilities::class)->getSortingParamName($request)
+            'sortedby' => $pagesUtilities->getSortingParamName($request)
         ]);
     }
 

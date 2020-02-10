@@ -73,26 +73,29 @@ class CartController extends AbstractController
      *
      * @Route("/orderform", methods={"GET", "POST"}, name="orderform")
      * @param Request $request
+     * @param PagesUtilities $pagesUtilities
+     * @param EmailNotifier $emailNotifier
      * @return Response
      * @throws Error
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
-    public function orderFormAction(Request $request): Response
-    {
+    public function orderFormAction(
+        Request $request,
+        PagesUtilities $pagesUtilities,
+        EmailNotifier $emailNotifier
+    ): Response {
         $order = new Orders();
         $form = $this->createForm(OrdersType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $orderSuccess = $this->get(PagesUtilities::class)->createOrderDBRecord($request, $order, $this->getUser());
+            $orderSuccess = $pagesUtilities->createOrderDBRecord($request, $order, $this->getUser());
 
             if (!$orderSuccess) {
                 return $this->redirect($this->generateUrl('cartisempty')); //check valid cart
             }
 
             //send email notification
-            $this->get(EmailNotifier::class)->handleNotification([
+            $emailNotifier->handleNotification([
                 'event' => 'new_order',
                 'order_id' => $order->getId(),
                 'admin_email' => $this->getParameter('admin_email')
