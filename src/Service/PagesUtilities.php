@@ -2,11 +2,8 @@
 
 namespace App\Service;
 
-use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use App\Entity\OrderProduct;
 use App\Entity\Orders;
 use App\Entity\User;
@@ -17,14 +14,20 @@ class PagesUtilities
 {
     /** @var EntityManagerInterface */
     private $em;
+    /** @var ProductRepository */
+    private $productRepository;
 
     /**
      * PagesUtilities constructor.
      * @param EntityManagerInterface $entityManager
+     * @param ProductRepository $productRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ProductRepository $productRepository
+    ) {
         $this->em = $entityManager;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -76,13 +79,12 @@ class PagesUtilities
      *
      * @param Request $request
      * @param Orders $order
-     * @param ProductRepository $productRepository
-     * @return void
+     * @param User|null $user
+     * @return bool
      */
     public function createOrderDBRecord(
         Request $request,
         Orders $order,
-        ProductRepository $productRepository,
         ?User $user
     ): bool {
         $cart = $this->getCartFromCookies($request);
@@ -93,7 +95,7 @@ class PagesUtilities
         //parse cart json form cookies
         $sum = 0; //total control sum of the order
         foreach ($cart as $productId => $productQuantity) {
-            $product = $productRepository->find((int)$productId);
+            $product = $this->productRepository->find((int)$productId);
             if (\is_object($product)) {
                 $quantity = abs((int)$productQuantity);
                 $sum += ($quantity * $product->getPrice());
