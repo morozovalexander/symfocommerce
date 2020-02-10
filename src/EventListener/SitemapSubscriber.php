@@ -2,10 +2,6 @@
 
 namespace App\EventListener;
 
-use App\Entity\Category;
-use App\Entity\Manufacturer;
-use App\Entity\Product;
-use App\Entity\StaticPage;
 use App\Repository\CategoryRepository;
 use App\Repository\ManufacturerRepository;
 use App\Repository\ProductRepository;
@@ -15,28 +11,18 @@ use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Service\UrlContainerInterface;
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Doctrine\Common\Persistence\ManagerRegistry;
 
 class SitemapSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
+    /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
     /**
-     * @var ManagerRegistry
-     */
-    private $doctrine;
-
-    /**
      * @param UrlGeneratorInterface $urlGenerator
-     * @param ManagerRegistry $doctrine
      */
-    public function __construct(UrlGeneratorInterface $urlGenerator, ManagerRegistry $doctrine)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
-        $this->doctrine = $doctrine;
     }
 
     /**
