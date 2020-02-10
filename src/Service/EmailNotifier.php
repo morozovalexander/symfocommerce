@@ -65,8 +65,8 @@ class EmailNotifier
             true
         );
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
+        $message = (new \Swift_Message($subject))
+            ->setSubject()
             ->setFrom(self::FROM_EMAIL)
             ->setTo($to)
             ->setBody(
