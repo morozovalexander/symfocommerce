@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Measure
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\MeasureRepository")
  */
 class Measure
 {

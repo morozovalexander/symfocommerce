@@ -4,6 +4,8 @@ namespace App\Controller\admin;
 
 use App\Entity\Featured;
 use App\Entity\Product;
+use App\Repository\FeaturedRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,11 +24,11 @@ class FeaturedController extends AbstractController
      * show featured products
      *
      * @Route("/", methods={"GET"}, name="admin_featured")
+     * @param FeaturedRepository $featuredRepository
+     * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(FeaturedRepository $featuredRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $featuredRepository = $em->getRepository(Featured::class);
         $products = $featuredRepository->findBy([], ['productOrder' => 'ASC']);
 
         return $this->render('admin/featured/index.html.twig', [
@@ -36,15 +38,13 @@ class FeaturedController extends AbstractController
 
     /**
      * @param Request $request
-     * @Route("/featured_product_edit_ajax", methods={"POST"}, name="admin_featured_product_edit_ajax")
+     * @param ProductRepository $productRepository
      * @return JsonResponse
      * @throws NonUniqueResultException
+     * @Route("/featured_product_edit_ajax", methods={"POST"}, name="admin_featured_product_edit_ajax")
      */
-    public function featuredProductEditAction(Request $request): JsonResponse
+    public function featuredProductEditAction(Request $request, ProductRepository $productRepository): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository(Product::class);
-
         $productId = $request->request->getInt('product_id');
         $addFeaturedValue = $request->request->getBoolean('new_value');
 
@@ -60,14 +60,12 @@ class FeaturedController extends AbstractController
 
     /**
      * @param Request $request
-     * @Route("/featured_order_edit_ajax", methods={"POST"}, name="admin_featured_order_edit_ajax")
+     * @param FeaturedRepository $featuredRepository
      * @return JsonResponse
+     * @Route("/featured_order_edit_ajax", methods={"POST"}, name="admin_featured_order_edit_ajax")
      */
-    public function featuredOrderEditAction(Request $request): JsonResponse
+    public function featuredOrderEditAction(Request $request, FeaturedRepository $featuredRepository): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $featuredRepository = $em->getRepository(Featured::class);
-
         $featuredId = $request->request->getInt('featured_id');
         $newOrder = $request->request->getInt('new_value');
 
@@ -89,14 +87,17 @@ class FeaturedController extends AbstractController
 
     /**
      * @param Product $product
+     * @param FeaturedRepository $featuredRepository
      * @param bool $addFeaturedValue
      * @return void
      * @throws NonUniqueResultException
      */
-    private function createOrDeleteFeaturedProduct(Product $product, bool $addFeaturedValue): void
+    private function createOrDeleteFeaturedProduct(
+        Product $product,
+        FeaturedRepository $featuredRepository,
+        bool $addFeaturedValue): void
     {
         $em = $this->getDoctrine()->getManager();
-        $featuredRepository = $em->getRepository(Featured::class);
 
         if ($addFeaturedValue) {
             $alreadyFeatured = $product->getFeatured(); //check if already featured

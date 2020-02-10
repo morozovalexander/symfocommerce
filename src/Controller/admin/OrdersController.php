@@ -4,6 +4,7 @@ namespace App\Controller\admin;
 
 use App\Entity\OrderProduct;
 use App\Entity\Product;
+use App\Repository\OrdersRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,12 +24,11 @@ class OrdersController extends AbstractController
      *
      * @Route("/", methods={"GET"}, name="admin_orders")
      * @param Request $request
+     * @param OrdersRepository $ordersRepository
      * @return Response
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, OrdersRepository $ordersRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $ordersRepository = $em->getRepository(Orders::class);
         $paginator = $this->get('knp_paginator');
 
         $qb = $ordersRepository->getAllOrdersAdminQB();
@@ -50,13 +50,12 @@ class OrdersController extends AbstractController
      *
      * @Route("/{id}", methods={"GET"}, name="admin_order_show")
      * @param int $id
+     * @param OrdersRepository $ordersRepository
      * @return Response
      */
-    public function showAction(int $id): Response
+    public function showAction(int $id, OrdersRepository $ordersRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        /** @var Orders $order */
-        $order = $em->getRepository(Orders::class)->find($id);
+        $order = $ordersRepository->find($id);
 
         if (!$order) {
             throw $this->createNotFoundException('Unable to find Order entity.');
@@ -99,16 +98,17 @@ class OrdersController extends AbstractController
      * @Route("/{id}", methods={"DELETE"}, name="admin_order_delete")
      * @param Request $request
      * @param int $id
+     * @param OrdersRepository $ordersRepository
      * @return Response
      */
-    public function deleteAction(Request $request, int $id): Response
+    public function deleteAction(Request $request, int $id, OrdersRepository $ordersRepository): Response
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository(Orders::class)->find($id);
+            $entity = $ordersRepository->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Order entity.');

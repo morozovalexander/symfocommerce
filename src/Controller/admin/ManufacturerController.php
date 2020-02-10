@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Form\Type\ManufacturerType;
+use App\Repository\ManufacturerRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,12 +23,11 @@ class ManufacturerController extends AbstractController
      *
      * @Route("/", methods={"GET"}, name="admin_manufacturer")
      * @param Request $request
+     * @param ManufacturerRepository $manufacturerRepository
      * @return Response
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, ManufacturerRepository $manufacturerRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $manufacturerRepository = $em->getRepository(Manufacturer::class);
         $paginator = $this->get('knp_paginator');
 
         $qb = $manufacturerRepository->getAllManufacturersAdminQB();

@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Form\Type\MeasureType;
+use App\Repository\MeasureRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,15 +22,13 @@ class MeasureController extends AbstractController
      * Lists all Measure entities.
      *
      * @Route("/", methods={"GET"}, name="admin_measure")
+     * @param MeasureRepository $measureRepository
+     * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(MeasureRepository $measureRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository(Measure::class)->findAll();
-
         return $this->render('admin/measure/index.html.twig', [
-            'entities' => $entities
+            'entities' => $measureRepository->findAll()
         ]);
     }
 

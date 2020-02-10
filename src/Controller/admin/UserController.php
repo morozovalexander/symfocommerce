@@ -4,6 +4,8 @@ namespace App\Controller\admin;
 
 use App\Entity\Orders;
 use App\Entity\User;
+use App\Repository\OrdersRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,12 +23,11 @@ class UserController extends AbstractController
      *
      * @Route("/", methods={"GET"}, name="admin_user_list")
      * @param Request $request
+     * @param UserRepository $userRepository
      * @return Response
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, UserRepository $userRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $userRepository = $em->getRepository(User::class);
         $paginator = $this->get('knp_paginator');
 
         $qb = $userRepository->getAllUsersAdminQB();
@@ -63,12 +64,11 @@ class UserController extends AbstractController
      * @Route("/user/{id}/orders", methods={"GET"}, name="admin_user_orders")
      * @param Request $request
      * @param User $user
+     * @param OrdersRepository $ordersRepository
      * @return Response
      */
-    public function showUserOrdersAction(Request $request, User $user): Response
+    public function showUserOrdersAction(Request $request, User $user, OrdersRepository $ordersRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $ordersRepository = $em->getRepository(Orders::class);
         $paginator = $this->get('knp_paginator');
 
         $qb = $ordersRepository->getUserOrdersAdminQB($user);

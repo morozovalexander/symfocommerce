@@ -2,6 +2,8 @@
 
 namespace App\Controller\admin;
 
+use App\Repository\ImageRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -26,12 +28,11 @@ class ProductController extends AbstractController
      *
      * @Route("/", methods={"GET"}, name="admin_product")
      * @param Request $request
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, ProductRepository $productRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository(Product::class);
         $paginator = $this->get('knp_paginator');
 
         //if search is required
@@ -57,9 +58,10 @@ class ProductController extends AbstractController
      *
      * @Route("/new", methods={"GET", "POST"}, name="admin_product_new")
      * @param Request $request
+     * @param ImageRepository $imageRepository
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function newAction(Request $request, ImageRepository $imageRepository): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -73,7 +75,6 @@ class ProductController extends AbstractController
                 array_pop($imageIdArray);
 
                 $em = $this->getDoctrine()->getManager();
-                $imageRepository = $em->getRepository(Image::class);
                 foreach ($imageIdArray as $imageId) {
                     $image = $imageRepository->find($imageId);
                     $image->setProduct($product);
@@ -124,9 +125,10 @@ class ProductController extends AbstractController
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="admin_product_edit")
      * @param Request $request
      * @param Product $product
+     * @param ImageRepository $imageRepository
      * @return Response
      */
-    public function editAction(Request $request, Product $product): Response
+    public function editAction(Request $request, Product $product, ImageRepository $imageRepository): Response
     {
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm(ProductType::class, $product);
@@ -140,7 +142,6 @@ class ProductController extends AbstractController
                 array_pop($imageIdArray);
 
                 $em = $this->getDoctrine()->getManager();
-                $imageRepository = $em->getRepository(Image::class);
                 foreach ($imageIdArray as $imageId) {
                     $image = $imageRepository->find($imageId);
                     $image->setProduct($product);
@@ -195,11 +196,12 @@ class ProductController extends AbstractController
     /**
      * @Route("/remove_image", methods={"POST"} , name="remove_image", defaults={"_format"="json"})
      * @param Request $request
+     * @param ImageRepository $imageRepository
      * @return Response
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function removeImageAction(Request $request): Response
+    public function removeImageAction(Request $request, ImageRepository $imageRepository): Response
     {
         $requestData = $request->request;
         $imageEntityId = (int)$requestData->get('imageEntityId');
@@ -207,7 +209,6 @@ class ProductController extends AbstractController
          * @var EntityManager $em
          */
         $em = $this->getDoctrine()->getManager();
-        $imageRepository = $em->getRepository(Image::class);
         /**
          * @var Image $image , $imageRepository
          */

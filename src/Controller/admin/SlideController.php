@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Form\Type\SlideType;
+use App\Repository\SlideRepository;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,14 +23,13 @@ class SlideController extends AbstractController
      * Lists all Slide entities.
      *
      * @Route("/", methods={"GET"}, name="admin_slide")
+     * @param SlideRepository $slideRepository
+     * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(SlideRepository $slideRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository(Slide::class)->findBy([], ['slideOrder' => 'ASC']);
-
         return $this->render('admin/slide/index.html.twig', [
-            'entities' => $entities
+            'entities' => $slideRepository->findBy([], ['slideOrder' => 'ASC'])
         ]);
     }
 

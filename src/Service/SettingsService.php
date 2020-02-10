@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\SettingsRepository;
 use App\Entity\Settings;
 
 /**
@@ -14,18 +14,12 @@ class SettingsService
     /** @var Settings $settings */
     private $settings;
 
-    /** @var EntityManagerInterface $em */
-    private $em;
-
     /**
      * SettingsService constructor.
-     * @param EntityManagerInterface $entityManager
+     * @param SettingsRepository $settingsRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
-        $allSettings = $this->em->getRepository(Settings::class)->findAll();
-        $this->settings = $allSettings[0];
+    public function __construct(SettingsRepository $settingsRepository) {
+        $this->settings = $settingsRepository->findAll()[0];
     }
 
     /**

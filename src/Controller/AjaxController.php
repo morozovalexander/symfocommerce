@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Repository\FavouritesRepository;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use App\Entity\Favourites;
 use App\Service\PagesUtilities;
@@ -18,14 +20,17 @@ class AjaxController extends AbstractController
      *
      * @Route("/ajax_like", methods={"POST"}, name="ajax_like")
      * @param Request $request
+     * @param ProductRepository $productRepository
+     * @param FavouritesRepository $favouritesRepository
      * @return JsonResponse
      * @throws \Exception
      */
-    public function likeAction(Request $request): JsonResponse
-    {
+    public function likeAction(
+        Request $request,
+        ProductRepository $productRepository,
+        FavouritesRepository $favouritesRepository
+    ): JsonResponse {
         $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository(Product::class);
-        $favouritesRepository = $em->getRepository(Favourites::class);
 
         $productId = $request->request->getInt('product_id');
 
@@ -70,13 +75,15 @@ class AjaxController extends AbstractController
      *
      * @Route("/ajax_is_liked_product", methods={"POST"}, name="ajax_is_liked_product")
      * @param Request $request
+     * @param FavouritesRepository $favouritesRepository
      * @return JsonResponse
      * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      */
-    public function checkIsLikedAction(Request $request): JsonResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $favouritesRepository = $em->getRepository(Favourites::class);
+    public function checkIsLikedAction(
+        Request $request,
+        FavouritesRepository $favouritesRepository
+    ): JsonResponse {
         $user = $this->getUser();
         if (!$user) {
             return $this->returnErrorJson('mustberegistered');
@@ -98,13 +105,14 @@ class AjaxController extends AbstractController
      * @Route("/ajax_get_last_seen_products", methods={"POST"}, name="ajax_get_last_seen_products")
      * @param Request $request
      * @param PagesUtilities $pagesUtilities
+     * @param ProductRepository $productRepository
      * @return JsonResponse
      */
-    public function getLastSeenProductsAction(Request $request, PagesUtilities $pagesUtilities): JsonResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository(Product::class);
-
+    public function getLastSeenProductsAction(
+        Request $request,
+        PagesUtilities $pagesUtilities,
+        ProductRepository $productRepository
+    ): JsonResponse {
         $productIdsArray = $pagesUtilities->getLastSeenProducts($request);
 
         $products = $productRepository->getLastSeen($productIdsArray, $this->getUser(), 4);

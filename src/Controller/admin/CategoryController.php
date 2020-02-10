@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Form\Type\CategoryType;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,12 +23,11 @@ class CategoryController extends AbstractController
      *
      * @Route("/", methods={"GET"}, name="admin_category")
      * @param Request $request
+     * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, CategoryRepository $categoryRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $categoryRepository = $em->getRepository(Category::class);
         $paginator = $this->get('knp_paginator');
 
         $qb = $categoryRepository->getAllCategoriesAdminQB();

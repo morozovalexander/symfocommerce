@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Form\Type\NewsType;
+use App\Repository\NewsRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,12 +23,11 @@ class NewsController extends AbstractController
      *
      * @Route("/", methods={"GET"}, name="admin_news")
      * @param Request $request
+     * @param NewsRepository $newsRepository
      * @return Response
      */
-    public function indexAction(Request $request): Response
+    public function indexAction(Request $request, NewsRepository $newsRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $newsRepository = $em->getRepository(News::class);
         $paginator = $this->get('knp_paginator');
 
         $qb = $newsRepository->getAllNewsAdminQB();

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Product;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -75,13 +76,15 @@ class PagesUtilities
      *
      * @param Request $request
      * @param Orders $order
-     * @param User $user
-     * @return bool
+     * @param ProductRepository $productRepository
+     * @return void
      */
-    public function createOrderDBRecord(Request $request, Orders $order, ?User $user): bool
-    {
-        $productRepository = $this->em->getRepository(Product::class);
-
+    public function createOrderDBRecord(
+        Request $request,
+        Orders $order,
+        ProductRepository $productRepository,
+        ?User $user
+    ): bool {
         $cart = $this->getCartFromCookies($request);
         if (!$cart || !\count((array)$cart)) {
             return false;

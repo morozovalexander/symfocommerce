@@ -54,16 +54,15 @@ class CatalogController extends AbstractController
      * @Route("/category/{slug}", methods={"GET"}, name="category")
      * @param Request $request
      * @param Category $category
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function categoryAction(Request $request, Category $category): Response
-    {
-        /**
-         * @var $em EntityManager
-         */
-        $em = $this->getDoctrine()->getManager();
+    public function categoryAction(
+        Request $request,
+        Category $category,
+        ProductRepository $productRepository
+    ): Response {
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository(Product::class);
 
         $productsQuery = $productRepository->findByCategoryQB($category, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
@@ -84,16 +83,15 @@ class CatalogController extends AbstractController
      * @Route("/manufacturer/{slug}", methods={"GET"}, name="manufacturer")
      * @param Request $request
      * @param Manufacturer $manufacturer
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function manufacturerAction(Request $request, Manufacturer $manufacturer): Response
-    {
-        /**
-         * @var $em EntityManager
-         */
-        $em = $this->getDoctrine()->getManager();
+    public function manufacturerAction(
+        Request $request,
+        Manufacturer $manufacturer,
+        ProductRepository $productRepository
+    ): Response {
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository(Product::class);
 
         $productsQuery = $productRepository->findByManufacturerQB($manufacturer, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
@@ -127,13 +125,12 @@ class CatalogController extends AbstractController
      *
      * @Route("/news", methods={"GET"}, name="news")
      * @param Request $request
+     * @param NewsRepository $newsRepository
      * @return Response
      */
-    public function newsAction(Request $request): Response
+    public function newsAction(Request $request, NewsRepository $newsRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $newsRepository = $em->getRepository(News::class);
         $limit = $this->getParameter('products_pagination_count');
 
         $query = $newsRepository->getNewsQB();
@@ -154,13 +151,12 @@ class CatalogController extends AbstractController
      *
      * @Route("/search", methods={"GET"}, name="search")
      * @param Request $request
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function searchProductAction(Request $request): Response
+    public function searchProductAction(Request $request, ProductRepository $productRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository(Product::class);
 
         $search_phrase = trim($request->get('search_phrase'));
         $searchWords = explode(' ', $search_phrase);

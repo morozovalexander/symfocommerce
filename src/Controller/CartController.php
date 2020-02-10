@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Orders;
 use App\Form\Type\OrdersType;
+use App\Repository\ProductRepository;
 use App\Service\EmailNotifier;
 use App\Service\PagesUtilities;
 use App\Entity\User;
@@ -24,12 +25,11 @@ class CartController extends AbstractController
      *
      * @Route("/showcart", methods={"GET"}, name="showcart")
      * @param Request $request
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function showCartAction(Request $request): Response
+    public function showCartAction(Request $request, ProductRepository $productRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $productRepository = $em->getRepository(Product::class);
         $productsArray = [];
         $cart = [];
         $totalSum = 0;
@@ -125,11 +125,11 @@ class CartController extends AbstractController
      * Count cart from cookies
      * @Route("navbar_cart", methods={"GET"})
      * @param Request $request
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function navbarCartAction(Request $request): Response
+    public function navbarCartAction(Request $request, ProductRepository $productRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
         //quantity -> sum array
         $cartArray = ['cart' => ['quantity' => 0, 'sum' => 0]];
         $cookies = $request->cookies->all();
@@ -142,8 +142,6 @@ class CartController extends AbstractController
         } else {
             return $this->render('cart/navbar_cart.html.twig', $cartArray);
         }
-
-        $productRepository = $em->getRepository(Product::class);
 
         foreach ($cart as $productId => $productQuantity) {
             /**

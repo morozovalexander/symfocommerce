@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Form\Type\StaticPageType;
+use App\Repository\StaticPageRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,14 +22,13 @@ class StaticPageController extends AbstractController
      * Lists all StaticPage entities.
      *
      * @Route("/", methods={"GET"}, name="admin_staticpage")
+     * @param StaticPageRepository $staticPageRepository
+     * @return Response
      */
-    public function indexAction(): Response
+    public function indexAction(StaticPageRepository $staticPageRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository(StaticPage::class)->findBy([], ['orderNum' => 'ASC']);
-
         return $this->render('admin/static_page/index.html.twig', [
-            'entities' => $entities
+            'entities' => $staticPageRepository->findBy([], ['orderNum' => 'ASC'])
         ]);
     }
 

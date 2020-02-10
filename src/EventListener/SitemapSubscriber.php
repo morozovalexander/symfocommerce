@@ -6,6 +6,10 @@ use App\Entity\Category;
 use App\Entity\Manufacturer;
 use App\Entity\Product;
 use App\Entity\StaticPage;
+use App\Repository\CategoryRepository;
+use App\Repository\ManufacturerRepository;
+use App\Repository\ProductRepository;
+use App\Repository\StaticPageRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Service\UrlContainerInterface;
@@ -79,10 +83,13 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlContainerInterface $urls
+     * @param ManufacturerRepository $manufacturerRepository
      */
-    public function registerManufacturersUrls(UrlContainerInterface $urls): void
-    {
-        $manufacturers = $this->doctrine->getRepository(Manufacturer::class)->getArrayForSitemap();
+    public function registerManufacturersUrls(
+        UrlContainerInterface $urls,
+        ManufacturerRepository $manufacturerRepository
+    ): void {
+        $manufacturers = $manufacturerRepository->getArrayForSitemap();
         $frequency = UrlConcrete::CHANGEFREQ_MONTHLY;
         $priority = 1;
 
@@ -107,10 +114,11 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlContainerInterface $urls
+     * @param CategoryRepository $categoryRepository
      */
-    public function registerCategoriesUrls(UrlContainerInterface $urls): void
+    public function registerCategoriesUrls(UrlContainerInterface $urls, CategoryRepository $categoryRepository): void
     {
-        $categories = $this->doctrine->getRepository(Category::class)->getArrayForSitemap();
+        $categories = $categoryRepository->getArrayForSitemap();
         $frequency = UrlConcrete::CHANGEFREQ_MONTHLY;
         $priority = 1;
 
@@ -135,10 +143,11 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlContainerInterface $urls
+     * @param ProductRepository $productRepository
      */
-    public function registerProductsUrls(UrlContainerInterface $urls): void
+    public function registerProductsUrls(UrlContainerInterface $urls, ProductRepository $productRepository): void
     {
-        $products = $this->doctrine->getRepository(Product::class)->getArrayForSitemap();
+        $products = $productRepository->getArrayForSitemap();
         $frequency = UrlConcrete::CHANGEFREQ_MONTHLY;
         $priority = 0.7;
 
@@ -186,11 +195,14 @@ class SitemapSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlContainerInterface $urls
+     * @param StaticPageRepository $staticPageRepository
      * @throws \Exception
      */
-    public function registerStaticPagesUrls(UrlContainerInterface $urls): void
-    {
-        $staticPages = $this->doctrine->getRepository(StaticPage::class)->getArrayForSitemap();
+    public function registerStaticPagesUrls(
+        UrlContainerInterface $urls,
+        StaticPageRepository $staticPageRepository
+    ): void {
+        $staticPages = $staticPageRepository->getArrayForSitemap();
         $frequency = UrlConcrete::CHANGEFREQ_MONTHLY;
         $priority = 0.7;
         $date = new \DateTime();

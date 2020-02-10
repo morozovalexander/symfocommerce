@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Repository\ProductRepository;
 use App\Service\PagesUtilities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +17,12 @@ class ProfileController extends AbstractController
      *
      * @Route("/favourites", methods={"GET"}, name="favourites")
      * @param Request $request
+     * @param ProductRepository $productRepository
      * @return Response
      */
-    public function favouritesAction(Request $request): Response
+    public function favouritesAction(Request $request, ProductRepository $productRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $productRepository = $em->getRepository(Product::class);
         $limit = $this->getParameter('products_pagination_count');
 
         $query = $productRepository->getFavouritesQB($this->getUser());
