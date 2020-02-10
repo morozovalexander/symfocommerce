@@ -152,9 +152,6 @@
             "config/routes/oneup_uploader.yaml"
         ]
     },
-    "paragonie/random_compat": {
-        "version": "v2.0.18"
-    },
     "php": {
         "version": "7.2"
     },
@@ -169,6 +166,9 @@
     },
     "psr/log": {
         "version": "1.1.2"
+    },
+    "roave/security-advisories": {
+        "version": "dev-master"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -356,12 +356,6 @@
     "symfony/polyfill-apcu": {
         "version": "v1.13.1"
     },
-    "symfony/polyfill-ctype": {
-        "version": "v1.13.1"
-    },
-    "symfony/polyfill-iconv": {
-        "version": "v1.13.1"
-    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.13.1"
     },
@@ -480,9 +474,6 @@
             "templates/base.html.twig"
         ]
     },
-    "symfony/twig-pack": {
-        "version": "v1.0.0"
-    },
     "symfony/validator": {
         "version": "4.3",
         "recipe": {
@@ -518,9 +509,6 @@
     },
     "symfony/yaml": {
         "version": "v4.4.4"
-    },
-    "twig/extra-bundle": {
-        "version": "v3.0.1"
     },
     "twig/twig": {
         "version": "v2.12.3"
