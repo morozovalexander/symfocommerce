@@ -45,6 +45,7 @@
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^3.4",
         "symfony/yaml": "^4.0",
+        "symfony/translation-contracts": "^1.1.6",
         "twig/twig": "^2.0"
     },
     "require-dev": {
