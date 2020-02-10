@@ -5,6 +5,7 @@ namespace App\Controller\admin;
 use App\Entity\OrderProduct;
 use App\Entity\Product;
 use App\Repository\OrdersRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,12 +26,14 @@ class OrdersController extends AbstractController
      * @Route("/", methods={"GET"}, name="admin_orders")
      * @param Request $request
      * @param OrdersRepository $ordersRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(Request $request, OrdersRepository $ordersRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function indexAction(
+        Request $request,
+        OrdersRepository $ordersRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $qb = $ordersRepository->getAllOrdersAdminQB();
         $limit = $this->getParameter('admin_manufacturers_pagination_count');
 

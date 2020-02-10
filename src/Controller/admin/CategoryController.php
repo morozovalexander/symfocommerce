@@ -4,6 +4,7 @@ namespace App\Controller\admin;
 
 use App\Form\Type\CategoryType;
 use App\Repository\CategoryRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,10 +27,11 @@ class CategoryController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function indexAction(Request $request, CategoryRepository $categoryRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function indexAction(
+        Request $request,
+        CategoryRepository $categoryRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $qb = $categoryRepository->getAllCategoriesAdminQB();
         $limit = $this->getParameter('admin_categories_pagination_count');
 
@@ -39,9 +41,7 @@ class CategoryController extends AbstractController
             $limit
         );
 
-        return $this->render('admin/category/index.html.twig', [
-                'entities' => $categories]
-        );
+        return $this->render('admin/category/index.html.twig', ['entities' => $categories]);
     }
 
     /**

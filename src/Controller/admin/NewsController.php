@@ -4,6 +4,7 @@ namespace App\Controller\admin;
 
 use App\Form\Type\NewsType;
 use App\Repository\NewsRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,12 +25,14 @@ class NewsController extends AbstractController
      * @Route("/", methods={"GET"}, name="admin_news")
      * @param Request $request
      * @param NewsRepository $newsRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(Request $request, NewsRepository $newsRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function indexAction(
+        Request $request,
+        NewsRepository $newsRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $qb = $newsRepository->getAllNewsAdminQB();
         $limit = $this->getParameter('admin_categories_pagination_count');
 

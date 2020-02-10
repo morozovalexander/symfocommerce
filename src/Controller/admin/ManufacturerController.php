@@ -4,6 +4,7 @@ namespace App\Controller\admin;
 
 use App\Form\Type\ManufacturerType;
 use App\Repository\ManufacturerRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,12 +25,14 @@ class ManufacturerController extends AbstractController
      * @Route("/", methods={"GET"}, name="admin_manufacturer")
      * @param Request $request
      * @param ManufacturerRepository $manufacturerRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(Request $request, ManufacturerRepository $manufacturerRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function indexAction(
+        Request $request,
+        ManufacturerRepository $manufacturerRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $qb = $manufacturerRepository->getAllManufacturersAdminQB();
         $limit = $this->getParameter('admin_manufacturers_pagination_count');
 

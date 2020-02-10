@@ -6,6 +6,7 @@ use App\Entity\Orders;
 use App\Entity\User;
 use App\Repository\OrdersRepository;
 use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,12 +25,14 @@ class UserController extends AbstractController
      * @Route("/", methods={"GET"}, name="admin_user_list")
      * @param Request $request
      * @param UserRepository $userRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(Request $request, UserRepository $userRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function indexAction(
+        Request $request,
+        UserRepository $userRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $qb = $userRepository->getAllUsersAdminQB();
         $limit = $this->getParameter('admin_users_pagination_count');
 
@@ -65,12 +68,15 @@ class UserController extends AbstractController
      * @param Request $request
      * @param User $user
      * @param OrdersRepository $ordersRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function showUserOrdersAction(Request $request, User $user, OrdersRepository $ordersRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function showUserOrdersAction(
+        Request $request,
+        User $user,
+        OrdersRepository $ordersRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $qb = $ordersRepository->getUserOrdersAdminQB($user);
         $limit = $this->getParameter('admin_user_orders_pagination_count');
 

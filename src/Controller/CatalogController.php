@@ -14,6 +14,7 @@ use App\Entity\Product;
 use App\Entity\StaticPage;
 use App\Service\PagesUtilities;
 use Doctrine\ORM\NonUniqueResultException;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,15 +56,17 @@ class CatalogController extends AbstractController
      * @param Request $request
      * @param Category $category
      * @param ProductRepository $productRepository
+     * @param PaginatorInterface $paginator
+     * @param PagesUtilities $pagesUtilities
      * @return Response
      */
     public function categoryAction(
         Request $request,
         Category $category,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        PaginatorInterface $paginator,
+        PagesUtilities $pagesUtilities
     ): Response {
-        $paginator = $this->get('knp_paginator');
-
         $productsQuery = $productRepository->findByCategoryQB($category, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
@@ -75,7 +78,7 @@ class CatalogController extends AbstractController
         return $this->render('catalog/category.html.twig', [
             'category' => $category,
             'products' => $products,
-            'sortedby' => $this->get(PagesUtilities::class)->getSortingParamName($request)
+            'sortedby' => $pagesUtilities->getSortingParamName($request)
         ]);
     }
 
@@ -84,15 +87,17 @@ class CatalogController extends AbstractController
      * @param Request $request
      * @param Manufacturer $manufacturer
      * @param ProductRepository $productRepository
+     * @param PaginatorInterface $paginator
+     * @param PagesUtilities $pagesUtilities
      * @return Response
      */
     public function manufacturerAction(
         Request $request,
         Manufacturer $manufacturer,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        PaginatorInterface $paginator,
+        PagesUtilities $pagesUtilities
     ): Response {
-        $paginator = $this->get('knp_paginator');
-
         $productsQuery = $productRepository->findByManufacturerQB($manufacturer, $this->getUser());
         $limit = $this->getParameter('category_products_pagination_count');
         $products = $paginator->paginate(
@@ -104,7 +109,7 @@ class CatalogController extends AbstractController
         return $this->render('catalog/manufacturer.html.twig', [
             'manufacturer' => $manufacturer,
             'products' => $products,
-            'sortedby' => $this->get(PagesUtilities::class)->getSortingParamName($request)
+            'sortedby' => $pagesUtilities->getSortingParamName($request)
         ]);
     }
 
@@ -126,11 +131,14 @@ class CatalogController extends AbstractController
      * @Route("/news", methods={"GET"}, name="news")
      * @param Request $request
      * @param NewsRepository $newsRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function newsAction(Request $request, NewsRepository $newsRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
+    public function newsAction(
+        Request $request,
+        NewsRepository $newsRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $limit = $this->getParameter('products_pagination_count');
 
         $query = $newsRepository->getNewsQB();
@@ -152,12 +160,14 @@ class CatalogController extends AbstractController
      * @Route("/search", methods={"GET"}, name="search")
      * @param Request $request
      * @param ProductRepository $productRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function searchProductAction(Request $request, ProductRepository $productRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function searchProductAction(
+        Request $request,
+        ProductRepository $productRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $search_phrase = trim($request->get('search_phrase'));
         $searchWords = explode(' ', $search_phrase);
 

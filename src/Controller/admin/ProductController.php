@@ -9,6 +9,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use App\Entity\Image;
 use App\Form\Type\ProductType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,12 +30,14 @@ class ProductController extends AbstractController
      * @Route("/", methods={"GET"}, name="admin_product")
      * @param Request $request
      * @param ProductRepository $productRepository
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(Request $request, ProductRepository $productRepository): Response
-    {
-        $paginator = $this->get('knp_paginator');
-
+    public function indexAction(
+        Request $request,
+        ProductRepository $productRepository,
+        PaginatorInterface $paginator
+    ): Response {
         //if search is required
         $searchWords = trim($request->get('search_words'));
 
