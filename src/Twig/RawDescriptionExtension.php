@@ -2,7 +2,10 @@
 
 namespace App\Twig;
 
-class RawDescriptionExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
+class RawDescriptionExtension extends AbstractExtension
 {
     /**
      * @return array
@@ -10,7 +13,7 @@ class RawDescriptionExtension extends \Twig_Extension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('rawdescr', [$this, 'rawdescrFilter'], ['is_safe' => ['html']])
+            new TwigFilter('rawdescr', [$this, 'rawdescrFilter'], ['is_safe' => ['html']])
         ];
     }
 
