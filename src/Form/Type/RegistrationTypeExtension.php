@@ -11,11 +11,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RegistrationTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @return string The name of the type being extended
+     * @return iterable The name of the type being extended
      */
-    public function getExtendedType(): string
+    public static function getExtendedTypes(): iterable
     {
-        return RegistrationFormType::class;
+        return [RegistrationFormType::class];
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

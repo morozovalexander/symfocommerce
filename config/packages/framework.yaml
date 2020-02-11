@@ -12,5 +12,5 @@ framework:
     fragments: { path: /_fragment }
     php_errors:
         log: true
-    templating:
-        engines: ["twig"]
+#    templating:
+#        engines: ["twig"]
