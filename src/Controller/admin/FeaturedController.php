@@ -6,6 +6,7 @@ use App\Entity\Featured;
 use App\Entity\Product;
 use App\Repository\FeaturedRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,12 +40,16 @@ class FeaturedController extends AbstractController
     /**
      * @param Request $request
      * @param ProductRepository $productRepository
+     * @param FeaturedRepository $featuredRepository
      * @return JsonResponse
      * @throws NonUniqueResultException
      * @Route("/featured_product_edit_ajax", methods={"POST"}, name="admin_featured_product_edit_ajax")
      */
-    public function featuredProductEditAction(Request $request, ProductRepository $productRepository): JsonResponse
-    {
+    public function featuredProductEditAction(
+        Request $request,
+        ProductRepository $productRepository,
+        FeaturedRepository $featuredRepository
+    ): JsonResponse {
         $productId = $request->request->getInt('product_id');
         $addFeaturedValue = $request->request->getBoolean('new_value');
 
@@ -53,7 +58,7 @@ class FeaturedController extends AbstractController
             return $this->returnErrorJson('product not found');
         }
 
-        $this->createOrDeleteFeaturedProduct($product, $addFeaturedValue);
+        $this->createOrDeleteFeaturedProduct($product, $featuredRepository, $addFeaturedValue);
 
         return new JsonResponse(['success' => true], 200);
     }
@@ -61,11 +66,15 @@ class FeaturedController extends AbstractController
     /**
      * @param Request $request
      * @param FeaturedRepository $featuredRepository
+     * @param EntityManagerInterface $em
      * @return JsonResponse
      * @Route("/featured_order_edit_ajax", methods={"POST"}, name="admin_featured_order_edit_ajax")
      */
-    public function featuredOrderEditAction(Request $request, FeaturedRepository $featuredRepository): JsonResponse
-    {
+    public function featuredOrderEditAction(
+        Request $request,
+        FeaturedRepository $featuredRepository,
+        EntityManagerInterface $em
+    ): JsonResponse {
         $featuredId = $request->request->getInt('featured_id');
         $newOrder = $request->request->getInt('new_value');
 
@@ -95,8 +104,8 @@ class FeaturedController extends AbstractController
     private function createOrDeleteFeaturedProduct(
         Product $product,
         FeaturedRepository $featuredRepository,
-        bool $addFeaturedValue): void
-    {
+        bool $addFeaturedValue
+    ): void {
         $em = $this->getDoctrine()->getManager();
 
         if ($addFeaturedValue) {
