@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50e4a9d0d7cf52d39d6c683db00964ad",
+    "content-hash": "2dd0f2b1e2d0395106a41fc1e865d66f",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1502,12 +1502,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "1e932f6fb58c56a41adc4186169d98fdd5f1e71e"
+                "reference": "a9e71b6e7b61e7f39ba77436ba3e9af954450c4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/1e932f6fb58c56a41adc4186169d98fdd5f1e71e",
-                "reference": "1e932f6fb58c56a41adc4186169d98fdd5f1e71e",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/a9e71b6e7b61e7f39ba77436ba3e9af954450c4b",
+                "reference": "a9e71b6e7b61e7f39ba77436ba3e9af954450c4b",
                 "shasum": ""
             },
             "require": {
@@ -1571,7 +1571,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2019-10-24T10:15:01+00:00"
+            "time": "2020-01-08T18:06:24+00:00"
         },
         {
             "name": "hwi/oauth-bundle",
@@ -2440,17 +2440,17 @@
         },
         {
             "name": "oneup/uploader-bundle",
-            "version": "1.9.2",
+            "version": "1.9.3",
             "target-dir": "Oneup/UploaderBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/1up-lab/OneupUploaderBundle.git",
-                "reference": "a32bc98019abfd51531d08cc79be19f849d87b84"
+                "reference": "d59fcd2e5f675ee83c53965e16d21a942e90a9ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/1up-lab/OneupUploaderBundle/zipball/a32bc98019abfd51531d08cc79be19f849d87b84",
-                "reference": "a32bc98019abfd51531d08cc79be19f849d87b84",
+                "url": "https://api.github.com/repos/1up-lab/OneupUploaderBundle/zipball/d59fcd2e5f675ee83c53965e16d21a942e90a9ef",
+                "reference": "d59fcd2e5f675ee83c53965e16d21a942e90a9ef",
                 "shasum": ""
             },
             "require": {
@@ -2511,7 +2511,7 @@
                 "plupload",
                 "upload"
             ],
-            "time": "2017-12-18T12:41:59+00:00"
+            "time": "2020-02-04T10:37:36+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -4181,6 +4181,7 @@
                 "code",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-code",
             "time": "2019-10-05T23:18:22+00:00"
         },
         {
@@ -4235,6 +4236,7 @@
                 "events",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2018-04-25T15:33:34+00:00"
         }
     ],
@@ -4291,6 +4293,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
+            "abandoned": "symfony/maker-bundle",
             "time": "2017-12-07T15:36:41+00:00"
         },
         {

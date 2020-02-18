@@ -37,7 +37,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "doctrine/doctrine-fixtures-bundle": "2.3.*",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "oneup/uploader-bundle": "^1.9.4",
+        "oneup/uploader-bundle": "^1.9.3",
         "cocur/slugify": "^1.4",
         "liip/imagine-bundle": "^1.5",
         "knplabs/knp-paginator-bundle": "2.5.1",
