@@ -1,7 +1,7 @@
 FROM php:7.2-cli
 
 RUN apt-get update && apt-get install -y zlib1g-dev zip \
-    && docker-php-ext-install zip
+    && docker-php-ext-install zip pdo_mysql
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet
 
