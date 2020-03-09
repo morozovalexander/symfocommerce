@@ -32,10 +32,10 @@ services:
         volumes:
             - sc-mysql:/var/lib/postgresql/data:cached
         environment:
-            MYSQL_ROOT_PASSWORD: symfocommerce
-            MYSQL_USER: symfocommerce
-            MYSQL_PASSWORD: symfocommerce
-            MYSQL_DATABASE: symfocommerce
+            MYSQL_ROOT_PASSWORD: sc-root-pass
+            MYSQL_USER: sc-user
+            MYSQL_PASSWORD: sc-pass
+            MYSQL_DATABASE: sc-db
         ports:
             - '33061:3306'
 volumes:
