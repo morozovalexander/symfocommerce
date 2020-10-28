@@ -3,8 +3,10 @@
 namespace App\Service;
 
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
-use Twig\Error\Error;
+use Twig\Environment as Templating;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class EmailNotifier
@@ -18,7 +20,7 @@ class EmailNotifier
     /** @var RouterInterface */
     private $router;
 
-    /** @var EngineInterface */
+    /** @var Templating */
     private $templating;
 
     /** @var string */
@@ -28,9 +30,9 @@ class EmailNotifier
      * EmailNotifier constructor.
      * @param \Swift_Mailer $mailer
      * @param RouterInterface $router
-     * @param EngineInterface $templating
+     * @param Templating $templating
      */
-    public function __construct(\Swift_Mailer $mailer, RouterInterface $router, EngineInterface $templating)
+    public function __construct(\Swift_Mailer $mailer, RouterInterface $router, Templating $templating)
     {
         $this->mailer = $mailer;
         $this->router = $router;
@@ -39,7 +41,9 @@ class EmailNotifier
 
     /**
      * @param array $parametersArray
-     * @throws Error
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function handleNotification(array $parametersArray): void
     {
@@ -51,6 +55,9 @@ class EmailNotifier
 
     /**
      * @param $parametersArray array
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     private function sendNewOrderNotification(array $parametersArray): void
     {
@@ -66,7 +73,6 @@ class EmailNotifier
         );
 
         $message = (new \Swift_Message($subject))
-            ->setSubject()
             ->setFrom(self::FROM_EMAIL)
             ->setTo($to)
             ->setBody(
