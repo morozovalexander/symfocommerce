@@ -17,9 +17,8 @@ security:
                 csrf_token_generator: security.csrf.token_manager
             logout:       true
             anonymous:    true
-
         login:
-            pattern:  ^/login$
+            pattern: ^/login$
             security: false
 
             remember_me:

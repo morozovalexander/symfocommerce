@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Migrations;
+namespace DoctrineMigrations;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;

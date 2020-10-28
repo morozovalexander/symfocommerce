@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\News;
-use App\Entity\Slide;
 use App\Repository\NewsRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SlideRepository;
-use Doctrine\ORM\EntityManager;
 use App\Entity\Category;
 use App\Entity\Manufacturer;
 use App\Entity\Product;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Migrations;
+namespace DoctrineMigrations;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
@@ -9,7 +9,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170508140613 extends AbstractMigration
+class Version20170508094506 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -20,7 +20,7 @@ class Version20170508140613 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE slide ADD image VARCHAR(255) DEFAULT NULL, DROP path');
+        $this->addSql('ALTER TABLE category ADD image VARCHAR(255) DEFAULT NULL, DROP path');
     }
 
     /**
@@ -32,6 +32,6 @@ class Version20170508140613 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE slide ADD path TINYTEXT DEFAULT NULL COLLATE utf8_unicode_ci, DROP image');
+        $this->addSql('ALTER TABLE category ADD path TINYTEXT DEFAULT NULL COLLATE utf8_unicode_ci, DROP image');
     }
 }
