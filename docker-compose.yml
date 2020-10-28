@@ -24,7 +24,7 @@ services:
             dockerfile: php-cli.docker
         volumes:
             - .:/app:cached
-            - composer:/root/.composer/cache:cached
+            - composer:/root/.composer/cache
         depends_on:
             - sc-mysql
     sc-mysql:
@@ -41,5 +41,3 @@ services:
 volumes:
     sc-mysql:
     composer:
-
-#todo: add dockerignore
