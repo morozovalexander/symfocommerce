@@ -28,7 +28,7 @@ class ManufacturerController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(
+    public function index(
         Request $request,
         ManufacturerRepository $manufacturerRepository,
         PaginatorInterface $paginator
@@ -54,7 +54,7 @@ class ManufacturerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function new(Request $request): Response
     {
         $manufacturer = new Manufacturer();
         $form = $this->createForm(ManufacturerType::class, $manufacturer);
@@ -83,7 +83,7 @@ class ManufacturerController extends AbstractController
      * @param Manufacturer $manufacturer
      * @return Response
      */
-    public function showAction(Manufacturer $manufacturer): Response
+    public function show(Manufacturer $manufacturer): Response
     {
         $deleteForm = $this->createDeleteForm($manufacturer);
 
@@ -101,7 +101,7 @@ class ManufacturerController extends AbstractController
      * @param Manufacturer $manufacturer
      * @return Response
      */
-    public function editAction(Request $request, Manufacturer $manufacturer): Response
+    public function edit(Request $request, Manufacturer $manufacturer): Response
     {
         $deleteForm = $this->createDeleteForm($manufacturer);
         $editForm = $this->createForm(ManufacturerType::class, $manufacturer);
@@ -137,7 +137,7 @@ class ManufacturerController extends AbstractController
      * @param Manufacturer $manufacturer
      * @return Response
      */
-    public function deleteAction(Request $request, Manufacturer $manufacturer): Response
+    public function delete(Request $request, Manufacturer $manufacturer): Response
     {
         $form = $this->createDeleteForm($manufacturer);
         $form->handleRequest($request);

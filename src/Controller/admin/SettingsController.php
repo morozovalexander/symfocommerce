@@ -24,7 +24,7 @@ class SettingsController extends AbstractController
      * @param SettingsRepository $settingsRepository
      * @return Response
      */
-    public function indexAction(SettingsRepository $settingsRepository): Response
+    public function index(SettingsRepository $settingsRepository): Response
     {
         return $this->render('admin/settings/index.html.twig', [
             'settings' => $settingsRepository->findAll()[0]
@@ -37,7 +37,7 @@ class SettingsController extends AbstractController
      * @return JsonResponse
      * @Route("/settings_edit", methods={"POST"}, name="admin_settings_edit")
      */
-    public function settingsEditAction(Request $request, SettingsRepository $settingsRepository): JsonResponse
+    public function settingsEdit(Request $request, SettingsRepository $settingsRepository): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $settingsRepository->findAll();

@@ -28,7 +28,7 @@ class CartController extends AbstractController
      * @param ProductRepository $productRepository
      * @return Response
      */
-    public function showCartAction(Request $request, ProductRepository $productRepository): Response
+    public function showCart(Request $request, ProductRepository $productRepository): Response
     {
         $productsArray = [];
         $cart = [];
@@ -78,7 +78,7 @@ class CartController extends AbstractController
      * @return Response
      * @throws Error
      */
-    public function orderFormAction(
+    public function orderForm(
         Request $request,
         PagesUtilities $pagesUtilities,
         EmailNotifier $emailNotifier
@@ -119,7 +119,7 @@ class CartController extends AbstractController
      *
      * @Route("/cartisempty", methods={"GET"}, name="cartisempty")
      */
-    public function cartIsEmptyAction(): Response
+    public function cartIsEmpty(): Response
     {
         return $this->render('cart/cart_is_empty.html.twig');
     }
@@ -131,7 +131,7 @@ class CartController extends AbstractController
      * @param ProductRepository $productRepository
      * @return Response
      */
-    public function navbarCartAction(Request $request, ProductRepository $productRepository): Response
+    public function navbarCart(Request $request, ProductRepository $productRepository): Response
     {
         //quantity -> sum array
         $cartArray = ['cart' => ['quantity' => 0, 'sum' => 0]];

@@ -28,7 +28,7 @@ class FeaturedController extends AbstractController
      * @param FeaturedRepository $featuredRepository
      * @return Response
      */
-    public function indexAction(FeaturedRepository $featuredRepository): Response
+    public function index(FeaturedRepository $featuredRepository): Response
     {
         $products = $featuredRepository->findBy([], ['productOrder' => 'ASC']);
 
@@ -45,7 +45,7 @@ class FeaturedController extends AbstractController
      * @throws NonUniqueResultException
      * @Route("/featured_product_edit_ajax", methods={"POST"}, name="admin_featured_product_edit_ajax")
      */
-    public function featuredProductEditAction(
+    public function featuredProductEdit(
         Request $request,
         ProductRepository $productRepository,
         FeaturedRepository $featuredRepository
@@ -70,7 +70,7 @@ class FeaturedController extends AbstractController
      * @return JsonResponse
      * @Route("/featured_order_edit_ajax", methods={"POST"}, name="admin_featured_order_edit_ajax")
      */
-    public function featuredOrderEditAction(
+    public function featuredOrderEdit(
         Request $request,
         FeaturedRepository $featuredRepository,
         EntityManagerInterface $em

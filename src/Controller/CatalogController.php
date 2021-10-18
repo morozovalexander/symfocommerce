@@ -29,7 +29,7 @@ class CatalogController extends AbstractController
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function indexAction(
+    public function index(
         NewsRepository $newsRepository,
         SlideRepository $slideRepository,
         ProductRepository $productRepository
@@ -57,7 +57,7 @@ class CatalogController extends AbstractController
      * @param PagesUtilities $pagesUtilities
      * @return Response
      */
-    public function categoryAction(
+    public function category(
         Request $request,
         Category $category,
         ProductRepository $productRepository,
@@ -88,7 +88,7 @@ class CatalogController extends AbstractController
      * @param PagesUtilities $pagesUtilities
      * @return Response
      */
-    public function manufacturerAction(
+    public function manufacturer(
         Request $request,
         Manufacturer $manufacturer,
         ProductRepository $productRepository,
@@ -115,7 +115,7 @@ class CatalogController extends AbstractController
      * @param Product $product
      * @return Response
      */
-    public function showProductAction(Product $product): Response
+    public function showProduct(Product $product): Response
     {
         return $this->render('catalog/show_product.html.twig', [
             'product' => $product
@@ -131,7 +131,7 @@ class CatalogController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function newsAction(
+    public function news(
         Request $request,
         NewsRepository $newsRepository,
         PaginatorInterface $paginator
@@ -161,7 +161,7 @@ class CatalogController extends AbstractController
      * @param PagesUtilities $pagesUtilities
      * @return Response
      */
-    public function searchProductAction(
+    public function searchProduct(
         Request $request,
         ProductRepository $productRepository,
         PaginatorInterface $paginator,
@@ -193,7 +193,7 @@ class CatalogController extends AbstractController
      * @param StaticPage $page
      * @return Response
      */
-    public function showStaticPageAction(StaticPage $page): Response
+    public function showStaticPage(StaticPage $page): Response
     {
         return $this->render('catalog/show_static_page.html.twig', [
             'page' => $page

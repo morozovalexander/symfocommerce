@@ -28,7 +28,7 @@ class UserController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(
+    public function index(
         Request $request,
         UserRepository $userRepository,
         PaginatorInterface $paginator
@@ -54,7 +54,7 @@ class UserController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function showUserInfoAction(User $user): Response
+    public function showUserInfo(User $user): Response
     {
         return $this->render('admin/user/show_user_info.html.twig', [
             'user' => $user
@@ -71,7 +71,7 @@ class UserController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function showUserOrdersAction(
+    public function showUserOrders(
         Request $request,
         User $user,
         OrdersRepository $ordersRepository,

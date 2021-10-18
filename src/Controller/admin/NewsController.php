@@ -28,7 +28,7 @@ class NewsController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(
+    public function index(
         Request $request,
         NewsRepository $newsRepository,
         PaginatorInterface $paginator
@@ -54,7 +54,7 @@ class NewsController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function new(Request $request): Response
     {
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
@@ -83,7 +83,7 @@ class NewsController extends AbstractController
      * @param News $news
      * @return Response
      */
-    public function showAction(News $news): Response
+    public function show(News $news): Response
     {
         $deleteForm = $this->createDeleteForm($news);
 
@@ -101,7 +101,7 @@ class NewsController extends AbstractController
      * @param News $news
      * @return Response
      */
-    public function editAction(Request $request, News $news): Response
+    public function edit(Request $request, News $news): Response
     {
         $deleteForm = $this->createDeleteForm($news);
         $editForm = $this->createForm(NewsType::class, $news);
@@ -137,7 +137,7 @@ class NewsController extends AbstractController
      * @param News $news
      * @return Response
      */
-    public function deleteAction(Request $request, News $news): Response
+    public function delete(Request $request, News $news): Response
     {
         $form = $this->createDeleteForm($news);
         $form->handleRequest($request);

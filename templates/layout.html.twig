@@ -27,12 +27,12 @@
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li><a href="{{ path('favourites') }}">{{ 'layout.navbar.favourites'|trans }}</a></li>
                     {% endif %}
-                    {{ render(controller('App\\Controller\\LayoutsUtilityController::staticPagesMenuAction')) }}
+                    {{ render(controller('App\\Controller\\LayoutsUtilityController::staticPagesMenu')) }}
 
                     <li>
                         <a href="{{ path('showcart') }}">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                            {{ render(controller('App\\Controller\\CartController::navbarCartAction')) }}
+                            {{ render(controller('App\\Controller\\CartController::navbarCart')) }}
                         </a>
                     </li>
                     {% include '_partials/navbar_auth_block.html.twig' %}
@@ -63,7 +63,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                {{ render(controller('App\\Controller\\LayoutsUtilityController::categoriesMenuAction')) }}
+                {{ render(controller('App\\Controller\\LayoutsUtilityController::categoriesMenu')) }}
             </div>
             <div class="col-md-8">
                 {% block page_content %}
@@ -71,7 +71,7 @@
                 <div class="row" id="latest-products"></div>
             </div>
             <div class="col-md-2">
-                {{ render(controller('App\\Controller\\LayoutsUtilityController::manufacturersMenuAction')) }}
+                {{ render(controller('App\\Controller\\LayoutsUtilityController::manufacturersMenu')) }}
             </div>
         </div>
     </div>
