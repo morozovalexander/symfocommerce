@@ -29,7 +29,7 @@ class OrdersController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(
+    public function index(
         Request $request,
         OrdersRepository $ordersRepository,
         PaginatorInterface $paginator
@@ -56,7 +56,7 @@ class OrdersController extends AbstractController
      * @param OrdersRepository $ordersRepository
      * @return Response
      */
-    public function showAction(int $id, OrdersRepository $ordersRepository): Response
+    public function show(int $id, OrdersRepository $ordersRepository): Response
     {
         $order = $ordersRepository->find($id);
 
@@ -104,7 +104,7 @@ class OrdersController extends AbstractController
      * @param OrdersRepository $ordersRepository
      * @return Response
      */
-    public function deleteAction(Request $request, int $id, OrdersRepository $ordersRepository): Response
+    public function delete(Request $request, int $id, OrdersRepository $ordersRepository): Response
     {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);

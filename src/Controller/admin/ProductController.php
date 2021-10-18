@@ -33,7 +33,7 @@ class ProductController extends AbstractController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function indexAction(
+    public function index(
         Request $request,
         ProductRepository $productRepository,
         PaginatorInterface $paginator
@@ -64,7 +64,7 @@ class ProductController extends AbstractController
      * @param ImageRepository $imageRepository
      * @return Response
      */
-    public function newAction(Request $request, ImageRepository $imageRepository): Response
+    public function new(Request $request, ImageRepository $imageRepository): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -108,7 +108,7 @@ class ProductController extends AbstractController
      * @param Product $product
      * @return Response
      */
-    public function showAction(Product $product): Response
+    public function show(Product $product): Response
     {
         $deleteForm = $this->createDeleteForm($product);
 
@@ -131,7 +131,7 @@ class ProductController extends AbstractController
      * @param ImageRepository $imageRepository
      * @return Response
      */
-    public function editAction(Request $request, Product $product, ImageRepository $imageRepository): Response
+    public function edit(Request $request, Product $product, ImageRepository $imageRepository): Response
     {
         $deleteForm = $this->createDeleteForm($product);
         $editForm = $this->createForm(ProductType::class, $product);
@@ -182,7 +182,7 @@ class ProductController extends AbstractController
      * @param Product $product
      * @return Response
      */
-    public function deleteAction(Request $request, Product $product): Response
+    public function delete(Request $request, Product $product): Response
     {
         $form = $this->createDeleteForm($product);
         $form->handleRequest($request);
@@ -204,7 +204,7 @@ class ProductController extends AbstractController
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function removeImageAction(Request $request, ImageRepository $imageRepository): Response
+    public function removeImage(Request $request, ImageRepository $imageRepository): Response
     {
         $requestData = $request->request;
         $imageEntityId = (int)$requestData->get('imageEntityId');

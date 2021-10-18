@@ -25,7 +25,7 @@ class AjaxController extends AbstractController
      * @return JsonResponse
      * @throws \Exception
      */
-    public function likeAction(
+    public function like(
         Request $request,
         ProductRepository $productRepository,
         FavouritesRepository $favouritesRepository
@@ -80,7 +80,7 @@ class AjaxController extends AbstractController
      * @throws NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */
-    public function checkIsLikedAction(
+    public function checkIsLiked(
         Request $request,
         FavouritesRepository $favouritesRepository
     ): JsonResponse {
@@ -108,7 +108,7 @@ class AjaxController extends AbstractController
      * @param ProductRepository $productRepository
      * @return JsonResponse
      */
-    public function getLastSeenProductsAction(
+    public function getLastSeenProducts(
         Request $request,
         PagesUtilities $pagesUtilities,
         ProductRepository $productRepository

@@ -23,7 +23,7 @@ class ProfileController extends AbstractController
      * @param PagesUtilities $pagesUtilities
      * @return Response
      */
-    public function favouritesAction(
+    public function favourites(
         Request $request,
         ProductRepository $productRepository,
         PaginatorInterface $paginator,

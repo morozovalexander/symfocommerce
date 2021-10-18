@@ -16,7 +16,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/", methods={"GET"}, name="admin_index")
      */
-    public function indexAction(): Response
+    public function index(): Response
     {
         return $this->render('admin/admin/index.html.twig');
     }

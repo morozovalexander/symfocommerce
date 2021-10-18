@@ -20,7 +20,7 @@ class LayoutsUtilityController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function categoriesMenuAction(
+    public function categoriesMenu(
         SettingsService $settingsService,
         CategoryRepository $categoryRepository
     ): Response {
@@ -39,7 +39,7 @@ class LayoutsUtilityController extends AbstractController
      * @param ManufacturerRepository $manufacturerRepository
      * @return Response
      */
-    public function manufacturersMenuAction(
+    public function manufacturersMenu(
         SettingsService $settingsService,
         ManufacturerRepository $manufacturerRepository
     ): Response {
@@ -56,7 +56,7 @@ class LayoutsUtilityController extends AbstractController
      * @param StaticPageRepository $staticPageRepository
      * @return Response
      */
-    public function staticPagesMenuAction(StaticPageRepository $staticPageRepository): Response
+    public function staticPagesMenu(StaticPageRepository $staticPageRepository): Response
     {
         $headers = $staticPageRepository->getHeaders();
         return $this->render('_partials/static_pages_menu.html.twig', [

@@ -26,7 +26,7 @@ class SlideController extends AbstractController
      * @param SlideRepository $slideRepository
      * @return Response
      */
-    public function indexAction(SlideRepository $slideRepository): Response
+    public function index(SlideRepository $slideRepository): Response
     {
         return $this->render('admin/slide/index.html.twig', [
             'entities' => $slideRepository->findBy([], ['slideOrder' => 'ASC'])
@@ -40,7 +40,7 @@ class SlideController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function new(Request $request): Response
     {
         $slide = new Slide();
         $form = $this->createForm(SlideType::class, $slide);
@@ -78,7 +78,7 @@ class SlideController extends AbstractController
      * @param Slide $slide
      * @return Response
      */
-    public function showAction(Slide $slide): Response
+    public function show(Slide $slide): Response
     {
         $deleteForm = $this->createDeleteForm($slide);
 
@@ -96,7 +96,7 @@ class SlideController extends AbstractController
      * @param Slide $slide
      * @return Response
      */
-    public function editAction(Request $request, Slide $slide): Response
+    public function edit(Request $request, Slide $slide): Response
     {
         $deleteForm = $this->createDeleteForm($slide);
         $editForm = $this->createForm(SlideType::class, $slide);
@@ -130,7 +130,7 @@ class SlideController extends AbstractController
      * @param Slide $slide
      * @return Response
      */
-    public function deleteAction(Request $request, Slide $slide): Response
+    public function delete(Request $request, Slide $slide): Response
     {
         $form = $this->createDeleteForm($slide);
         $form->handleRequest($request);

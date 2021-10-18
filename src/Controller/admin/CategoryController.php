@@ -27,7 +27,7 @@ class CategoryController extends AbstractController
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function indexAction(
+    public function index(
         Request $request,
         CategoryRepository $categoryRepository,
         PaginatorInterface $paginator
@@ -51,7 +51,7 @@ class CategoryController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function new(Request $request): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -78,7 +78,7 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @return Response
      */
-    public function showAction(Category $category): Response
+    public function show(Category $category): Response
     {
         $deleteForm = $this->createDeleteForm($category);
 
@@ -96,7 +96,7 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @return Response
      */
-    public function editAction(Request $request, Category $category): Response
+    public function edit(Request $request, Category $category): Response
     {
         $deleteForm = $this->createDeleteForm($category);
         $editForm = $this->createForm(CategoryType::class, $category);
@@ -132,7 +132,7 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @return Response
      */
-    public function deleteAction(Request $request, Category $category): Response
+    public function delete(Request $request, Category $category): Response
     {
         $form = $this->createDeleteForm($category);
         $form->handleRequest($request);

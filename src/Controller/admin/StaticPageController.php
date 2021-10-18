@@ -25,7 +25,7 @@ class StaticPageController extends AbstractController
      * @param StaticPageRepository $staticPageRepository
      * @return Response
      */
-    public function indexAction(StaticPageRepository $staticPageRepository): Response
+    public function index(StaticPageRepository $staticPageRepository): Response
     {
         return $this->render('admin/static_page/index.html.twig', [
             'entities' => $staticPageRepository->findBy([], ['orderNum' => 'ASC'])
@@ -39,7 +39,7 @@ class StaticPageController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function new(Request $request): Response
     {
         $staticPage = new StaticPage();
         $form = $this->createForm(StaticPageType::class, $staticPage);
@@ -68,7 +68,7 @@ class StaticPageController extends AbstractController
      * @param StaticPage $staticPage
      * @return Response
      */
-    public function showAction(StaticPage $staticPage): Response
+    public function show(StaticPage $staticPage): Response
     {
         $deleteForm = $this->createDeleteForm($staticPage);
 
@@ -86,7 +86,7 @@ class StaticPageController extends AbstractController
      * @param StaticPage $staticPage
      * @return Response
      */
-    public function editAction(Request $request, StaticPage $staticPage): Response
+    public function edit(Request $request, StaticPage $staticPage): Response
     {
         $deleteForm = $this->createDeleteForm($staticPage);
         $editForm = $this->createForm(StaticPageType::class, $staticPage);
@@ -122,7 +122,7 @@ class StaticPageController extends AbstractController
      * @param StaticPage $staticPage
      * @return Response
      */
-    public function deleteAction(Request $request, StaticPage $staticPage): Response
+    public function delete(Request $request, StaticPage $staticPage): Response
     {
         $form = $this->createDeleteForm($staticPage);
         $form->handleRequest($request);

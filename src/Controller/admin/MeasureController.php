@@ -25,7 +25,7 @@ class MeasureController extends AbstractController
      * @param MeasureRepository $measureRepository
      * @return Response
      */
-    public function indexAction(MeasureRepository $measureRepository): Response
+    public function index(MeasureRepository $measureRepository): Response
     {
         return $this->render('admin/measure/index.html.twig', [
             'entities' => $measureRepository->findAll()
@@ -39,7 +39,7 @@ class MeasureController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newAction(Request $request): Response
+    public function new(Request $request): Response
     {
         $measure = new Measure();
         $form = $this->createForm(MeasureType::class, $measure);
@@ -68,7 +68,7 @@ class MeasureController extends AbstractController
      * @param Measure $measure
      * @return Response
      */
-    public function showAction(Measure $measure): Response
+    public function show(Measure $measure): Response
     {
         $deleteForm = $this->createDeleteForm($measure);
 
@@ -86,7 +86,7 @@ class MeasureController extends AbstractController
      * @param Measure $measure
      * @return Response
      */
-    public function editAction(Request $request, Measure $measure): Response
+    public function edit(Request $request, Measure $measure): Response
     {
         $deleteForm = $this->createDeleteForm($measure);
         $editForm = $this->createForm(MeasureType::class, $measure);
@@ -122,7 +122,7 @@ class MeasureController extends AbstractController
      * @param Measure $measure
      * @return Response
      */
-    public function deleteAction(Request $request, Measure $measure): Response
+    public function delete(Request $request, Measure $measure): Response
     {
         $form = $this->createDeleteForm($measure);
         $form->handleRequest($request);
