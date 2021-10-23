@@ -2,57 +2,40 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Entity\Manufacturer;
-use App\Entity\StaticPage;
-use App\Repository\CategoryRepository;
-use App\Repository\ManufacturerRepository;
 use App\Repository\StaticPageRepository;
-use App\Service\SettingsService;
+use App\Service\Category;
+use App\Service\Manufacturer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class LayoutsUtilityController extends AbstractController
 {
     /**
-     * render categories menu
-     * @param SettingsService $settingsService
-     * @param CategoryRepository $categoryRepository
+     * Render categories menu
+     * @param Category $category
      * @return Response
      */
-    public function categoriesMenu(
-        SettingsService $settingsService,
-        CategoryRepository $categoryRepository
-    ): Response {
-        $showEmpty = $settingsService->getShowEmptyCategories();
-
-        $categories = $categoryRepository->getAllCategories($showEmpty);
-
+    public function categoriesMenu(Category $category): Response
+    {
         return $this->render('_partials/categories_menu.html.twig', [
-            'categories' => $categories
+            'categories' => $category->getCategoriesForMenu()
         ]);
     }
 
     /**
-     * render manufacturers menu
-     * @param SettingsService $settingsService
-     * @param ManufacturerRepository $manufacturerRepository
+     * Render manufacturers menu
+     * @param Manufacturer $manufacturer
      * @return Response
      */
-    public function manufacturersMenu(
-        SettingsService $settingsService,
-        ManufacturerRepository $manufacturerRepository
-    ): Response {
-        $showEmpty = $settingsService->getShowEmptyManufacturers();
-        $manufacturers = $manufacturerRepository->getAllManufacturers($showEmpty);
-
+    public function manufacturersMenu(Manufacturer $manufacturer): Response
+    {
         return $this->render('_partials/manufacturers_menu.html.twig', [
-            'manufacturers' => $manufacturers
+            'manufacturers' => $manufacturer->getManufacturersForMenu()
         ]);
     }
 
     /**
-     * render top menu with static pages headers.
+     * Render top menu with static pages headers.
      * @param StaticPageRepository $staticPageRepository
      * @return Response
      */

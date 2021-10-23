@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
-use App\Repository\ProductRepository;
+use App\Service\Catalog;
 use App\Service\PagesUtilities;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,24 +16,18 @@ class ProfileController extends AbstractController
      *
      * @Route("/favourites", methods={"GET"}, name="favourites")
      * @param Request $request
-     * @param ProductRepository $productRepository
-     * @param PaginatorInterface $paginator
+     * @param Catalog $catalog
      * @param PagesUtilities $pagesUtilities
      * @return Response
      */
     public function favourites(
         Request $request,
-        ProductRepository $productRepository,
-        PaginatorInterface $paginator,
+        Catalog $catalog,
         PagesUtilities $pagesUtilities
     ): Response {
-        $limit = $this->getParameter('products_pagination_count');
-        $query = $productRepository->getFavouritesQB($this->getUser());
-
-        $products = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            $limit
+        $products = $catalog->getFavouriteProducts(
+            $this->getParameter('products_pagination_count'),
+            $request->query->getInt('page', 1)
         );
 
         return $this->render('profile/favourites.html.twig', [

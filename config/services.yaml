@@ -8,10 +8,12 @@ parameters:
     uploads_directory: "%kernel.root_dir%/../public/uploads/images"
     admin_email: null
     products_pagination_count: 12
+    news_pagination_count: 12
     admin_products_pagination_count: 20
     admin_categories_pagination_count: 20
     admin_manufacturers_pagination_count: 20
     category_products_pagination_count: 24
+    manufacturer_products_pagination_count: 24
     search_pagination_count: 24
     admin_users_pagination_count: 20
     admin_user_orders_pagination_count: 10

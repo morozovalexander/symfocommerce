@@ -2,15 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Entity\Orders;
 use App\Form\Type\OrdersType;
-use App\Repository\ProductRepository;
+use App\Service\Cart;
 use App\Service\EmailNotifier;
 use App\Service\PagesUtilities;
 use App\Entity\User;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,50 +18,20 @@ use Twig\Error\Error;
 class CartController extends AbstractController
 {
     /**
-     * Lists all Category entities.
-     *
      * @Route("/showcart", methods={"GET"}, name="showcart")
      * @param Request $request
-     * @param ProductRepository $productRepository
+     * @param Cart $cart
      * @return Response
      */
-    public function showCart(Request $request, ProductRepository $productRepository): Response
+    public function showCart(Request $request, Cart $cart): Response
     {
-        $productsArray = [];
-        $cart = [];
-        $totalSum = 0;
-
         $cookies = $request->cookies->all();
-
-        if (isset($cookies['cart'])) {
-            $cart = json_decode($cookies['cart']);
-        }
-
-        foreach ($cart as $productId => $productQuantity) {
-            /**
-             * @var Product $product
-             */
-            $product = $productRepository->find((int)$productId);
-            if (\is_object($product)) {
-                $productPosition = [];
-
-                $quantity = abs((int)$productQuantity);
-                $price = $product->getPrice();
-                $sum = $price * $quantity;
-
-                $productPosition['product'] = $product;
-                $productPosition['quantity'] = $quantity;
-                $productPosition['price'] = $price;
-                $productPosition['sum'] = $sum;
-                $totalSum += $sum;
-
-                $productsArray[] = $productPosition;
-            }
-        }
+        $quantityByProductId = isset($cookies['cart']) ? json_decode($cookies['cart'], true) : [];
+        $cartContents = $cart->getCartContents($quantityByProductId);
 
         return $this->render('cart/show_cart.html.twig', [
-            'products' => $productsArray,
-            'totalsum' => $totalSum
+            'products' => $cartContents->positions,
+            'totalSum' => $cartContents->totalSum
         ]);
     }
 
@@ -125,39 +92,20 @@ class CartController extends AbstractController
     }
 
     /**
-     * Count cart from cookies
      * @Route("navbar_cart", methods={"GET"})
      * @param Request $request
-     * @param ProductRepository $productRepository
+     * @param Cart $cart
      * @return Response
      */
-    public function navbarCart(Request $request, ProductRepository $productRepository): Response
+    public function navbarCart(Request $request, Cart $cart): Response
     {
-        //quantity -> sum array
-        $cartArray = ['cart' => ['quantity' => 0, 'sum' => 0]];
         $cookies = $request->cookies->all();
-
-        if (isset($cookies['cart'])) {
-            $cart = json_decode($cookies['cart']);
-            if ($cart === '') {
-                return $this->render('cart/navbar_cart.html.twig', $cartArray);
-            }
-        } else {
-            return $this->render('cart/navbar_cart.html.twig', $cartArray);
-        }
-
-        foreach ($cart as $productId => $productQuantity) {
-            /**
-             * @var Product $product
-             */
-            $product = $productRepository->find((int)$productId);
-            if (\is_object($product)) {
-                $cartArray['cart']['sum'] += ($product->getPrice() * abs((int)$productQuantity));
-                $cartArray['cart']['quantity'] += abs((int)$productQuantity);
-            }
-        }
-
-        return $this->render('cart/navbar_cart.html.twig', $cartArray);
+        $quantityByProductId = isset($cookies['cart']) ? json_decode($cookies['cart'], true) : [];
+        $cartContents = $cart->getCartContents($quantityByProductId);
+        return $this->render('cart/navbar_cart.html.twig', [
+            'productsCount' => count($cartContents->positions),
+            'totalSum' => $cartContents->totalSum
+        ]);
     }
 
     /**

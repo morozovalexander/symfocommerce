@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
-use App\Repository\FavouritesRepository;
-use App\Repository\ProductRepository;
+use App\Service\Catalog;
+use App\Service\FavouriteProducts;
 use Doctrine\ORM\NonUniqueResultException;
-use App\Entity\Favourites;
 use App\Service\PagesUtilities;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,54 +19,20 @@ class AjaxController extends AbstractController
      *
      * @Route("/ajax_like", methods={"POST"}, name="ajax_like")
      * @param Request $request
-     * @param ProductRepository $productRepository
-     * @param FavouritesRepository $favouritesRepository
+     * @param FavouriteProducts $favouriteProducts
      * @return JsonResponse
-     * @throws \Exception
      */
-    public function like(
-        Request $request,
-        ProductRepository $productRepository,
-        FavouritesRepository $favouritesRepository
-    ): JsonResponse {
-        $em = $this->getDoctrine()->getManager();
-
-        $productId = $request->request->getInt('product_id');
-
-        $product = $productRepository->find($productId);
-        $user = $this->getUser();
-
-        if (!\is_object($product)) {
-            return $this->returnErrorJson('productnotfound');
-        }
-
-        if (!\is_object($user)) {
-            return $this->returnErrorJson('mustberegistered');
-        }
-
-        $favoriteRecord = $favouritesRepository->findOneBy([
-            'user' => $this->getUser(),
-            'product' => $product
-        ]);
-
-        $liked = false;
-        if (!\is_object($favoriteRecord)) {
-            $favoriteRecord = new Favourites; //add like
-            $favoriteRecord->setUser($this->getUser());
-            $favoriteRecord->setProduct($product);
-            $favoriteRecord->setDate(new \DateTime());
-            $em->persist($favoriteRecord);
-            $liked = true;
-        } else {
-            $em->remove($favoriteRecord); //remove like
-        }
-
-        $em->flush();
+    public function like(Request $request, FavouriteProducts $favouriteProducts): JsonResponse
+    {
+        $result = $favouriteProducts->toggleProductLike(
+            $request->request->getInt('product_id')
+        );
 
         return new JsonResponse([
-            'favourite' => $liked,
-            'success' => true
-        ], 200);
+            'favourite' => $result->isLiked,
+            'success' => $result->success,
+            'message' => $result->message
+        ], $result->success ? 200 : 400);
     }
 
     /**
@@ -75,26 +40,19 @@ class AjaxController extends AbstractController
      *
      * @Route("/ajax_is_liked_product", methods={"POST"}, name="ajax_is_liked_product")
      * @param Request $request
-     * @param FavouritesRepository $favouritesRepository
+     * @param FavouriteProducts $favouriteProducts
      * @return JsonResponse
+     * @throws NoResultException
      * @throws NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
      */
-    public function checkIsLiked(
-        Request $request,
-        FavouritesRepository $favouritesRepository
-    ): JsonResponse {
-        $user = $this->getUser();
-        if (!$user) {
+    public function checkIsLiked(Request $request, FavouriteProducts $favouriteProducts): JsonResponse
+    {
+        if (!$this->getUser()) {
             return $this->returnErrorJson('mustberegistered');
         }
 
-        $productId = $request->request->getInt('product_id');
-
-        $liked = $favouritesRepository->checkIsLiked($user, $productId);
-
         return new JsonResponse([
-            'liked' => $liked,
+            'liked' => $favouriteProducts->checkIsLiked($request->request->getInt('product_id')),
             'success' => true
         ], 200);
     }
@@ -105,23 +63,23 @@ class AjaxController extends AbstractController
      * @Route("/ajax_get_last_seen_products", methods={"POST"}, name="ajax_get_last_seen_products")
      * @param Request $request
      * @param PagesUtilities $pagesUtilities
-     * @param ProductRepository $productRepository
+     * @param Catalog $catalog
      * @return JsonResponse
      */
     public function getLastSeenProducts(
         Request $request,
         PagesUtilities $pagesUtilities,
-        ProductRepository $productRepository
+        Catalog $catalog
     ): JsonResponse {
-        $productIdsArray = $pagesUtilities->getLastSeenProducts($request);
+        $productIds = $pagesUtilities->getLastSeenProducts($request);
+        $products = $catalog->getLastSeenProducts($productIds);
 
-        $products = $productRepository->getLastSeen($productIdsArray, $this->getUser(), 4);
-        if (!$products) {
-            $this->returnErrorJson('product not forund');
+        if (!count($products)) {
+            $this->returnErrorJson('product not found');
         }
         $html = $this->renderView('_partials/last_seen_products.html.twig', [
-                'products' => $products]
-        );
+            'products' => $products
+        ]);
 
         return new JsonResponse([
             'html' => $html,
@@ -133,7 +91,7 @@ class AjaxController extends AbstractController
      * @param string $message
      * @return JsonResponse
      */
-    private function returnErrorJson($message): JsonResponse
+    private function returnErrorJson(string $message): JsonResponse
     {
         return new JsonResponse([
             'success' => false,
