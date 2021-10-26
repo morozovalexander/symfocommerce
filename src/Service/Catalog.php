@@ -8,29 +8,23 @@ use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Security\Core\Security;
 
 class Catalog
 {
     /** @var ProductRepository */
     private $productRepository;
-    /** @var Security */
-    private $security;
     /** @var PaginatorInterface */
     private $paginator;
 
     /**
      * @param ProductRepository $productRepository
-     * @param Security $security
      * @param PaginatorInterface $paginator
      */
     public function __construct(
         ProductRepository $productRepository,
-        Security $security,
         PaginatorInterface $paginator
     ) {
         $this->productRepository = $productRepository;
-        $this->security = $security;
         $this->paginator = $paginator;
     }
 
@@ -40,7 +34,7 @@ class Catalog
      */
     public function getLatestProducts(int $quantity = 12): array
     {
-        return $this->productRepository->getLatest($quantity, $this->security->getUser());
+        return $this->productRepository->getLatest($quantity);
     }
 
     /**
@@ -54,7 +48,7 @@ class Catalog
         int $limit,
         int $page = 1
     ): SlidingPaginationInterface {
-        $query = $this->productRepository->findByCategoryQB($category, $this->security->getUser());
+        $query = $this->productRepository->findByCategoryQB($category);
         return $this->paginator->paginate($query, $page, $limit);
     }
 
@@ -69,7 +63,7 @@ class Catalog
         int $limit,
         int $page = 1
     ): SlidingPaginationInterface {
-        $query = $this->productRepository->findByManufacturerQB($manufacturer, $this->security->getUser());
+        $query = $this->productRepository->findByManufacturerQB($manufacturer);
         return $this->paginator->paginate($query, $page, $limit);
     }
 
@@ -79,18 +73,7 @@ class Catalog
      */
     public function getFeaturedProducts(int $quantity = 12): array
     {
-        return $this->productRepository->getLatest($quantity, $this->security->getUser());
-    }
-
-    /**
-     * @param int $limit
-     * @param int $page
-     * @return Iterable|Product[]
-     */
-    public function getFavouriteProducts(int $limit, int $page = 1): array
-    {
-        $query = $this->productRepository->getFavouritesQB($this->security->getUser());
-        return $this->paginator->paginate($query, $page, $limit);
+        return $this->productRepository->getFeatured($quantity);
     }
 
     /**
@@ -103,7 +86,7 @@ class Catalog
     {
         $searchWords = explode(' ', trim($searchPhrase));
 
-        $qb = $this->productRepository->getSearchQB($searchWords, $this->security->getUser());
+        $qb = $this->productRepository->getSearchQB($searchWords);
         return $this->paginator->paginate($qb, $page, $limit);
     }
 
@@ -113,6 +96,6 @@ class Catalog
      */
     public function getLastSeenProducts(array $productIds): array
     {
-        return $this->productRepository->getLastSeen($productIds, $this->security->getUser(), 4);
+        return $this->productRepository->getLastSeen($productIds, 4);
     }
 }

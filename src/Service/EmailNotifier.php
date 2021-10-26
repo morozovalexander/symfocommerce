@@ -2,19 +2,16 @@
 
 namespace App\Service;
 
+use Swift_Mailer;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment as Templating;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * Class EmailNotifier
- * @package App\Service
- */
 class EmailNotifier
 {
-    /** @var \Swift_Mailer */
+    /** @var Swift_Mailer */
     private $mailer;
 
     /** @var RouterInterface */
@@ -28,11 +25,11 @@ class EmailNotifier
 
     /**
      * EmailNotifier constructor.
-     * @param \Swift_Mailer $mailer
+     * @param Swift_Mailer $mailer
      * @param RouterInterface $router
      * @param Templating $templating
      */
-    public function __construct(\Swift_Mailer $mailer, RouterInterface $router, Templating $templating)
+    public function __construct(Swift_Mailer $mailer, RouterInterface $router, Templating $templating)
     {
         $this->mailer = $mailer;
         $this->router = $router;

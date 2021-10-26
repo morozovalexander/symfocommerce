@@ -43,3 +43,19 @@
         </div>
     </div>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            const latestProductIds = [
+                {% for product in latest_products %}{{ product.id }}{{ loop.last ? '' : ',' }}{% endfor %}
+            ];
+            const featuredProductIds = [
+                {% for product in featured_products %}{{ product.id }}{{ loop.last ? '' : ',' }}{% endfor %}
+            ];
+            likesHighlight(latestProductIds);
+            likesHighlight(featuredProductIds);
+        });
+    </script>
+{% endblock javascripts %}

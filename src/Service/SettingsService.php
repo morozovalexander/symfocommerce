@@ -5,10 +5,6 @@ namespace App\Service;
 use App\Repository\SettingsRepository;
 use App\Entity\Settings;
 
-/**
- * Class SettingsService
- * @package App\Service
- */
 class SettingsService
 {
     /** @var Settings $settings */

@@ -58,6 +58,23 @@ class AjaxController extends AbstractController
     }
 
     /**
+     * Return liked products ids from sent array
+     * @Route("/ajax_check_liked_products", methods={"POST"}, name="ajax_check_liked_products")
+     * @param Request $request
+     * @param FavouriteProducts $favouriteProducts
+     * @return JsonResponse
+     */
+    public function checkLikedProducts(Request $request, FavouriteProducts $favouriteProducts): JsonResponse
+    {
+        $productIds = array_map('intval', $request->request->get('product_ids', []));
+
+        return new JsonResponse([
+            'liked' => $favouriteProducts->selectLikedProductIds($productIds),
+            'success' => true
+        ], 200);
+    }
+
+    /**
      * Render last seen products from cookies
      *
      * @Route("/ajax_get_last_seen_products", methods={"POST"}, name="ajax_get_last_seen_products")

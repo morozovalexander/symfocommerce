@@ -4,10 +4,6 @@ namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * Class FileUploader
- * @package App\Service
- */
 class FileUploader
 {
     /** @var string */
@@ -42,7 +38,7 @@ class FileUploader
      * @param string $fileName
      * @return bool
      */
-    public function removeUpload($fileName): bool
+    public function removeUpload(string $fileName): bool
     {
         $fullPath = $this->targetDir . DIRECTORY_SEPARATOR . $fileName;
 

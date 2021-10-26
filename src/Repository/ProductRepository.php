@@ -50,50 +50,44 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param Category $category
-     * @param User $user
      * @return QueryBuilder
      */
-    public function findByCategoryQB(Category $category, ?User $user): QueryBuilder
+    public function findByCategoryQB(Category $category): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
+        $qb->select(['p', 'pi', 'pm', 'pfe'])
             ->from(Product::class, 'p')
             ->innerJoin('p.category', 'ca')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user')//if liked
             ->leftJoin('p.featured', 'pfe')
             ->where('ca = :category')
             ->andWhere('p.quantity <> 0')
             ->andWhere($qb->expr()->neq('p.deleted', 1))
-            ->setParameter('category', $category)
-            ->setParameter('user', $user);
+            ->setParameter('category', $category);
 
         return $qb;
     }
 
     /**
      * @param Manufacturer $manufacturer
-     * @param User $user
      * @return QueryBuilder
      */
-    public function findByManufacturerQB(Manufacturer $manufacturer, ?User $user): QueryBuilder
+    public function findByManufacturerQB(Manufacturer $manufacturer): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
+        $qb->select(['p', 'pi', 'pm', 'pfe'])
             ->from(Product::class, 'p')
             ->innerJoin('p.manufacturer', 'ma')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user')//if liked
             ->leftJoin('p.featured', 'pfe')
             ->where('ma.id = :manufacturer')
             ->andWhere('p.quantity <> 0')
             ->andWhere($qb->expr()->neq('p.deleted', 1))
-            ->setParameter('manufacturer', $manufacturer)
-            ->setParameter('user', $user);
+            ->setParameter('manufacturer', $manufacturer);
 
         return $qb;
     }
@@ -121,22 +115,19 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param array $searchWords
-     * @param User $user
      * @return QueryBuilder
      */
-    public function getSearchQB(array $searchWords, ?User $user): QueryBuilder
+    public function getSearchQB(array $searchWords): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
+        $qb->select(['p', 'pi', 'pm', 'pfe'])
             ->from(Product::class, 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user')//if liked
             ->leftJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
-            ->andWhere($qb->expr()->neq('p.deleted', 1))
-            ->setParameter('user', $user);
+            ->andWhere($qb->expr()->neq('p.deleted', 1));
 
         $cqbORX = [];
         foreach ($searchWords as $searchWord) {
@@ -151,23 +142,20 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param int $quantity
-     * @param User $user
      * @return Product[]|null
      */
-    public function getLatest(int $quantity = 1, ?User $user): ?array
+    public function getLatest(int $quantity = 1): ?array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
+        $qb->select(['p', 'pi', 'pm', 'pfe'])
             ->from(Product::class, 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user')//if liked
             ->leftJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
             ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setMaxResults($quantity)
-            ->setParameter('user', $user)
             ->addOrderBy('p.dateCreated', 'DESC');
 
         return $qb->getQuery()->getResult();
@@ -175,23 +163,20 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param int $quantity
-     * @param User $user
      * @return Product[]|null
      */
-    public function getFeatured(int $quantity = 1, ?User $user): ?array
+    public function getFeatured(int $quantity = 1): ?array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select(['p', 'pi', 'pm', 'pfa', 'pfe'])
+        $qb->select(['p', 'pi', 'pm', 'pfe'])
             ->from(Product::class, 'p')
             ->leftJoin('p.images', 'pi')
             ->leftJoin('p.measure', 'pm')
-            ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user')//if liked
             ->innerJoin('p.featured', 'pfe')
             ->where('p.quantity <> 0')
             ->andWhere($qb->expr()->neq('p.deleted', 1))
             ->setMaxResults($quantity)
-            ->setParameter('user', $user)
             ->addOrderBy('pfe.productOrder', 'DESC');
 
         return $qb->getQuery()->getResult();
@@ -199,11 +184,10 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @param array $productIdsArray
-     * @param User|null $user
      * @param int $quantity
      * @return Product[]|null
      */
-    public function getLastSeen(array $productIdsArray, ?User $user, int $quantity = 1): ?array
+    public function getLastSeen(array $productIdsArray, int $quantity = 1): ?array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -216,12 +200,6 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.id IN (:ids)')
             ->setParameter('ids', $productIdsArray)
             ->setMaxResults($quantity);
-
-        if ($user) {
-            $qb->addSelect('pfa')
-                ->leftJoin('p.favourites', 'pfa', 'WITH', 'pfa.user = :user')
-                ->setParameter('user', $user);
-        }
 
         return $qb->getQuery()->getResult();
     }
