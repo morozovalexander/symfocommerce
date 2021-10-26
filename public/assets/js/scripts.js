@@ -67,7 +67,7 @@ function changeGlyphicon(clickedIcon) {
 
 function checkProductIsLiked(productId) {
     $.ajax({
-        type: 'post',
+        type: 'POST',
         url: urls['ajax_is_liked_product'],
         data: {product_id: productId},
         success: function (data) {
@@ -88,7 +88,7 @@ function checkProductIsLiked(productId) {
 
 function getLastSeenProducts() {
     $.ajax({
-        type: 'post',
+        type: 'POST',
         url: urls['ajax_get_last_seen_products'],
         success: function (data) {
             if (data.success === true) {
@@ -106,7 +106,7 @@ function likesInit() {
         var productId = $(this).parent().parent().data('id');
         //send ajax
         $.ajax({
-            type: 'post',
+            type: 'POST',
             url: urls['ajax_like'],
             data: {product_id: productId},
             success: function (data) {
@@ -150,5 +150,25 @@ function addToLastSeenProductIds(productId) {
         arr.unshift(productId);
     }
     Cookies.set('last-seen', JSON.stringify(arr));
+}
+
+function likesHighlight(productIds) {
+    //send ajax
+    $.ajax({
+        type: 'POST',
+        url: urls['ajax_check_liked_products'],
+        data: {product_ids: productIds},
+        success: function (data) {
+            if (data.success === true) {
+                for (let i in data.liked) {
+                    const productId = data.liked[i];
+                    const productContainer = $('.product-container[data-product-id="' + productId + '"]');
+                    const likeSpan = productContainer.find(".like");
+                    likeSpan.removeClass('glyphicon-heart-empty');
+                    likeSpan.addClass('glyphicon-heart');
+                }
+            }
+        }
+    });
 }
 

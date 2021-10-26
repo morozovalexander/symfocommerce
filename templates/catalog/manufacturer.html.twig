@@ -52,3 +52,13 @@
         </div>
     </div>
 {% endblock page_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            const productIds = [{% for product in products %}{{ product.id }}{{ loop.last ? '' : ',' }}{% endfor %}];
+            likesHighlight(productIds);
+        });
+    </script>
+{% endblock javascripts %}

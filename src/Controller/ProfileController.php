@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Catalog;
+use App\Service\FavouriteProducts;
 use App\Service\PagesUtilities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,16 +16,16 @@ class ProfileController extends AbstractController
      *
      * @Route("/favourites", methods={"GET"}, name="favourites")
      * @param Request $request
-     * @param Catalog $catalog
+     * @param FavouriteProducts $favouriteProducts
      * @param PagesUtilities $pagesUtilities
      * @return Response
      */
     public function favourites(
         Request $request,
-        Catalog $catalog,
+        FavouriteProducts $favouriteProducts,
         PagesUtilities $pagesUtilities
     ): Response {
-        $products = $catalog->getFavouriteProducts(
+        $products = $favouriteProducts->getFavouriteProducts(
             $this->getParameter('products_pagination_count'),
             $request->query->getInt('page', 1)
         );

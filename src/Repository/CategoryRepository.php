@@ -55,12 +55,10 @@ class CategoryRepository extends ServiceEntityRepository
      */
     public function getAllCategoriesAdminQB(): QueryBuilder
     {
-        $qb = $this->getEntityManager()
+        return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('c')
             ->from(Category::class, 'c');
-
-        return $qb;
     }
 
     /**

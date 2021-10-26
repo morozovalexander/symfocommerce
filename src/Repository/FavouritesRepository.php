@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Favourites;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use App\Entity\User;
@@ -53,5 +55,34 @@ class FavouritesRepository extends ServiceEntityRepository
         }
 
         return false;
+    }
+
+    /**
+     * @param User $user
+     * @param int[] $productIds
+     * @return string[]
+     */
+    public function selectLikedProductIds(User $user, array $productIds): array
+    {
+        if (!count($productIds)) {
+            return [];
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('p.id')
+            ->from(Favourites::class, 'f')
+            ->innerJoin('f.user', 'u')
+            ->innerJoin('f.product', 'p')
+            ->andWhere('u = :user')
+            ->andWhere($qb->expr()->In('p.id', ':product_ids'))
+            ->setParameter('user', $user)
+            ->setParameter('product_ids', $productIds);
+        $result = $qb->getQuery()->getScalarResult();
+
+        return array_map(function ($result) {
+                return $result['id'] ?? null;
+            },
+            $result
+        );
     }
 }

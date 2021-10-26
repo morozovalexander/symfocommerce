@@ -65,7 +65,7 @@ class PagesUtilities
         $cookies = $request->cookies->all();
 
         if (isset($cookies['last-seen'])) {
-            $productIdsArray = json_decode($cookies['last-seen']);
+            $productIdsArray = json_decode($cookies['last-seen'], true);
 
             if (\is_array($productIdsArray) && !empty($productIdsArray)) {
                 return $productIdsArray;
