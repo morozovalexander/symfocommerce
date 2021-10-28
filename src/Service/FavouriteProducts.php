@@ -107,7 +107,10 @@ class FavouriteProducts
      */
     public function getFavouriteProducts(int $limit, int $page = 1): array
     {
-        $query = $this->productRepository->getFavouritesQB($this->security->getUser());
+        if (is_null($user = $this->security->getUser())) {
+            return [];
+        }
+        $query = $this->productRepository->getFavouritesQB($user);
         return $this->paginator->paginate($query, $page, $limit);
     }
 
@@ -117,6 +120,9 @@ class FavouriteProducts
      */
     public function selectLikedProductIds(array $productIds): array
     {
-        return $this->favouritesRepository->selectLikedProductIds($this->security->getUser(), $productIds);
+        if (is_null($user = $this->security->getUser())) {
+            return [];
+        }
+        return $this->favouritesRepository->selectLikedProductIds($user, $productIds);
     }
 }
