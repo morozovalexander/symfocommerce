@@ -35,7 +35,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "oneup/uploader-bundle": "^3.0",
         "cocur/slugify": "^1.4",
-        "liip/imagine-bundle": "^2.3",
+        "liip/imagine-bundle": "^2.7",
         "knplabs/knp-paginator-bundle": "^5.3.0",
         "presta/sitemap-bundle": "^2.3.1",
         "symfony/flex": "^1.1",
