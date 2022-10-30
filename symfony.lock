@@ -367,9 +367,9 @@
         "version": "4.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "4.4",
-            "ref": "2257d2a1754c7840f49ad04e1d529c402415f4b5"
+            "ref": "24eb45d1355810154890460e6a05c0ca27318fe7"
         },
         "files": [
             "config/bootstrap.php",
