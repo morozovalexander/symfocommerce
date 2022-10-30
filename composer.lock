@@ -9222,6 +9222,8 @@
                     "type": "tidelift"
                 }
             ],
+            "time": "2022-09-28T08:42:51+00:00"
+        }
     ],
     "packages-dev": [
         {
@@ -10008,5 +10010,5 @@
     "platform-overrides": {
         "php": "7.2.5"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
