@@ -433,12 +433,12 @@
         "version": "v5.0.4"
     },
     "symfony/phpunit-bridge": {
-        "version": "3.3",
+        "version": "3.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "3.3",
-            "ref": "7e941371431f5245d05c6490ada44c17eb0d27ed"
+            "ref": "f59588dbcb508b1f45097a97d5066905aa6f8f41"
         },
         "files": [
             ".env.test",
