@@ -1,0 +1,43 @@
+version: '3.6'
+services:
+    sc-nginx:
+        build:
+            context: ./docker/development
+            dockerfile: nginx.docker
+        depends_on:
+            - sc-php-fpm
+        ports:
+            - "8081:80"
+        volumes:
+            - .:/app:cached
+    sc-php-fpm:
+        build:
+            context: ./docker/development
+            dockerfile: php-fpm.docker
+        volumes:
+            - .:/app:cached
+        depends_on:
+            - sc-mysql
+    sc-php-cli:
+        build:
+            context: ./docker/development
+            dockerfile: php-cli.docker
+        volumes:
+            - .:/app:cached
+            - composer:/root/.composer/cache
+        depends_on:
+            - sc-mysql
+    sc-mysql:
+        image: mysql:5.7
+        volumes:
+            - sc-mysql:/var/lib/postgresql/data:cached
+        environment:
+            MYSQL_ROOT_PASSWORD: sc-root-pass
+            MYSQL_USER: sc-user
+            MYSQL_PASSWORD: sc-pass
+            MYSQL_DATABASE: sc-db
+        ports:
+            - '33061:3306'
+volumes:
+    sc-mysql:
+    composer:

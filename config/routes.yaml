@@ -1,0 +1,28 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+app:
+    resource: '../src/Controller/'
+    type: annotation
+
+homepage:
+    path: /
+    defaults:
+        _controller: App\Controller\CatalogController::indexAction
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
+
+oneup_uploader:
+    resource: .
+    type: uploader
+
+PrestaSitemapBundle:
+    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
+    prefix:   /
+
+facebook_login:
+    path: /login/check-facebook
+
+google_login:
+    path: /login/check-google
