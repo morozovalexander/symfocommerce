@@ -45,9 +45,9 @@
         "version": "1.12",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "1.12",
-            "ref": "b11d5292f574a9cd092d506c899d05c79cf4d613"
+            "ref": "28a0beb09b45a97111e43bb2c0e652aa83d44981"
         },
         "files": [
             "config/packages/doctrine.yaml",
