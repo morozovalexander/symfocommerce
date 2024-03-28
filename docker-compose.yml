@@ -1,4 +1,5 @@
 version: '3.6'
+name: symfocommerce
 services:
     sc-nginx:
         build:
