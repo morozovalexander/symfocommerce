@@ -1,10 +1,10 @@
-version: '3.6'
+version: '3.9'
 name: symfocommerce
 services:
     sc-nginx:
         build:
             context: ./docker/development
-            dockerfile: nginx.docker
+            dockerfile: nginx/Dockerfile
         depends_on:
             - sc-php-fpm
         ports:
@@ -14,7 +14,7 @@ services:
     sc-php-fpm:
         build:
             context: ./docker/development
-            dockerfile: php-fpm.docker
+            dockerfile: php-fpm/Dockerfile
         volumes:
             - .:/app:cached
         depends_on:
@@ -22,16 +22,16 @@ services:
     sc-php-cli:
         build:
             context: ./docker/development
-            dockerfile: php-cli.docker
+            dockerfile: php-cli/Dockerfile
         volumes:
             - .:/app:cached
             - composer:/root/.composer/cache
         depends_on:
             - sc-mysql
     sc-mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         volumes:
-            - sc-mysql:/var/lib/postgresql/data:cached
+            - sc-mysql:/var/lib/mysql:cached
         environment:
             MYSQL_ROOT_PASSWORD: sc-root-pass
             MYSQL_USER: sc-user
