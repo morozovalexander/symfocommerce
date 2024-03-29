@@ -2,6 +2,7 @@ version: '3.9'
 name: symfocommerce
 services:
     sc-nginx:
+        container_name: sc-nginx
         build:
             context: ./docker/development
             dockerfile: nginx/Dockerfile
@@ -12,6 +13,7 @@ services:
         volumes:
             - .:/app:cached
     sc-php-fpm:
+        container_name: sc-php-fpm
         build:
             context: ./docker/development
             dockerfile: php-fpm/Dockerfile
@@ -20,6 +22,7 @@ services:
         depends_on:
             - sc-mysql
     sc-php-cli:
+        container_name: sc-php-cli
         build:
             context: ./docker/development
             dockerfile: php-cli/Dockerfile
@@ -29,6 +32,7 @@ services:
         depends_on:
             - sc-mysql
     sc-mysql:
+        container_name: sc-mysql
         image: mysql:8.0
         volumes:
             - sc-mysql:/var/lib/mysql:cached
