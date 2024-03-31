@@ -19,6 +19,7 @@ services:
             dockerfile: php-fpm/Dockerfile
         volumes:
             - .:/app:cached
+            - ./docker/development/php-fpm/php.ini-development:/usr/local/etc/php/php.ini:ro
         depends_on:
             - sc-mysql
     sc-php-cli:

@@ -1,1 +1,5 @@
-<h1>Your lucky number is {{ number }}</h1>
+{% extends '@lucky/number.html.twig' %}
+
+{% block javascripts %}
+    <h1>Your lucky number is {{ number }}</h1>
+{% endblock %}
